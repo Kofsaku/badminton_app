@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title> Tournament Creation - Badminton </title>
+      <!-- Animate With CSS -->
+      <link rel="stylesheet" type="text/css" href="css/animate.css">
+      <!-- Font Awesome KIT -->
+      <link href="fontawesome-kit-5/css/all.css" rel="stylesheet">
+      <link href="fontawesome-kit-5/css/fontawesome.css" rel="stylesheet">
+      <link href="fontawesome-kit-5/css/brands.css" rel="stylesheet">
+      <link href="fontawesome-kit-5/css/solid.css" rel="stylesheet">
+      <script defer src="fontawesome-kit-5/js/all.js"></script>
+      <script defer src="fontawesome-kit-5/js/brands.js"></script>
+      <script defer src="fontawesome-kit-5/js/solid.js"></script>
+      <script defer src="fontawesome-kit-5/js/fontawesome.js"></script>
+      <!-- Slick CSS -->
+      <link href="css/slick.css" rel="stylesheet">
+      <link href="css/slick-theme.css" rel="stylesheet">
+      <!-- Bootstrap Grids -->
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom Stylings -->
+      <link href="css/custom.css" rel="stylesheet">
+      <!-- Jquery Library -->
+      <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+   </head>
+   <body>
+      <!-- Mobile Header Starts Here --> 
+      <section class="mob-header d-lg-none d-md-block d-sm-block d-block">
+         <div class="container">
+            <div class="d-flex w-100 align-items-center justify-content-start">
+               <div class="d-inline-block min-width-clear">
+                  <button id="admin-menu-icon" class="bg-transparent border-0 p-0">
+                  <img src="images/admin-menu-icon.png">
+                  </button>
+               </div>
+               <div class="d-inline-block w-100 text-center">
+                  <img class="admin-mob-logo" src="images/badminton-admin-logo.png">
+               </div>
+               <div class="min-width-clear d-inline-block">
+                  <div class="d-inline-block">
+                     <div class="dropdown user-dropdown">
+                        <button class="border-0 bg-transparent user-dropdown-btn shadow-none p-0 dropdown-toggle no-caret" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/bell-icon.png">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li><a class="dropdown-item" href="#">Action</a></li>
+                           <li><a class="dropdown-item" href="#">Another action</a></li>
+                           <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="d-inline-block ms-2">
+                     <div class="dropdown notif-dropdown">
+                        <button class="border-0 bg-transparent notif-dropdown-btn shadow-none p-0 dropdown-toggle no-caret" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/user-menu-icon.png">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li><a class="dropdown-item" href="#">Action</a></li>
+                           <li><a class="dropdown-item" href="#">Another action</a></li>
+                           <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- Mobile Header Ends Here --> 
+      <main class="admin-wrapper d-flex w-100 flex-wrap bg-EEEEEE">
+        <!-- Left Sidebar Starts Here -->   
+         <section class="left-sidebar-wrapper bg-white overflow-auto custom-scroll1">
+            <div class="d-block w-100">
+               <div class="d-lg-none d-sm-block d-block text-start">
+                  <button id="admin-close-icon" class="border-0 bg-transparent px-3 py-3">
+                  <i class="fa fa-times text-black text-20"> </i>
+                  </button>
+               </div>
+               <div class="d-block w-100 py-lg-5 py-md-5 pt-sm-2 pb-sm-5 pt-2 pb-5 text-center">
+                  <img class="admin-logo" src="images/badminton-admin-logo.png">
+               </div>
+               <div class="d-block w-100 px-3 mb-4">
+                  <h3 class="text-black fw-bold text-20 merriweather-font"> Tournament Organizer </h3>
+               </div>
+               <div class="d-block px-3 mb-4">
+                  <ul class="list-style-none p-0 m-0">
+                     <li>
+                        <a href="tournament-management.html" class="left-menu-btn1 active merriweather-font"> Tournament Management </a>
+                     </li>
+                     <li>
+                        <a href="tournament-creation.html" class="left-menu-btn1 merriweather-font"> Tournament Creation  </a>
+                     </li>
+
+                      <li>
+                        <a  class="left-menu-btn1 merriweather-font"> Type Management  </a>
+                     </li>
+
+                      <li>
+                        <a class="left-menu-btn1 merriweather-font"> Split Management  </a>
+                     </li>
+
+                     <li>
+                        <a href="player-management.html" class="left-menu-btn1 merriweather-font"> Player Management  </a>
+                     </li>
+
+                     <li>
+                        <a href="league-tournament-tables.html" class="left-menu-btn1 merriweather-font"> League/Tournament Tables </a>
+                     </li>
+
+
+                      <li>
+                        <a href="tournament-timetable.html" class="left-menu-btn1 merriweather-font"> Timetable</a>
+                     </li>
+
+
+                     <li>
+                        <a href="notifications-management.html" class="left-menu-btn1 merriweather-font"> Notification Management </a>
+                     </li> 
+                  </ul>
+               </div>
+            </div>
+         </section>
+         <!-- Left Sidebar Ends Here --> 
+         <!-- Right Content Starts Here -->
+         <section class="right-content-wrapper overflow-auto custom-scroll1">
+            <!-- Top bar Starts Here -->
+            <div class="d-block top-bar-sec w-100 py-2 px-3">
+               <div class="d-flex w-100 align-items-center justify-content-lg-end justify-content-md-center justify-content-sm-center justify-content-center">
+                  <div class="d-inline-block search-form-wrapper ms-3">
+                     <form class="d-flex search-form bg-EEEEEE rounded-3 overflow-hidden w-100">
+                        <input type="text" placeholder="Search" class="merriweather-font bg-transparent text-14 px-2 py-2 text-black px-1 border-0 outline-none" name="">
+                        <button class="search-btn">
+                        <img src="images/search-icon.png">
+                        </button>
+                     </form>
+                  </div>
+                  <div class="d-lg-inline-block d-md-none d-sm-none d-none ms-4">
+                     <div class="dropdown user-dropdown">
+                        <button class="border-0 bg-transparent user-dropdown-btn shadow-none p-0 dropdown-toggle no-caret" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/bell-icon.png">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li><a class="dropdown-item" href="#">Action</a></li>
+                           <li><a class="dropdown-item" href="#">Another action</a></li>
+                           <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="d-lg-inline-block d-md-none d-sm-none d-none ms-3">
+                     <div class="dropdown notif-dropdown">
+                        <button class="border-0 bg-transparent notif-dropdown-btn shadow-none p-0 dropdown-toggle no-caret" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/user-menu-icon.png">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li><a class="dropdown-item" href="#">Action</a></li>
+                           <li><a class="dropdown-item" href="#">Another action</a></li>
+                           <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Top bar Ends Here -->
+            <div class="d-block w-100 px-lg-4 px-md-4 px-sm-4 px-2 py-4">
+             <div class="d-block w-100 mb-3">
+                  <div class="d-flex flex-wrap w-100 align-items-center justify-content-between">
+                     <div class="d-inline-block min-width-clear mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+                        <h3 class="text-black text-20 mob-text-18 fw-bold merriweather-font mt-0 mb-2"> Tournament Creation </h3>
+                        <p class="text-grey1 text-15 m-0"> New Tournament 
+                        </p>
+                     </div> 
+                  </div>
+               </div>
+
+                <div class="d-block w-100 bg-silver5 rounded-3 border border-color-silver2 px-4 py-4">
+                 
+               <form>
+                  
+                  <div class="row">
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div class="form-field5">
+                  <label> Name <sup> * </sup> </label>
+                  <input type="text" required="" placeholder="Add Tournament Name" class="field-style5" name="">
+                  </div>
+                  </div> 
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div class="form-field5">
+                  <label> Date & Time of Event <sup> * </sup> </label>
+                  <input type="date" required="" placeholder="Add Tournament Name" class="field-style5" name="">
+                  </div>
+                  </div> 
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div class="form-field5">
+                  <label> Starting Time for Registration <sup> * </sup> </label>
+                  <input type="text" required="" placeholder="Add Time" class="field-style5" name="">
+                  </div>
+                  </div> 
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div class="form-field5">
+                  <label> Venue Name <sup> * </sup> </label>
+                  <input type="text" required="" placeholder="Add Venue" class="field-style5" name="">
+                  </div>
+                  </div> 
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div class="form-field5">
+                  <label> No of Courts <sup> * </sup> </label>
+                  <input type="text" required="" placeholder="Add Tournament Name" class="field-style5" name="">
+                  </div>
+                  </div> 
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div class="form-field5">
+                  <label> Organization Name <sup> * </sup> </label>
+                  <input type="text" required="" placeholder="Add Organization Name" class="field-style5" name="">
+                  </div>
+                  </div> 
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div class="form-field5">
+                  <label> Payment Method <sup> * </sup> </label>
+                  <input type="text" required="" placeholder="Add Payment method" class="field-style5" name="">
+                  </div>
+                  </div> 
+
+ 
+
+ 
+    
+
+                  </div>
+
+                  <div class="row pt-2">
+                     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+
+                        <button class="bg-green1 text-white text-15 w-100 px-3 py-2 rounded-3 merriweather-font border-0">
+                           Save Tournament
+                        </button>
+
+                     </div>
+                  </div>
+
+
+               </form>
+                  
+               </div>
+              
+            </div>
+         </section>
+         <!-- Right Content Ends Here -->
+      </main>
+      <!-- Bootstrap Javascript -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="js/popper.min.js"> </script>
+      <script src="js/bootstrap.min.js"> </script>
+      <script src="js/functions.js"> </script>
+      <!-- Slick Slider -->
+      <script src="js/slick-slider.js"> </script>
+      <script src="js/slick-functions.js"> </script>
+   </body>
+</html>
