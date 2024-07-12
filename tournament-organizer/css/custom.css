@@ -1057,7 +1057,211 @@ textarea.field-style5 {
     border-style: dashed;
 }
 
+
+.scorecard-table tbody tr td {
+    height: 70px !important;
+}
+
+.bg-grey1 {
+    background: grey;
+}
+
+.player-score-number {
+    min-width: 50px !important;
+    text-align: center;
+}
+
+
+.rating-liners .top-liners {
+    background: #767676;
+    height: 2px;
+    display: inline-block;
+    width: 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+
+.rating-liners .middle-liners {
+    background: #767676;
+    height: 90px;
+    display: inline-block;
+    width: 2px;
+
+}
+
+
+
+.rating-liners .bottom-liners {
+    background: #767676;
+    height: 2px;
+    display: inline-block;
+    width: 40px;
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+}
+
+.rating-liners {
+    position: absolute;
+    left: 100%;
+    top: 30px;
+}
+
+.rating-liners::before {
+    content: "";
+    font-size: 0px;
+    position: absolute;
+    top: 48%;
+    height: 2px;
+    background: #767676;
+    width: 40px;
+    left: 100%;
+}
+
+.rating-standard-1 {
+     margin-top: 68px;
+}
+.rating-standard-2 {
+    margin-top: 115px;
+} 
+
+
  
+
+
+
+
+
+
+
+ .rating-liners2 .top-liners2 {
+    background: #767676;
+    height: 2px;
+    display: inline-block;
+    width: 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+
+.rating-liners2 .middle-liners2 {
+    background: #767676;
+    height: 180px;
+    display: inline-block;
+    width: 2px;
+
+}
+
+
+
+.rating-liners2 .bottom-liners2 {
+    background: #767676;
+    height: 2px;
+    display: inline-block;
+    width: 40px;
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+}
+
+.rating-liners2 {
+    position: absolute;
+    left: 100%;
+    top: 30px;
+}
+
+.rating-liners2::before {
+    content: "";
+    font-size: 0px;
+    position: absolute;
+    top: 48%;
+    height: 2px;
+    background: #767676;
+    width: 40px;
+    left: 100%;
+}
+
+
+ 
+.rating-standard-3 {
+    margin-top: 158px;
+    position: relative;
+}
+
+.rating-standard-4 {
+    margin-top: 295px;
+    position: relative;
+}
+
+
+
+
+
+.rating-standard-5 {
+    margin-top: 333px;
+    position: relative;
+}
+
+
+
+
+
+
+
+
+ .rating-liners3 .top-liners3 {
+    background: #767676;
+    height: 2px;
+    display: inline-block;
+    width: 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+
+.rating-liners3 .middle-liners3 {
+    background: #767676;
+    height: 360px;
+    display: inline-block;
+    width: 2px;
+
+}
+
+
+
+.rating-liners3 .bottom-liners3 {
+    background: #767676;
+    height: 2px;
+    display: inline-block;
+    width: 40px;
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+}
+
+.rating-liners3 {
+    position: absolute;
+    left: 100%;
+    top: 30px;
+}
+
+.rating-liners3::before {
+    content: "";
+    font-size: 0px;
+    position: absolute;
+    top: 48%;
+    height: 2px;
+    background: #767676;
+    width: 40px;
+    left: 100%;
+}
+
+
+
 
 /*Media Queries Of Website*/
 
