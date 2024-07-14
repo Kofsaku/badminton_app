@@ -1,44 +1,65 @@
 import React from 'react';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import Slider from 'react-slick'
 
 const TournamentSection = () => {
 
-  var settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
+
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 300,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  arrows: true,
+  autoplay: true,
+  focusOnSelect: false,
+  pauseOnHover: false,
+  autoplaySpeed: 2000,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
       }
-    ]
-  };
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 700,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
+};
+
 
   return (
     <section className="py-5 my-3">
@@ -63,34 +84,134 @@ const TournamentSection = () => {
           </div>
         </div>
 
-    <div className="slider-container">
-      <Slider {...settings}>
-        <div>
-          <h3>1</h3>
+        <div className="d-block w-100">
+          <Slider {...sliderSettings} className="custom-slider1 arrows-1">
+            <div className="d-block px-3">
+              <div className="d-block w-100">
+                <img className="w-100" src="images/result-1.png" alt="Result 1" />
+              </div>
+              <div className="d-block py-3">
+                <h3 className="text-green4 text-22 fw-bold m-0">2024 Shimane Club Cup Badminton New Year's Izumo Tournament</h3>
+              </div>
+              <div className="d-block w-100 mb-3">
+                <h5 className="text-grey1 text-14 mt-0 mb-2">
+                  prefecture
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Shimane</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Dates
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Sunday, January 21, 2024</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  meeting place
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Hirata Gymnasium</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Tournament Classification
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Team Competition (Open)</span>
+                </h5>
+              </div>
+              <div className="d-flex align-items-center justify-content-start w-100">
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Deadline: 10 days left</span>
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Available: Extra room</span>
+              </div>
+            </div>
+
+            <div className="d-block px-3">
+              <div className="d-block w-100">
+                <img className="w-100" src="images/result-2.png" alt="Result 2" />
+              </div>
+              <div className="d-block py-3">
+                <h3 className="text-green4 text-22 fw-bold m-0">2024 Shimane Club Cup Badminton New Year's Izumo Tournament</h3>
+              </div>
+              <div className="d-block w-100 mb-3">
+                <h5 className="text-grey1 text-14 mt-0 mb-2">
+                  prefecture
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Shimane</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Dates
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Sunday, January 21, 2024</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  meeting place
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Hirata Gymnasium</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Tournament Classification
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Team Competition (Open)</span>
+                </h5>
+              </div>
+              <div className="d-flex align-items-center justify-content-start w-100">
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Deadline: 10 days left</span>
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Available: Extra room</span>
+              </div>
+            </div>
+
+            <div className="d-block px-3">
+              <div className="d-block w-100">
+                <img className="w-100" src="images/result-3.png" alt="Result 3" />
+              </div>
+              <div className="d-block py-3">
+                <h3 className="text-green4 text-22 fw-bold m-0">2024 Shimane Club Cup Badminton New Year's Izumo Tournament</h3>
+              </div>
+              <div className="d-block w-100 mb-3">
+                <h5 className="text-grey1 text-14 mt-0 mb-2">
+                  prefecture
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Shimane</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Dates
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Sunday, January 21, 2024</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  meeting place
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Hirata Gymnasium</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Tournament Classification
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Team Competition (Open)</span>
+                </h5>
+              </div>
+              <div className="d-flex align-items-center justify-content-start w-100">
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Deadline: 10 days left</span>
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Available: Extra room</span>
+              </div>
+            </div>
+
+            <div className="d-block px-3">
+              <div className="d-block w-100">
+                <img className="w-100" src="images/result-1.png" alt="Result 4" />
+              </div>
+              <div className="d-block py-3">
+                <h3 className="text-green4 text-22 fw-bold m-0">2024 Shimane Club Cup Badminton New Year's Izumo Tournament</h3>
+              </div>
+              <div className="d-block w-100 mb-3">
+                <h5 className="text-grey1 text-14 mt-0 mb-2">
+                  prefecture
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Shimane</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Dates
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Sunday, January 21, 2024</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  meeting place
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Hirata Gymnasium</span>
+                </h5>
+                <h5 className="text-grey1 text-14">
+                  Tournament Classification
+                  <span className="text-green4 d-inline-block ms-1 fw-bold">Team Competition (Open)</span>
+                </h5>
+              </div>
+              <div className="d-flex align-items-center justify-content-start w-100">
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Deadline: 10 days left</span>
+                <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">Available: Extra room</span>
+              </div>
+            </div>
+          </Slider>
         </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
-        <div>
-          <h3>7</h3>
-        </div>
-        <div>
-          <h3>8</h3>
-        </div>
-      </Slider>
-    </div>
+
         <div className="d-block w-100 text-start pt-5">
           <a href="#" className="bg-green1 bg-hover-black text-white rounded-pill px-5 py-2 lh-lg border-0 text-16">See all</a>
         </div>
