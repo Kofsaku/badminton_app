@@ -16,4 +16,10 @@ class HomepageController < ApplicationController
 
   def contact
   end
+
+  def create_account
+  end
+
+  def login
+  end
 end

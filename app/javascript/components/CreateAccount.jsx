@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const CreateAccount = () => {
   const [formData, setFormData] = useState({
+    fullName: '',
     email: '',
     password: '',
   });
@@ -36,16 +37,25 @@ const Login = () => {
             </div>
             <div className="d-block w-100">
               <div className="d-block w-100 text-center">
-                <h5 className="text-black1 mb-2 text-capitalize text-32 tab-text-28 fw-bold d-lg-block d-md-block d-sm-block d-none">Welcome Back!</h5>
-                <p className="text-grey1 mt-0 mb-4 text-14 d-lg-block d-md-block d-sm-block d-none">Please enter your details</p>
-                <h5 className="text-black1 mb-1 text-capitalize text-20 fw-bold">Please sign in to continue</h5>
-                <p className="text-grey1 mt-0 mb-4 text-14">Please enter your details below</p>
+                <h5 className="text-black1 mb-1 text-capitalize text-25 mob-text-22 fw-bold">create an account</h5>
+                <p className="text-grey1 mt-0 mb-4 text-14">Fill in your details.</p>
               </div>
               <div className="d-block w-100 mb-3">
                 <form onSubmit={handleSubmit}>
                   <div className="d-block w-100">
                     <div className="row m-0 justify-content-center">
                       <div className="col-lg-6 col-md-8 col-sm-12 col-11">
+                        <div className="form-field1 mb-3 px-3 py-2 d-flex w-100 align-items-center justify-content-start rounded-3 bg-silver1">
+                          <img src="images/user-icon.png" className="me-2" alt="User Icon" />
+                          <input
+                            type="text"
+                            placeholder="Full Name"
+                            className="text-black w-100 outline-none border-0 bg-transparent text-15"
+                            name="fullName"
+                            value={formData.fullName}
+                            onChange={handleChange}
+                          />
+                        </div>
                         <div className="form-field1 mb-3 px-3 py-2 d-flex w-100 align-items-center justify-content-start rounded-3 bg-silver1">
                           <img src="images/email-icon.svg" className="me-2" alt="Email Icon" />
                           <input
@@ -70,7 +80,7 @@ const Login = () => {
                         </div>
                         <div className="d-block w-100">
                           <button type="submit" className="custom-btn3 w-100 mb-3">
-                            Sign In
+                            Create An Account
                           </button>
                         </div>
                       </div>
@@ -79,7 +89,7 @@ const Login = () => {
                 </form>
               </div>
               <div className="d-block w-100 text-center px-2 mb-5">
-                <h5 className="text-grey1 text-16 mt-0 mb-3">or continue</h5>
+                <h5 className="text-grey1 text-16 mt-0 mb-3">Or continue to be a habit</h5>
                 <div className="d-flex w-100 align-items-center justify-content-center">
                   <div className="d-inline-block text-center mx-2">
                     <button className="bg-silver2 d-flex align-items-center justify-content-center rounded-circle p-3 border-0">
@@ -100,9 +110,9 @@ const Login = () => {
               </div>
               <div className="d-block w-100 px-2">
                 <p className="text-center w-100 text-14">
-                  Don't have an account?
-                  <Link to="/create-account" className="text-green2">
-                    Create an account
+                  Already have an account?&nbsp;
+                  <Link to="/login" className="text-green2">
+                    Sign In
                   </Link>
                 </p>
               </div>
@@ -114,4 +124,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default CreateAccount;
