@@ -1,23 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Header from './Header';
+import HeroSection from './HomeScreens/HeroSection';
+import SearchSection from './HomeScreens/SearchSection';
+import FeatureSection from './HomeScreens/FeatureSection';
+import ProductSection from './HomeScreens/ProductSection';
+import UseSection from './HomeScreens/UseSection';
+import CtaSection from './HomeScreens/CtaSection';
+import TeamSearchSection from './HomeScreens/TeamSearchSection';
+import Footer from './Footer';
 
 export default () => (
-<div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
-<div className="jumbotron jumbotron-fluid bg-transparent">
-<div className="container secondary-color">
-<h1 className="display-4">Sport exercises</h1>
-<p className="lead">
-A list of sport exercises to boost your workout.
-</p>
-<hr className="my-4" />
-<Link
-to="/exercises"
-className="btn btn-lg custom-button"
-role="button"
->
-View Exercises
-</Link>
-</div>
-</div>
-</div>
+  <div>
+    <Header />
+    <HeroSection />
+    <SearchSection />
+    <TeamSearchSection />
+    <FeatureSection />
+    <ProductSection />
+    <UseSection />
+    <CtaSection />
+    <Footer />
+  </div>
 );
