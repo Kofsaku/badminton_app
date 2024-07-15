@@ -1,0 +1,202 @@
+<%= form_with(model: tournament) do |form| %>
+  <% if tournament.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(tournament.errors.count, "error") %> prohibited this tournament from being saved:</h2>
+
+      <ul>
+        <% tournament.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :event_date, style: "display: block" %>
+    <%= form.date_field :event_date %>
+  </div>
+
+  <div>
+    <%= form.label :registeration_time, style: "display: block" %>
+    <%= form.time_field :registeration_time %>
+  </div>
+
+  <div>
+    <%= form.label :venue_name, style: "display: block" %>
+    <%= form.text_field :venue_name %>
+  </div>
+
+  <div>
+    <%= form.label :no_of_courts, style: "display: block" %>
+    <%= form.number_field :no_of_courts %>
+  </div>
+
+  <div>
+    <%= form.label :organization_name, style: "display: block" %>
+    <%= form.text_field :organization_name %>
+  </div>
+
+  <div>
+    <%= form.label :payment_method, style: "display: block" %>
+    <%= form.text_field :payment_method %>
+  </div>
+
+  <div>
+    <%= form.label :match_start_time, style: "display: block" %>
+    <%= form.time_field :match_start_time %>
+  </div>
+
+  <div>
+    <%= form.label :match_end_time, style: "display: block" %>
+    <%= form.time_field :match_end_time %>
+  </div>
+
+  <div>
+    <%= form.label :venue_address, style: "display: block" %>
+    <%= form.text_field :venue_address %>
+  </div>
+
+  <div>
+    <%= form.label :match_overview, style: "display: block" %>
+    <%= form.text_field :match_overview %>
+  </div>
+
+  <div>
+    <%= form.label :organizer, style: "display: block" %>
+    <%= form.text_field :organizer %>
+  </div>
+
+  <div>
+    <%= form.label :administrator, style: "display: block" %>
+    <%= form.text_field :administrator %>
+  </div>
+
+  <div>
+    <%= form.label :sponsor, style: "display: block" %>
+    <%= form.text_field :sponsor %>
+  </div>
+
+  <div>
+    <%= form.label :event_category, style: "display: block" %>
+    <%= form.text_field :event_category %>
+  </div>
+
+  <div>
+    <%= form.label :days, style: "display: block" %>
+    <%= form.text_field :days %>
+  </div>
+
+  <div>
+    <%= form.label :reception_period, style: "display: block" %>
+    <%= form.text_field :reception_period %>
+  </div>
+
+  <div>
+    <%= form.label :competition_format, style: "display: block" %>
+    <%= form.text_field :competition_format %>
+  </div>
+
+  <div>
+    <%= form.label :capacity, style: "display: block" %>
+    <%= form.text_field :capacity %>
+  </div>
+
+  <div>
+    <%= form.label :competition_rules, style: "display: block" %>
+    <%= form.text_area :competition_rules %>
+  </div>
+
+  <div>
+    <%= form.label :ball_type, style: "display: block" %>
+    <%= form.text_field :ball_type %>
+  </div>
+
+  <div>
+    <%= form.label :participation_eligibility, style: "display: block" %>
+    <%= form.text_field :participation_eligibility %>
+  </div>
+
+  <div>
+    <%= form.label :payment_method_for_participant, style: "display: block" %>
+    <%= form.text_field :payment_method_for_participant %>
+  </div>
+
+  <div>
+    <%= form.label :application_method, style: "display: block" %>
+    <%= form.text_field :application_method %>
+  </div>
+
+  <div>
+    <%= form.label :application_deadline, style: "display: block" %>
+    <%= form.text_field :application_deadline %>
+  </div>
+
+  <div>
+    <%= form.label :pairing_selection_method, style: "display: block" %>
+    <%= form.text_field :pairing_selection_method %>
+  </div>
+
+  <div>
+    <%= form.label :award_details, style: "display: block" %>
+    <%= form.text_area :award_details %>
+  </div>
+
+  <div>
+    <%= form.label :participation_qualification, style: "display: block" %>
+    <%= form.text_field :participation_qualification %>
+  </div>
+
+  <div>
+    <%= form.label :presence_of_member_changes, style: "display: block" %>
+    <%= form.text_field :presence_of_member_changes %>
+  </div>
+
+  <div>
+    <%= form.label :entry_in_multiple_events, style: "display: block" %>
+    <%= form.text_field :entry_in_multiple_events %>
+  </div>
+
+  <div>
+    <%= form.label :cancellation_after_application, style: "display: block" %>
+    <%= form.text_field :cancellation_after_application %>
+  </div>
+
+  <div>
+    <%= form.label :participation_fee, style: "display: block" %>
+    <%= form.text_field :participation_fee %>
+  </div>
+
+  <div>
+    <%= form.label :announcements, style: "display: block" %>
+    <%= form.text_field :announcements %>
+  </div>
+
+  <div>
+    <%= form.label :organizers_url, style: "display: block" %>
+    <%= form.text_field :organizers_url %>
+  </div>
+
+  <div>
+    <%= form.label :inquiry_contact_information, style: "display: block" %>
+    <%= form.text_field :inquiry_contact_information %>
+  </div>
+
+  <div>
+    <%= form.label :notes_for_organizers, style: "display: block" %>
+    <%= form.text_area :notes_for_organizers %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

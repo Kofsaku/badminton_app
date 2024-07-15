@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :tournaments
+  resources :profiles
+  resources :users
   root 'homepage#index'
   get 'about', to: 'homepage#about'
   get 'terms-of-service', to: 'homepage#terms_of_service'
