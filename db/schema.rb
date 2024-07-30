@@ -10,8 +10,81 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_15_215723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "profiles", force: :cascade do |t|
+    t.string "role"
+    t.string "real_name"
+    t.string "pet_name"
+    t.string "telephone_number"
+    t.string "prefecture"
+    t.string "address"
+    t.string "city"
+    t.string "gender"
+    t.date "date_of_birth"
+    t.integer "years_of_experience"
+    t.string "racket"
+    t.string "affiliation"
+    t.string "age"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "tournaments", force: :cascade do |t|
+    t.string "name"
+    t.date "event_date"
+    t.time "registeration_time"
+    t.string "venue_name"
+    t.integer "no_of_courts"
+    t.string "organization_name"
+    t.string "payment_method"
+    t.time "match_start_time"
+    t.time "match_end_time"
+    t.string "venue_address"
+    t.string "match_overview"
+    t.string "organizer"
+    t.string "administrator"
+    t.string "sponsor"
+    t.string "event_category"
+    t.string "days"
+    t.string "reception_period"
+    t.string "competition_format"
+    t.string "capacity"
+    t.text "competition_rules"
+    t.string "ball_type"
+    t.string "participation_eligibility"
+    t.string "payment_method_for_participant"
+    t.string "application_method"
+    t.string "application_deadline"
+    t.string "pairing_selection_method"
+    t.text "award_details"
+    t.string "participation_qualification"
+    t.string "presence_of_member_changes"
+    t.string "entry_in_multiple_events"
+    t.string "cancellation_after_application"
+    t.string "participation_fee"
+    t.string "announcements"
+    t.string "organizers_url"
+    t.string "inquiry_contact_information"
+    t.text "notes_for_organizers"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tournaments_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "full_name"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "profiles", "users"
+  add_foreign_key "tournaments", "users"
 end

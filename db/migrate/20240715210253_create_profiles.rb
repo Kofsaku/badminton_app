@@ -10,7 +10,6 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.string :city
       t.string :gender
       t.date :date_of_birth
-      t.string :gender
       t.integer :years_of_experience
       t.string :racket
       t.string :affiliation
