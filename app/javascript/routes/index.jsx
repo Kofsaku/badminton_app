@@ -10,6 +10,7 @@ import CreateAccount from "../components/CreateAccount"
 import Login from "../components/Login"
 import Tournaments from '../pages/Tournaments';
 import CreateTournament from '../pages/Tournaments/Create';
+import EditTournament from '../pages/Tournaments/Edit';
 
 export default (
   <Router>
@@ -23,6 +24,8 @@ export default (
       <Route path="/create-account" element={<CreateAccount />} />
       <Route path="/login" element={<Login />} />
       <Route path="/tournaments/new" element={<CreateTournament />} />
+      <Route path="/tournament-management" element={<Tournaments />} />
+      <Route path="/tournaments/:id/edit" element={<EditTournament />} />
     </Routes>
   </Router>
 );

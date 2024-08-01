@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const AdminSidebar = () => {
   return (
@@ -18,28 +19,76 @@ const AdminSidebar = () => {
         <div className="d-block px-3 mb-4">
           <ul className="list-style-none p-0 m-0">
             <li>
-              <a href="tournament-management.html" className="left-menu-btn1 active merriweather-font"> Tournament Management </a>
+              <NavLink
+                to="/tournament-management"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                Tournament Management
+              </NavLink>
             </li>
             <li>
-              <a href="tournament-creation.html" className="left-menu-btn1 merriweather-font"> Tournament Creation </a>
+              <NavLink
+                to="/tournaments/new"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                Tournament Creation
+              </NavLink>
             </li>
             <li>
-              <a className="left-menu-btn1 merriweather-font"> Type Management </a>
+              <NavLink
+                to="#"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                Type Management
+              </NavLink>
             </li>
             <li>
-              <a className="left-menu-btn1 merriweather-font"> Split Management </a>
+              <NavLink
+                to="#"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                Split Management
+              </NavLink>
             </li>
             <li>
-              <a href="player-management.html" className="left-menu-btn1 merriweather-font"> Player Management </a>
+              <NavLink
+                to="/player-management"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                Player Management
+              </NavLink>
             </li>
             <li>
-              <a href="league-tournament-tables.html" className="left-menu-btn1 merriweather-font"> League/Tournament Tables </a>
+              <NavLink
+                to="/league-tournament-tables"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                League/Tournament Tables
+              </NavLink>
             </li>
             <li>
-              <a href="tournament-timetable.html" className="left-menu-btn1 merriweather-font"> Timetable</a>
+              <NavLink
+                to="/tournament-timetable"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                Timetable
+              </NavLink>
             </li>
             <li>
-              <a href="notifications-management.html" className="left-menu-btn1 merriweather-font"> Notification Management </a>
+              <NavLink
+                to="/notifications-management"
+                className="left-menu-btn1 merriweather-font"
+                activeClassName="active"
+              >
+                Notification Management
+              </NavLink>
             </li>
           </ul>
         </div>
