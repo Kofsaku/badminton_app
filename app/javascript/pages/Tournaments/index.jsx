@@ -1,6 +1,7 @@
 import React from 'react';
 import AdminHeader from '../../components/Shared/AdminHeader';
 import AdminSidebar from '../../components/Shared/AdminSidebar';
+import { Link } from 'react-router-dom';
 
 const Tournaments = () => {
   return (
@@ -24,10 +25,10 @@ const Tournaments = () => {
                 </p>
               </div>
               <div className="d-inline-block">
-                <a href="add-new-tournament.html" className="custom-btn5 mb-2">
+                <Link to="/tournaments/new" className="custom-btn5 mb-2">
                   <i className="fa fa-plus text-14 me-2"> </i>
-                  Add New Tournament
-                </a>
+                  Create New Tournament
+                </Link>
                 <a className="custom-btn5">
                   <i className="fa fa-file text-14 me-2"> </i>
                   Download PDF Report

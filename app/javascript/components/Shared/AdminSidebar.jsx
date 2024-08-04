@@ -38,7 +38,7 @@ const AdminSidebar = () => {
             </li>
             <li>
               <NavLink
-                to="#"
+                to="type-management#"
                 className="left-menu-btn1 merriweather-font"
                 activeClassName="active"
               >
@@ -47,7 +47,7 @@ const AdminSidebar = () => {
             </li>
             <li>
               <NavLink
-                to="#"
+                to="split-management"
                 className="left-menu-btn1 merriweather-font"
                 activeClassName="active"
               >
