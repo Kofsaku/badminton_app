@@ -4,13 +4,10 @@ class CreateTournaments < ActiveRecord::Migration[7.0]
       t.string :name
       t.date :event_date
       t.time :registeration_time
-      t.string :venue_name
-      t.integer :no_of_courts
       t.string :organization_name
       t.string :payment_method
       t.time :match_start_time
       t.time :match_end_time
-      t.string :venue_address
       t.string :match_overview
       t.string :organizer
       t.string :administrator
@@ -37,6 +34,16 @@ class CreateTournaments < ActiveRecord::Migration[7.0]
       t.string :organizers_url
       t.string :inquiry_contact_information
       t.text :notes_for_organizers
+      t.boolean :is_league
+      t.boolean :is_tournament
+      t.string :game_number
+      t.integer :score
+      t.float :time_limit
+      t.integer :break_point
+      t.float :interval_duration
+      t.integer :points_limit
+      t.integer :change_ends
+      t.integer :division_number
       t.references :user, null: false, foreign_key: true
 
       t.timestamps

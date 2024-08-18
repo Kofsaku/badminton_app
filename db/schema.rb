@@ -10,9 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_15_215723) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "profiles", force: :cascade do |t|
     t.string "role"
@@ -34,17 +40,43 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_15_215723) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "tournament_divisions", force: :cascade do |t|
+    t.string "division"
+    t.integer "participants_limit"
+    t.bigint "tournament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_tournament_divisions_on_tournament_id"
+  end
+
+  create_table "tournament_players", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tournament_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
+    t.index ["user_id"], name: "index_tournament_players_on_user_id"
+  end
+
+  create_table "tournament_venues", force: :cascade do |t|
+    t.string "venue_name"
+    t.string "venue_address"
+    t.integer "no_of_courts"
+    t.bigint "tournament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_tournament_venues_on_tournament_id"
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.date "event_date"
     t.time "registeration_time"
-    t.string "venue_name"
-    t.integer "no_of_courts"
     t.string "organization_name"
     t.string "payment_method"
     t.time "match_start_time"
     t.time "match_end_time"
-    t.string "venue_address"
     t.string "match_overview"
     t.string "organizer"
     t.string "administrator"
@@ -71,6 +103,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_15_215723) do
     t.string "organizers_url"
     t.string "inquiry_contact_information"
     t.text "notes_for_organizers"
+    t.boolean "is_league"
+    t.boolean "is_tournament"
+    t.string "game_number"
+    t.integer "score"
+    t.float "time_limit"
+    t.integer "break_point"
+    t.float "interval_duration"
+    t.integer "points_limit"
+    t.integer "change_ends"
+    t.integer "division_number"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,5 +128,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_15_215723) do
   end
 
   add_foreign_key "profiles", "users"
+  add_foreign_key "tournament_divisions", "tournaments"
+  add_foreign_key "tournament_players", "tournaments"
+  add_foreign_key "tournament_players", "users"
+  add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"
 end
