@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
+  const [divisions, setDivisions] = useState([{ division: null, participants_limit: null }]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     handleFormChange(name, type === 'checkbox' ? checked : value);
@@ -9,6 +11,21 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     nextStep();
+  };
+
+  const handleDivisionChange = (index, e) => {
+    const { name, value } = e.target;
+    const newDivisions = [...divisions];
+    newDivisions[index][name] = value;
+    setDivisions(newDivisions);
+
+    // Update the formData with the divisions array
+    handleFormChange('divisions', newDivisions);
+  };
+
+  const addDivision = () => {
+    const newDivisions = [...divisions, { division: null, participants_limit: null }];
+    setDivisions(newDivisions);
   };
 
   return (
@@ -82,7 +99,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
             <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
               <div className="form-field5">
                 <label>
-                  Gender Number <sup>*</sup>
+                  Game Number <sup>*</sup>
                 </label>
                 <select
                   className="field-style5"
@@ -91,9 +108,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select Gender Number</option>
-                  <option value="#12434">#12434</option>
-                  <option value="#12435">#12435</option>
+                  <option value="">Select Game Number</option>
+                  <option value="0">0</option>
+                  <option value="1">#1</option>
                 </select>
               </div>
             </div>
@@ -128,7 +145,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
             <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
               <div className="form-field5">
                 <label>
-                  Deadline <sup>*</sup>
+                  Time Limit <sup>*</sup>
                 </label>
                 <div className="d-flex w-100 align-items-center justify-content-start">
                   <div className="checkbox-style1 me-2 d-inline-block">
@@ -146,7 +163,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     placeholder="Deadline"
                     className="field-style5"
                     name="deadline"
-                    value={formData.deadline}
+                    value={formData.time_limit}
                     onChange={handleChange}
                     required
                   />
@@ -278,8 +295,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   required
                 >
                   <option value="">Select Division Number</option>
-                  <option value="#2323">#2323</option>
-                  <option value="#4545">#4545</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
                 </select>
               </div>
             </div>
@@ -318,10 +336,53 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 </div>
               </div>
             </div>
+
+            { divisions.map((division, index) => (
+              <div key={index} className="row mb-4">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-6">
+                  <div className="form-field5">
+                    <label>Division <sup>*</sup></label>
+                    <select
+                      className="field-style5"
+                      name="division"
+                      value={division.division}
+                      onChange={(e) => handleDivisionChange(index, e)}
+                      required
+                    >
+                      <option value="">Select Division</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-6">
+                  <div className="form-field5">
+                    <label>Participants Limit <sup>*</sup></label>
+                    <input
+                      type="text"
+                      placeholder="Add Participants Limit"
+                      className="field-style5"
+                      name="participants_limit"
+                      value={division.participants_limit}
+                      onChange={(e) => handleDivisionChange(index, e)}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <div className="row mb-4">
+              <div className="col-auto">
+                <button type="button" onClick={addDivision} className="btn btn-link p-0 text-decoration-none">
+                  Add Another division
+                </button>
+              </div>
+            </div>
+
             <div className="row pt-4">
               <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                 <button type="submit" className="bg-green1 text-white text-15 w-100 px-3 py-2 rounded-3 merriweather-font border-0">
-                  Next
+                  Continue
                 </button>
               </div>
             </div>

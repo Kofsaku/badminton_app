@@ -25,8 +25,8 @@ export default (
       <Route path="/contact" element={<Contact />} />
       <Route path="/create-account" element={<CreateAccount />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/tournaments/new" element={<CreateTournament />} />
-      <Route path="/tournaments" element={<Tournaments />} />
+      <Route path="/tournament-creation" element={<CreateTournament />} />
+      <Route path="/tournament-management" element={<Tournaments />} />
       <Route path="/tournaments/:id/edit" element={<EditTournament />} />
       <Route path="/players" element={<Players />} />
       <Route path="/timetable" element={<TimeTable />} />

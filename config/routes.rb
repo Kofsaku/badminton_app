@@ -9,8 +9,11 @@ Rails.application.routes.draw do
   get 'login', to: 'homepage#login'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :tournaments
-  resources :profiles
+  get 'tournament-creation', to: 'tournaments#new'
+  get 'tournament-management', to: 'tournaments#index'
+  get 'players-management', to: 'user#index'
+  resources :tournaments, only: [:edit, :update, :destroy, :show, :create]
+  resources :profiles, only: [:edit, :update, :destroy, :show, :create]
   resources :users
   # Defines the root path route ("/")
   # root "articles#index"

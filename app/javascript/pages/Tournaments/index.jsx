@@ -25,7 +25,7 @@ const Tournaments = () => {
                 </p>
               </div>
               <div className="d-inline-block">
-                <Link to="/tournaments/new" className="custom-btn5 mb-2">
+                <Link to="/tournament-creation" className="custom-btn5 mb-2">
                   <i className="fa fa-plus text-14 me-2"> </i>
                   Create New Tournament
                 </Link>

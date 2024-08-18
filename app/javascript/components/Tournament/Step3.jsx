@@ -21,7 +21,7 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
             </button>
           </div>
           <div className="d-inline-block min-width-clear">
-            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0"> Select the Tournament Division </h3>
+            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0">Select the Tournament Timetable</h3>
           </div>
         </div>
       </div>
@@ -30,56 +30,63 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
               <div className="form-field5">
-                <label>
-                  Division <sup>*</sup>
-                </label>
+                <label>12/6 Tokyo Gym</label>
                 <select
                   className="field-style5"
-                  name="division"
-                  value={formData.division}
+                  name="tokyoGym1"
+                  value={formData.tokyoGym1}
                   onChange={handleChange}
                   required
                 >
                   <option value="">Select Division</option>
-                  <option value="division1">Division 1</option>
-                  <option value="division2">Division 2</option>
+                  <option value="mensSingle1">Men's single individual 1 division</option>
+                  <option value="mensSingle2">Men's single individual 2 division</option>
+                  <option value="mensSingle3">Men's single individual 3 division</option>
+                  <option value="womensDouble1">Woman doubles team 1 division</option>
+                  <option value="womensDouble2">Woman doubles team 2 division</option>
+                  <option value="womensDouble3">Woman doubles team 3 division</option>
                 </select>
               </div>
             </div>
 
             <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
               <div className="form-field5">
-                <label>
-                  No. of Matches <sup>*</sup>
-                </label>
+                <label>12/7 Tokyo Gym</label>
                 <select
                   className="field-style5"
-                  name="numberOfMatches"
-                  value={formData.numberOfMatches}
+                  name="tokyoGym2"
+                  value={formData.tokyoGym2}
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select Number of Matches</option>
-                  <option value="match1">Match 1</option>
-                  <option value="match2">Match 2</option>
+                  <option value="">Select Division</option>
+                  <option value="mensSingle1">Men's single individual 1 division</option>
+                  <option value="mensSingle2">Men's single individual 2 division</option>
+                  <option value="mensSingle3">Men's single individual 3 division</option>
+                  <option value="womensDouble1">Woman doubles team 1 division</option>
+                  <option value="womensDouble2">Woman doubles team 2 division</option>
+                  <option value="womensDouble3">Woman doubles team 3 division</option>
                 </select>
               </div>
             </div>
 
             <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
               <div className="form-field5">
-                <label>
-                  Match Type <sup>*</sup>
-                </label>
+                <label>12/7 Hokkaido Gym</label>
                 <select
                   className="field-style5"
-                  name="matchType"
-                  value={formData.matchType}
+                  name="hokkaidoGym"
+                  value={formData.hokkaidoGym}
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Select Type</option>
-                  <option value="singleDouble">Single Double</option>
+                  <option value="">Select Division</option>
+                  <option value="mensSingle1">Men's single individual 1 division</option>
+                  <option value="mensSingle2">Men's single individual 2 division</option>
+                  <option value="mensSingle3">Men's single individual 3 division</option>
+                  <option value="womensDouble1">Woman doubles team 1 division</option>
+                  <option value="womensDouble2">Woman doubles team 2 division</option>
+                  <option value="womensDouble3">Woman doubles team 3 division</option>
                 </select>
               </div>
             </div>

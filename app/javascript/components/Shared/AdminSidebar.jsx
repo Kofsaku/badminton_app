@@ -29,7 +29,7 @@ const AdminSidebar = () => {
             </li>
             <li>
               <NavLink
-                to="/tournaments/new"
+                to="/tournament-creation"
                 className="left-menu-btn1 merriweather-font"
                 activeClassName="active"
               >
