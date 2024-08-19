@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get 'tournament-creation', to: 'tournaments#new'
   get 'tournament-management', to: 'tournaments#index'
-  get 'players-management', to: 'user#index'
+  get 'players-management', to: 'users#index'
   resources :tournaments, only: [:edit, :update, :destroy, :show, :create]
   resources :profiles, only: [:edit, :update, :destroy, :show, :create]
   resources :users

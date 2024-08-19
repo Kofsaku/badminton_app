@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Step1 = ({ nextStep, formData, handleFormChange }) => {
-  const [venues, setVenues] = useState([{ name: '', address: '', courts_number: 1 }]);
+  const [venues, setVenues] = useState([{ name: '', address: '', courts_number: null, venue_date: null }]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +24,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
   };
 
   const addVenue = () => {
-    const newVenues = [...venues, { name: '', address: '', courts_number: 1 }];
+    const newVenues = [...venues, { name: '', address: '', courts_number: null, venue_date: null }];
     setVenues(newVenues);
   };
 
@@ -139,20 +139,6 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   className="field-style5"
                   name="estimatedEndTime"
                   value={formData.estimatedEndTime}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Venue Address <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Venue Address"
-                  className="field-style5"
-                  name="venueAddress"
-                  value={formData.venueAddress}
                   onChange={handleChange}
                 />
               </div>
@@ -466,7 +452,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
               </div>
             </div>
 
-            <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
+            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
               <div className="form-field5">
                 <label>Organizers URL <sup>*</sup></label>
                 <input
@@ -507,7 +493,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
 
           {venues.map((venue, index) => (
             <div key={index} className="row mb-4">
-              <div className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>Venue Name <sup>*</sup></label>
                   <input
@@ -520,7 +506,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   />
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>Venue Address <sup>*</sup></label>
                   <input
@@ -533,7 +519,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   />
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>Number of Courts <sup>*</sup></label>
                   <input
@@ -544,6 +530,19 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                     value={venue.courts_number}
                     onChange={(e) => handleVenueChange(index, e)}
                   />
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                  <div className="form-field5">
+                    <label>Venue Date <sup>*</sup></label>
+                    <input
+                      type="date"
+                      placeholder="Add Venue Date"
+                      className="field-style5"
+                      name="venueDate"
+                      value={venue.venue_date}
+                      onChange={(e) => handleVenueChange(index, e)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

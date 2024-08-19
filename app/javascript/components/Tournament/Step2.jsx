@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const [divisions, setDivisions] = useState([{ division: null, participants_limit: null }]);
+  const [showPointsLimit, setShowPointsLimit] = useState(false);
+  const [showChangeEnds, setShowChangeEnds] = useState(false);
+  const [showIntervals, setShowIntervals] = useState(false);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -27,6 +31,17 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
     const newDivisions = [...divisions, { division: null, participants_limit: null }];
     setDivisions(newDivisions);
   };
+
+  const handleCheckboxChange = (e, setState) => {
+    const { checked } = e.target;
+    setState(checked);
+  };
+
+  useEffect(() => {
+    if (formData.pointsLimit) setShowPointsLimit(true);
+    if (formData.changeEnds) setShowChangeEnds(true);
+    if (formData.breakPoint || formData.internalDuration) setShowIntervals(true);
+  }, [formData]);
 
   return (
     <div className="d-block w-100 px-lg-4 px-md-4 px-sm-4 px-2 py-4">
@@ -110,7 +125,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 >
                   <option value="">Select Game Number</option>
                   <option value="0">0</option>
-                  <option value="1">#1</option>
+                  <option value="1">1</option>
                 </select>
               </div>
             </div>
@@ -181,51 +196,53 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       className="m-0 min-width-clear mt-0"
                       type="checkbox"
                       id="intervals"
-                      name="intervals"
-                      checked={formData.intervals}
-                      onChange={handleChange}
+                      name="intervalsCheckbox"
+                      checked={showIntervals}
+                      onChange={(e) => handleCheckboxChange(e, setShowIntervals)}
                     />
                   </div>
                 </div>
-                <div className="d-inline-block w-100 border rounded-3 px-3 py-2 border border-color-silver">
-                  <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-lg-0 mb-md-0 mb-sm-0 mb-4">
-                      <div className="form-field5">
-                        <label>
-                          Break Point <sup>*</sup>
-                        </label>
-                        <select
-                          className="field-style5"
-                          name="breakPoint"
-                          value={formData.breakPoint}
-                          onChange={handleChange}
-                          required
-                        >
-                          <option value="">Select Break Point</option>
-                          <option value="10Points">10 Points</option>
-                          <option value="20Points">20 Points</option>
-                          <option value="30Points">30 Points</option>
-                        </select>
+                {showIntervals && (
+                  <div className="d-inline-block w-100 border rounded-3 px-3 py-2 border border-color-silver">
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-lg-0 mb-md-0 mb-sm-0 mb-4">
+                        <div className="form-field5">
+                          <label>
+                            Break Point <sup>*</sup>
+                          </label>
+                          <select
+                            className="field-style5"
+                            name="breakPoint"
+                            value={formData.breakPoint}
+                            onChange={handleChange}
+                            required
+                          >
+                            <option value="">Select Break Point</option>
+                            <option value="10Points">10 Points</option>
+                            <option value="20Points">20 Points</option>
+                            <option value="30Points">30 Points</option>
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div className="form-field5">
-                        <label>
-                          Internal Duration <sup>*</sup>
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Internal Duration"
-                          className="field-style5"
-                          name="internalDuration"
-                          value={formData.internalDuration}
-                          onChange={handleChange}
-                          required
-                        />
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-field5">
+                          <label>
+                            Internal Duration <sup>*</sup>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Internal Duration"
+                            className="field-style5"
+                            name="internalDuration"
+                            value={formData.internalDuration}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
@@ -240,18 +257,20 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       type="checkbox"
                       id="pointsLimit"
                       name="pointsLimitCheckbox"
-                      checked={formData.pointsLimitCheckbox}
-                      onChange={handleChange}
+                      checked={showPointsLimit}
+                      onChange={(e) => handleCheckboxChange(e, setShowPointsLimit)}
                     />
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Points Limit"
-                    className="field-style5"
-                    name="pointsLimit"
-                    value={formData.pointsLimit}
-                    onChange={handleChange}
-                  />
+                  {showPointsLimit && (
+                    <input
+                      type="text"
+                      placeholder="Points Limit"
+                      className="field-style5"
+                      name="pointsLimit"
+                      value={formData.pointsLimit}
+                      onChange={handleChange}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -267,18 +286,20 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       type="checkbox"
                       id="changeEnds"
                       name="changeEndsCheckbox"
-                      checked={formData.changeEndsCheckbox}
-                      onChange={handleChange}
+                      checked={showChangeEnds}
+                      onChange={(e) => handleCheckboxChange(e, setShowChangeEnds)}
                     />
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Change Ends"
-                    className="field-style5"
-                    name="changeEnds"
-                    value={formData.changeEnds}
-                    onChange={handleChange}
-                  />
+                  {showChangeEnds && (
+                    <input
+                      type="text"
+                      placeholder="Change Ends"
+                      className="field-style5"
+                      name="changeEnds"
+                      value={formData.changeEnds}
+                      onChange={handleChange}
+                    />
+                  )}
                 </div>
               </div>
             </div>

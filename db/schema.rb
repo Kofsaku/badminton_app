@@ -63,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
     t.string "venue_name"
     t.string "venue_address"
     t.integer "no_of_courts"
+    t.date "venue_date"
     t.bigint "tournament_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

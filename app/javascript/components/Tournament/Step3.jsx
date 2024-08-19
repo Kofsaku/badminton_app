@@ -1,4 +1,6 @@
 import React from 'react';
+import { createTournament } from '../../api/tournamentApi';
+
 
 const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
   const handleChange = (e) => {
@@ -6,9 +8,17 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
     handleFormChange(name, value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    nextStep();
+    try {
+      // Submit form data using the API function
+      const result = await createTournament(formData);
+      console.log('Tournament created successfully:', result);
+      // Handle success (e.g., redirect to another page or show success message)
+    } catch (error) {
+      // Handle error (e.g., show error message)
+      console.error('Failed to create tournament:', error);
+    }
   };
 
   return (

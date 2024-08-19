@@ -56,7 +56,7 @@ const AdminSidebar = () => {
             </li>
             <li>
               <NavLink
-                to="/player-management"
+                to="/players-management"
                 className="left-menu-btn1 merriweather-font"
                 activeClassName="active"
               >

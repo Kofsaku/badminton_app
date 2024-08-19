@@ -28,7 +28,7 @@ export default (
       <Route path="/tournament-creation" element={<CreateTournament />} />
       <Route path="/tournament-management" element={<Tournaments />} />
       <Route path="/tournaments/:id/edit" element={<EditTournament />} />
-      <Route path="/players" element={<Players />} />
+      <Route path="/players-management" element={<Players />} />
       <Route path="/timetable" element={<TimeTable />} />
     </Routes>
   </Router>
