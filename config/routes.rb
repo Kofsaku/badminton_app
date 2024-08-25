@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get 'tournament-creation', to: 'tournaments#new'
-  get 'tournament-management', to: 'tournaments#index'
+  get 'tournament-management', to: 'tournaments#tournament_management'
   get 'players-management', to: 'users#index'
-  resources :tournaments, only: [:edit, :update, :destroy, :show, :create]
+  resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index]
   resources :profiles, only: [:edit, :update, :destroy, :show, :create]
   resources :users
   # Defines the root path route ("/")

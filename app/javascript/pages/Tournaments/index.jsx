@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminHeader from '../../components/Shared/AdminHeader';
 import AdminSidebar from '../../components/Shared/AdminSidebar';
 import { Link } from 'react-router-dom';
+import { fetchTournaments } from '../../api/tournamentApi';  // Import the API function
 
 const Tournaments = () => {
+  const [tournaments, setTournaments] = useState([]);
+
+  useEffect(() => {
+    const getTournaments = async () => {
+      try {
+        const data = await fetchTournaments();
+        setTournaments(data);
+      } catch (error) {
+        console.error('Error fetching tournaments:', error);
+      }
+    };
+
+    getTournaments();
+  }, []);
+
   return (
     <main className="admin-wrapper d-flex w-100 flex-wrap bg-EEEEEE">
       <AdminSidebar />
@@ -20,7 +36,7 @@ const Tournaments = () => {
                 <p className="text-grey1 text-15 m-0">
                   General Conference:
                   <span className="bg-green1 px-1 rounded-3 text-white d-inline-block ms-1">
-                    20
+                    {tournaments.length}
                   </span>
                 </p>
               </div>
@@ -63,22 +79,22 @@ const Tournaments = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {[1, 2, 3, 4].map((index) => (
-                      <tr key={index}>
+                    {tournaments.map((tournament, index) => (
+                      <tr key={tournament.id}>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
-                          {index.toString().padStart(2, '0')}
+                          {(index + 1).toString().padStart(2, '0')}
                         </td>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
-                          College Tournament
+                          {tournament.name}
                         </td>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
-                          22-12-2023 & 08:00 AM
+                          {tournament.event_date} & {tournament.match_start_time}
                         </td>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
-                          Tokyo Japan
+                          {tournament.venue_name}
                         </td>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
-                          Japan
+                          {tournament.organization_name}
                         </td>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2 text-center">
                           <div className="dropdown d-inline-block action-dropdown">

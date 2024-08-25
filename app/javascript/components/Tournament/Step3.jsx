@@ -46,7 +46,7 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
                   name="tokyoGym1"
                   value={formData.tokyoGym1}
                   onChange={handleChange}
-                  required
+
                 >
                   <option value="">Select Division</option>
                   <option value="mensSingle1">Men's single individual 1 division</option>
@@ -67,7 +67,7 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
                   name="tokyoGym2"
                   value={formData.tokyoGym2}
                   onChange={handleChange}
-                  required
+
                 >
                   <option value="">Select Division</option>
                   <option value="mensSingle1">Men's single individual 1 division</option>
@@ -88,7 +88,7 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
                   name="hokkaidoGym"
                   value={formData.hokkaidoGym}
                   onChange={handleChange}
-                  required
+
                 >
                   <option value="">Select Division</option>
                   <option value="mensSingle1">Men's single individual 1 division</option>

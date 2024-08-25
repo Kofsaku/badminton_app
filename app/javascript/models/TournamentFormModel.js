@@ -1,45 +1,50 @@
 export const TournamentFormModel = {
   // Step 1 fields
-  name: '',
-  eventDateTime: '',
-  registrationStartTime: '',
-  venueName: '',
-  courtsNumber: '',
-  organizationName: '',
-  paymentMethod: '',
-  matchStartTime: '',
-  estimatedEndTime: '',
-  venueAddress: '',
-  matchOverview: '',
-  organizer: '',
-  administrator: '',
-  sponsor: '',
-  eventCategory: '',
-  daysSchedule: '',
-  receptionPeriod: '',
-  competitionFormat: '',
-  maxParticipants: '',
-  competitionRules: '',
-  ballType: '',
-  participationEligibility: '',
-  participationPaymentMethod: '',
-  applicationMethod: '',
-  applicationDeadline: '',
-  pairingSelectionMethod: '',
-  awardDetails: '',
-  memberChanges: '',
-  multipleEventsEntry: '',
-  cancellationAfterApplication: '',
-  participationFee: '',
-  inquiryContactInfo: '',
-  announcements: '',
-  organizersURL: '',
-  notes: '',
-  // Step 2 fields
-  field1Step2: '',
-  field2Step2: '',
-  // Step 3 fields
-  field1Step3: '',
-  field2Step3: '',
-  // Add other fields for subsequent steps...
+  name: '',                           // t.string "name"
+  event_date: '',                 // t.date "event_date"
+  registration_start: '',        // t.time "registration_time"
+  organization_name: '',              // t.string "organization_name"
+  payment_method: '',                 // t.string "payment_method"
+  match_start_time: '',               // t.time "match_start_time"
+  match_overview: '',                 // t.string "match_overview"
+  organizer: '',                      // t.string "organizer"
+  administrator: '',                  // t.string "administrator"
+  sponsor: '',                        // t.string "sponsor"
+  event_category: '',                 // t.string "event_category"
+  days_schedule: '',                  // t.string "days"
+  reception_period: '',               // t.string "reception_period"
+  competition_format: '',             // t.string "competition_format"
+  max_participants: '',               // t.string "capacity"
+  competition_rules: '',              // t.text "competition_rules"
+  ball_type: '',                      // t.string "ball_type"
+  participation_eligibility: '',      // t.string "participation_eligibility"
+  participation_payment_method: '',   // t.string "payment_method_for_participant"
+  application_method: '',             // t.string "application_method"
+  application_deadline: '',           // t.string "application_deadline"
+  pairing_selection_method: '',       // t.string "pairing_selection_method"
+  award_details: '',                  // t.text "award_details"
+  member_changes: '',                 // t.string "presence_of_member_changes"
+  entry_in_multiple_events: '',          // t.string "entry_in_multiple_events"
+  cancellation_after_application: '', // t.string "cancellation_after_application"
+  participation_fee: '',              // t.string "participation_fee"
+  inquiry_contact_information: '',           // t.string "inquiry_contact_information"
+  announcements: '',                  // t.string "announcements"
+  organizers_url: '',                 // t.string "organizers_url"
+  notes_for_organizers: '',                          // t.text "notes_for_organizers"
+  is_league: false,                   // t.boolean "is_league"
+  is_tournament: false,               // t.boolean "is_tournament"
+  game_number: '',                    // t.string "game_number"
+  score: null,                        // t.integer "score"
+  time_limit: null,                   // t.float "time_limit"
+  break_point: null,                  // t.integer "break_point"
+  interval_duration: null,            // t.float "interval_duration"
+  points_limit: null,                 // t.integer "points_limit"
+  change_ends: null,                  // t.integer "change_ends"
+  division_number: null,              // t.integer "division_number"
+  user_id: null,                      // t.bigint "user_id"
+
+  // New fields for associations
+  tournament_divisions_attributes: [],           // Array for associated tournament divisions
+  tournament_players_attributes: [],             // Array for associated tournament players
+  tournament_venues_attributes: [],              // Array for associated tournament venues
 };

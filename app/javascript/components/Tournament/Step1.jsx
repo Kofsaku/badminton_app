@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Step1 = ({ nextStep, formData, handleFormChange }) => {
-  const [venues, setVenues] = useState([{ name: '', address: '', courts_number: null, venue_date: null }]);
+  const [venues, setVenues] = useState([{ venue_name: '', venue_address: '', no_of_courts: null, venue_date: null }]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,17 +14,17 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
   };
 
   const handleVenueChange = (index, e) => {
-    const { name, value, courts_number } = e.target;
+    const { venue_name, value, no_of_courts, venue_date } = e.target;
     const newVenues = [...venues];
     newVenues[index][name] = value;
     setVenues(newVenues);
 
     // Update the formData with the venues array
-    handleFormChange('venues', newVenues);
+    handleFormChange('tournament_venues_attributes', newVenues);
   };
 
   const addVenue = () => {
-    const newVenues = [...venues, { name: '', address: '', courts_number: null, venue_date: null }];
+    const newVenues = [...venues, { venue_name: '', venue_address: '', no_of_courts: null, venue_date: null }];
     setVenues(newVenues);
   };
 
@@ -67,8 +67,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="datetime-local"
                   placeholder="Add Event Date Time"
                   className="field-style5"
-                  name="eventDateTime"
-                  value={formData.eventDateTime}
+                  name="event_date"
+                  value={formData.event_date}
                   onChange={handleChange}
                 />
               </div>
@@ -81,8 +81,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="time"
                   placeholder="Add Registration Start Time"
                   className="field-style5"
-                  name="registrationStartTime"
-                  value={formData.registrationStartTime}
+                  name="registeration_time"
+                  value={formData.registeration_time}
                   onChange={handleChange}
                 />
               </div>
@@ -95,8 +95,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Organization Name"
                   className="field-style5"
-                  name="organizationName"
-                  value={formData.organizationName}
+                  name="organization_name"
+                  value={formData.organization_name}
                   onChange={handleChange}
                 />
               </div>
@@ -109,8 +109,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Payment Method"
                   className="field-style5"
-                  name="paymentMethod"
-                  value={formData.paymentMethod}
+                  name="payment_method"
+                  value={formData.payment_method}
                   onChange={handleChange}
                 />
               </div>
@@ -123,22 +123,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="time"
                   placeholder="Add Match Start Time"
                   className="field-style5"
-                  name="matchStartTime"
-                  value={formData.matchStartTime}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Estimated End Time <sup>*</sup></label>
-                <input
-                  type="time"
-                  placeholder="Add Estimated End Time"
-                  className="field-style5"
-                  name="estimatedEndTime"
-                  value={formData.estimatedEndTime}
+                  name="match_start_time"
+                  value={formData.match_start_time}
                   onChange={handleChange}
                 />
               </div>
@@ -151,8 +137,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Match Overview"
                   className="field-style5"
-                  name="matchOverview"
-                  value={formData.matchOverview}
+                  name="match_overview"
+                  value={formData.match_overview}
                   onChange={handleChange}
                 />
               </div>
@@ -207,8 +193,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Event Category"
                   className="field-style5"
-                  name="eventCategory"
-                  value={formData.eventCategory}
+                  name="event_category"
+                  value={formData.event_category}
                   onChange={handleChange}
                 />
               </div>
@@ -221,8 +207,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Days Schedule"
                   className="field-style5"
-                  name="daysSchedule"
-                  value={formData.daysSchedule}
+                  name="days_schedule"
+                  value={formData.days_schedule}
                   onChange={handleChange}
                 />
               </div>
@@ -235,8 +221,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Reception Period"
                   className="field-style5"
-                  name="receptionPeriod"
-                  value={formData.receptionPeriod}
+                  name="reception_period"
+                  value={formData.reception_period}
                   onChange={handleChange}
                 />
               </div>
@@ -249,8 +235,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Competition Format"
                   className="field-style5"
-                  name="competitionFormat"
-                  value={formData.competitionFormat}
+                  name="competition_format"
+                  value={formData.competition_format}
                   onChange={handleChange}
                 />
               </div>
@@ -263,8 +249,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="number"
                   placeholder="Add Max Participants"
                   className="field-style5"
-                  name="maxParticipants"
-                  value={formData.maxParticipants}
+                  name="max_participants"
+                  value={formData.max_participants}
                   onChange={handleChange}
                 />
               </div>
@@ -277,8 +263,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Competition Rules"
                   className="field-style5"
-                  name="competitionRules"
-                  value={formData.competitionRules}
+                  name="competition_rules"
+                  value={formData.competition_rules}
                   onChange={handleChange}
                 />
               </div>
@@ -291,8 +277,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Ball Type"
                   className="field-style5"
-                  name="ballType"
-                  value={formData.ballType}
+                  name="ball_type"
+                  value={formData.ball_type}
                   onChange={handleChange}
                 />
               </div>
@@ -305,8 +291,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Participation Eligibility"
                   className="field-style5"
-                  name="participationEligibility"
-                  value={formData.participationEligibility}
+                  name="participation_eligibility"
+                  value={formData.participation_eligibility}
                   onChange={handleChange}
                 />
               </div>
@@ -319,8 +305,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Participation Payment Method"
                   className="field-style5"
-                  name="participationPaymentMethod"
-                  value={formData.participationPaymentMethod}
+                  name="participation_payment_method"
+                  value={formData.participation_payment_method}
                   onChange={handleChange}
                 />
               </div>
@@ -333,8 +319,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Application Method"
                   className="field-style5"
-                  name="applicationMethod"
-                  value={formData.applicationMethod}
+                  name="application_method"
+                  value={formData.application_method}
                   onChange={handleChange}
                 />
               </div>
@@ -347,8 +333,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="date"
                   placeholder="Add Application Deadline"
                   className="field-style5"
-                  name="applicationDeadline"
-                  value={formData.applicationDeadline}
+                  name="application_deadline"
+                  value={formData.application_deadline}
                   onChange={handleChange}
                 />
               </div>
@@ -361,8 +347,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Pairing Selection Method"
                   className="field-style5"
-                  name="pairingSelectionMethod"
-                  value={formData.pairingSelectionMethod}
+                  name="pairing_selection_method"
+                  value={formData.pairing_selection_method}
                   onChange={handleChange}
                 />
               </div>
@@ -375,8 +361,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Award Details"
                   className="field-style5"
-                  name="awardDetails"
-                  value={formData.awardDetails}
+                  name="award_details"
+                  value={formData.award_details}
                   onChange={handleChange}
                 />
               </div>
@@ -389,8 +375,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Member Changes"
                   className="field-style5"
-                  name="memberChanges"
-                  value={formData.memberChanges}
+                  name="member_changes"
+                  value={formData.member_changes}
                   onChange={handleChange}
                 />
               </div>
@@ -403,8 +389,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Multiple Events Entry"
                   className="field-style5"
-                  name="multipleEventsEntry"
-                  value={formData.multipleEventsEntry}
+                  name="entry_in_multiple_events"
+                  value={formData.entry_in_multiple_events}
                   onChange={handleChange}
                 />
               </div>
@@ -417,8 +403,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Cancellation After Application"
                   className="field-style5"
-                  name="cancellationAfterApplication"
-                  value={formData.cancellationAfterApplication}
+                  name="cancellation_after_application"
+                  value={formData.cancellation_after_application}
                   onChange={handleChange}
                 />
               </div>
@@ -431,8 +417,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="number"
                   placeholder="Add Participation Fee"
                   className="field-style5"
-                  name="participationFee"
-                  value={formData.participationFee}
+                  name="participation_fee"
+                  value={formData.participation_fee}
                   onChange={handleChange}
                 />
               </div>
@@ -445,8 +431,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="text"
                   placeholder="Add Inquiry Contact Info"
                   className="field-style5"
-                  name="inquiryContactInfo"
-                  value={formData.inquiryContactInfo}
+                  name="inquiry_contact_information"
+                  value={formData.inquiry_contact_information}
                   onChange={handleChange}
                 />
               </div>
@@ -459,8 +445,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   type="url"
                   placeholder="Add Organizers URL"
                   className="field-style5"
-                  name="organizersURL"
-                  value={formData.organizersURL}
+                  name="organizers_url"
+                  value={formData.organizers_url}
                   onChange={handleChange}
                 />
               </div>
@@ -483,8 +469,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 <label>Notes for Organizers</label>
                 <textarea
                   className="field-style5"
-                  name="notes"
-                  value={formData.notes}
+                  name="notes_for_organizers"
+                  value={formData.notes_for_organizers}
                   onChange={handleChange}
                 ></textarea>
               </div>
@@ -500,8 +486,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                     type="text"
                     placeholder="Venue Name"
                     className="field-style5"
-                    name="name"
-                    value={venue.name}
+                    name="venue_name"
+                    value={venue.venue_name}
                     onChange={(e) => handleVenueChange(index, e)}
                   />
                 </div>
@@ -513,8 +499,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                     type="text"
                     placeholder="Venue Address"
                     className="field-style5"
-                    name="address"
-                    value={venue.address}
+                    name="venue_address"
+                    value={venue.venue_address}
                     onChange={(e) => handleVenueChange(index, e)}
                   />
                 </div>
@@ -526,23 +512,23 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                     type="number"
                     placeholder="Add Courts Number"
                     className="field-style5"
-                    name="courtsNumber"
-                    value={venue.courts_number}
+                    name="no_of_courts"
+                    value={venue.no_of_courts}
                     onChange={(e) => handleVenueChange(index, e)}
                   />
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-                  <div className="form-field5">
-                    <label>Venue Date <sup>*</sup></label>
-                    <input
-                      type="date"
-                      placeholder="Add Venue Date"
-                      className="field-style5"
-                      name="venueDate"
-                      value={venue.venue_date}
-                      onChange={(e) => handleVenueChange(index, e)}
-                    />
-                  </div>
+              </div>
+              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                <div className="form-field5">
+                  <label>Venue Date <sup>*</sup></label>
+                  <input
+                    type="date"
+                    placeholder="Add Venue Date"
+                    className="field-style5"
+                    name="venue_date"
+                    value={venue.venue_date}
+                    onChange={(e) => handleVenueChange(index, e)}
+                  />
                 </div>
               </div>
             </div>

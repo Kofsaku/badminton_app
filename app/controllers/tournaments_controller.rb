@@ -4,6 +4,10 @@ class TournamentsController < ApplicationController
   # GET /tournaments or /tournaments.json
   def index
     @tournaments = Tournament.all
+    render json: @tournaments
+  end
+
+  def tournament_management
   end
 
   # GET /tournaments/1 or /tournaments/1.json
@@ -23,14 +27,10 @@ class TournamentsController < ApplicationController
   def create
     @tournament = Tournament.new(tournament_params)
 
-    respond_to do |format|
-      if @tournament.save
-        format.html { redirect_to tournament_url(@tournament), notice: "Tournament was successfully created." }
-        format.json { render :show, status: :created, location: @tournament }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tournament.errors, status: :unprocessable_entity }
-      end
+    if @tournament.save!
+      render json: { tournament: @tournament, message: 'Tournament created successfully' }, status: :created
+    else
+      render json: { errors: tournament.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -64,7 +64,61 @@ class TournamentsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def tournament_params
-      params.require(:tournament).permit(:name, :event_date, :registeration_time, :venue_name, :no_of_courts, :organization_name, :payment_method, :match_start_time, :match_end_time, :venue_address, :match_overview, :organizer, :administrator, :sponsor, :event_category, :days, :reception_period, :competition_format, :capacity, :competition_rules, :ball_type, :participation_eligibility, :payment_method_for_participant, :application_method, :application_deadline, :pairing_selection_method, :award_details, :participation_qualification, :presence_of_member_changes, :entry_in_multiple_events, :cancellation_after_application, :participation_fee, :announcements, :organizers_url, :inquiry_contact_information, :notes_for_organizers, :user_id)
-    end
+   def tournament_params
+    params.require(:tournament).permit(
+      :name,
+      :event_date,
+      :registration_start_time, # Corrected key
+      :organization_name,
+      :payment_method,
+      :match_start_time,
+      :match_end_time,           # This should also be permitted
+      :match_overview,
+      :organizer,
+      :administrator,
+      :sponsor,
+      :event_category,
+      :days_schedule,
+      :reception_period,
+      :competition_format,
+      :max_participants,         # Corrected key from 'capacity' if needed
+      :competition_rules,
+      :ball_type,
+      :participation_eligibility,
+      :participation_payment_method,
+      :application_method,
+      :application_deadline,
+      :pairing_selection_method,
+      :award_details,
+      :member_changes,           # Added this to the correct key
+      :entry_in_multiple_events,
+      :cancellation_after_application,
+      :participation_fee,
+      :inquiry_contact_information,
+      :announcements,
+      :organizers_url,
+      :notes_for_organizers,
+      :is_league,
+      :is_tournament,
+      :game_number,
+      :score,
+      :time_limit,
+      :break_point,
+      :interval_duration,
+      :points_limit,
+      :change_ends,
+      :division_number,
+      :user_id,
+      tournament_divisions_attributes: [
+        :id, :division, :participants_limit, :_destroy
+      ],
+      tournament_players_attributes: [
+        :id, :user_id, :status, :_destroy
+      ],
+      tournament_venues_attributes: [
+        :id, :venue_name, :venue_address, :no_of_courts, :venue_date, :_destroy
+      ]
+    )
+  end
+
 end

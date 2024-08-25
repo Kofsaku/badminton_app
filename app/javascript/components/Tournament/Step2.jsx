@@ -24,7 +24,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
     setDivisions(newDivisions);
 
     // Update the formData with the divisions array
-    handleFormChange('divisions', newDivisions);
+    handleFormChange('tournament_divisions_attributes', newDivisions);
   };
 
   const addDivision = () => {
@@ -72,7 +72,6 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   name="categoryType"
                   value={formData.categoryType}
                   onChange={handleChange}
-                  required
                 >
                   <option value="">Select Category Type</option>
                   <option value="type1">Category type 1</option>
@@ -88,8 +87,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     className="m-0 min-width-clear mt-0"
                     type="checkbox"
                     id="mensdoubleplace"
-                    name="tournament"
-                    checked={formData.tournament}
+                    name="is_tournament"
+                    checked={formData.is_tournament}
                     onChange={handleChange}
                   />
                   <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor="mensdoubleplace">
@@ -100,9 +99,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   <input
                     className="m-0 min-width-clear mt-0"
                     type="checkbox"
-                    id="league"
-                    name="league"
-                    checked={formData.league}
+                    id="isLeague"
+                    name="is_league"
+                    checked={formData.is_league}
                     onChange={handleChange}
                   />
                   <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor="league">
@@ -118,10 +117,10 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 </label>
                 <select
                   className="field-style5"
-                  name="genderNumber"
-                  value={formData.genderNumber}
+                  name="game_number"
+                  value={formData.game_number}
                   onChange={handleChange}
-                  required
+
                 >
                   <option value="">Select Game Number</option>
                   <option value="0">0</option>
@@ -152,7 +151,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     name="score"
                     value={formData.score}
                     onChange={handleChange}
-                    required
+
                   />
                 </div>
               </div>
@@ -175,12 +174,12 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   </div>
                   <input
                     type="text"
-                    placeholder="Deadline"
+                    placeholder="Time Limit"
                     className="field-style5"
-                    name="deadline"
+                    name="time_limit"
                     value={formData.time_limit}
                     onChange={handleChange}
-                    required
+
                   />
                 </div>
               </div>
@@ -212,10 +211,10 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                           </label>
                           <select
                             className="field-style5"
-                            name="breakPoint"
-                            value={formData.breakPoint}
+                            name="break_point"
+                            value={formData.break_point}
                             onChange={handleChange}
-                            required
+
                           >
                             <option value="">Select Break Point</option>
                             <option value="10Points">10 Points</option>
@@ -233,10 +232,10 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                             type="text"
                             placeholder="Internal Duration"
                             className="field-style5"
-                            name="internalDuration"
-                            value={formData.internalDuration}
+                            name="internal_duration"
+                            value={formData.internal_duration}
                             onChange={handleChange}
-                            required
+
                           />
                         </div>
                       </div>
@@ -266,8 +265,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       type="text"
                       placeholder="Points Limit"
                       className="field-style5"
-                      name="pointsLimit"
-                      value={formData.pointsLimit}
+                      name="points_limit"
+                      value={formData.points_limit}
                       onChange={handleChange}
                     />
                   )}
@@ -295,8 +294,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       type="text"
                       placeholder="Change Ends"
                       className="field-style5"
-                      name="changeEnds"
-                      value={formData.changeEnds}
+                      name="change_ends"
+                      value={formData.change_ends}
                       onChange={handleChange}
                     />
                   )}
@@ -310,10 +309,10 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 </label>
                 <select
                   className="field-style5"
-                  name="divisionNumber"
-                  value={formData.divisionNumber}
+                  name="division_number"
+                  value={formData.division_number}
                   onChange={handleChange}
-                  required
+
                 >
                   <option value="">Select Division Number</option>
                   <option value="1">1</option>
@@ -368,7 +367,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       name="division"
                       value={division.division}
                       onChange={(e) => handleDivisionChange(index, e)}
-                      required
+
                     >
                       <option value="">Select Division</option>
                       <option value="1">1</option>

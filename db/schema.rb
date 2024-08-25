@@ -83,14 +83,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
     t.string "administrator"
     t.string "sponsor"
     t.string "event_category"
-    t.string "days"
+    t.string "days_schedule"
+    t.integer "max_participants"
     t.string "reception_period"
     t.string "competition_format"
     t.string "capacity"
     t.text "competition_rules"
     t.string "ball_type"
     t.string "participation_eligibility"
-    t.string "payment_method_for_participant"
+    t.string "participation_payment_method"
     t.string "application_method"
     t.string "application_deadline"
     t.string "pairing_selection_method"
@@ -114,7 +115,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
     t.integer "points_limit"
     t.integer "change_ends"
     t.integer "division_number"
-    t.bigint "user_id", null: false
+    t.string "member_changes"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_tournaments_on_user_id"
