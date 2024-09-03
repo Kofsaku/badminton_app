@@ -1,8 +1,10 @@
 import React from 'react';
 import { createTournament } from '../../api/tournamentApi';
-
+import { useNavigate } from 'react-router-dom';
 
 const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     handleFormChange(name, value);
@@ -14,6 +16,8 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
       // Submit form data using the API function
       const result = await createTournament(formData);
       console.log('Tournament created successfully:', result);
+
+      navigate('/tournament-management');
       // Handle success (e.g., redirect to another page or show success message)
     } catch (error) {
       // Handle error (e.g., show error message)

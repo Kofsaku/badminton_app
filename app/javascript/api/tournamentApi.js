@@ -12,13 +12,39 @@ export const createTournament = async (tournamentData) => {
   }
 };
 
-
-export const fetchTournaments = async () => {
+export const fetchTournaments = async (page = 1, limit = 50) => {
   try {
-    const response = await axios.get(API_BASE_URL);
+    const response = await axios.get(API_BASE_URL, {
+      params: {
+        page,
+        limit,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error('Error fetching tournaments:', error);
     throw error;
   }
 };
+
+
+export const deleteTournament = async (id) => {
+  try {
+    const response = await axios.delete(`/api/tournaments/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to delete tournament with id ${id}:`, error);
+    throw error;
+  }
+};
+
+export const showTournament = async (id) => {
+  try {
+    const response = await axios.get(`/api/tournaments/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch tournament with id ${id}:`, error);
+    throw error;
+  }
+};
+

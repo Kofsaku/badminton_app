@@ -3,8 +3,13 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments or /tournaments.json
   def index
-    @tournaments = Tournament.all
-    render json: @tournaments
+    @tournaments = Tournament.page(params[:page]).per(params[:per_page] || 50)
+    render json: {
+      tournaments: @tournaments,
+      current_page: @tournaments.current_page,
+      total_pages: @tournaments.total_pages,
+      total_count: @tournaments.total_count
+    }
   end
 
   def tournament_management

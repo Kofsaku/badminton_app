@@ -74,9 +74,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   onChange={handleChange}
                 >
                   <option value="">Select Category Type</option>
-                  <option value="type1">Category type 1</option>
-                  <option value="type2">Category type 2</option>
-                  <option value="type3">Category type 3</option>
+                  <option value="type1">Men's single individual</option>
+                  <option value="type2">Men's doubles team</option>
+                  <option value="type3">Women's single individual</option>
                 </select>
               </div>
             </div>
@@ -367,11 +367,13 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       name="division"
                       value={division.division}
                       onChange={(e) => handleDivisionChange(index, e)}
-
                     >
                       <option value="">Select Division</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
+                      {[...Array(50).keys()].map((num) => (
+                        <option key={num + 1} value={num + 1}>
+                          {num + 1}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
