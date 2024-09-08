@@ -30,7 +30,7 @@ export const fetchTournaments = async (page = 1, limit = 50) => {
 
 export const deleteTournament = async (id) => {
   try {
-    const response = await axios.delete(`/api/tournaments/${id}`);
+    const response = await axios.delete(`/tournaments/${id}.json`);
     return response.data;
   } catch (error) {
     console.error(`Failed to delete tournament with id ${id}:`, error);
@@ -40,7 +40,7 @@ export const deleteTournament = async (id) => {
 
 export const showTournament = async (id) => {
   try {
-    const response = await axios.get(`/api/tournaments/${id}`);
+    const response = await axios.get(`/tournaments/${id}.json`);
     return response.data;
   } catch (error) {
     console.error(`Failed to fetch tournament with id ${id}:`, error);

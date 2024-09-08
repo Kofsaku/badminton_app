@@ -17,6 +17,7 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1 or /tournaments/1.json
   def show
+    render json: { tournament: @tournament }
   end
 
   # GET /tournaments/new

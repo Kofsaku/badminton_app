@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_08_153715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "match_compositions", force: :cascade do |t|
+    t.string "string"
+    t.bigint "tournament_division_id", null: false
+    t.bigint "tournament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_division_id"], name: "index_match_compositions_on_tournament_division_id"
+    t.index ["tournament_id"], name: "index_match_compositions_on_tournament_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -43,6 +53,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
   create_table "tournament_divisions", force: :cascade do |t|
     t.string "division"
     t.integer "participants_limit"
+    t.integer "pairs_limit"
+    t.integer "trios_limit"
     t.bigint "tournament_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -130,6 +142,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_18_164359) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "match_compositions", "tournament_divisions"
+  add_foreign_key "match_compositions", "tournaments"
   add_foreign_key "profiles", "users"
   add_foreign_key "tournament_divisions", "tournaments"
   add_foreign_key "tournament_players", "tournaments"

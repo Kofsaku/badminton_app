@@ -5,7 +5,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const [showPointsLimit, setShowPointsLimit] = useState(false);
   const [showChangeEnds, setShowChangeEnds] = useState(false);
   const [showIntervals, setShowIntervals] = useState(false);
-
+  const [divisionNumbers, setDivisionNumbers] = useState([]); // To store division numbers array
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -35,6 +35,21 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const handleCheckboxChange = (e, setState) => {
     const { checked } = e.target;
     setState(checked);
+  };
+
+  // Handle dynamic division number field generation
+  const handleDivisionNumberChange = (e) => {
+    const selectedNumber = parseInt(e.target.value, 10);
+    const divisionArray = Array.from({ length: selectedNumber }, (_, i) => i + 1);
+    setDivisionNumbers(divisionArray); // Update the state with new array
+    handleFormChange('division_number', selectedNumber); // Update formData with selected number
+  };
+
+  const handleDivisionTextFieldChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedDivisionNumbers = [...formData.division_numbers];
+    updatedDivisionNumbers[index] = value;
+    handleFormChange('division_numbers', updatedDivisionNumbers); // Update formData with division numbers
   };
 
   useEffect(() => {
@@ -73,10 +88,22 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   value={formData.categoryType}
                   onChange={handleChange}
                 >
-                  <option value="">Select Category Type</option>
-                  <option value="type1">Men's single individual</option>
-                  <option value="type2">Men's doubles team</option>
-                  <option value="type3">Women's single individual</option>
+                  <option value="mens_singles_individual">Men's Singles Individual Event</option>
+                  <option value="womens_singles_individual">Women's Singles Individual Event</option>
+                  <option value="mens_doubles_individual">Men's Doubles Individual Event</option>
+                  <option value="womens_doubles_individual">Women's Doubles Individual Event</option>
+                  <option value="mens_triples_individual">Men's Triples Individual Event</option>
+                  <option value="womens_triples_individual">Women's Triples Individual Event</option>
+                  <option value="mixed_triples_individual">Mixed Triples Individual Event</option>
+                  <option value="mens_doubles_team">Men's Doubles Team Event</option>
+                  <option value="womens_doubles_team">Women's Doubles Team Event</option>
+                  <option value="mixed_doubles_team">Mixed Doubles Team Event</option>
+                  <option value="mens_singles_doubles_team">Men's Singles & Doubles Team Event</option>
+                  <option value="womens_singles_doubles_team">Women's Singles & Doubles Team Event</option>
+                  <option value="mixed_singles_doubles_team">Mixed Singles & Doubles Team Event</option>
+                  <option value="mens_triples_team">Men's Triples Team Event</option>
+                  <option value="womens_triples_team">Women's Triples Team Event</option>
+                  <option value="mixed_triples_team">Mixed Triples Team Event</option>
                 </select>
               </div>
             </div>
@@ -115,17 +142,14 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 <label>
                   Game Number <sup>*</sup>
                 </label>
-                <select
+                <input
+                  type="text"
+                  placeholder="Game Number"
                   className="field-style5"
                   name="game_number"
                   value={formData.game_number}
                   onChange={handleChange}
-
-                >
-                  <option value="">Select Game Number</option>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                </select>
+                />
               </div>
             </div>
             <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
@@ -310,9 +334,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 <select
                   className="field-style5"
                   name="division_number"
-                  value={formData.division_number}
-                  onChange={handleChange}
-
+                  value={formData.division_number || ''}
+                  onChange={handleDivisionNumberChange} // Updated to handle number of divisions
                 >
                   <option value="">Select Division Number</option>
                   <option value="1">1</option>
@@ -321,6 +344,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 </select>
               </div>
             </div>
+
             <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
               <div className="form-field5">
                 <label>
@@ -356,6 +380,23 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 </div>
               </div>
             </div>
+
+            {divisionNumbers.map((division, index) => (
+              <div key={index} className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
+                <div className="form-field5">
+                  <label>
+                    Division {index + 1} Name <sup>*</sup>
+                  </label>
+                  <input
+                    type="text"
+                    className="field-style5"
+                    name={`division_number_${index}`}
+                    value={formData.division_numbers?.[index] || ''}
+                    onChange={(e) => handleDivisionTextFieldChange(index, e)} // Handle individual text field changes
+                  />
+                </div>
+              </div>
+            ))}
 
             { divisions.map((division, index) => (
               <div key={index} className="row mb-4">

@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import { TournamentFormModel } from '../../models/TournamentFormModel';
 
-const TournamentForm = () => {
+const TournamentForm = ({ initialData }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(TournamentFormModel);
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData); // Populate form with initial data when editing
+    }
+  }, [initialData]);
 
   const nextStep = () => setStep(prevStep => prevStep + 1);
   const prevStep = () => setStep(prevStep => prevStep - 1);
