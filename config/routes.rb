@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   get 'players-management', to: 'users#index'
   resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index]
   resources :profiles, only: [:edit, :update, :destroy, :show, :create]
-  resources :users
+  resources :users do
+    collection do
+      post 'show_api_key'
+      post 'regenerate_api_key'
+    end
+  end
   # Defines the root path route ("/")
   # root "articles#index"
 end

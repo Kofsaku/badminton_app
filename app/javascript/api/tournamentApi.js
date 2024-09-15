@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useAxiosWithAuth from './useAxiosWithAuth';
 
 const API_BASE_URL = '/tournaments.json';
 
@@ -13,6 +14,8 @@ export const createTournament = async (tournamentData) => {
 };
 
 export const fetchTournaments = async (page = 1, limit = 50) => {
+  const axiosInstance = useAxiosWithAuth();
+
   try {
     const response = await axios.get(API_BASE_URL, {
       params: {

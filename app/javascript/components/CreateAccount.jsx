@@ -1,5 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/actions'; // Action to set user in Redux store
+import { useNavigate } from 'react-router-dom';
 
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +11,9 @@ const CreateAccount = () => {
     email: '',
     password: '',
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,10 +23,18 @@ const CreateAccount = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add form submission logic here, e.g., send data to an API
-    console.log('Form data submitted:', formData);
+    try {
+      const response = await axios.post('/users.json', formData); // Ensure your API endpoint is correct
+      dispatch(setUser({ apiKey: response.data.api_key })); // Store API key in Redux
+      console.log('User created:', response.data);
+
+      // Redirect to the tournaments management page
+      navigate('/tournament-management');
+    } catch (error) {
+      console.error('Error creating user:', error.response?.data || error.message);
+    }
   };
 
   return (

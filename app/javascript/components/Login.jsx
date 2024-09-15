@@ -100,7 +100,7 @@ const Login = () => {
               </div>
               <div className="d-block w-100 px-2">
                 <p className="text-center w-100 text-14">
-                  Don't have an account?
+                  Don't have an account?&nbsp;
                   <Link to="/create-account" className="text-green2">
                     Create an account
                   </Link>
