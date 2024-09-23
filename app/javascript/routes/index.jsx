@@ -13,6 +13,7 @@ import CreateTournament from '../pages/Tournaments/Create';
 import EditTournament from '../pages/Tournaments/Edit';
 import TimeTable from '../pages/Tournaments/TimeTable';
 import Players from '../pages/Players';
+import ProtectedRoute from './ProtectedRoute';
 
 export default (
   <Router>
@@ -26,7 +27,14 @@ export default (
       <Route path="/create-account" element={<CreateAccount />} />
       <Route path="/login" element={<Login />} />
       <Route path="/tournament-creation" element={<CreateTournament />} />
-      <Route path="/tournament-management" element={<Tournaments />} />
+      <Route
+        path="/tournament-management"
+        element={
+          <ProtectedRoute>
+            <Tournaments />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/tournaments/:id/edit" element={<EditTournament />} />
       <Route path="/players-management" element={<Players />} />
       <Route path="/timetable" element={<TimeTable />} />

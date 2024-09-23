@@ -46,6 +46,9 @@ class CreateTournaments < ActiveRecord::Migration[7.0]
       t.integer :change_ends
       t.integer :division_number
       t.string :member_changes
+      t.boolean :switch_during_game, default: true
+      t.integer :switch_score_during_game, default: 11
+      t.boolean :switch_between_games
       t.references :user, null: true, foreign_key: true
 
       t.timestamps

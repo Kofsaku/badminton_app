@@ -1,4 +1,6 @@
 class TournamentsController < ApplicationController
+  include Authenticable
+  #before_action :authorize_request
   before_action :set_tournament, only: %i[ show edit update destroy ]
 
   # GET /tournaments or /tournaments.json
@@ -114,6 +116,9 @@ class TournamentsController < ApplicationController
       :points_limit,
       :change_ends,
       :division_number,
+      :switch_during_game,
+      :switch_score_during_game,
+      :switch_between_games,
       :user_id,
       tournament_divisions_attributes: [
         :id, :division, :participants_limit, :_destroy

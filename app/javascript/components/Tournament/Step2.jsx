@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
-  const [divisions, setDivisions] = useState([{ division: null, participants_limit: null }]);
+  const [divisions, setDivisions] = useState([{ division: null }]);
   const [showPointsLimit, setShowPointsLimit] = useState(false);
   const [showChangeEnds, setShowChangeEnds] = useState(false);
   const [showIntervals, setShowIntervals] = useState(false);
+  const [showScore, setShowScore] = useState(true);
   const [divisionNumbers, setDivisionNumbers] = useState([]); // To store division numbers array
 
   const handleChange = (e) => {
@@ -28,7 +29,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   };
 
   const addDivision = () => {
-    const newDivisions = [...divisions, { division: null, participants_limit: null }];
+    const newDivisions = [...divisions, { division: null }];
     setDivisions(newDivisions);
   };
 
@@ -163,9 +164,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       className="m-0 min-width-clear mt-0"
                       type="checkbox"
                       id="score"
-                      name="scoreCheckbox"
-                      checked={formData.scoreCheckbox}
-                      onChange={handleChange}
+                      checked={showScore}
+                      onChange={() => setShowScore(true)}
                     />
                   </div>
                   <input
@@ -175,11 +175,12 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     name="score"
                     value={formData.score}
                     onChange={handleChange}
-
+                    disabled={!showScore} // Disable if showScore is false
                   />
                 </div>
               </div>
             </div>
+
             <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
               <div className="form-field5">
                 <label>
@@ -191,23 +192,26 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       className="m-0 min-width-clear mt-0"
                       type="checkbox"
                       id="deadline"
-                      name="deadlineCheckbox"
-                      checked={formData.deadlineCheckbox}
-                      onChange={handleChange}
+                      checked={!showScore}
+                      onChange={() => setShowScore(false)}
                     />
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Time Limit"
+                  <select
                     className="field-style5"
                     name="time_limit"
                     value={formData.time_limit}
                     onChange={handleChange}
-
-                  />
+                    disabled={showScore}
+                  >
+                    <option value="">Select Time Limit</option>
+                    <option value="7">7 minutes</option>
+                    <option value="8">8 minutes</option>
+                    <option value="15">15 minutes</option>
+                  </select>
                 </div>
               </div>
             </div>
+
             <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
               <div className="form-field5">
                 <label>Intervals</label>
@@ -225,79 +229,48 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     />
                   </div>
                 </div>
-                {showIntervals && (
-                  <div className="d-inline-block w-100 border rounded-3 px-3 py-2 border border-color-silver">
-                    <div className="row">
-                      <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-lg-0 mb-md-0 mb-sm-0 mb-4">
-                        <div className="form-field5">
-                          <label>
-                            Break Point <sup>*</sup>
-                          </label>
-                          <select
-                            className="field-style5"
-                            name="break_point"
-                            value={formData.break_point}
-                            onChange={handleChange}
-
-                          >
-                            <option value="">Select Break Point</option>
-                            <option value="10Points">10 Points</option>
-                            <option value="20Points">20 Points</option>
-                            <option value="30Points">30 Points</option>
-                          </select>
-                        </div>
+                <div className="d-inline-block w-100 border rounded-3 px-3 py-2 border border-color-silver">
+                  <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-lg-0 mb-md-0 mb-sm-0 mb-4">
+                      <div className="form-field5">
+                        <label>
+                          Break Point <sup>*</sup>
+                        </label>
+                        <select
+                          className="field-style5"
+                          name="break_point"
+                          value={formData.break_point}
+                          onChange={handleChange}
+                          disabled={!showIntervals}
+                        >
+                          <option value="">Select Break Point</option>
+                          <option value="10Points">10 Points</option>
+                          <option value="20Points">20 Points</option>
+                          <option value="30Points">30 Points</option>
+                        </select>
                       </div>
-                      <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-field5">
-                          <label>
-                            Internal Duration <sup>*</sup>
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Internal Duration"
-                            className="field-style5"
-                            name="internal_duration"
-                            value={formData.internal_duration}
-                            onChange={handleChange}
-
-                          />
-                        </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div className="form-field5">
+                        <label>
+                          Internal Duration <sup>*</sup>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Internal Duration"
+                          className="field-style5"
+                          name="internal_duration"
+                          value={formData.internal_duration}
+                          onChange={handleChange}
+                          disabled={!showIntervals}
+                        />
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>
-                  Points Limit <sup>*</sup>
-                </label>
-                <div className="d-flex w-100 align-items-center justify-content-start">
-                  <div className="checkbox-style1 me-2 d-inline-block">
-                    <input
-                      className="m-0 min-width-clear mt-0"
-                      type="checkbox"
-                      id="pointsLimit"
-                      name="pointsLimitCheckbox"
-                      checked={showPointsLimit}
-                      onChange={(e) => handleCheckboxChange(e, setShowPointsLimit)}
-                    />
-                  </div>
-                  {showPointsLimit && (
-                    <input
-                      type="text"
-                      placeholder="Points Limit"
-                      className="field-style5"
-                      name="points_limit"
-                      value={formData.points_limit}
-                      onChange={handleChange}
-                    />
-                  )}
                 </div>
               </div>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+            <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
               <div className="form-field5">
                 <label>
                   Change Ends <sup>*</sup>
@@ -313,20 +286,19 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       onChange={(e) => handleCheckboxChange(e, setShowChangeEnds)}
                     />
                   </div>
-                  {showChangeEnds && (
-                    <input
-                      type="text"
-                      placeholder="Change Ends"
-                      className="field-style5"
-                      name="change_ends"
-                      value={formData.change_ends}
-                      onChange={handleChange}
-                    />
-                  )}
+                  <input
+                    type="text"
+                    placeholder="Change Ends"
+                    className="field-style5"
+                    name="change_ends"
+                    value={formData.change_ends}
+                    onChange={handleChange}
+                    disabled={!showChangeEnds}
+                  />
                 </div>
               </div>
             </div>
-            <div className="col-lg-8 col-md-8 col-sm-6 col-12 mb-4">
+            <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
               <div className="form-field5">
                 <label>
                   Division Number <sup>*</sup>
@@ -380,6 +352,83 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 </div>
               </div>
             </div>
+            <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
+              <div className="form-field5">
+                <label>
+                  Switch During Game<sup>*</sup>
+                </label>
+                <div className="d-flex w-100 align-items-center justify-content-start">
+                  <label className="mr-2">
+                    <input
+                      type="radio"
+                      name="switch_during_game"
+                      value="yes"
+                      checked={formData.switch_during_game === 'yes'}
+                      onChange={handleChange}
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="switch_during_game"
+                      value="no"
+                      checked={formData.switch_during_game === 'no'}
+                      onChange={handleChange}
+                    />{' '}
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
+              <div className="form-field5">
+                <label>
+                  Switch Score During Game<sup>*</sup>
+                </label>
+                <div className="d-flex w-100 align-items-center justify-content-start">
+                  <input
+                    type="text"
+                    placeholder="Change Ends"
+                    className="field-style5"
+                    name="change_ends"
+                    value={formData.switch_score_during_game}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
+              <div className="form-field5">
+                <label>
+                  Switch Between Game<sup>*</sup>
+                </label>
+                <div className="d-flex w-100 align-items-center justify-content-start">
+                  <label className="mr-2">
+                    <input
+                      type="radio"
+                      name="switch_between_games"
+                      value="yes"
+                      checked={formData.switch_between_games === 'yes'}
+                      onChange={handleChange}
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="switch_between_games"
+                      value="no"
+                      checked={formData.switch_between_games === 'no'}
+                      onChange={handleChange}
+                    />{' '}
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
 
             {divisionNumbers.map((division, index) => (
               <div key={index} className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
@@ -416,19 +465,6 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                         </option>
                       ))}
                     </select>
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-6">
-                  <div className="form-field5">
-                    <label>Participants Limit <sup>*</sup></label>
-                    <input
-                      type="text"
-                      placeholder="Add Participants Limit"
-                      className="field-style5"
-                      name="participants_limit"
-                      value={division.participants_limit}
-                      onChange={(e) => handleDivisionChange(index, e)}
-                    />
                   </div>
                 </div>
               </div>

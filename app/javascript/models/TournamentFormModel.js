@@ -33,14 +33,17 @@ export const TournamentFormModel = {
   notes_for_organizers: '',                          // t.text "notes_for_organizers"
   is_league: false,                   // t.boolean "is_league"
   is_tournament: false,               // t.boolean "is_tournament"
-  game_number: '',                    // t.string "game_number"
-  score: null,                        // t.integer "score"
+  game_number: '3',                    // t.string "game_number"
+  score: 21,                          // t.integer "score"
   time_limit: null,                   // t.float "time_limit"
   break_point: null,                  // t.integer "break_point"
   interval_duration: null,            // t.float "interval_duration"
   points_limit: null,                 // t.integer "points_limit"
   change_ends: null,                  // t.integer "change_ends"
   division_number: null,              // t.integer "division_number"
+  switch_during_game: true,
+  switch_score_during_game: 11,
+  switch_between_games: true,
   user_id: null,                      // t.bigint "user_id"
 
   // New fields for associations

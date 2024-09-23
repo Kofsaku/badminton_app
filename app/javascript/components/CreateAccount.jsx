@@ -27,7 +27,7 @@ const CreateAccount = () => {
     e.preventDefault();
     try {
       const response = await axios.post('/users.json', formData); // Ensure your API endpoint is correct
-      dispatch(setUser({ apiKey: response.data.api_key })); // Store API key in Redux
+      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true })); // Store API key in Redux
       console.log('User created:', response.data);
 
       // Redirect to the tournaments management page

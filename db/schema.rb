@@ -128,6 +128,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_08_153715) do
     t.integer "change_ends"
     t.integer "division_number"
     t.string "member_changes"
+    t.boolean "switch_during_game", default: true
+    t.integer "switch_score_during_game", default: 11
+    t.boolean "switch_between_games"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

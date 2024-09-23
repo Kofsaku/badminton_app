@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { setUser } from '../redux/actions'; // Assuming you have this action defined
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,10 +21,18 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add form submission logic here, e.g., send data to an API
-    console.log('Form data submitted:', formData);
+    try {
+      const response = await axios.post('/users/show_api_key', formData); // API endpoint to get API key
+      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true })); // Store API key in Redux
+      console.log('User logged in:', response.data);
+
+      // Redirect to the tournaments management page
+      navigate('/tournament-management');
+    } catch (error) {
+      setError(error.response?.data?.error || 'An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -36,8 +50,6 @@ const Login = () => {
             </div>
             <div className="d-block w-100">
               <div className="d-block w-100 text-center">
-                <h5 className="text-black1 mb-2 text-capitalize text-32 tab-text-28 fw-bold d-lg-block d-md-block d-sm-block d-none">Welcome Back!</h5>
-                <p className="text-grey1 mt-0 mb-4 text-14 d-lg-block d-md-block d-sm-block d-none">Please enter your details</p>
                 <h5 className="text-black1 mb-1 text-capitalize text-20 fw-bold">Please sign in to continue</h5>
                 <p className="text-grey1 mt-0 mb-4 text-14">Please enter your details below</p>
               </div>
@@ -46,6 +58,7 @@ const Login = () => {
                   <div className="d-block w-100">
                     <div className="row m-0 justify-content-center">
                       <div className="col-lg-6 col-md-8 col-sm-12 col-11">
+                        {error && <div className="error-message text-danger mb-3">{error}</div>} {/* Display error */}
                         <div className="form-field1 mb-3 px-3 py-2 d-flex w-100 align-items-center justify-content-start rounded-3 bg-silver1">
                           <img src="images/email-icon.svg" className="me-2" alt="Email Icon" />
                           <input
