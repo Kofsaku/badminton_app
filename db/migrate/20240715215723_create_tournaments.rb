@@ -35,20 +35,6 @@ class CreateTournaments < ActiveRecord::Migration[7.0]
       t.string :organizers_url
       t.string :inquiry_contact_information
       t.text :notes_for_organizers
-      t.boolean :is_league
-      t.boolean :is_tournament
-      t.string :game_number
-      t.integer :score
-      t.float :time_limit
-      t.integer :break_point
-      t.float :interval_duration
-      t.integer :points_limit
-      t.integer :change_ends
-      t.integer :division_number
-      t.string :member_changes
-      t.boolean :switch_during_game, default: true
-      t.integer :switch_score_during_game, default: 11
-      t.boolean :switch_between_games
       t.references :user, null: true, foreign_key: true
 
       t.timestamps
