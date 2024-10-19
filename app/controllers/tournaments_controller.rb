@@ -74,54 +74,57 @@ class TournamentsController < ApplicationController
     # Only allow a list of trusted parameters through.
    def tournament_params
     params.require(:tournament).permit(
-      :name,
-      :event_date,
-      :registration_start_time, # Corrected key
-      :organization_name,
-      :payment_method,
-      :match_start_time,
-      :match_end_time,           # This should also be permitted
-      :match_overview,
-      :organizer,
-      :administrator,
-      :sponsor,
-      :event_category,
-      :days_schedule,
-      :reception_period,
-      :competition_format,
-      :max_participants,         # Corrected key from 'capacity' if needed
-      :competition_rules,
-      :ball_type,
-      :participation_eligibility,
-      :participation_payment_method,
-      :application_method,
-      :application_deadline,
-      :pairing_selection_method,
-      :award_details,
-      :member_changes,           # Added this to the correct key
-      :entry_in_multiple_events,
-      :cancellation_after_application,
-      :participation_fee,
-      :inquiry_contact_information,
-      :announcements,
-      :organizers_url,
+      :name,                           # t.string "name"
+      :event_date,                     # t.date "event_date"
+      :registeration_time,              # t.time "registeration_time" (corrected spelling)
+      :organization_name,               # t.string "organization_name"
+      :payment_method,                  # t.string "payment_method"
+      :match_start_time,                # t.time "match_start_time"
+      :match_end_time,                  # t.time "match_end_time"
+      :match_overview,                  # t.string "match_overview"
+      :organizer,                       # t.string "organizer"
+      :administrator,                   # t.string "administrator"
+      :sponsor,                         # t.string "sponsor"
+      :event_category,                  # t.string "event_category"
+      :days_schedule,                   # t.string "days_schedule"
+      :max_participants,                # t.integer "max_participants"
+      :reception_period,                # t.string "reception_period"
+      :competition_format,              # t.string "competition_format"
+      :competition_rules,               # t.text "competition_rules"
+      :ball_type,                       # t.string "ball_type"
+      :participation_eligibility,        # t.string "participation_eligibility"
+      :participation_payment_method,    # t.string "participation_payment_method"
+      :application_method,              # t.string "application_method"
+      :application_deadline,            # t.string "application_deadline"
+      :pairing_selection_method,        # t.string "pairing_selection_method"
+      :award_details,                   # t.text "award_details"
+      :entry_in_multiple_events,        # t.string "entry_in_multiple_events"
+      :cancellation_after_application,  # t.string "cancellation_after_application"
+      :participation_fee,               # t.string "participation_fee"
+      :announcements,                   # t.string "announcements"
+      :organizers_url,                  # t.string "organizers_url"
+      :inquiry_contact_information,     # t.string "inquiry_contact_information"
       :notes_for_organizers,
-      :is_league,
-      :is_tournament,
-      :game_number,
-      :score,
-      :time_limit,
-      :break_point,
-      :interval_duration,
-      :points_limit,
-      :change_ends,
-      :division_number,
-      :switch_during_game,
-      :switch_score_during_game,
-      :switch_between_games,
       :user_id,
-      tournament_divisions_attributes: [
-        :id, :division, :participants_limit, :_destroy
+      tournament_categories_attributes: [
+        :is_league,                       # t.boolean "is_league"
+        :is_tournament,                   # t.boolean "is_tournament"
+        :number_of_games,                 # t.string "number_of_games"
+        :score,                           # t.integer "score"
+        :time_limit,                      # t.float "time_limit"
+        :break_point,                     # t.integer "break_point"
+        :interval_duration,               # t.float "interval_duration"
+        :points_limit,                    # t.integer "points_limit"
+        :division_name_type,              # t.string "division_name_type"
+        :division_number,                 # t.integer "division_number"
+        :switch_during_game,              # t.boolean "switch_during_game", default: true
+        :switch_score_during_game,        # t.integer "switch_score_during_game", default: 11
+        :switch_between_games,            # t.boolean "switch_between_games"
+        :match_composition,               # t.string "match_composition"
+        :match_facilitator,
+        tournament_divisions_attributes: [
+          :id, :division, :participants_limit, :_destroy
+        ],
       ],
       tournament_players_attributes: [
         :id, :user_id, :status, :_destroy

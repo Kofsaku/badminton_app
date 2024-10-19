@@ -1,10 +1,22 @@
+import { TournamentDivisionModel } from './TournamentDivisionModel';
+
 export const TournamentCategoryModel = {
-  event_category: '',               // t.string "event_category"
-  competition_format: '',           // t.string "competition_format"
-  application_method: '',           // t.string "application_method"
-  application_deadline: '',         // t.string "application_deadline"
-  pairing_selection_method: '',     // t.string "pairing_selection_method"
-  participation_eligibility: '',    // t.string "participation_eligibility"
-  participation_fee: '',            // t.string "participation_fee"
-  payment_method: '',               // t.string "payment_method"
+  tournament_id: null,                // t.bigint "tournament_id"
+  category_type: '',                  // t.string "category_type"
+  is_league: false,                   // t.boolean "is_league"
+  is_tournament: false,               // t.boolean "is_tournament"
+  number_of_games: '3',               // t.string "number_of_games"
+  score: 21,                          // t.integer "score"
+  time_limit: null,                   // t.float "time_limit"
+  break_point: null,                  // t.integer "break_point"
+  interval_duration: null,            // t.float "interval_duration"
+  points_limit: null,                 // t.integer "points_limit"
+  division_name_type: '',             // t.string "division_name_type"
+  division_number: null,              // t.integer "division_number"
+  switch_during_game: true,           // t.boolean "switch_during_game"
+  switch_score_during_game: 11,       // t.integer "switch_score_during_game"
+  switch_between_games: false,        // t.boolean "switch_between_games"
+  match_composition: '',              // t.string "match_composition"
+  match_facilitator: '',              // t.string "match_facilitator"
+  tournament_divisions_attributes: [TournamentDivisionModel]
 };

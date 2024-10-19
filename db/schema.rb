@@ -101,13 +101,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
   end
 
   create_table "tournament_players", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.string "player_type", null: false
+    t.bigint "player_id", null: false
     t.bigint "tournament_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["player_type", "player_id"], name: "index_tournament_players_on_player"
     t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
-    t.index ["user_id"], name: "index_tournament_players_on_user_id"
   end
 
   create_table "tournament_venues", force: :cascade do |t|
@@ -178,7 +179,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories", column: "tournament_categories_id"
   add_foreign_key "tournament_players", "tournaments"
-  add_foreign_key "tournament_players", "users"
   add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"
 end

@@ -1,6 +1,5 @@
 import { TournamentCategoryModel } from './TournamentCategoryModel';
 import { TournamentVenueModel } from './TournamentVenueModel';
-import { TournamentDivisionModel } from './TournamentDivisionModel';
 
 export const TournamentFormModel = {
   // Step 1 fields
@@ -35,19 +34,6 @@ export const TournamentFormModel = {
   announcements: '',                  // t.string "announcements"
   organizers_url: '',                 // t.string "organizers_url"
   notes_for_organizers: '',                          // t.text "notes_for_organizers"
-  is_league: false,                   // t.boolean "is_league"
-  is_tournament: false,               // t.boolean "is_tournament"
-  game_number: '3',                    // t.string "game_number"
-  score: 21,                          // t.integer "score"
-  time_limit: null,                   // t.float "time_limit"
-  break_point: null,                  // t.integer "break_point"
-  interval_duration: null,            // t.float "interval_duration"
-  points_limit: null,                 // t.integer "points_limit"
-  change_ends: null,                  // t.integer "change_ends"
-  division_number: null,              // t.integer "division_number"
-  switch_during_game: true,
-  switch_score_during_game: 11,
-  switch_between_games: true,
   user_id: null,                      // t.bigint "user_id"
 
   tournament_categories_attributes: [TournamentCategoryModel],           // Using category model
