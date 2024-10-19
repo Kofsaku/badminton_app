@@ -1,3 +1,7 @@
+import { TournamentCategoryModel } from './TournamentCategoryModel';
+import { TournamentVenueModel } from './TournamentVenueModel';
+import { TournamentDivisionModel } from './TournamentDivisionModel';
+
 export const TournamentFormModel = {
   // Step 1 fields
   name: '',                           // t.string "name"
@@ -46,8 +50,7 @@ export const TournamentFormModel = {
   switch_between_games: true,
   user_id: null,                      // t.bigint "user_id"
 
-  // New fields for associations
-  tournament_divisions_attributes: [],           // Array for associated tournament divisions
-  tournament_players_attributes: [],             // Array for associated tournament players
-  tournament_venues_attributes: [],              // Array for associated tournament venues
+  tournament_categories_attributes: [TournamentCategoryModel],           // Using category model
+  tournament_venues_attributes: [TournamentVenueModel],   // Array of venue models
+  tournament_divisions_attributes: [TournamentDivisionModel]
 };
