@@ -1,5 +1,6 @@
 import { TournamentCategoryModel } from './TournamentCategoryModel';
 import { TournamentVenueModel } from './TournamentVenueModel';
+import { TournamentDivisionModel } from './TournamentDivisionModel';
 
 export const TournamentFormModel = {
   // Step 1 fields

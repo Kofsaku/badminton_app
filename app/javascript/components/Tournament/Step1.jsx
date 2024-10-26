@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { TournamentVenueModel } from '../../models/TournamentVenueModel';
 
-const Step1 = ({ nextStep, formData, handleFormChange }) => {
-  const [venues, setVenues] = useState([{ venue_name: '', venue_address: '', no_of_courts: null, venue_date: null }]);
+const Step1 = ({ nextStep, formData, handleFormChange, addCategory }) => {
+  const [venues, setVenues] = useState([new TournamentVenueModel()]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,18 +15,16 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
   };
 
   const handleVenueChange = (index, e) => {
-    const { venue_name, value, no_of_courts, venue_date } = e.target;
+    const { name, value } = e.target;
     const newVenues = [...venues];
     newVenues[index][name] = value;
     setVenues(newVenues);
 
-    // Update the formData with the venues array
     handleFormChange('tournament_venues_attributes', newVenues);
   };
 
   const addVenue = () => {
-    const newVenues = [...venues, { venue_name: '', venue_address: '', no_of_courts: null, venue_date: null }];
-    setVenues(newVenues);
+    setVenues([...venues, new TournamentVenueModel()]);
   };
 
   return (

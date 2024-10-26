@@ -21,6 +21,10 @@ const TournamentForm = ({ initialData }) => {
     setFormData({ ...formData, [input]: value });
   };
 
+  const addCategory = () => {
+    setStep(2);
+  };
+
   switch (step) {
     case 1:
       return (
@@ -28,6 +32,7 @@ const TournamentForm = ({ initialData }) => {
           nextStep={nextStep}
           formData={formData}
           handleFormChange={handleFormChange}
+          addCategory={addCategory}
         />
       );
     case 2:

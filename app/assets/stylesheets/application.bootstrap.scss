@@ -1020,7 +1020,10 @@ section.right-content-wrapper {
 .form-field5 label sup {
     color: red;
 }
-
+.custom_label_width {
+    width: 70px !important;
+    margin-right: 10px;
+}
 
 .bg-silver5 {
     background: #f9f9f9 !important;
