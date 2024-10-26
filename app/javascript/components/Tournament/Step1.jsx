@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TournamentVenueModel } from '../../models/TournamentVenueModel';
 
-const Step1 = ({ nextStep, formData, handleFormChange, addCategory }) => {
-  const [venues, setVenues] = useState([new TournamentVenueModel()]);
+const Step1 = ({ nextStep, formData, handleFormChange }) => {
+  const [venues, setVenues] = useState([TournamentVenueModel()]); // Call the model function
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +24,7 @@ const Step1 = ({ nextStep, formData, handleFormChange, addCategory }) => {
   };
 
   const addVenue = () => {
-    setVenues([...venues, new TournamentVenueModel()]);
+    setVenues([...venues, TournamentVenueModel()]); // Call the model function
   };
 
   return (
@@ -45,499 +45,132 @@ const Step1 = ({ nextStep, formData, handleFormChange, addCategory }) => {
       <div className="d-block w-100 bg-silver5 rounded-3 border border-color-silver2 px-4 py-4">
         <form onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Name <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Name"
-                  className="field-style5"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Event Date Time <sup>*</sup></label>
-                <input
-                  type="datetime-local"
-                  placeholder="Add Event Date Time"
-                  className="field-style5"
-                  name="event_date"
-                  value={formData.event_date}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Registration Start Time <sup>*</sup></label>
-                <input
-                  type="time"
-                  placeholder="Add Registration Start Time"
-                  className="field-style5"
-                  name="registeration_time"
-                  value={formData.registeration_time}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Organization Name <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Organization Name"
-                  className="field-style5"
-                  name="organization_name"
-                  value={formData.organization_name}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Payment Method <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Payment Method"
-                  className="field-style5"
-                  name="payment_method"
-                  value={formData.payment_method}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Match Start Time <sup>*</sup></label>
-                <input
-                  type="time"
-                  placeholder="Add Match Start Time"
-                  className="field-style5"
-                  name="match_start_time"
-                  value={formData.match_start_time}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Match Overview <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Match Overview"
-                  className="field-style5"
-                  name="match_overview"
-                  value={formData.match_overview}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Organizer <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Organizer"
-                  className="field-style5"
-                  name="organizer"
-                  value={formData.organizer}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Administrator <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Administrator"
-                  className="field-style5"
-                  name="administrator"
-                  value={formData.administrator}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Sponsor <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Sponsor"
-                  className="field-style5"
-                  name="sponsor"
-                  value={formData.sponsor}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Event Category <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Event Category"
-                  className="field-style5"
-                  name="event_category"
-                  value={formData.event_category}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Days Schedule <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Days Schedule"
-                  className="field-style5"
-                  name="days_schedule"
-                  value={formData.days_schedule}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Reception Period <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Reception Period"
-                  className="field-style5"
-                  name="reception_period"
-                  value={formData.reception_period}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Competition Format <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Competition Format"
-                  className="field-style5"
-                  name="competition_format"
-                  value={formData.competition_format}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Max Participants <sup>*</sup></label>
-                <input
-                  type="number"
-                  placeholder="Add Max Participants"
-                  className="field-style5"
-                  name="max_participants"
-                  value={formData.max_participants}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Competition Rules <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Competition Rules"
-                  className="field-style5"
-                  name="competition_rules"
-                  value={formData.competition_rules}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Ball Type <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Ball Type"
-                  className="field-style5"
-                  name="ball_type"
-                  value={formData.ball_type}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Participation Eligibility <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Participation Eligibility"
-                  className="field-style5"
-                  name="participation_eligibility"
-                  value={formData.participation_eligibility}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Participation Payment Method <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Participation Payment Method"
-                  className="field-style5"
-                  name="participation_payment_method"
-                  value={formData.participation_payment_method}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Application Method <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Application Method"
-                  className="field-style5"
-                  name="application_method"
-                  value={formData.application_method}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Application Deadline <sup>*</sup></label>
-                <input
-                  type="date"
-                  placeholder="Add Application Deadline"
-                  className="field-style5"
-                  name="application_deadline"
-                  value={formData.application_deadline}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Pairing Selection Method <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Pairing Selection Method"
-                  className="field-style5"
-                  name="pairing_selection_method"
-                  value={formData.pairing_selection_method}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Award Details <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Award Details"
-                  className="field-style5"
-                  name="award_details"
-                  value={formData.award_details}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Member Changes <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Member Changes"
-                  className="field-style5"
-                  name="member_changes"
-                  value={formData.member_changes}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Multiple Events Entry <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Multiple Events Entry"
-                  className="field-style5"
-                  name="entry_in_multiple_events"
-                  value={formData.entry_in_multiple_events}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Cancellation After Application <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Cancellation After Application"
-                  className="field-style5"
-                  name="cancellation_after_application"
-                  value={formData.cancellation_after_application}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Participation Fee <sup>*</sup></label>
-                <input
-                  type="number"
-                  placeholder="Add Participation Fee"
-                  className="field-style5"
-                  name="participation_fee"
-                  value={formData.participation_fee}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Inquiry Contact Info <sup>*</sup></label>
-                <input
-                  type="text"
-                  placeholder="Add Inquiry Contact Info"
-                  className="field-style5"
-                  name="inquiry_contact_information"
-                  value={formData.inquiry_contact_information}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>Organizers URL <sup>*</sup></label>
-                <input
-                  type="url"
-                  placeholder="Add Organizers URL"
-                  className="field-style5"
-                  name="organizers_url"
-                  value={formData.organizers_url}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
-              <div className="form-field5">
-                <label>Announcements <sup>*</sup></label>
-                <textarea
-                  className="field-style5"
-                  name="announcements"
-                  value={formData.announcements}
-                  onChange={handleChange}
-                ></textarea>
-              </div>
-            </div>
-
-            <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
-              <div className="form-field5">
-                <label>Notes for Organizers</label>
-                <textarea
-                  className="field-style5"
-                  name="notes_for_organizers"
-                  value={formData.notes_for_organizers}
-                  onChange={handleChange}
-                ></textarea>
-              </div>
-            </div>
-          </div>
-
-          {venues.map((venue, index) => (
-            <div key={index} className="row mb-4">
-              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+            {[
+              { label: 'Name', name: 'name', type: 'text' },
+              { label: 'Event Date Time', name: 'event_date', type: 'datetime-local' },
+              { label: 'Registration Start Time', name: 'registration_time', type: 'time' },
+              { label: 'Organization Name', name: 'organization_name', type: 'text' },
+              { label: 'Payment Method', name: 'payment_method', type: 'text' },
+              { label: 'Match Start Time', name: 'match_start_time', type: 'time' },
+              { label: 'Match Overview', name: 'match_overview', type: 'text' },
+              { label: 'Organizer', name: 'organizer', type: 'text' },
+              { label: 'Administrator', name: 'administrator', type: 'text' },
+              { label: 'Sponsor', name: 'sponsor', type: 'text' },
+              { label: 'Event Category', name: 'event_category', type: 'text' },
+              { label: 'Days Schedule', name: 'days_schedule', type: 'text' },
+              { label: 'Reception Period', name: 'reception_period', type: 'text' },
+              { label: 'Competition Format', name: 'competition_format', type: 'text' },
+              { label: 'Max Participants', name: 'max_participants', type: 'number' },
+              { label: 'Competition Rules', name: 'competition_rules', type: 'text' },
+              { label: 'Ball Type', name: 'ball_type', type: 'text' },
+              { label: 'Participation Eligibility', name: 'participation_eligibility', type: 'text' },
+              { label: 'Participation Payment Method', name: 'participation_payment_method', type: 'text' },
+              { label: 'Application Method', name: 'application_method', type: 'text' },
+              { label: 'Application Deadline', name: 'application_deadline', type: 'date' },
+              { label: 'Pairing Selection Method', name: 'pairing_selection_method', type: 'text' },
+              { label: 'Award Details', name: 'award_details', type: 'text' },
+              { label: 'Member Changes', name: 'member_changes', type: 'text' },
+              { label: 'Add Multiple Events Entry', name: 'entry_in_multiple_events', type: 'text' },
+              { label: 'Add Cancellation After Application', name: 'cancellation_after_application', type: 'text' },
+              { label: 'Participation Fee', name: 'participation_fee', type: 'text' },
+              { label: 'Inquiry Contact Info', name: 'inquiry_contact_information', type: 'text' },
+              { label: 'Announcements', name: 'announcements', type: 'textarea' },
+              { label: 'Notes for Organizers', name: 'notes_for_organizers', type: 'textarea' },
+            ].map(({ label, name, type }) => (
+              <div 
+                className={type === 'textarea' ? "col-lg-12 col-md-12 col-sm-12 col-12 mb-4" : "col-lg-6 col-md-6 col-sm-6 col-12 mb-4"}
+                key={name}
+              >
                 <div className="form-field5">
-                  <label>Venue Name <sup>*</sup></label>
-                  <input
-                    type="text"
-                    placeholder="Venue Name"
-                    className="field-style5"
-                    name="venue_name"
-                    value={venue.venue_name}
-                    onChange={(e) => handleVenueChange(index, e)}
-                  />
+                  <label>{label} <sup>*</sup></label>
+                  {type === 'textarea' ? (
+                    <textarea
+                      className="field-style5"
+                      name={name}
+                      placeholder={`Add ${label}`}
+                      value={formData[name] || ''}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    <input
+                      type={type}
+                      placeholder={`Add ${label}`}
+                      className="field-style5"
+                      name={name}
+                      value={formData[name] || ''}
+                      onChange={handleChange}
+                    />
+                  )}
                 </div>
               </div>
-              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-                <div className="form-field5">
-                  <label>Venue Address <sup>*</sup></label>
-                  <input
-                    type="text"
-                    placeholder="Venue Address"
-                    className="field-style5"
-                    name="venue_address"
-                    value={venue.venue_address}
-                    onChange={(e) => handleVenueChange(index, e)}
-                  />
-                </div>
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-                <div className="form-field5">
-                  <label>Number of Courts <sup>*</sup></label>
-                  <input
-                    type="number"
-                    placeholder="Add Courts Number"
-                    className="field-style5"
-                    name="no_of_courts"
-                    value={venue.no_of_courts}
-                    onChange={(e) => handleVenueChange(index, e)}
-                  />
-                </div>
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-                <div className="form-field5">
-                  <label>Venue Date <sup>*</sup></label>
-                  <input
-                    type="date"
-                    placeholder="Add Venue Date"
-                    className="field-style5"
-                    name="venue_date"
-                    value={venue.venue_date}
-                    onChange={(e) => handleVenueChange(index, e)}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
+            ))}
 
-          <div className="row mb-4">
-            <div className="col-auto">
-              <button type="button" onClick={addVenue} className="btn btn-link p-0 text-decoration-none">
-                Add More Venues
-              </button>
+            {/* Venue Section */}
+            <div className="col-12 mb-4">
+              <h4>Venues</h4>
+              {venues.map((venue, index) => (
+                <div key={index} className="row mb-4">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                    <div className="form-field5">
+                      <label>Venue Name <sup>*</sup></label>
+                      <input
+                        type="text"
+                        placeholder="Venue Name"
+                        className="field-style5"
+                        name="venue_name"
+                        value={venue.venue_name}
+                        onChange={(e) => handleVenueChange(index, e)}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                    <div className="form-field5">
+                      <label>Venue Address <sup>*</sup></label>
+                      <input
+                        type="text"
+                        placeholder="Venue Address"
+                        className="field-style5"
+                        name="venue_address"
+                        value={venue.venue_address}
+                        onChange={(e) => handleVenueChange(index, e)}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                    <div className="form-field5">
+                      <label>Number of Courts <sup>*</sup></label>
+                      <input
+                        type="number"
+                        placeholder="Add Courts Number"
+                        className="field-style5"
+                        name="no_of_courts"
+                        value={venue.no_of_courts}
+                        onChange={(e) => handleVenueChange(index, e)}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                    <div className="form-field5">
+                      <label>Venue Date <sup>*</sup></label>
+                      <input
+                        type="date"
+                        placeholder="Add Venue Date"
+                        className="field-style5"
+                        name="venue_date"
+                        value={venue.venue_date}
+                        onChange={(e) => handleVenueChange(index, e)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className="row mb-4">
+                <div className="col-auto">
+                  <button type="button" onClick={addVenue} className="btn btn-link p-0 text-decoration-none">
+                    Add More Venues
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 

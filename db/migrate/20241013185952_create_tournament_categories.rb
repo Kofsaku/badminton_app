@@ -18,6 +18,9 @@ class CreateTournamentCategories < ActiveRecord::Migration[7.0]
       t.boolean :switch_between_games
       t.string :match_composition
       t.string :match_facilitator
+      t.boolean :show_score
+      t.boolean :show_intervals
+      t.boolean :show_time_limit
 
       t.timestamps
     end

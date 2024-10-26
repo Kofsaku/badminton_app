@@ -2,7 +2,7 @@ import { TournamentCategoryModel } from './TournamentCategoryModel';
 import { TournamentVenueModel } from './TournamentVenueModel';
 import { TournamentDivisionModel } from './TournamentDivisionModel';
 
-export const TournamentFormModel = {
+export const TournamentFormModel = () => ({
   // Step 1 fields
   name: '',                           // t.string "name"
   event_date: '',                 // t.date "event_date"
@@ -40,4 +40,4 @@ export const TournamentFormModel = {
   tournament_categories_attributes: [TournamentCategoryModel],           // Using category model
   tournament_venues_attributes: [TournamentVenueModel],   // Array of venue models
   tournament_divisions_attributes: [TournamentDivisionModel]
-};
+});

@@ -3,8 +3,8 @@ import { TournamentCategoryModel } from '../../models/TournamentCategoryModel';
 import { TournamentDivisionModel } from '../../models/TournamentDivisionModel';
 
 const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
-  const [categories, setCategories] = useState([new TournamentCategoryModel()]);
-
+  const [categories, setCategories] = useState([TournamentCategoryModel()]);
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     nextStep();
@@ -14,56 +14,27 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
     const { name, value, type, checked } = e.target;
     const newCategories = [...categories];
     newCategories[index][name] = type === 'checkbox' ? checked : value;
+
+    if (name === "division_number") {
+      const divisionCount = parseInt(value) || 0;
+      newCategories[index].divisions = Array.from({ length: divisionCount }, (_, i) => TournamentDivisionModel());
+    }
+    
     setCategories(newCategories);
     handleFormChange('tournament_categories_attributes', newCategories);
   };
 
-  const handleDivisionChange = (categoryIndex, divisionIndex, e) => {
+  const handleDivisionChange = (catIndex, divIndex, e) => {
     const { name, value } = e.target;
     const newCategories = [...categories];
-    newCategories[categoryIndex].tournament_divisions_attributes[divisionIndex][name] = value;
+    newCategories[catIndex].divisions[divIndex][name] = value;
     setCategories(newCategories);
     handleFormChange('tournament_categories_attributes', newCategories);
-  };
-
-  const addDivision = (categoryIndex) => {
-    const newCategories = [...categories];
-    newCategories[categoryIndex].tournament_divisions_attributes.push(new TournamentDivisionModel());
-    setCategories(newCategories);
-  };
-
-  const removeDivision = (categoryIndex, divisionIndex) => {
-    const newCategories = [...categories];
-    newCategories[categoryIndex].tournament_divisions_attributes.splice(divisionIndex, 1);
-    setCategories(newCategories);
   };
 
   const addCategory = () => {
-    setCategories([...categories, new TournamentCategoryModel()]);
+    setCategories([...categories, TournamentCategoryModel()]);
   };
-
-  useEffect(() => {
-    if (formData.pointsLimit) setShowPointsLimit(true);
-    if (formData.changeEnds) setShowChangeEnds(true);
-    if (formData.breakPoint || formData.internalDuration) setShowIntervals(true);
-  }, [formData]);
-
-  
-  // Handle dynamic division number field generation
-  const handleDivisionNumberChange = (e) => {
-    const selectedNumber = parseInt(e.target.value, 10);
-    const divisionArray = Array.from({ length: selectedNumber }, (_, i) => i + 1);
-    setDivisionNumbers(divisionArray); // Update the state with new array
-    handleFormChange('division_number', selectedNumber); // Update formData with selected number
-  };
-
-  const handleDivisionTextFieldChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedDivisionNumbers = [...formData.division_numbers];
-    updatedDivisionNumbers[index] = value;
-    handleFormChange('division_numbers', updatedDivisionNumbers);
-  };
-
 
   return (
     <div className="d-block w-100 px-lg-4 px-md-4 px-sm-4 px-2 py-4">
@@ -71,7 +42,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
         <div className="d-flex w-100 align-items-center justify-content-start">
           <div className="d-inline-block me-3">
             <button onClick={prevStep} className="bg-green1 p-2 rounded-2 d-flex align-items-center justify-content-center">
-              <i className="fa fa-arrow-left text-14 text-white"> </i>
+              <i className="fa fa-arrow-left text-14 text-white"></i>
             </button>
           </div>
           <div className="d-inline-block min-width-clear">
@@ -84,7 +55,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
       <div className="d-block w-100 bg-silver5 rounded-3 border border-color-silver2 px-4 py-4">
         <form onSubmit={handleSubmit}>
           {categories.map((category, catIndex) => (
-            <div key={catIndex} className="mb-4">
+            <div key={catIndex} className="row mb-4">
               <div className="col-lg-8 col-md-8 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
@@ -115,18 +86,18 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   </select>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4 align-self-end">
+              <div className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4 align-self-end">
                 <div className="d-flex w-100 align-items-center justify-content-start">
                   <div className="checkbox-style1 me-2 mb-2 d-flex rounded-2 align-items-center justify-content-start">
                     <input
                       className="m-0 min-width-clear mt-0"
                       type="checkbox"
-                      id="mensdoubleplace"
+                      id={`isTournament_${catIndex}`}
                       name="is_tournament"
                       checked={category.is_tournament}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
-                    <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor="mensdoubleplace">
+                    <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor={`isTournament_${catIndex}`}>
                       Tournament
                     </label>
                   </div>
@@ -134,12 +105,12 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     <input
                       className="m-0 min-width-clear mt-0"
                       type="checkbox"
-                      id="isLeague"
+                      id={`isLeague_${catIndex}`}
                       name="is_league"
                       checked={category.is_league}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
-                    <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor="league">
+                    <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor={`isLeague_${catIndex}`}>
                       League
                     </label>
                   </div>
@@ -170,9 +141,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       <input
                         className="m-0 min-width-clear mt-0"
                         type="checkbox"
-                        id="score"
-                        checked={showScore}
-                        onChange={() => setShowScore(true)}
+                        name="show_score"
+                        checked={category.show_score}
+                        onChange={(e) => handleCategoryChange(catIndex, e)}
                       />
                     </div>
                     <input
@@ -182,7 +153,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       name="score"
                       value={category.score}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
-                      disabled={!showScore} // Disable if showScore is false
+                      disabled={!category.show_score}
                     />
                   </div>
                 </div>
@@ -197,9 +168,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       <input
                         className="m-0 min-width-clear mt-0"
                         type="checkbox"
-                        id="deadline"
-                        checked={!showScore}
-                        onChange={() => setShowScore(false)}
+                        name="show_time_limit"
+                        value={category.show_time_limit}
+                        onChange={(e) => handleCategoryChange(catIndex, e)}
                       />
                     </div>
                     <select
@@ -207,12 +178,12 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       name="time_limit"
                       value={category.time_limit}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
-                      disabled={showScore}
+                      disabled={!category.show_time_limit}
                     >
                       <option value="">Select Time Limit</option>
-                      <option value="7">7 minutes</option>
-                      <option value="8">8 minutes</option>
                       <option value="15">15 minutes</option>
+                      <option value="30">30 minutes</option>
+                      <option value="60">60 minutes</option>
                     </select>
                   </div>
                 </div>
@@ -227,10 +198,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       <input
                         className="m-0 min-width-clear mt-0"
                         type="checkbox"
-                        id="intervals"
-                        name="intervalsCheckbox"
-                        checked={showIntervals}
-                        onChange={(e) => handleCheckboxChange(e, setShowIntervals)}
+                        name="show_intervals"
+                        value={category.show_intervals}
+                        onChange={(e) => handleCategoryChange(catIndex, e)}
                       />
                     </div>
                   </div>
@@ -246,7 +216,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                             name="break_point"
                             value={category.break_point}
                             onChange={(e) => handleCategoryChange(catIndex, e)}
-                            disabled={!showIntervals}
+                            disabled={!category.show_intervals}
                           >
                             <option value="">Select Break Point</option>
                             <option value="10Points">10 Points</option>
@@ -266,8 +236,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                             className="field-style5"
                             name="internal_duration"
                             value={category.internal_duration}
+                            disabled={!category.show_intervals}
                             onChange={(e) => handleCategoryChange(catIndex, e)}
-                            disabled={!showIntervals}
                           />
                         </div>
                       </div>
@@ -366,7 +336,6 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     className="field-style5"
                     name="division_number"
                     value={category.division_number || ''}
-                    onChange={(e) => handleCategoryChange(catIndex, e)} // Handle division number change
                   >
                     <option value="">Select Division Number</option>
                     <option value="1">1</option>
@@ -386,15 +355,15 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     <input
                       className="m-0 min-width-clear mt-0"
                       type="radio"
-                      id={`divisionNameTournament-${catIndex}`}
-                      name={`divisionName-${catIndex}`} // Grouping name by category index
+                      id="divisionNameTournament"
+                      name="divisionName"  // Same name attribute for grouping
                       value="tournament"
                       checked={category.divisionName === 'tournament'}
-                      onChange={(e) => handleDivisionChange(catIndex, -1, e)} // Handle division name change
+                      onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
                     <label
                       className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold"
-                      htmlFor={`divisionNameTournament-${catIndex}`}
+                      htmlFor="divisionNameTournament"
                     >
                       Number
                     </label>
@@ -404,48 +373,31 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     <input
                       className="m-0 min-width-clear mt-0"
                       type="radio"
-                      id={`divisionNameFreeWriting-${catIndex}`}
-                      name={`divisionName-${catIndex}`} // Grouping name by category index
+                      id="divisionNameFreeWriting"
+                      name="divisionName"  // Same name attribute for grouping
                       value="freeWriting"
                       checked={category.divisionName === 'freeWriting'}
-                      onChange={(e) => handleDivisionChange(catIndex, -1, e)} // Handle division name change
+                      onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
                     <label
                       className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold"
-                      htmlFor={`divisionNameFreeWriting-${catIndex}`}
+                      htmlFor="divisionNameFreeWriting"
                     >
                       Free Writing
                     </label>
                   </div>
                 </div>
               </div>
-              <div className="row">
-                {category.divisions.map((division, index) => (
-                  <div key={index} className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
-                    <div className="form-field5">
-                      <label>
-                        Division {index + 1} Name <sup>*</sup>
-                      </label>
-                      <input
-                        type="text"
-                        className="field-style5"
-                        name={`division_number_${index}`}
-                        value={division.divisionName || ''} // Assuming divisionName is part of the model
-                        onChange={(e) => handleDivisionChange(catIndex, index, e)} // Handle individual text field changes
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="row pt-4">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-                  <button type="submit" className="bg-green1 text-white text-15 w-100 px-3 py-2 rounded-3 merriweather-font border-0">
-                    Continue
-                  </button>
-                </div>
-              </div>
             </div>
-          )}
+          ))}
+          <button type="button" onClick={addCategory} className="btn btn-primary mb-3">
+            Add Category
+          </button>
+          <div className="d-flex w-100 justify-content-end">
+            <button type="submit" className="bg-green1 py-2 px-4 text-white rounded-2">
+              Next
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -453,4 +405,3 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
 };
 
 export default Step2;
-

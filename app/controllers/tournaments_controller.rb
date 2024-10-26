@@ -122,6 +122,9 @@ class TournamentsController < ApplicationController
         :switch_between_games,            # t.boolean "switch_between_games"
         :match_composition,               # t.string "match_composition"
         :match_facilitator,
+        :show_score,
+        :show_intervals,
+        :show_time_limit,
         tournament_divisions_attributes: [
           :id, :division, :participants_limit, :_destroy
         ],

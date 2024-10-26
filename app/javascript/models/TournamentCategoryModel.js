@@ -1,6 +1,6 @@
 import { TournamentDivisionModel } from './TournamentDivisionModel';
 
-export const TournamentCategoryModel = {
+export const TournamentCategoryModel = () => ({
   tournament_id: null,                // t.bigint "tournament_id"
   category_type: '',                  // t.string "category_type"
   is_league: false,                   // t.boolean "is_league"
@@ -17,6 +17,9 @@ export const TournamentCategoryModel = {
   switch_score_during_game: 11,       // t.integer "switch_score_during_game"
   switch_between_games: false,        // t.boolean "switch_between_games"
   match_composition: '',              // t.string "match_composition"
-  match_facilitator: '',              // t.string "match_facilitator"
-  tournament_divisions_attributes: [TournamentDivisionModel]
-};
+  match_facilitator: '',
+  show_score: true,
+  show_intervals: false,
+  show_time_limit: false,              // t.string "match_facilitator"
+  tournament_divisions_attributes: [TournamentDivisionModel()]
+});
