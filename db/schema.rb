@@ -97,10 +97,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
     t.integer "participants_limit"
     t.integer "pairs_limit"
     t.integer "trios_limit"
-    t.bigint "tournament_categories_id", null: false
+    t.bigint "tournament_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tournament_categories_id"], name: "index_tournament_divisions_on_tournament_categories_id"
+    t.index ["tournament_category_id"], name: "index_tournament_divisions_on_tournament_category_id"
   end
 
   create_table "tournament_players", force: :cascade do |t|
@@ -180,7 +180,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
   add_foreign_key "team_members", "teams"
   add_foreign_key "teams", "users"
   add_foreign_key "tournament_categories", "tournaments"
-  add_foreign_key "tournament_divisions", "tournament_categories", column: "tournament_categories_id"
+  add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"
   add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"
