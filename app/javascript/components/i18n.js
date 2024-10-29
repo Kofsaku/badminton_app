@@ -1,0 +1,100 @@
+// src/i18n.js
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  en: {
+    translation: {
+      add_new_tournament: "Add New Tournament",
+      name: "Name",
+      event_date: "Event Date Time",
+      registration_time: "Registration Start Time",
+      organization_name: "Organization Name",
+      payment_method: "Payment Method",
+      match_start_time: "Match Start Time",
+      match_overview: "Match Overview",
+      organizer: "Organizer",
+      administrator: "Administrator",
+      sponsor: "Sponsor",
+      event_category: "Event Category",
+      days_schedule: "Days Schedule",
+      reception_period: "Reception Period",
+      competition_format: "Competition Format",
+      max_participants: "Max Participants",
+      competition_rules: "Competition Rules",
+      ball_type: "Ball Type",
+      participation_eligibility: "Participation Eligibility",
+      participation_payment_method: "Participation Payment Method",
+      application_method: "Application Method",
+      application_deadline: "Application Deadline",
+      pairing_selection_method: "Pairing Selection Method",
+      award_details: "Award Details",
+      member_changes: "Member Changes",
+      entry_in_multiple_events: "Add Multiple Events Entry",
+      cancellation_after_application: "Add Cancellation After Application",
+      participation_fee: "Participation Fee",
+      inquiry_contact_information: "Inquiry Contact Info",
+      announcements: "Announcements",
+      notes_for_organizers: "Notes for Organizers",
+      venues: "Venues",
+      venue_name: "Venue Name",
+      venue_address: "Venue Address",
+      number_of_courts: "Number of Courts",
+      venue_date: "Venue Date",
+      add_more_venues: "Add More Venues",
+      next: "Next",
+    },
+  },
+  jp: {
+    translation: {
+      add_new_tournament: "新しいトーナメントを追加",
+      name: "名前",
+      event_date_time: "イベント日時",
+      registration_time: "登録開始時間",
+      organization_name: "組織名",
+      payment_method: "支払方法",
+      match_start_time: "試合開始時間",
+      match_overview: "試合概要",
+      organizer: "主催者",
+      administrator: "管理者",
+      sponsor: "スポンサー",
+      event_category: "イベントカテゴリ",
+      days_schedule: "日程表",
+      reception_period: "受付期間",
+      competition_format: "競技形式",
+      max_participants: "最大参加者数",
+      competition_rules: "競技規則",
+      ball_type: "ボールの種類",
+      participation_eligibility: "参加資格",
+      participation_payment_method: "参加費支払い方法",
+      application_method: "応募方法",
+      application_deadline: "応募締切日",
+      pairing_selection_method: "組み合わせ選定方法",
+      award_details: "賞品詳細",
+      member_changes: "メンバーの変更",
+      entry_in_multiple_events: "複数イベントのエントリー",
+      cancellation_after_application: "応募後のキャンセル",
+      participation_fee: "参加費",
+      inquiry_contact_information: "問い合わせ先情報",
+      announcements: "お知らせ",
+      notes_for_organizers: "主催者へのメモ",
+      venue_name: "会場名",
+      venue_address: "会場住所",
+      number_of_courts: "コートの数",
+      venue_date: "会場日程"
+    },
+  },
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: "en",
+    fallbackLng: "en",
+    interpolation: {
+      escapeValue: false,
+    },
+  });
+
+export default i18n;
