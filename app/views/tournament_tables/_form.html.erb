@@ -1,0 +1,35 @@
+<%= form_with(model: @tournament_table, local: true) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :table_type, "Select Table Type" %>
+    <%= f.select :table_type, TournamentTable.table_types.keys.map { |type| [type.titleize, type] } %>
+  </div>
+
+  <div>
+    <%= f.label :tournament_id, "Select Tournament" %>
+    <%= f.collection_select :tournament_id, @tournaments, :id, :name %>
+  </div>
+
+  <div>
+    <%= f.label :tournament_category_id, "Select Category" %>
+    <%= f.collection_select :tournament_category_id, @categories, :id, :category_type %>
+  </div>
+
+  <div>
+    <%= f.label :tournament_division_id, "Select Division" %>
+    <%= f.collection_select :tournament_division_id, @divisions, :id, :division %>
+  </div>
+
+  <div>
+    <%= f.label :size, "Table Size (e.g., 4 for 4x4)" %>
+    <%= f.number_field :size %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

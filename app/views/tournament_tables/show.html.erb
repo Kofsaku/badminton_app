@@ -1,0 +1,8 @@
+<h1><%= @tournament_table.name %> Details</h1>
+<p><strong>Tournament:</strong> <%= @tournament_table.tournament.name %></p>
+<p><strong>Category:</strong> <%= @tournament_table.tournament_category.category_type %></p>
+<p><strong>Division:</strong> <%= @tournament_table.tournament_division.division %></p>
+<p><strong>Type:</strong> <%= @tournament_table.table_type %></p>
+<p><strong>Size:</strong> <%= @tournament_table.size %>x<%= @tournament_table.size %></p>
+<%= link_to 'Edit', edit_tournament_table_path(@tournament_table) %> |
+<%= link_to 'Back to List', tournament_tables_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_29_220508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,9 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
     t.boolean "switch_between_games"
     t.string "match_composition"
     t.string "match_facilitator"
-    t.boolean "show_score"
-    t.boolean "show_intervals"
-    t.boolean "show_time_limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tournament_id"], name: "index_tournament_categories_on_tournament_id"
@@ -97,21 +94,34 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
     t.integer "participants_limit"
     t.integer "pairs_limit"
     t.integer "trios_limit"
-    t.bigint "tournament_categories_id", null: false
+    t.bigint "tournament_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tournament_categories_id"], name: "index_tournament_divisions_on_tournament_categories_id"
+    t.index ["tournament_category_id"], name: "index_tournament_divisions_on_tournament_category_id"
   end
 
   create_table "tournament_players", force: :cascade do |t|
-    t.string "player_type", null: false
-    t.bigint "player_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "tournament_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["player_type", "player_id"], name: "index_tournament_players_on_player"
     t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
+    t.index ["user_id"], name: "index_tournament_players_on_user_id"
+  end
+
+  create_table "tournament_tables", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "table_type", null: false
+    t.bigint "tournament_id", null: false
+    t.bigint "tournament_category_id", null: false
+    t.bigint "tournament_division_id", null: false
+    t.integer "size", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_category_id"], name: "index_tournament_tables_on_tournament_category_id"
+    t.index ["tournament_division_id"], name: "index_tournament_tables_on_tournament_division_id"
+    t.index ["tournament_id"], name: "index_tournament_tables_on_tournament_id"
   end
 
   create_table "tournament_venues", force: :cascade do |t|
@@ -180,8 +190,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
   add_foreign_key "team_members", "teams"
   add_foreign_key "teams", "users"
   add_foreign_key "tournament_categories", "tournaments"
-  add_foreign_key "tournament_divisions", "tournament_categories", column: "tournament_categories_id"
+  add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"
+  add_foreign_key "tournament_players", "users"
+  add_foreign_key "tournament_tables", "tournament_categories"
+  add_foreign_key "tournament_tables", "tournament_divisions"
+  add_foreign_key "tournament_tables", "tournaments"
   add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"
 end
