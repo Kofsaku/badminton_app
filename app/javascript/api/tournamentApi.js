@@ -1,9 +1,11 @@
 // api.js
-import axiosInstance from './axiosInstance'; // Adjust the import path according to your project structure
+import axiosInstance from './axiosInstance';
 
+// Create a new tournament
 export const createTournament = async (tournamentData) => {
   try {
-    const response = await axiosInstance.post('', tournamentData); // No need to include the base URL again
+    // Add `.json` suffix for the API format requirement
+    const response = await axiosInstance.post('tournaments.json', tournamentData);
     return response.data;
   } catch (error) {
     console.error('Error creating tournament:', error);
@@ -11,9 +13,11 @@ export const createTournament = async (tournamentData) => {
   }
 };
 
+// Fetch tournaments with pagination
 export const fetchTournaments = async (page = 1, limit = 50) => {
   try {
-    const response = await axiosInstance.get('', {
+    // Include `.json` suffix for the API format requirement
+    const response = await axiosInstance.get('tournaments.json', {
       params: {
         page,
         limit,
@@ -26,9 +30,11 @@ export const fetchTournaments = async (page = 1, limit = 50) => {
   }
 };
 
+// Delete a tournament by ID
 export const deleteTournament = async (id) => {
   try {
-    const response = await axiosInstance.delete(`/${id}`); // Adjusted to match the base URL setup
+    // Construct the URL with the ID and `.json` suffix
+    const response = await axiosInstance.delete(`tournaments/${id}.json`);
     return response.data;
   } catch (error) {
     console.error(`Failed to delete tournament with id ${id}:`, error);
@@ -36,9 +42,11 @@ export const deleteTournament = async (id) => {
   }
 };
 
+// Show tournament details by ID
 export const showTournament = async (id) => {
   try {
-    const response = await axiosInstance.get(`/${id}`);
+    // Construct the URL with the ID and `.json` suffix
+    const response = await axiosInstance.get(`tournaments/${id}.json`);
     return response.data;
   } catch (error) {
     console.error(`Failed to fetch tournament with id ${id}:`, error);

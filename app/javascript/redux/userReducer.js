@@ -12,6 +12,11 @@ const userReducer = (state = initialState, action) => {
         apiKey: action.payload.apiKey,
         isLoggedIn: true,
       };
+    case 'LOGOUT_USER':
+      return {
+        apiKey: null,
+        isLoggedIn: false,
+      };
     default:
       return state;
   }

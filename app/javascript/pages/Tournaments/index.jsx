@@ -85,7 +85,7 @@ const Tournaments = () => {
                         Date & Time
                       </th>
                       <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                        Venue
+                        Organizer
                       </th>
                       <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
                         Organization
@@ -108,7 +108,7 @@ const Tournaments = () => {
                           {tournament.event_date} & {tournament.match_start_time}
                         </td>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
-                          {tournament.venue_name}
+                          {tournament.organizer}
                         </td>
                         <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
                           {tournament.organization_name}

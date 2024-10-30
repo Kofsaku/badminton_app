@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    full_name: '',
     email: '',
     password: '',
   });
@@ -67,7 +67,7 @@ const CreateAccount = () => {
                             placeholder="Full Name"
                             className="text-black w-100 outline-none border-0 bg-transparent text-15"
                             name="fullName"
-                            value={formData.fullName}
+                            value={formData.full_name}
                             onChange={handleChange}
                           />
                         </div>

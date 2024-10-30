@@ -113,6 +113,8 @@ class TournamentsController < ApplicationController
       :notes_for_organizers,
       :user_id,
       tournament_categories_attributes: [
+        :id,
+        :category_type,
         :is_league,                       # t.boolean "is_league"
         :is_tournament,                   # t.boolean "is_tournament"
         :number_of_games,                 # t.string "number_of_games"
@@ -132,7 +134,7 @@ class TournamentsController < ApplicationController
         :show_intervals,
         :show_time_limit,
         tournament_divisions_attributes: [
-          :id, :division, :participants_limit, :_destroy
+          :id, :division, :_destroy
         ],
       ],
       tournament_players_attributes: [
