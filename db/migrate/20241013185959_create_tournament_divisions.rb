@@ -5,8 +5,7 @@ class CreateTournamentDivisions < ActiveRecord::Migration[7.0]
       t.integer :participants_limit
       t.integer :pairs_limit
       t.integer :trios_limit
-
-      t.references :tournament_categories, null: false, foreign_key: true
+      t.references :tournament_category, null: false, foreign_key: true
 
       t.timestamps
     end

@@ -17,7 +17,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
 
     if (name === "division_number") {
       const divisionCount = parseInt(value) || 0;
-      newCategories[index].divisions = Array.from({ length: divisionCount }, (_, i) => TournamentDivisionModel());
+      newCategories[index].tournament_divisions_attributes = Array.from({ length: divisionCount }, (_, i) => TournamentDivisionModel());
     }
     
     setCategories(newCategories);
@@ -27,7 +27,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const handleDivisionChange = (catIndex, divIndex, e) => {
     const { name, value } = e.target;
     const newCategories = [...categories];
-    newCategories[catIndex].divisions[divIndex][name] = value;
+    newCategories[catIndex].tournament_divisions_attributes[divIndex][name] = value;
     setCategories(newCategories);
     handleFormChange('tournament_categories_attributes', newCategories);
   };
@@ -63,8 +63,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   </label>
                   <select
                     className="field-style5"
-                    name="categoryType"
-                    value={category.categoryType}
+                    name="category_type"
+                    value={category.category_type}
                     onChange={(e) => handleCategoryChange(catIndex, e)}
                   >
                     <option value="mens_singles_individual">Men's Singles Individual Event</option>
@@ -119,14 +119,14 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Game Number <sup>*</sup>
+                    Number of Games <sup>*</sup>
                   </label>
                   <input
                     type="text"
                     placeholder="Game Number"
                     className="field-style5"
-                    name="game_number"
-                    value={category.game_number}
+                    name="number_of_games"
+                    value={category.number_of_games}
                     onChange={(e) => handleCategoryChange(catIndex, e)}
                   />
                 </div>
@@ -234,8 +234,8 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                             type="text"
                             placeholder="Internal Duration"
                             className="field-style5"
-                            name="internal_duration"
-                            value={category.internal_duration}
+                            name="interval_duration"
+                            value={category.interval_duration}
                             disabled={!category.show_intervals}
                             onChange={(e) => handleCategoryChange(catIndex, e)}
                           />
@@ -328,21 +328,35 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 </div>
               </div>
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
-                <div className="form-field5">
-                  <label>
-                    Division Number <sup>*</sup>
-                  </label>
-                  <select
-                    className="field-style5"
-                    name="division_number"
-                    value={category.division_number || ''}
-                  >
-                    <option value="">Select Division Number</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                </div>
+                {category.division_name === "free_writing" ? (
+                  <div className="form-field5">
+                    <input
+                      type="text"
+                      placeholder="Division Number"
+                      className="field-style5"
+                      name="division_number"
+                      value={category.division_number}
+                      onChange={(e) => handleCategoryChange(catIndex, e)}
+                    />
+                  </div>
+                ) : (
+                  <div className="form-field5">
+                    <label>
+                      Division Number <sup>*</sup>
+                    </label>
+                    <select
+                      className="field-style5"
+                      name="division_number"
+                      value={category.division_number || ''}
+                      onChange={(e) => handleCategoryChange(catIndex, e)}
+                    >
+                      <option value="">Select Division Number</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                  </div>
+                )}
               </div>
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
@@ -355,10 +369,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     <input
                       className="m-0 min-width-clear mt-0"
                       type="radio"
-                      id="divisionNameTournament"
-                      name="divisionName"  // Same name attribute for grouping
-                      value="tournament"
-                      checked={category.divisionName === 'tournament'}
+                      name="division_name_type"
+                      value="number"
+                      checked={category.division_name_type === 'number'}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
                     <label
@@ -373,10 +386,9 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     <input
                       className="m-0 min-width-clear mt-0"
                       type="radio"
-                      id="divisionNameFreeWriting"
-                      name="divisionName"  // Same name attribute for grouping
-                      value="freeWriting"
-                      checked={category.divisionName === 'freeWriting'}
+                      name="division_name_type"  // Same name attribute for grouping
+                      value="free_writing"
+                      checked={category.division_name_type === 'free_writing'}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
                     <label
@@ -387,6 +399,25 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     </label>
                   </div>
                 </div>
+              </div>
+
+              <div className="row">
+                {(category.tournament_divisions_attributes || []).map((division, division_index) => (
+                  <div key={division_index} className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
+                    <div className="form-field5">
+                      <label>
+                        Division {division_index + 1} Name <sup>*</sup>
+                      </label>
+                      <input
+                        type="text"
+                        className="field-style5"
+                        name="division"
+                        value={division.division || ''}
+                        onChange={(e) => handleDivisionChange(catIndex, division_index, e)}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

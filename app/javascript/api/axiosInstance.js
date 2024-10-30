@@ -1,9 +1,9 @@
 // axiosInstance.js
 import axios from 'axios';
-import store from '../redux/store'; // Adjust the import path according to your project structure
+import { store } from '../redux/store'; // Adjust the import path according to your project structure
 
 const axiosInstance = axios.create({
-  baseURL: '/tournaments.json', // Set the base URL here
+  baseURL: '/', // Set the base URL here for tournaments
 });
 
 // Add a request interceptor

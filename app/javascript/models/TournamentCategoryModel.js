@@ -1,7 +1,6 @@
 import { TournamentDivisionModel } from './TournamentDivisionModel';
 
 export const TournamentCategoryModel = () => ({
-  tournament_id: null,                // t.bigint "tournament_id"
   category_type: '',                  // t.string "category_type"
   is_league: false,                   // t.boolean "is_league"
   is_tournament: false,               // t.boolean "is_tournament"
