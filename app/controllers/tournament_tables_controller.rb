@@ -8,8 +8,15 @@ class TournamentTablesController < ApplicationController
   end
 
   # 詳細表示
+# app/controllers/tournament_tables_controller.rb
+# app/controllers/tournament_tables_controller.rb
   def show
+    @tournament_table = TournamentTable.find(params[:id])
+    # 各 TournamentPlayer インスタンスのユーザー名を取得
+    @players = User.all
+    @players_options = @players.map { |user| [user.full_name, user.id] }
   end
+
 
   # 新規作成フォーム
   def new
@@ -25,7 +32,6 @@ class TournamentTablesController < ApplicationController
     category_id = tournament_table_params[:tournament_category_id]
     division_id = tournament_table_params[:tournament_division_id]
 
-    binding.pry
     
     # チェック: divisionがcategoryに紐づいているか
     division = TournamentDivision.find_by(id: division_id, tournament_category_id: category_id)
@@ -64,6 +70,22 @@ class TournamentTablesController < ApplicationController
     @tournament_table.destroy
     redirect_to tournament_tables_path, notice: "Tournament table deleted successfully."
   end
+
+# app/controllers/tournament_tables_controller.rb
+  def league_select_players
+    @tournament_table = TournamentTable.find(params[:id])
+    selected_player_ids = params[:selected_players] || []
+
+    # 既存の関連を削除してから新しく追加
+    @tournament_table.tournament_table_players.destroy_all
+    selected_player_ids.each do |player_id|
+      @tournament_table.tournament_table_players.create(tournament_player_id: player_id)
+    end
+
+    redirect_to @tournament_table, notice: "Players selected successfully."
+  end
+
+
 
   private
 

@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   get 'players-management', to: 'users#index'
   resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index]
   resources :profiles, only: [:edit, :update, :destroy, :show, :create]
-  resources :tournament_tables
+
+  resources :tournament_tables do
+    post :league_select_players, on: :member
+  end
+
   resources :users do
     collection do
       post 'show_api_key'
