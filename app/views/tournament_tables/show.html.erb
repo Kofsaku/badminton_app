@@ -1,8 +1,7 @@
-<!-- app/views/tournament_tables/show.html.erb -->
 <h1><%= @tournament_table.name %> - League Table</h1>
 
 <%= form_with url: league_select_players_tournament_table_path(@tournament_table), method: :post, local: true do %>
-  <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+  <table style="width: 100%; border-collapse: collapse; border: 1px solid black;" data-size="<%= @tournament_table.size %>" data-players="<%= @players_options.to_json %>">
     <thead>
       <tr>
         <th style="border: 1px solid black; padding: 8px;">Player</th>

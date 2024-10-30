@@ -21,39 +21,37 @@ class TournamentTablesController < ApplicationController
   # 新規作成フォーム
   def new
     @tournament_table = TournamentTable.new
-    @tournaments = Tournament.all
-    @categories = TournamentCategory.where(tournament_id: @tournaments.first.id)
-    @divisions = TournamentDivision.where(tournament_category_id: @categories.first.id)
+    load_form_data
   end
 
   # 作成処理
   def create
-    # パラメータの取得
+    # binding.pry
     category_id = tournament_table_params[:tournament_category_id]
     division_id = tournament_table_params[:tournament_division_id]
-
-    
-    # チェック: divisionがcategoryに紐づいているか
+  
     division = TournamentDivision.find_by(id: division_id, tournament_category_id: category_id)
     
+    binding.pry
     if division.nil?
       flash[:alert] = "選択されたディビジョンは、このカテゴリーに紐づいていません。"
-      return redirect_to new_tournament_table_path
+      load_form_data # データを読み込む
+      return render :new
     end
   
+    binding.pry
     @tournament_table = TournamentTable.new(tournament_table_params)
     if @tournament_table.save
       redirect_to @tournament_table, notice: "Tournament table created successfully."
     else
+      load_form_data # データを読み込む
       render :new
     end
   end
   
   # 編集フォーム
   def edit
-    @tournaments = Tournament.all
-    @categories = TournamentCategory.all
-    @divisions = TournamentDivision.all
+    load_form_data
   end
 
   # 更新処理
@@ -88,6 +86,12 @@ class TournamentTablesController < ApplicationController
 
 
   private
+
+  def load_form_data
+    @tournaments = Tournament.all
+    @categories = TournamentCategory.where(tournament_id: @tournaments.first&.id)
+    @divisions = TournamentDivision.where(tournament_category_id: @categories.first&.id)
+  end
 
   def set_tournament_table
     @tournament_table = TournamentTable.find(params[:id])

@@ -1,35 +1,55 @@
-<%= form_with(model: @tournament_table, local: true) do |f| %>
+<form action="/tournament_tables" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
   <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <label for="tournament_table_name">Name</label>
+    <input type="text" name="tournament_table[name]" id="tournament_table_name">
   </div>
 
   <div>
-    <%= f.label :table_type, "Select Table Type" %>
-    <%= f.select :table_type, TournamentTable.table_types.keys.map { |type| [type.titleize, type] } %>
+    <label for="tournament_table_table_type">Select Table Type</label>
+    <select name="tournament_table[table_type]" id="tournament_table_table_type">
+      <% TournamentTable.table_types.keys.each do |type| %>
+        <option value="<%= type %>"><%= type.titleize %></option>
+      <% end %>
+    </select>
   </div>
 
   <div>
-    <%= f.label :tournament_id, "Select Tournament" %>
-    <%= f.collection_select :tournament_id, @tournaments, :id, :name %>
+    <label for="tournament_table_tournament_id">Select Tournament</label>
+    <select name="tournament_table[tournament_id]" id="tournament_table_tournament_id">
+      <% @tournaments.each do |tournament| %>
+        <option value="<%= tournament.id %>"><%= tournament.name %></option>
+      <% end %>
+    </select>
   </div>
 
   <div>
-    <%= f.label :tournament_category_id, "Select Category" %>
-    <%= f.collection_select :tournament_category_id, @categories, :id, :category_type %>
+    <label for="tournament_table_tournament_category_id">Select Category</label>
+    <select name="tournament_table[tournament_category_id]" id="tournament_table_tournament_category_id">
+      <% @categories.each do |category| %>
+        <option value="<%= category.id %>"><%= category.category_type %></option>
+      <% end %>
+    </select>
   </div>
 
   <div>
-    <%= f.label :tournament_division_id, "Select Division" %>
-    <%= f.collection_select :tournament_division_id, @divisions, :id, :division %>
+    <label for="tournament_table_tournament_division_id">Select Division</label>
+    <select name="tournament_table[tournament_division_id]" id="tournament_table_tournament_division_id">
+      <% @divisions.each do |division| %>
+        <option value="<%= division.id %>"><%= division.division %></option>
+      <% end %>
+    </select>
   </div>
 
   <div>
-    <%= f.label :size, "Table Size (e.g., 4 for 4x4)" %>
-    <%= f.number_field :size %>
+    <label for="tournament_table_size">Table Size (e.g., 4 for 4x4)</label>
+    <input type="number" name="tournament_table[size]" id="tournament_table_size">
   </div>
 
   <div>
-    <%= f.submit %>
+    <input type="submit" value="Create Tournament Table">
   </div>
-<% end %>
+</form>
+
+<%= javascript_include_tag 'tournament_table_create' %>
