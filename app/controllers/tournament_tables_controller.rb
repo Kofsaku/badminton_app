@@ -32,14 +32,12 @@ class TournamentTablesController < ApplicationController
   
     division = TournamentDivision.find_by(id: division_id, tournament_category_id: category_id)
     
-    binding.pry
     if division.nil?
       flash[:alert] = "選択されたディビジョンは、このカテゴリーに紐づいていません。"
       load_form_data # データを読み込む
       return render :new
     end
   
-    binding.pry
     @tournament_table = TournamentTable.new(tournament_table_params)
     if @tournament_table.save
       redirect_to @tournament_table, notice: "Tournament table created successfully."
@@ -90,7 +88,11 @@ class TournamentTablesController < ApplicationController
   def load_form_data
     @tournaments = Tournament.all
     @categories = TournamentCategory.where(tournament_id: @tournaments.first&.id)
-    @divisions = TournamentDivision.where(tournament_category_id: @categories.first&.id)
+    if @categories.any?
+      @divisions = TournamentDivision.where(tournament_category_id: @categories.first.id)
+    else
+      @divisions = TournamentDivision.none
+    end
   end
 
   def set_tournament_table

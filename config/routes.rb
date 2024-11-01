@@ -27,6 +27,10 @@ Rails.application.routes.draw do
     post :league_select_players, on: :member
   end
 
+  resources :timetables, only: [:index, :show, :new, :create] do
+    get 'venues_for_tournament', on: :collection
+  end
+
   resources :users do
     collection do
       post 'show_api_key'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_29_231701) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_231701) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_teams_on_user_id"
+  end
+
+  create_table "timetables", force: :cascade do |t|
+    t.bigint "tournament_venue_id", null: false
+    t.integer "row_count", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "memos"
+    t.index ["tournament_venue_id"], name: "index_timetables_on_tournament_venue_id"
   end
 
   create_table "tournament_categories", force: :cascade do |t|
@@ -198,6 +207,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_231701) do
   add_foreign_key "profiles", "users"
   add_foreign_key "team_members", "teams"
   add_foreign_key "teams", "users"
+  add_foreign_key "timetables", "tournament_venues"
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"

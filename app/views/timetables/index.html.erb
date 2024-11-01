@@ -1,0 +1,9 @@
+<h2>タイムテーブル一覧</h2>
+
+<ul>
+  <% @timetables.each do |timetable| %>
+    <li>
+      <%= link_to "#{timetable.tournament_venue.venue_name} - #{timetable.tournament_venue.venue_date}", timetable %>
+    </li>
+  <% end %>
+</ul>
