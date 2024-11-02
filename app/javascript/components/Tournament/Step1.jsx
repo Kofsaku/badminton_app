@@ -39,7 +39,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
             </a>
           </div>
           <div className="d-inline-block min-width-clear">
-            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0"> {t('add_new_tournament')} </h3>
+            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0"> {t('tournament.add_new_tournament')} </h3>
           </div>
         </div>
       </div>
@@ -48,36 +48,36 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
         <form onSubmit={handleSubmit}>
           <div className="row">
             {[
-              { label: t('name'), name: 'name', type: 'text' },
-              { label: t('event_date_time'), name: 'event_date', type: 'datetime-local' },
-              { label: t('registration_time'), name: 'registration_time', type: 'time' },
-              { label: t('organization_name'), name: 'organization_name', type: 'text' },
-              { label: t('payment_method'), name: 'payment_method', type: 'text' },
-              { label: t('match_start_time'), name: 'match_start_time', type: 'time' },
-              { label: t('match_overview'), name: 'match_overview', type: 'text' },
-              { label: t('organizer'), name: 'organizer', type: 'text' },
-              { label: t('administrator'), name: 'administrator', type: 'text' },
-              { label: t('sponsor'), name: 'sponsor', type: 'text' },
-              { label: t('event_category'), name: 'event_category', type: 'text' },
-              { label: t('days_schedule'), name: 'days_schedule', type: 'text' },
-              { label: t('reception_period'), name: 'reception_period', type: 'text' },
-              { label: t('competition_format'), name: 'competition_format', type: 'text' },
-              { label: t('max_participants'), name: 'max_participants', type: 'number' },
-              { label: t('competition_rules'), name: 'competition_rules', type: 'text' },
-              { label: t('ball_type'), name: 'ball_type', type: 'text' },
-              { label: t('participation_eligibility'), name: 'participation_eligibility', type: 'text' },
-              { label: t('participation_payment_method'), name: 'participation_payment_method', type: 'text' },
-              { label: t('application_method'), name: 'application_method', type: 'text' },
-              { label: t('application_deadline'), name: 'application_deadline', type: 'date' },
-              { label: t('pairing_selection_method'), name: 'pairing_selection_method', type: 'text' },
-              { label: t('award_details'), name: 'award_details', type: 'text' },
-              { label: t('member_changes'), name: 'member_changes', type: 'text' },
-              { label: t('entry_in_multiple_events'), name: 'entry_in_multiple_events', type: 'text' },
-              { label: t('cancellation_after_application'), name: 'cancellation_after_application', type: 'text' },
-              { label: t('participation_fee'), name: 'participation_fee', type: 'text' },
-              { label: t('inquiry_contact_information'), name: 'inquiry_contact_information', type: 'text' },
-              { label: t('announcements'), name: 'announcements', type: 'textarea' },
-              { label: t('notes_for_organizers'), name: 'notes_for_organizers', type: 'textarea' },
+              { label: t('tournament.name'), name: 'name', type: 'text' },
+              { label: t('tournament.event_date_time'), name: 'event_date', type: 'datetime-local' },
+              { label: t('tournament.registration_time'), name: 'registration_time', type: 'time' },
+              { label: t('tournament.organization_name'), name: 'organization_name', type: 'text' },
+              { label: t('tournament.payment_method'), name: 'payment_method', type: 'text' },
+              { label: t('tournament.match_start_time'), name: 'match_start_time', type: 'time' },
+              { label: t('tournament.match_overview'), name: 'match_overview', type: 'text' },
+              { label: t('tournament.organizer'), name: 'organizer', type: 'text' },
+              { label: t('tournament.administrator'), name: 'administrator', type: 'text' },
+              { label: t('tournament.sponsor'), name: 'sponsor', type: 'text' },
+              { label: t('tournament.event_category'), name: 'event_category', type: 'text' },
+              { label: t('tournament.days_schedule'), name: 'days_schedule', type: 'text' },
+              { label: t('tournament.reception_period'), name: 'reception_period', type: 'text' },
+              { label: t('tournament.competition_format'), name: 'competition_format', type: 'text' },
+              { label: t('tournament.max_participants'), name: 'max_participants', type: 'number' },
+              { label: t('tournament.competition_rules'), name: 'competition_rules', type: 'text' },
+              { label: t('tournament.ball_type'), name: 'ball_type', type: 'text' },
+              { label: t('tournament.participation_eligibility'), name: 'participation_eligibility', type: 'text' },
+              { label: t('tournament.participation_payment_method'), name: 'participation_payment_method', type: 'text' },
+              { label: t('tournament.application_method'), name: 'application_method', type: 'text' },
+              { label: t('tournament.application_deadline'), name: 'application_deadline', type: 'date' },
+              { label: t('tournament.pairing_selection_method'), name: 'pairing_selection_method', type: 'text' },
+              { label: t('tournament.award_details'), name: 'award_details', type: 'text' },
+              { label: t('tournament.member_changes'), name: 'member_changes', type: 'text' },
+              { label: t('tournament.entry_in_multiple_events'), name: 'entry_in_multiple_events', type: 'text' },
+              { label: t('tournament.cancellation_after_application'), name: 'cancellation_after_application', type: 'text' },
+              { label: t('tournament.participation_fee'), name: 'participation_fee', type: 'text' },
+              { label: t('tournament.inquiry_contact_information'), name: 'inquiry_contact_information', type: 'text' },
+              { label: t('tournament.announcements'), name: 'announcements', type: 'textarea' },
+              { label: t('tournament.notes_for_organizers'), name: 'notes_for_organizers', type: 'textarea' },
             ].map(({ label, name, type }) => (
               <div 
                 className={type === 'textarea' ? "col-lg-12 col-md-12 col-sm-12 col-12 mb-4" : "col-lg-6 col-md-6 col-sm-6 col-12 mb-4"}
@@ -114,10 +114,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 <div key={index} className="row mb-4">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>{t('venue_name')}<sup>*</sup></label>
+                      <label>{t('tournament.venue_name')}<sup>*</sup></label>
                       <input
                         type="text"
-                        placeholder={t('venue_name')}
+                        placeholder={t('tournament.venue_name')}
                         className="field-style5"
                         name="venue_name"
                         value={venue.venue_name}
@@ -127,10 +127,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>{t('venue_address')}<sup>*</sup></label>
+                      <label>{t('tournament.venue_address')}<sup>*</sup></label>
                       <input
                         type="text"
-                        placeholder={t('venue_address')}
+                        placeholder={t('tournament.venue_address')}
                         className="field-style5"
                         name="venue_address"
                         value={venue.venue_address}
@@ -140,10 +140,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>{t('number_of_courts')}<sup>*</sup></label>
+                      <label>{t('tournament.number_of_courts')}<sup>*</sup></label>
                       <input
                         type="number"
-                        placeholder={t('number_of_courts')}
+                        placeholder={t('tournament.number_of_courts')}
                         className="field-style5"
                         name="no_of_courts"
                         value={venue.no_of_courts}
@@ -153,10 +153,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>{t('venue_date')} <sup>*</sup></label>
+                      <label>{t('tournament.venue_date')} <sup>*</sup></label>
                       <input
                         type="date"
-                        placeholder={t('venue_date')} 
+                        placeholder={t('tournament.venue_date')} 
                         className="field-style5"
                         name="venue_date"
                         value={venue.venue_date}
@@ -169,7 +169,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
               <div className="row mb-4">
                 <div className="col-auto">
                   <button type="button" onClick={addVenue} className="btn btn-link p-0 text-decoration-none">
-                    {t('add_more_venues')}
+                    {t('tournament.add_more_venues')}
                   </button>
                 </div>
               </div>
@@ -179,7 +179,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
           <div className="row pt-2">
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
               <button className="bg-green1 text-white text-15 w-100 rounded-2 p-3" type="submit">
-                {t('next')}
+                {t('tournament.next')}
               </button>
             </div>
           </div>
