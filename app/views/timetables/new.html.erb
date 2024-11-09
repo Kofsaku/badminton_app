@@ -1,0 +1,121 @@
+<%= form_with(model: @timetable, local: true, url: timetables_path, id: "timetable-form") do |f| %>
+  <div>
+    <%= f.label :tournament_id, "大会を選択" %>
+    <%= select_tag :tournament_id, options_from_collection_for_select(@tournaments, :id, :name), prompt: "大会を選択してください", onchange: "fetchVenues(this.value)" %>
+  </div>
+
+  <div id="venues-selection">
+    <!-- 大会に関連する体育館と日程リストがここに表示されます -->
+  </div>
+
+  <!-- 隠しフィールドに行数を動的に設定 -->
+  <%= hidden_field_tag "timetable[row_count]", 0, id: "row-count-input" %>
+  <%= hidden_field_tag "timetable[memos]", "", id: "memos-input" %>
+
+  <h2><%= @timetable&.tournament_venue&.venue_name || "タイムテーブル作成" %></h2>
+
+  <button type="button" onclick="toggleTimeColumn()">時間を入力</button>
+
+  <table id="timetable">
+    <thead>
+      <tr>
+        <th id="time-header" style="display: none;">時間</th>
+        <% 3.times do |i| %>
+          <th>コート <%= i + 1 %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody id="timetable-body">
+      <tr>
+        <td class="time-cell" style="display: none;"><input type="text" class="time-input" placeholder="時間を入力" style="width: 80px;"></td>
+        <% 3.times do %>
+          <td>セル内容</td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <button type="button" onclick="addRow()">行を追加</button>
+    <button type="button" onclick="removeRow()">行を削除</button>
+  </div>
+
+  <%= f.submit "保存", class: "save-button" %>
+<% end %>
+
+<script>
+
+document.getElementById("timetable-form").addEventListener("submit", function(event) {
+  saveMemos();  // フォーム送信時に memos フィールドを更新
+});
+
+  function saveMemos() {
+    // 各行の時間を配列として収集し、memos フィールドに設定
+    const memos = Array.from(document.querySelectorAll('.time-input')).map(input => input.value);
+    document.getElementById('memos-input').value = JSON.stringify(memos);
+  }
+
+
+  function fetchVenues(tournamentId) {
+    fetch(`/timetables/venues_for_tournament?tournament_id=${tournamentId}`)
+      .then(response => response.json())
+      .then(data => {
+        const venuesSelection = document.getElementById('venues-selection');
+        if (data.length === 0) {
+          venuesSelection.innerHTML = '<p>該当する体育館や日程がありません</p>';
+          return;
+        }
+        
+        let options = '<label>体育館と日付を選択</label><select name="timetable[tournament_venue_id]">';
+        data.forEach(venue => {
+          options += `<option value="${venue.id}">${venue.venue_name} - ${venue.venue_date}</option>`;
+        });
+        options += '</select>';
+        venuesSelection.innerHTML = options;
+      });
+  }
+
+  function updateRowCount() {
+    const rowCount = document.querySelectorAll('#timetable-body tr').length;
+    document.getElementById('row-count-input').value = rowCount;
+  }
+
+  function addRow() {
+    const tbody = document.getElementById('timetable-body');
+    const row = document.createElement('tr');
+
+    // 時間入力セル
+    const timeCell = document.createElement('td');
+    timeCell.className = 'time-cell';
+    timeCell.style.display = document.getElementById('time-header').style.display;
+    timeCell.innerHTML = '<input type="text" class="time-input" placeholder="時間を入力" style="width: 80px;">';
+    row.appendChild(timeCell);
+
+    // コートセルを3列追加
+    for (let i = 0; i < 3; i++) {
+      const cell = document.createElement('td');
+      cell.textContent = 'セル内容';
+      row.appendChild(cell);
+    }
+
+    tbody.appendChild(row);
+    updateRowCount();  // 行数を更新
+  }
+
+  function removeRow() {
+    const tbody = document.getElementById('timetable-body');
+    if (tbody.rows.length > 1) {  // 少なくとも1行は残す
+      tbody.deleteRow(-1);
+      updateRowCount();  // 行数を更新
+    }
+  }
+
+  function toggleTimeColumn() {
+    const timeHeader = document.getElementById('time-header');
+    const timeCells = document.querySelectorAll('.time-cell');
+    const isVisible = timeHeader.style.display === 'table-cell';
+    
+    timeHeader.style.display = isVisible ? 'none' : 'table-cell';
+    timeCells.forEach(cell => cell.style.display = isVisible ? 'none' : 'table-cell');
+  }
+</script>

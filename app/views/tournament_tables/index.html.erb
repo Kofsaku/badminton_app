@@ -1,0 +1,32 @@
+<h1>Tournament Tables</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Tournament</th>
+      <th>Category</th>
+      <th>Division</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tournament_tables.each do |table| %>
+      <tr>
+        <td><%= table.name %></td>
+        <td><%= table.tournament.name %></td>
+        <td><%= table.tournament_category.category_type %></td>
+        <td><%= table.tournament_division.division %></td>
+        <td><%= table.table_type %></td>
+        <td><%= table.size %>x<%= table.size %></td>
+        <td>
+          <%= link_to 'Show', tournament_table_path(table) %>
+          <%= link_to 'Edit', edit_tournament_table_path(table) %>
+          <%= link_to 'Delete', tournament_table_path(table), method: :delete, data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'New Tournament Table', new_tournament_table_path %>

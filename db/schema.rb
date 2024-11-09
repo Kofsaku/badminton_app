@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
     t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
+  create_table "timetables", force: :cascade do |t|
+    t.bigint "tournament_venue_id", null: false
+    t.integer "row_count", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "memos"
+    t.index ["tournament_venue_id"], name: "index_timetables_on_tournament_venue_id"
+  end
+
   create_table "tournament_categories", force: :cascade do |t|
     t.bigint "tournament_id", null: false
     t.string "category_type"
@@ -84,9 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
     t.boolean "switch_between_games"
     t.string "match_composition"
     t.string "match_facilitator"
-    t.boolean "show_score"
-    t.boolean "show_intervals"
-    t.boolean "show_time_limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tournament_id"], name: "index_tournament_categories_on_tournament_id"
@@ -104,14 +110,36 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
   end
 
   create_table "tournament_players", force: :cascade do |t|
-    t.string "player_type", null: false
-    t.bigint "player_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "tournament_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["player_type", "player_id"], name: "index_tournament_players_on_player"
     t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
+    t.index ["user_id"], name: "index_tournament_players_on_user_id"
+  end
+
+  create_table "tournament_table_players", force: :cascade do |t|
+    t.bigint "tournament_table_id", null: false
+    t.bigint "tournament_player_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_player_id"], name: "index_tournament_table_players_on_tournament_player_id"
+    t.index ["tournament_table_id"], name: "index_tournament_table_players_on_tournament_table_id"
+  end
+
+  create_table "tournament_tables", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "table_type", null: false
+    t.bigint "tournament_id", null: false
+    t.bigint "tournament_category_id", null: false
+    t.bigint "tournament_division_id", null: false
+    t.integer "size", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_category_id"], name: "index_tournament_tables_on_tournament_category_id"
+    t.index ["tournament_division_id"], name: "index_tournament_tables_on_tournament_division_id"
+    t.index ["tournament_id"], name: "index_tournament_tables_on_tournament_id"
   end
 
   create_table "tournament_venues", force: :cascade do |t|
@@ -179,9 +207,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_225012) do
   add_foreign_key "profiles", "users"
   add_foreign_key "team_members", "teams"
   add_foreign_key "teams", "users"
+  add_foreign_key "timetables", "tournament_venues"
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"
+  add_foreign_key "tournament_players", "users"
+  add_foreign_key "tournament_table_players", "tournament_players"
+  add_foreign_key "tournament_table_players", "tournament_tables"
+  add_foreign_key "tournament_tables", "tournament_categories"
+  add_foreign_key "tournament_tables", "tournament_divisions"
+  add_foreign_key "tournament_tables", "tournaments"
   add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"
 end

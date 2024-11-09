@@ -12,8 +12,25 @@ Rails.application.routes.draw do
   get 'tournament-creation', to: 'tournaments#new'
   get 'tournament-management', to: 'tournaments#tournament_management'
   get 'players-management', to: 'users#index'
-  resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index]
+  resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index] do 
+    get 'categories', to: 'tournaments#categories'
+  end
+
+  resources :categories do 
+    get 'divisions', to: 'categories#divisions'
+  end
+  
   resources :profiles, only: [:edit, :update, :destroy, :show, :create]
+
+
+  resources :tournament_tables do
+    post :league_select_players, on: :member
+  end
+
+  resources :timetables, only: [:index, :show, :new, :create] do
+    get 'venues_for_tournament', on: :collection
+  end
+
   resources :users do
     collection do
       post 'show_api_key'
