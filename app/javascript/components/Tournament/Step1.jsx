@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { TournamentVenueModel } from '../../models/TournamentVenueModel';
+import { useTranslation } from 'react-i18next';
 
 const Step1 = ({ nextStep, formData, handleFormChange }) => {
   const [venues, setVenues] = useState([TournamentVenueModel()]); // Call the model function
+  const { t } = useTranslation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +39,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
             </a>
           </div>
           <div className="d-inline-block min-width-clear">
-            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0"> Add New Tournament </h3>
+            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0"> {t('tournament.add_new_tournament')} </h3>
           </div>
         </div>
       </div>
@@ -46,36 +48,36 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
         <form onSubmit={handleSubmit}>
           <div className="row">
             {[
-              { label: 'Name', name: 'name', type: 'text' },
-              { label: 'Event Date Time', name: 'event_date', type: 'datetime-local' },
-              { label: 'Registration Start Time', name: 'registration_time', type: 'time' },
-              { label: 'Organization Name', name: 'organization_name', type: 'text' },
-              { label: 'Payment Method', name: 'payment_method', type: 'text' },
-              { label: 'Match Start Time', name: 'match_start_time', type: 'time' },
-              { label: 'Match Overview', name: 'match_overview', type: 'text' },
-              { label: 'Organizer', name: 'organizer', type: 'text' },
-              { label: 'Administrator', name: 'administrator', type: 'text' },
-              { label: 'Sponsor', name: 'sponsor', type: 'text' },
-              { label: 'Event Category', name: 'event_category', type: 'text' },
-              { label: 'Days Schedule', name: 'days_schedule', type: 'text' },
-              { label: 'Reception Period', name: 'reception_period', type: 'text' },
-              { label: 'Competition Format', name: 'competition_format', type: 'text' },
-              { label: 'Max Participants', name: 'max_participants', type: 'number' },
-              { label: 'Competition Rules', name: 'competition_rules', type: 'text' },
-              { label: 'Ball Type', name: 'ball_type', type: 'text' },
-              { label: 'Participation Eligibility', name: 'participation_eligibility', type: 'text' },
-              { label: 'Participation Payment Method', name: 'participation_payment_method', type: 'text' },
-              { label: 'Application Method', name: 'application_method', type: 'text' },
-              { label: 'Application Deadline', name: 'application_deadline', type: 'date' },
-              { label: 'Pairing Selection Method', name: 'pairing_selection_method', type: 'text' },
-              { label: 'Award Details', name: 'award_details', type: 'text' },
-              { label: 'Member Changes', name: 'member_changes', type: 'text' },
-              { label: 'Add Multiple Events Entry', name: 'entry_in_multiple_events', type: 'text' },
-              { label: 'Add Cancellation After Application', name: 'cancellation_after_application', type: 'text' },
-              { label: 'Participation Fee', name: 'participation_fee', type: 'text' },
-              { label: 'Inquiry Contact Info', name: 'inquiry_contact_information', type: 'text' },
-              { label: 'Announcements', name: 'announcements', type: 'textarea' },
-              { label: 'Notes for Organizers', name: 'notes_for_organizers', type: 'textarea' },
+              { label: t('tournament.name'), name: 'name', type: 'text' },
+              { label: t('tournament.event_date_time'), name: 'event_date', type: 'datetime-local' },
+              { label: t('tournament.registration_time'), name: 'registration_time', type: 'time' },
+              { label: t('tournament.organization_name'), name: 'organization_name', type: 'text' },
+              { label: t('tournament.payment_method'), name: 'payment_method', type: 'text' },
+              { label: t('tournament.match_start_time'), name: 'match_start_time', type: 'time' },
+              { label: t('tournament.match_overview'), name: 'match_overview', type: 'text' },
+              { label: t('tournament.organizer'), name: 'organizer', type: 'text' },
+              { label: t('tournament.administrator'), name: 'administrator', type: 'text' },
+              { label: t('tournament.sponsor'), name: 'sponsor', type: 'text' },
+              { label: t('tournament.event_category'), name: 'event_category', type: 'text' },
+              { label: t('tournament.days_schedule'), name: 'days_schedule', type: 'text' },
+              { label: t('tournament.reception_period'), name: 'reception_period', type: 'text' },
+              { label: t('tournament.competition_format'), name: 'competition_format', type: 'text' },
+              { label: t('tournament.max_participants'), name: 'max_participants', type: 'number' },
+              { label: t('tournament.competition_rules'), name: 'competition_rules', type: 'text' },
+              { label: t('tournament.ball_type'), name: 'ball_type', type: 'text' },
+              { label: t('tournament.participation_eligibility'), name: 'participation_eligibility', type: 'text' },
+              { label: t('tournament.participation_payment_method'), name: 'participation_payment_method', type: 'text' },
+              { label: t('tournament.application_method'), name: 'application_method', type: 'text' },
+              { label: t('tournament.application_deadline'), name: 'application_deadline', type: 'date' },
+              { label: t('tournament.pairing_selection_method'), name: 'pairing_selection_method', type: 'text' },
+              { label: t('tournament.award_details'), name: 'award_details', type: 'text' },
+              { label: t('tournament.member_changes'), name: 'member_changes', type: 'text' },
+              { label: t('tournament.entry_in_multiple_events'), name: 'entry_in_multiple_events', type: 'text' },
+              { label: t('tournament.cancellation_after_application'), name: 'cancellation_after_application', type: 'text' },
+              { label: t('tournament.participation_fee'), name: 'participation_fee', type: 'text' },
+              { label: t('tournament.inquiry_contact_information'), name: 'inquiry_contact_information', type: 'text' },
+              { label: t('tournament.announcements'), name: 'announcements', type: 'textarea' },
+              { label: t('tournament.notes_for_organizers'), name: 'notes_for_organizers', type: 'textarea' },
             ].map(({ label, name, type }) => (
               <div 
                 className={type === 'textarea' ? "col-lg-12 col-md-12 col-sm-12 col-12 mb-4" : "col-lg-6 col-md-6 col-sm-6 col-12 mb-4"}
@@ -112,10 +114,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 <div key={index} className="row mb-4">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>Venue Name <sup>*</sup></label>
+                      <label>{t('tournament.venue_name')}<sup>*</sup></label>
                       <input
                         type="text"
-                        placeholder="Venue Name"
+                        placeholder={t('tournament.venue_name')}
                         className="field-style5"
                         name="venue_name"
                         value={venue.venue_name}
@@ -125,10 +127,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>Venue Address <sup>*</sup></label>
+                      <label>{t('tournament.venue_address')}<sup>*</sup></label>
                       <input
                         type="text"
-                        placeholder="Venue Address"
+                        placeholder={t('tournament.venue_address')}
                         className="field-style5"
                         name="venue_address"
                         value={venue.venue_address}
@@ -138,10 +140,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>Number of Courts <sup>*</sup></label>
+                      <label>{t('tournament.number_of_courts')}<sup>*</sup></label>
                       <input
                         type="number"
-                        placeholder="Add Courts Number"
+                        placeholder={t('tournament.number_of_courts')}
                         className="field-style5"
                         name="no_of_courts"
                         value={venue.no_of_courts}
@@ -151,10 +153,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
                     <div className="form-field5">
-                      <label>Venue Date <sup>*</sup></label>
+                      <label>{t('tournament.venue_date')} <sup>*</sup></label>
                       <input
                         type="date"
-                        placeholder="Add Venue Date"
+                        placeholder={t('tournament.venue_date')} 
                         className="field-style5"
                         name="venue_date"
                         value={venue.venue_date}
@@ -167,7 +169,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
               <div className="row mb-4">
                 <div className="col-auto">
                   <button type="button" onClick={addVenue} className="btn btn-link p-0 text-decoration-none">
-                    Add More Venues
+                    {t('tournament.add_more_venues')}
                   </button>
                 </div>
               </div>
@@ -177,7 +179,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
           <div className="row pt-2">
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
               <button className="bg-green1 text-white text-15 w-100 rounded-2 p-3" type="submit">
-                Next
+                {t('tournament.next')}
               </button>
             </div>
           </div>

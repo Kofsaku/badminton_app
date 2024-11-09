@@ -1,9 +1,11 @@
 import React from 'react';
 import { createTournament } from '../../api/tournamentApi';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +37,7 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
             </button>
           </div>
           <div className="d-inline-block min-width-clear">
-            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0">Select the Tournament Timetable</h3>
+            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0">{ t('tournament.selectTournamentTimetable') }</h3>
           </div>
         </div>
       </div>

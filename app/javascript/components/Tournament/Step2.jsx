@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TournamentCategoryModel } from '../../models/TournamentCategoryModel';
 import { TournamentDivisionModel } from '../../models/TournamentDivisionModel';
+import { useTranslation } from 'react-i18next';
 
 const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const [categories, setCategories] = useState([TournamentCategoryModel()]);
- 
+  const { t } = useTranslation();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     nextStep();
@@ -47,7 +49,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
           </div>
           <div className="d-inline-block min-width-clear">
             <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0">
-              Select the Tournament Category
+              {t('tournament.selectCategory')}
             </h3>
           </div>
         </div>
@@ -67,22 +69,22 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     value={category.category_type}
                     onChange={(e) => handleCategoryChange(catIndex, e)}
                   >
-                    <option value="mens_singles_individual">Men's Singles Individual Event</option>
-                    <option value="womens_singles_individual">Women's Singles Individual Event</option>
-                    <option value="mens_doubles_individual">Men's Doubles Individual Event</option>
-                    <option value="womens_doubles_individual">Women's Doubles Individual Event</option>
-                    <option value="mens_triples_individual">Men's Triples Individual Event</option>
-                    <option value="womens_triples_individual">Women's Triples Individual Event</option>
-                    <option value="mixed_triples_individual">Mixed Triples Individual Event</option>
-                    <option value="mens_doubles_team">Men's Doubles Team Event</option>
-                    <option value="womens_doubles_team">Women's Doubles Team Event</option>
-                    <option value="mixed_doubles_team">Mixed Doubles Team Event</option>
-                    <option value="mens_singles_doubles_team">Men's Singles & Doubles Team Event</option>
-                    <option value="womens_singles_doubles_team">Women's Singles & Doubles Team Event</option>
-                    <option value="mixed_singles_doubles_team">Mixed Singles & Doubles Team Event</option>
-                    <option value="mens_triples_team">Men's Triples Team Event</option>
-                    <option value="womens_triples_team">Women's Triples Team Event</option>
-                    <option value="mixed_triples_team">Mixed Triples Team Event</option>
+                    <option value="mens_singles_individual">{t('tournament.mensSinglesIndividual')}</option> {/* Translation key */}
+                    <option value="womens_singles_individual">{t('tournament.womensSinglesIndividual')}</option> {/* Translation key */}
+                    <option value="mens_doubles_individual">{t('tournament.mensDoublesIndividual')}</option> {/* Translation key */}
+                    <option value="womens_doubles_individual">{t('tournament.womensDoublesIndividual')}</option> {/* Translation key */}
+                    <option value="mens_triples_individual">{t('tournament.mensTriplesIndividual')}</option> {/* Translation key */}
+                    <option value="womens_triples_individual">{t('tournament.womensTriplesIndividual')}</option> {/* Translation key */}
+                    <option value="mixed_triples_individual">{t('tournament.mixedTriplesIndividual')}</option> {/* Translation key */}
+                    <option value="mens_doubles_team">{t('tournament.mensDoublesTeam')}</option> {/* Translation key */}
+                    <option value="womens_doubles_team">{t('tournament.womensDoublesTeam')}</option> {/* Translation key */}
+                    <option value="mixed_doubles_team">{t('tournament.mixedDoublesTeam')}</option> {/* Translation key */}
+                    <option value="mens_singles_doubles_team">{t('tournament.mensSinglesDoublesTeam')}</option> {/* Translation key */}
+                    <option value="womens_singles_doubles_team">{t('tournament.womensSinglesDoublesTeam')}</option> {/* Translation key */}
+                    <option value="mixed_singles_doubles_team">{t('tournament.mixedSinglesDoublesTeam')}</option> {/* Translation key */}
+                    <option value="mens_triples_team">{t('tournament.mensTriplesTeam')}</option> {/* Translation key */}
+                    <option value="womens_triples_team">{t('tournament.womensTriplesTeam')}</option> {/* Translation key */}
+                    <option value="mixed_triples_team">{t('tournament.mixedTriplesTeam')}</option> {/* Translation key */}
                   </select>
                 </div>
               </div>
@@ -98,7 +100,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
                     <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor={`isTournament_${catIndex}`}>
-                      Tournament
+                      {t('tournament.tournament')}
                     </label>
                   </div>
                   <div className="checkbox-style1 me-2 mb-2 d-flex rounded-2 align-items-center justify-content-start">
@@ -111,7 +113,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     />
                     <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold" htmlFor={`isLeague_${catIndex}`}>
-                      League
+                      {t('tournament.league')}
                     </label>
                   </div>
                 </div>
@@ -119,7 +121,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Number of Games <sup>*</sup>
+                    {t('tournament.numberOfGames')} <sup>*</sup>
                   </label>
                   <input
                     type="text"
@@ -134,7 +136,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Score <sup>*</sup>
+                    {t('tournament.score')} <sup>*</sup>
                   </label>
                   <div className="d-flex w-100 align-items-center justify-content-start">
                     <div className="checkbox-style1 me-2 d-inline-block">
@@ -161,7 +163,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Time Limit <sup>*</sup>
+                    {t('tournament.timeLimit')} <sup>*</sup>
                   </label>
                   <div className="d-flex w-100 align-items-center justify-content-start">
                     <div className="checkbox-style1 me-2 d-inline-block">
@@ -180,17 +182,17 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                       disabled={!category.show_time_limit}
                     >
-                      <option value="">Select Time Limit</option>
-                      <option value="15">15 minutes</option>
-                      <option value="30">30 minutes</option>
-                      <option value="60">60 minutes</option>
+                      <option value="">{ t('tournament.selectTimeLimit') }</option>
+                      <option value="15">{ t('tournament.fifteenMinutes') }</option>
+                      <option value="30">{ t('tournament.thirtyMinutes') }</option>
+                      <option value="60">{ t('tournament.sixtyMinutes') }</option>
                     </select>
                   </div>
                 </div>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
                 <div className="form-field5">
-                  <label>Intervals</label>
+                  <label>{ t('tournament.intervals') }</label>
                 </div>
                 <div className="d-flex align-items-center justify-content-start w-100">
                   <div className="d-inline-block min-width-clear">
@@ -209,7 +211,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-lg-0 mb-md-0 mb-sm-0 mb-4">
                         <div className="form-field5">
                           <label>
-                            Break Point <sup>*</sup>
+                            { t('tournament.breakPoint') } <sup>*</sup>
                           </label>
                           <select
                             className="field-style5"
@@ -218,17 +220,17 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                             onChange={(e) => handleCategoryChange(catIndex, e)}
                             disabled={!category.show_intervals}
                           >
-                            <option value="">Select Break Point</option>
-                            <option value="10Points">10 Points</option>
-                            <option value="20Points">20 Points</option>
-                            <option value="30Points">30 Points</option>
+                            <option value="">{ t('tournament.selectBreakPoint') }</option>
+                            <option value="10Points">{ t('tournament.tenPoints') }</option>
+                            <option value="20Points">{ t('tournament.twentyPoints') }</option>
+                            <option value="30Points">{ t('tournament.thirtyPoints') }</option>
                           </select>
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-field5">
                           <label>
-                            Internal Duration <sup>*</sup>
+                            { t('tournament.intervalDurationPlaceholder') } <sup>*</sup>
                           </label>
                           <input
                             type="text"
@@ -248,14 +250,14 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div className="form-field5">
                   <label>
-                    Change Ends
+                    { t('tournament.changeEnds') }
                   </label>
                 </div>
               </div>
               <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Switch During Game<sup>*</sup>
+                    { t('tournament.switchDuringGame') }<sup>*</sup>
                   </label>
                   <div className="d-flex w-100 align-items-center justify-content-start">
                     <label className="mr-2 custom_label_width">
@@ -266,7 +268,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                         checked={category.switch_during_game === 'yes'}
                         onChange={(e) => handleCategoryChange(catIndex, e)}
                       />{' '}
-                      Yes
+                      { t('tournament.yes') }
                     </label>
                     <label>
                       <input
@@ -276,7 +278,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                         checked={category.switch_during_game === 'no'}
                         onChange={(e) => handleCategoryChange(catIndex, e)}
                       />{' '}
-                      No
+                      { t('tournament.no') }
                     </label>
                   </div>
                 </div>
@@ -284,7 +286,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Switch Score During Game<sup>*</sup>
+                    { t('tournament.switchScoreDuringGame') }<sup>*</sup>
                   </label>
                   <div className="d-flex w-100 align-items-center justify-content-start">
                     <input
@@ -301,7 +303,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Switch Between Game<sup>*</sup>
+                    { t('tournament.switchBetweenGame') }<sup>*</sup>
                   </label>
                   <div className="d-flex w-100 align-items-center justify-content-start">
                     <label className="mr-2 custom_label_width">
@@ -312,7 +314,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                         checked={category.switch_between_games === 'yes'}
                         onChange={(e) => handleCategoryChange(catIndex, e)}
                       />{' '}
-                      Yes
+                      { t('tournament.yes') }
                     </label>
                     <label>
                       <input
@@ -322,7 +324,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                         checked={category.switch_between_games === 'no'}
                         onChange={(e) => handleCategoryChange(catIndex, e)}
                       />{' '}
-                      No
+                      { t('tournament.no') }
                     </label>
                   </div>
                 </div>
@@ -342,7 +344,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 ) : (
                   <div className="form-field5">
                     <label>
-                      Division Number <sup>*</sup>
+                      { t('tournament.divisionNumber') } <sup>*</sup>
                     </label>
                     <select
                       className="field-style5"
@@ -350,7 +352,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       value={category.division_number || ''}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     >
-                      <option value="">Select Division Number</option>
+                      <option value="">{ t('tournament.selectDivisionNumber') }</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -361,7 +363,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Division Name <sup>*</sup>
+                    {t('tournament.divisionName')} <sup>*</sup>
                   </label>
                 </div>
                 <div className="d-flex w-100 align-items-center justify-content-start">
@@ -378,7 +380,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold"
                       htmlFor="divisionNameTournament"
                     >
-                      Number
+                      {t('tournament.number')}
                     </label>
                   </div>
                   
@@ -395,7 +397,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold"
                       htmlFor="divisionNameFreeWriting"
                     >
-                      Free Writing
+                      {t('tournament.freeWriting')}
                     </label>
                   </div>
                 </div>
@@ -421,12 +423,12 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
               </div>
             </div>
           ))}
-          <button type="button" onClick={addCategory} className="btn btn-primary mb-3">
-            Add Category
+          <button type="button" onClick={addCategory} className="btn btn-link p-0 text-decoration-none">
+            {t('tournament.addCategory')}
           </button>
           <div className="d-flex w-100 justify-content-end">
             <button type="submit" className="bg-green1 py-2 px-4 text-white rounded-2">
-              Next
+              {t('tournament.next')}
             </button>
           </div>
         </form>
