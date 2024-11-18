@@ -6,7 +6,7 @@ import Faqs from "../components/Faqs"
 import TermsOfService from "../components/TermsOfService"
 import PrivacyPolicy from "../components/PrivacyPolicy"
 import Contact from "../components/Contact"
-import CreateAccount from "../components/CreateAccount"
+import AccountForm from "../components/CreateAccount/AccountForm"
 import Login from "../components/Login"
 import Tournaments from '../pages/Tournaments';
 import CreateTournament from '../pages/Tournaments/Create';
@@ -24,7 +24,7 @@ export default (
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/create-account" element={<CreateAccount />} />
+      <Route path="/create-account" element={<AccountForm />} />
       <Route path="/login" element={<Login />} />
       <Route path="/tournament-creation" element={<CreateTournament />} />
       <Route
@@ -32,6 +32,14 @@ export default (
         element={
           <ProtectedRoute>
             <Tournaments />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/congrats-profile"
+        element={
+          <ProtectedRoute>
+            <CongratsProfile />
           </ProtectedRoute>
         }
       />

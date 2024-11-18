@@ -5,6 +5,9 @@ class User < ApplicationRecord
   # Add secure password handling
   has_secure_password
 
+  has_one :profile
+  accepts_nested_attributes_for :profile
+
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be a valid email address' }
 
