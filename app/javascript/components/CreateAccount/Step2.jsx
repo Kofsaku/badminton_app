@@ -5,7 +5,9 @@ const Step2 = ({ nextStep, formData, handleFormChange }) => {
   const handleRoleSelection = (role) => {
      const updatedProfileAttributes = { ...formData.profile_attributes, role };
      handleFormChange("profile_attributes", updatedProfileAttributes);
+     console.log("Before calling nextStep");
      nextStep();
+     console.log("After calling nextStep");
    };
 
 
@@ -28,7 +30,6 @@ const Step2 = ({ nextStep, formData, handleFormChange }) => {
                   className={`d-flex flex-column align-items-center justify-content-center role-selector mb-3 ${
                     formData.profile_attributes.role === role ? "selected" : ""
                   }`}
-                  onClick={() => handleRoleSelection(role)}
                   style={{ cursor: "pointer" }}
                 >
                   <div className="d-flex align-items-center justify-content-center bg-silver2 text-center p-4 rounded-circle position-relative overflow-hidden">

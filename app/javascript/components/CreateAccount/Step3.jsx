@@ -1,7 +1,11 @@
 import React from "react";
 import StepLayout from "./StepLayout";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUser } from '../../redux/actions';
 
-const Step3 = ({ nextStep, formData, handleFormChange }) => {
+const Step3 = ({ formData, handleFormChange }) => {
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     const updatedProfileAttributes = {
@@ -10,11 +14,14 @@ const Step3 = ({ nextStep, formData, handleFormChange }) => {
     handleFormChange("profile_attributes", updatedProfileAttributes);
   };
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('/users.json', formData); // Ensure your API endpoint is correct
-      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true, fullName: formData.full_name })); // Store API key in Redux
+      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true, fullName: formData.full_name, role: formData.profile_attributes.role })); // Store API key in Redux
       console.log('User created:', response.data);
 
       // Redirect to the tournaments management page

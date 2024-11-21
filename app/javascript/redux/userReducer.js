@@ -12,13 +12,15 @@ const userReducer = (state = initialState, action) => {
         ...state,
         apiKey: action.payload.apiKey,
         isLoggedIn: true,
-        fullName: action.payload.full_name
+        fullName: action.payload.full_name,
+        role: action.payload.role
       };
     case 'LOGOUT_USER':
       return {
         apiKey: null,
         isLoggedIn: false,
-        fullName: null
+        fullName: null,
+        role: null,
       };
     default:
       return state;

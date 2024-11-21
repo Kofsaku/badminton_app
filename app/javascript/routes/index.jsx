@@ -11,6 +11,7 @@ import Login from "../components/Login"
 import Tournaments from '../pages/Tournaments';
 import CreateTournament from '../pages/Tournaments/Create';
 import EditTournament from '../pages/Tournaments/Edit';
+import CongratsProfile from '../components/CreateAccount/CongratsProfile'
 import TimeTable from '../pages/Tournaments/TimeTable';
 import Players from '../pages/Players';
 import ProtectedRoute from './ProtectedRoute';

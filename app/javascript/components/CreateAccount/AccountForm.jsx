@@ -42,8 +42,6 @@ const AccountForm = ({ initialData }) => {
     case 3:
       return (
         <Step3
-          nextStep={nextStep}
-          prevStep={prevStep}
           formData={formData}
           handleFormChange={handleFormChange}
         />

@@ -1,7 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../redux/actions';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  // Logout function
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(setUser({ apiKey: null, isLoggedIn: false }));
+    navigate('/login');
+  };
+
   return (
     <header className="bg-green1">
       <div className="container">
@@ -48,9 +62,20 @@ const Header = () => {
               </Link>
             </div>
             <div className="d-inline-block">
-              <Link to="/create-account" className="header-btn1">
-                Sign up now
-              </Link>
+              {isLoggedIn ? (
+                <>
+                  <Link to="/tournament-management" className="header-btn1">
+                    Dashboard
+                  </Link>
+                  <button className="header-btn1" onClick={logout}>
+                    Signout
+                  </button>
+                </>
+              ) : (
+                <Link to="/create-account" className="header-btn1">
+                  Signup
+                </Link>
+              )}
             </div>
           </div>
           <div className="navbar-handler d-lg-none d-md-none d-sm-block d-block">
