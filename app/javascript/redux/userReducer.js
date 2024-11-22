@@ -2,7 +2,8 @@
 const initialState = {
   apiKey: null,
   isLoggedIn: false,
-  fullName: null
+  fullName: null,
+  role: null
 };
 
 const userReducer = (state = initialState, action) => {

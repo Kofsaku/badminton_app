@@ -24,7 +24,7 @@ const Step2 = ({ nextStep, formData, handleFormChange }) => {
         <div className="row m-0 justify-content-center">
           <div className="col-lg-9 col-md-10 col-sm-12 col-12">
             <div className="d-flex flex-wrap align-items-start justify-content-center">
-              {["Player", "Tournament Organizer", "Both Sides"].map((role) => (
+              {["Player", "Tournament Organizer", "Both"].map((role) => (
                 <div
                   key={role}
                   className={`d-flex flex-column align-items-center justify-content-center role-selector mb-3 ${

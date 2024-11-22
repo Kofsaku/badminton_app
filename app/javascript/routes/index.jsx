@@ -27,26 +27,55 @@ export default (
       <Route path="/contact" element={<Contact />} />
       <Route path="/create-account" element={<AccountForm />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/tournament-creation" element={<CreateTournament />} />
-      <Route
-        path="/tournament-management"
+      <Route 
+        path="/tournament-creation" 
+        element={
+          <ProtectedRoute>
+            <CreateTournament />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/tournament-management" 
         element={
           <ProtectedRoute>
             <Tournaments />
           </ProtectedRoute>
-        }
+        } 
       />
-      <Route
-        path="/congrats-profile"
+      <Route 
+        path="/congrats-profile" 
         element={
           <ProtectedRoute>
             <CongratsProfile />
           </ProtectedRoute>
-        }
+        } 
       />
-      <Route path="/tournaments/:id/edit" element={<EditTournament />} />
-      <Route path="/players-management" element={<Players />} />
-      <Route path="/timetable" element={<TimeTable />} />
+      <Route 
+        path="/tournaments/:id/edit" 
+        element={
+          <ProtectedRoute>
+            <EditTournament />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/players-management" 
+        element={
+          <ProtectedRoute>
+            <Players />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/timetable" 
+        element={
+          <ProtectedRoute>
+            <TimeTable />
+          </ProtectedRoute>
+        } 
+      />
+
     </Routes>
   </Router>
 );

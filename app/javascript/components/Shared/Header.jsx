@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../redux/actions';
+import { setUser, logoutUser } from '../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -12,8 +12,8 @@ const Header = () => {
   // Logout function
   const logout = (e) => {
     e.preventDefault();
-    dispatch(setUser({ apiKey: null, isLoggedIn: false }));
-    navigate('/login');
+    dispatch(logoutUser()); // Dispatch LOGOUT_USER action
+    navigate('/login');     // Redirect to login page
   };
 
   return (
@@ -65,7 +65,7 @@ const Header = () => {
               {isLoggedIn ? (
                 <>
                   <Link to="/tournament-management" className="header-btn1">
-                    Dashboard
+                    Dashboard 
                   </Link>
                   <button className="header-btn1" onClick={logout}>
                     Signout
