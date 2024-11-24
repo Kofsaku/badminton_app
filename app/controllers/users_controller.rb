@@ -1,9 +1,32 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :authenticate_user, except: %i[create]
+  #before_action :authenticate_user, except: %i[create]
   # GET /users or /users.json
   def index
-    @users = User.all
+  end
+
+  def players_list
+    @users = User.includes(:profile)
+             .where(profiles: { role: ["Player", "Both"] })
+             .page(params[:page])
+             .per(params[:per_page] || 50)
+
+    tournament_player_ids = TournamentPlayer.where(tournament_id = params["tournament_id"]).pluck(:player_id) if params["tournament_id"]
+
+    render json: {
+      users: @users.map do |user|
+        user.as_json(
+          include: {
+            profile: {
+              only: [:id, :years_of_experience, :date_of_birth, :prefecture, :gender]
+            }
+          }
+        ).merge(part_of_tournament: tournament_player_ids&.include?(user.id))
+      end,
+      current_page: @users.current_page,
+      total_pages: @users.total_pages,
+      total_count: @users.total_count
+    }
   end
 
   # GET /users/1 or /users/1.json

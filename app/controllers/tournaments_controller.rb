@@ -17,6 +17,13 @@ class TournamentsController < ApplicationController
   def tournament_management
   end
 
+  def tournament_ids
+    @tournaments = Tournament.all.select(:id, :name)
+    render json: {
+      tournaments: @tournaments
+    }
+  end
+
   # GET /tournaments/1 or /tournaments/1.json
   def show
     render json: { tournament: @tournament }
@@ -25,6 +32,12 @@ class TournamentsController < ApplicationController
   # GET /tournaments/new
   def new
     @tournament = Tournament.new
+  end
+
+  def add_player
+    TournamentPlayer.create!(player_id: params["player_id"], player_type: "User", tournament_id: params["tournament_id"])
+
+    render json: { success: true }
   end
 
   # GET /tournaments/1/edit
