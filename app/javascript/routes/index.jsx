@@ -14,6 +14,9 @@ import EditTournament from '../pages/Tournaments/Edit';
 import TimeTable from '../pages/Tournaments/TimeTable';
 import Players from '../pages/Players';
 import ProtectedRoute from './ProtectedRoute';
+import MatchList from '../pages/MatchList';
+import NewMatch from '../pages/NewMatch';
+import ScoreBoard from '../pages/ScoreBoard';
 
 export default (
   <Router>
@@ -38,6 +41,9 @@ export default (
       <Route path="/tournaments/:id/edit" element={<EditTournament />} />
       <Route path="/players-management" element={<Players />} />
       <Route path="/timetable" element={<TimeTable />} />
+      <Route path="/matches" element={<MatchList />} />
+      <Route path="/matches/new" element={<NewMatch />} />
+      <Route path="/matches/:id/scoreboard" element={<ScoreBoard />} />
     </Routes>
   </Router>
 );

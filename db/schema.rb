@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_28_210359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tournament_id"], name: "index_match_compositions_on_tournament_id"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.string "match_type"
+    t.string "player1"
+    t.string "player2"
+    t.string "player3"
+    t.string "player4"
+    t.string "winner"
+    t.text "match_log"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "match_time"
+    t.integer "match_score_teamA", default: 0
+    t.integer "match_score_teamB", default: 0
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -211,7 +227,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"
-  add_foreign_key "tournament_players", "users"
   add_foreign_key "tournament_table_players", "tournament_players"
   add_foreign_key "tournament_table_players", "tournament_tables"
   add_foreign_key "tournament_tables", "tournament_categories"
