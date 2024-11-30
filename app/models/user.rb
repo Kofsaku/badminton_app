@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_one :profile
   accepts_nested_attributes_for :profile
 
+  has_many :team_players
+  has_many :teams, through: :team_players
+
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be a valid email address' }
 

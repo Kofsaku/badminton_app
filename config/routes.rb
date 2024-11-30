@@ -12,12 +12,18 @@ Rails.application.routes.draw do
   get 'tournament-creation', to: 'tournaments#new'
   get 'tournament-management', to: 'tournaments#tournament_management'
   get 'players-management', to: 'users#index'
-  resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index]
+  get 'tournament-ids', to: 'tournaments#tournament_ids'
+  resources :tournaments do
+    post 'add_player'
+    post 'add_new_player'
+    post 'add_new_team'
+  end
   resources :profiles, only: [:edit, :update, :destroy, :show, :create]
   resources :users do
     collection do
       post 'show_api_key'
       post 'regenerate_api_key'
+      get 'players-list', to: 'users#players_list'
     end
   end
   # Defines the root path route ("/")

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
              .page(params[:page])
              .per(params[:per_page] || 50)
 
-    tournament_player_ids = TournamentPlayer.where(tournament_id = params["tournament_id"]).pluck(:player_id) if params["tournament_id"]
+    tournament_player_ids = TournamentPlayer.where(tournament_id: params["tournament_id"]).pluck(:player_id) if params["tournament_id"]
 
     render json: {
       users: @users.map do |user|

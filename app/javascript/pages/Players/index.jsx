@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import AdminHeader from '../../components/Shared/AdminHeader';
 import AdminSidebar from '../../components/Shared/AdminSidebar';
 import { fetchPlayers } from '../../api/userApi'; // Adjust the import paths
-import { fetchTournamentIds, addPlayersTournament } from '../../api/tournamentApi';
-
+import { fetchTournamentIds, addPlayersTournament, addNewPlayersTournament, addNewTeamsTournament } from '../../api/tournamentApi';
+import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 
 const Players = () => {
   const { tournament_id } = useParams();
@@ -17,6 +17,28 @@ const Players = () => {
   const [loadingTournaments, setLoadingTournaments] = useState(true);
   const [buttonStates, setButtonStates] = useState({});
   const limit = 50;
+  const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
+  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+  const [newPlayer, setNewPlayer] = useState({
+    name: '',
+    email: '',
+    gender: '',
+    date_of_birth: '',
+    years_of_experience: '',
+    age: '',
+  });
+  const [newTeam, setNewTeam] = useState({
+    teamName: '',
+    numberOfPlayers: 0,
+    players: [],
+  });
 
   // Fetch tournaments for the dropdown
   useEffect(() => {
@@ -70,6 +92,98 @@ const Players = () => {
     }
   };
 
+  const handleAddPlayerModal = () => {
+    console.log("hgfh");
+    setIsPlayerModalOpen(!isPlayerModalOpen);
+  };
+
+  const handleAddTeamModal = () => {
+    setIsTeamModalOpen(!isTeamModalOpen);
+  };
+
+  const handlePlayerChange = (field, value) => {
+    setNewPlayer((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleTeamChange = (field, value) => {
+    setNewTeam((prev) => ({ ...prev, [field]: value }));
+    if (field === 'numberOfPlayers') {
+      setNewTeam((prev) => ({
+        ...prev,
+        players: Array.from({ length: value }, () => ({
+          name: '',
+          email: '',
+          gender: '',
+          date_of_birth: '',
+          years_of_experience: '',
+          age: '',
+        })),
+      }));
+    }
+  };
+
+  const handlePlayerInTeamChange = (index, field, value) => {
+    const updatedPlayers = [...newTeam.players];
+    updatedPlayers[index][field] = value;
+    setNewTeam((prev) => ({ ...prev, players: updatedPlayers }));
+  };
+
+  const handlePlayerSubmit = async () => {
+    console.log('New Player Data:', newPlayer);
+    // Add your API call logic here
+
+    if (!selectedTournament) {
+      alert('Please select a tournament before adding a player.');
+      return;
+    }
+
+    try {
+      console.log('New Player Data:', newPlayer);
+
+      // Call API to add the new player
+      await addNewPlayersTournament(selectedTournament, newPlayer);
+
+      alert('Player added successfully!');
+      setIsPlayerModalOpen(false);
+      setNewPlayer({
+        name: '',
+        email: '',
+        gender: '',
+        date_of_birth: '',
+        years_of_experience: '',
+        age: '',
+      }); // Reset player form
+    } catch (error) {
+      console.error('Error submitting player:', error);
+      alert('Failed to add player. Please try again.');
+    }
+  };
+
+  const handleTeamSubmit = async () => {
+    if (!selectedTournament) {
+      alert('Please select a tournament before adding a player.');
+      return;
+    }
+
+    try {
+      console.log('New Team Data:', newTeam);
+
+      // Call API to add the new team
+      await addNewTeamsTournament(selectedTournament, newTeam);
+
+      alert('Team added successfully!');
+      setIsTeamModalOpen(false);
+      setNewTeam({
+        teamName: '',
+        numberOfPlayers: 0,
+        players: [],
+      }); // Reset team form
+    } catch (error) {
+      console.error('Error submitting team:', error);
+      alert('Failed to add team. Please try again.');
+    }
+  };
+
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -113,16 +227,171 @@ const Players = () => {
                 )}
               </div>
             </div>
-            <div className="d-flex flex-wrap w-100 align-items-center justify-content-between">
-              <div className="d-inline-block min-width-clear mb-lg-0 mb-md-0 mb-sm-0 mb-3">
-                <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font mt-0 mb-2">Applicants</h3>
-                <p className="text-grey1 text-15 m-0">
-                  Total Applicants
-                  <span className="bg-green1 px-1 rounded-3 text-white d-inline-block ms-1">{players.length}</span>
-                </p>
-              </div>
+
+            <div className="d-flex justify-content-between mb-4">
+              <Button variant="primary" onClick={handleAddPlayerModal}>
+                Add New Player
+              </Button>
+              <button className="btn btn-secondary" onClick={handleAddTeamModal}>
+                Add New Team
+              </button>
             </div>
+
+            <Modal show={isPlayerModalOpen} onHide={handleAddPlayerModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Add New Player</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group className="mb-3" controlId="formPlayerName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter name"
+                      value={newPlayer.name}
+                      onChange={(e) => handlePlayerChange("name", e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formPlayerEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      value={newPlayer.email}
+                      onChange={(e) => handlePlayerChange("email", e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formPlayerGender">
+                    <Form.Label>Gender</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter gender"
+                      value={newPlayer.gender}
+                      onChange={(e) => handlePlayerChange("gender", e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formPlayerDOB">
+                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Control
+                      type="date"
+                      value={newPlayer.date_of_birth}
+                      onChange={(e) => handlePlayerChange("date_of_birth", e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formPlayerExperience">
+                    <Form.Label>Years of Experience</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Enter years of experience"
+                      value={newPlayer.years_of_experience}
+                      onChange={(e) => handlePlayerChange("years_of_experience", e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formPlayerAge">
+                    <Form.Label>Age</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Enter age"
+                      value={newPlayer.age}
+                      onChange={(e) => handlePlayerChange("age", e.target.value)}
+                    />
+                  </Form.Group>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleAddPlayerModal}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handlePlayerSubmit}>
+                  Submit
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal show={isTeamModalOpen} onHide={handleAddTeamModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Add New Team</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group className="mb-3" controlId="formTeamName">
+                    <Form.Label>Team Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter team name"
+                      value={newTeam.teamName}
+                      onChange={(e) => handleTeamChange("teamName", e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formNumberOfPlayers">
+                    <Form.Label>Number of Players</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Enter number of players"
+                      value={newTeam.numberOfPlayers}
+                      onChange={(e) => handleTeamChange("numberOfPlayers", e.target.value)}
+                    />
+                  </Form.Group>
+
+                  {newTeam.players.map((player, index) => (
+                    <div key={index} className="mb-3 border p-3 rounded">
+                      <h5>Player {index + 1}</h5>
+                      <Row>
+                        <Col md={4}>
+                          <Form.Group className="mb-3" controlId={`playerName${index}`}>
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter player name"
+                              value={player.name}
+                              onChange={(e) => handlePlayerInTeamChange(index, "name", e.target.value)}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                          <Form.Group className="mb-3" controlId={`playerEmail${index}`}>
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                              type="email"
+                              placeholder="Enter player email"
+                              value={player.email}
+                              onChange={(e) => handlePlayerInTeamChange(index, "email", e.target.value)}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                          <Form.Group className="mb-3" controlId={`playerEmail${index}`}>
+                            <Form.Label>Age</Form.Label>
+                            <Form.Control
+                              type="number"
+                              placeholder="Enter player email"
+                              value={player.age}
+                              onChange={(e) => handlePlayerInTeamChange(index, "age", e.target.value)}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                    </div>
+                  ))}
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleAddTeamModal}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleTeamSubmit}>
+                  Submit
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
+
           <div className="d-block w-100">
             {loading ? (
               <p>Loading players...</p>
