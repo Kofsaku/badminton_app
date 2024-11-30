@@ -1,0 +1,102 @@
+2024-10-17 22:17:47.002 JST [94343] LOG:  starting PostgreSQL 14.13 (Homebrew) on x86_64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-10-17 22:17:47.004 JST [94343] LOG:  listening on IPv6 address "::1", port 5432
+2024-10-17 22:17:47.004 JST [94343] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-10-17 22:17:47.005 JST [94343] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-10-17 22:17:47.009 JST [94344] LOG:  database system was shut down at 2024-10-17 22:17:33 JST
+2024-10-17 22:17:47.014 JST [94343] LOG:  database system is ready to accept connections
+2024-10-17 22:18:33.969 JST [94343] LOG:  received fast shutdown request
+2024-10-17 22:18:33.970 JST [94343] LOG:  aborting any active transactions
+2024-10-17 22:18:33.972 JST [94343] LOG:  background worker "logical replication launcher" (PID 94350) exited with exit code 1
+2024-10-17 22:18:33.972 JST [94345] LOG:  shutting down
+2024-10-17 22:18:33.980 JST [94343] LOG:  database system is shut down
+2024-10-17 22:42:10.601 JST [35864] LOG:  starting PostgreSQL 14.13 (Homebrew) on x86_64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-10-17 22:42:10.604 JST [35864] LOG:  listening on IPv6 address "::1", port 5432
+2024-10-17 22:42:10.604 JST [35864] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-10-17 22:42:10.604 JST [35864] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-10-17 22:42:10.608 JST [35865] LOG:  database system was shut down at 2024-10-17 22:40:37 JST
+2024-10-17 22:42:10.614 JST [35864] LOG:  database system is ready to accept connections
+2024-10-17 22:42:25.065 JST [36445] FATAL:  lock file "postmaster.pid" already exists
+2024-10-17 22:42:25.065 JST [36445] HINT:  Is another postmaster (PID 35864) running in data directory "/usr/local/var/postgres"?
+2024-10-17 22:45:19.485 JST [40089] LOG:  starting PostgreSQL 14.13 (Homebrew) on x86_64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-10-17 22:45:19.487 JST [40089] LOG:  listening on IPv6 address "::1", port 5432
+2024-10-17 22:45:19.488 JST [40089] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-10-17 22:45:19.488 JST [40089] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-10-17 22:45:19.492 JST [40095] LOG:  database system was interrupted; last known up at 2024-10-17 22:42:10 JST
+2024-10-17 22:45:19.555 JST [40095] LOG:  database system was not properly shut down; automatic recovery in progress
+2024-10-17 22:45:19.557 JST [40095] LOG:  redo starts at 0/1728B18
+2024-10-17 22:45:19.557 JST [40095] LOG:  invalid record length at 0/1728B50: wanted 24, got 0
+2024-10-17 22:45:19.557 JST [40095] LOG:  redo done at 0/1728B18 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2024-10-17 22:45:19.565 JST [40089] LOG:  database system is ready to accept connections
+2024-10-17 22:45:58.711 JST [40089] LOG:  received fast shutdown request
+2024-10-17 22:45:58.712 JST [40089] LOG:  aborting any active transactions
+2024-10-17 22:45:58.714 JST [40089] LOG:  background worker "logical replication launcher" (PID 40101) exited with exit code 1
+2024-10-17 22:45:58.714 JST [40096] LOG:  shutting down
+2024-10-17 22:45:58.723 JST [40089] LOG:  database system is shut down
+2024-10-17 22:46:29.013 JST [42377] LOG:  starting PostgreSQL 14.13 (Homebrew) on x86_64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-10-17 22:46:29.016 JST [42377] LOG:  listening on IPv6 address "::1", port 5432
+2024-10-17 22:46:29.016 JST [42377] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-10-17 22:46:29.016 JST [42377] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-10-17 22:46:29.020 JST [42383] LOG:  database system was shut down at 2024-10-17 22:45:58 JST
+2024-10-17 22:46:29.024 JST [42377] LOG:  database system is ready to accept connections
+2024-10-17 22:46:43.950 JST [42734] FATAL:  database "badminton_app_development" does not exist
+2024-10-17 23:16:03.986 JST [42377] LOG:  received smart shutdown request
+2024-10-17 23:16:03.988 JST [42377] LOG:  background worker "logical replication launcher" (PID 42389) exited with exit code 1
+2024-10-17 23:16:03.988 JST [42384] LOG:  shutting down
+2024-10-17 23:16:03.996 JST [42377] LOG:  database system is shut down
+2024-10-20 13:11:47.897 JST [18620] LOG:  starting PostgreSQL 14.13 (Homebrew) on x86_64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-10-20 13:11:47.900 JST [18620] LOG:  listening on IPv6 address "::1", port 5432
+2024-10-20 13:11:47.900 JST [18620] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-10-20 13:11:47.900 JST [18620] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-10-20 13:11:47.912 JST [18621] LOG:  database system was shut down at 2024-10-17 23:16:03 JST
+2024-10-20 13:11:47.918 JST [18620] LOG:  database system is ready to accept connections
+2024-10-20 13:11:56.407 JST [18751] ERROR:  relation "tournament_divisions" already exists
+2024-10-20 13:11:56.407 JST [18751] STATEMENT:  CREATE TABLE "tournament_divisions" ("id" bigserial primary key, "division" character varying, "participants_limit" integer, "pairs_limit" integer, "trios_limit" integer, "tournament_categories_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_99c9e5f2d4"
+	FOREIGN KEY ("tournament_categories_id")
+	  REFERENCES "tournament_categories" ("id")
+	)
+2024-10-20 13:13:22.490 JST [21230] ERROR:  database "badminton_app_development" is being accessed by other users
+2024-10-20 13:13:22.490 JST [21230] DETAIL:  There is 1 other session using the database.
+2024-10-20 13:13:22.490 JST [21230] STATEMENT:  DROP DATABASE IF EXISTS "badminton_app_development"
+2024-10-24 12:45:37.276 JST [18620] LOG:  received smart shutdown request
+2024-10-24 12:45:37.278 JST [18620] LOG:  background worker "logical replication launcher" (PID 18627) exited with exit code 1
+2024-10-24 12:45:37.278 JST [18622] LOG:  shutting down
+2024-10-24 12:45:37.291 JST [18620] LOG:  database system is shut down
+2024-10-30 05:27:00.250 JST [33666] LOG:  starting PostgreSQL 14.13 (Homebrew) on x86_64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-10-30 05:27:00.252 JST [33666] LOG:  listening on IPv6 address "::1", port 5432
+2024-10-30 05:27:00.252 JST [33666] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-10-30 05:27:00.252 JST [33666] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-10-30 05:27:00.264 JST [33668] LOG:  database system was shut down at 2024-10-24 12:45:37 JST
+2024-10-30 05:27:00.273 JST [33666] LOG:  database system is ready to accept connections
+2024-10-30 06:52:41.264 JST [80318] ERROR:  update or delete on table "users" violates foreign key constraint "fk_rails_0a2ed81221" on table "tournaments"
+2024-10-30 06:52:41.264 JST [80318] DETAIL:  Key (id)=(1) is still referenced from table "tournaments".
+2024-10-30 06:52:41.264 JST [80318] STATEMENT:  DELETE FROM "users" WHERE "users"."id" = $1
+2024-10-30 06:53:13.088 JST [81238] ERROR:  update or delete on table "tournaments" violates foreign key constraint "fk_rails_aafa50e195" on table "tournament_categories"
+2024-10-30 06:53:13.088 JST [81238] DETAIL:  Key (id)=(2) is still referenced from table "tournament_categories".
+2024-10-30 06:53:13.088 JST [81238] STATEMENT:  DELETE FROM "tournaments" WHERE "tournaments"."id" = $1
+2024-10-30 07:22:51.919 JST [17432] ERROR:  insert or update on table "tournament_tables" violates foreign key constraint "fk_rails_c862a19d9f"
+2024-10-30 07:22:51.919 JST [17432] DETAIL:  Key (tournament_division_id)=(90) is not present in table "tournament_categories".
+2024-10-30 07:22:51.919 JST [17432] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:31:05.080 JST [17432] ERROR:  insert or update on table "tournament_tables" violates foreign key constraint "fk_rails_c862a19d9f"
+2024-10-30 07:31:05.080 JST [17432] DETAIL:  Key (tournament_division_id)=(125) is not present in table "tournament_categories".
+2024-10-30 07:31:05.080 JST [17432] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:36:17.008 JST [17432] ERROR:  null value in column "size" of relation "tournament_tables" violates not-null constraint
+2024-10-30 07:36:17.008 JST [17432] DETAIL:  Failing row contains (3, , 0, 25, 64, 124, null, 2024-10-29 22:36:17.007604, 2024-10-29 22:36:17.007604).
+2024-10-30 07:36:17.008 JST [17432] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:37:16.910 JST [17432] ERROR:  null value in column "size" of relation "tournament_tables" violates not-null constraint
+2024-10-30 07:37:16.910 JST [17432] DETAIL:  Failing row contains (4, a, 1, 28, 64, 124, null, 2024-10-29 22:37:16.909669, 2024-10-29 22:37:16.909669).
+2024-10-30 07:37:16.910 JST [17432] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:37:28.319 JST [17432] ERROR:  insert or update on table "tournament_tables" violates foreign key constraint "fk_rails_c862a19d9f"
+2024-10-30 07:37:28.319 JST [17432] DETAIL:  Key (tournament_division_id)=(124) is not present in table "tournament_categories".
+2024-10-30 07:37:28.319 JST [17432] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:38:38.410 JST [17432] ERROR:  null value in column "size" of relation "tournament_tables" violates not-null constraint
+2024-10-30 07:38:38.410 JST [17432] DETAIL:  Failing row contains (6, , 0, 25, 64, 124, null, 2024-10-29 22:38:38.409768, 2024-10-29 22:38:38.409768).
+2024-10-30 07:38:38.410 JST [17432] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:44:45.098 JST [66829] ERROR:  insert or update on table "tournament_tables" violates foreign key constraint "fk_rails_c862a19d9f"
+2024-10-30 07:44:45.098 JST [66829] DETAIL:  Key (tournament_division_id)=(124) is not present in table "tournament_categories".
+2024-10-30 07:44:45.098 JST [66829] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:54:41.844 JST [66829] ERROR:  insert or update on table "tournament_tables" violates foreign key constraint "fk_rails_c862a19d9f"
+2024-10-30 07:54:41.844 JST [66829] DETAIL:  Key (tournament_division_id)=(124) is not present in table "tournament_categories".
+2024-10-30 07:54:41.844 JST [66829] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2024-10-30 07:56:07.703 JST [92030] ERROR:  insert or update on table "tournament_tables" violates foreign key constraint "fk_rails_c862a19d9f"
+2024-10-30 07:56:07.703 JST [92030] DETAIL:  Key (tournament_division_id)=(124) is not present in table "tournament_categories".
+2024-10-30 07:56:07.703 JST [92030] STATEMENT:  INSERT INTO "tournament_tables" ("name", "table_type", "tournament_id", "tournament_category_id", "tournament_division_id", "size", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"

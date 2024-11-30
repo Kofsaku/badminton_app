@@ -1,0 +1,25 @@
+<h2><%= @timetable.tournament_venue.venue_name %> - タイムテーブル</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>時間</th> <!-- 左側に時間列 -->
+      <% @timetable.column_count.times do |i| %>
+        <th>コート <%= i + 1 %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @timetable.row_count.times do |row_index| %>
+      <tr>
+        <!-- 時間の入力フィールド（空欄にもできる） -->
+        <td>
+          <input type="text" name="time_slots[<%= row_index %>]" placeholder="時間を入力" style="width: 80px;">
+        </td>
+        <% @timetable.column_count.times do %>
+          <td>セル内容</td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

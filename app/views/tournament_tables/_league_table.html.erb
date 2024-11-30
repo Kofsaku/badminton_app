@@ -1,0 +1,20 @@
+<!-- app/views/tournament_tables/_league_table.html.erb -->
+<h2>リーグテーブル</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Select</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= player.user.full_name %></td>
+        <td>
+          <%= check_box_tag "selected_players[]", player.id, false %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
