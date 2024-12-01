@@ -59,21 +59,22 @@ const Players = () => {
 
   // Fetch players based on the page and selected tournament
   useEffect(() => {
-    const loadPlayers = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchPlayers(page, limit, selectedTournament);
-        setPlayers(data.users || []);
-        setTotalPages(data.totalPages || 1);
-      } catch (error) {
-        console.error('Error fetching players:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadPlayers();
   }, [page, selectedTournament]);
+
+
+  const loadPlayers = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchPlayers(page, limit, selectedTournament);
+      setPlayers(data.users || []);
+      setTotalPages(data.totalPages || 1);
+    } catch (error) {
+      console.error('Error fetching players:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAddPlayer = async (playerId) => {
     if (!selectedTournament) {
@@ -93,7 +94,6 @@ const Players = () => {
   };
 
   const handleAddPlayerModal = () => {
-    console.log("hgfh");
     setIsPlayerModalOpen(!isPlayerModalOpen);
   };
 
@@ -143,7 +143,6 @@ const Players = () => {
       // Call API to add the new player
       await addNewPlayersTournament(selectedTournament, newPlayer);
 
-      alert('Player added successfully!');
       setIsPlayerModalOpen(false);
       setNewPlayer({
         name: '',
@@ -153,6 +152,8 @@ const Players = () => {
         years_of_experience: '',
         age: '',
       }); // Reset player form
+      loadPlayers();
+      alert('Player added successfully!');
     } catch (error) {
       console.error('Error submitting player:', error);
       alert('Failed to add player. Please try again.');
@@ -171,13 +172,14 @@ const Players = () => {
       // Call API to add the new team
       await addNewTeamsTournament(selectedTournament, newTeam);
 
-      alert('Team added successfully!');
       setIsTeamModalOpen(false);
       setNewTeam({
         teamName: '',
         numberOfPlayers: 0,
         players: [],
       }); // Reset team form
+      loadPlayers();
+      alert('Team added successfully!');
     } catch (error) {
       console.error('Error submitting team:', error);
       alert('Failed to add team. Please try again.');
