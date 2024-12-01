@@ -1,48 +1,49 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const tournamentSelect = document.getElementById("tournament_table_tournament_id");
-  const categorySelect = document.getElementById("tournament_table_tournament_category_id");
-  const divisionSelect = document.getElementById("tournament_table_tournament_division_id");
+  const tournamentDropdown = document.getElementById("tournament-dropdown");
+  const categoryDropdown = document.getElementById("category-dropdown");
+  const divisionDropdown = document.getElementById("division-dropdown");
 
-  // 大会が変更された場合にカテゴリを更新
-  tournamentSelect.addEventListener("change", (event) => {
-    const tournamentId = event.target.value;
+  // Fetch categories when a tournament is selected
+  tournamentDropdown.addEventListener("change", function () {
+    const tournamentId = this.value;
 
-    // Fetch categories for selected tournament
-    fetch(`/tournaments/${tournamentId}/categories`)
-      .then((response) => response.json())
-      .then((data) => {
-        // カテゴリ選択肢を更新
-        categorySelect.innerHTML = "";
-        data.categories.forEach((category) => {
-          const option = document.createElement("option");
-          option.value = category.id;
-          option.text = category.category_type;
-          categorySelect.appendChild(option);
+    if (tournamentId) {
+      fetch(`/tournaments/${tournamentId}/categories`)
+        .then((response) => response.json())
+        .then((data) => {
+          categoryDropdown.innerHTML = '<option value="">Select Category</option>';
+          data.categories.forEach((category) => {
+            const option = document.createElement("option");
+            option.value = category.id;
+            option.textContent = category.category_type;
+            categoryDropdown.appendChild(option);
+          });
+          divisionDropdown.innerHTML = '<option value="">Select Division</option>'; // Reset divisions
         });
-
-        // カテゴリを変更したためディビジョンもクリア
-        divisionSelect.innerHTML = "";
-      })
-      .catch((error) => console.error("Error fetching categories:", error));
+    } else {
+      categoryDropdown.innerHTML = '<option value="">Select Category</option>';
+      divisionDropdown.innerHTML = '<option value="">Select Division</option>';
+    }
   });
 
-  // カテゴリが変更された場合にディビジョンを更新
-  categorySelect.addEventListener("change", (event) => {
-    const categoryId = event.target.value;
+  // Fetch divisions when a category is selected
+  categoryDropdown.addEventListener("change", function () {
+    const categoryId = this.value;
 
-    // Fetch divisions for selected category
-    fetch(`/categories/${categoryId}/divisions`)
-      .then((response) => response.json())
-      .then((data) => {
-        // ディビジョン選択肢を更新
-        divisionSelect.innerHTML = "";
-        data.divisions.forEach((division) => {
-          const option = document.createElement("option");
-          option.value = division.id;
-          option.text = division.division;
-          divisionSelect.appendChild(option);
+    if (categoryId) {
+      fetch(`/categories/${categoryId}/divisions`)
+        .then((response) => response.json())
+        .then((data) => {
+          divisionDropdown.innerHTML = '<option value="">Select Division</option>';
+          data.divisions.forEach((division) => {
+            const option = document.createElement("option");
+            option.value = division.id;
+            option.textContent = division.division;
+            divisionDropdown.appendChild(option);
+          });
         });
-      })
-      .catch((error) => console.error("Error fetching divisions:", error));
+    } else {
+      divisionDropdown.innerHTML = '<option value="">Select Division</option>';
+    }
   });
 });

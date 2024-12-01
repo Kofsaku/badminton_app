@@ -50,6 +50,16 @@ puts "Creating tournaments with events and divisions..."
     user: organizer
   )
 
+  5.times do |i|
+    TournamentVenue.create!(
+      venue_name: "venue_#{i + 1}",
+      venue_address: "venue_address_#{i + 1}",
+      no_of_courts: 3,
+      venue_date: "2024/11/#{i + 1}",
+      tournament: tournament,
+    )  
+  end
+
   # 大会にランダムな種目を追加
   event_types.sample(3).each do |event_name|
     event = TournamentCategory.create!(
@@ -84,7 +94,7 @@ tournaments = Tournament.all
 players.each do |player|
   tournament = tournaments.sample
   TournamentPlayer.create!(
-    user: player,
+    player: player,
     tournament: tournament,
     status: "registered"
   )

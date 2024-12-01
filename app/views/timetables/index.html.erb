@@ -1,9 +1,28 @@
-<h2>タイムテーブル一覧</h2>
+<h1>Timetables</h1>
 
-<ul>
-  <% @timetables.each do |timetable| %>
-    <li>
-      <%= link_to "#{timetable.tournament_venue.venue_name} - #{timetable.tournament_venue.venue_date}", timetable %>
-    </li>
-  <% end %>
-</ul>
+<%= link_to 'New Timetable', new_timetable_path, class: 'btn btn-primary' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Tournament</th>
+      <th>Venue</th>
+      <th>Rows</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @timetables.each do |timetable| %>
+      <tr>
+        <td><%= timetable.tournament.name %></td>
+        <td><%= timetable.tournament_venue.venue_name %></td>
+        <td><%= timetable.row_count %></td>
+        <td>
+          <%= link_to 'Show', timetable_path(timetable), class: 'btn btn-info' %>
+          <%= link_to 'Edit', edit_timetable_path(timetable), class: 'btn btn-warning' %>
+          <%= link_to 'Delete', timetable_path(timetable), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
