@@ -137,6 +137,14 @@ const Tournaments = () => {
                                 </Link>
                               </li>
                               <li>
+                                <Link
+                                  to={`/players-management?tournament_id=${tournament.id}`}
+                                  className="dropdown-item text-14"
+                                >
+                                  Manage Players
+                                </Link>
+                              </li>
+                              <li>
                                 <a
                                   className="dropdown-item text-14"
                                   href="#"

@@ -1701,3 +1701,23 @@ section.left-sidebar-wrapper {
   justify-content: center;
   align-items: baseline;
 }
+
+.modal.show {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* grey semi-transparent background */
+  z-index: 1050; /* Ensure the backdrop is above other content but below the modal */
+}
+
+.modal {
+  z-index: 1051; /* Ensure the modal is above the backdrop */
+}

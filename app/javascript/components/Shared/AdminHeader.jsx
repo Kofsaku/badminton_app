@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../redux/actions';
+import { setUser, logoutUser } from '../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 
 const AdminHeader = () => {
@@ -11,8 +11,8 @@ const AdminHeader = () => {
   // Logout function
   const logout = (e) => {
     e.preventDefault();
-    dispatch(setUser({ apiKey: null, isLoggedIn: false }));
-    navigate('/login');
+    dispatch(logoutUser()); // Dispatch LOGOUT_USER action
+    navigate('/login');     // Redirect to login page
   };
 
   return (

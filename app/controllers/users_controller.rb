@@ -1,9 +1,32 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :authenticate_user, except: %i[create]
+  #before_action :authenticate_user, except: %i[create]
   # GET /users or /users.json
   def index
-    @users = User.all
+  end
+
+  def players_list
+    @users = User.includes(:profile)
+             .where(profiles: { role: ["Player", "Both"] })
+             .page(params[:page])
+             .per(params[:per_page] || 50)
+
+    tournament_player_ids = TournamentPlayer.where(tournament_id: params["tournament_id"]).pluck(:player_id) if params["tournament_id"]
+
+    render json: {
+      users: @users.map do |user|
+        user.as_json(
+          include: {
+            profile: {
+              only: [:id, :years_of_experience, :date_of_birth, :prefecture, :gender]
+            }
+          }
+        ).merge(part_of_tournament: tournament_player_ids&.include?(user.id))
+      end,
+      current_page: @users.current_page,
+      total_pages: @users.total_pages,
+      total_count: @users.total_count
+    }
   end
 
   # GET /users/1 or /users/1.json
@@ -21,6 +44,7 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
+
     if user.save!
       render json: { api_key: user.api_key, message: 'User created successfully' }, status: :created
     else
@@ -29,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def show_api_key
-    render json: { api_key: @current_user.api_key }
+    render json: { api_key: @current_user.api_key, full_name: @current_user.full_name, role: @current_user.profile&.role }
   end
 
   def regenerate_api_key
@@ -77,6 +101,17 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.permit(:email, :password, :password_confirmation, :full_name)
+      params.permit(
+        :full_name,
+        :email,
+        :password,
+        :password_confirmation,
+        profile_attributes: [
+          :role, :real_name, :pet_name, :telephone_number, :prefecture,
+          :city, :gender, :date_of_birth, :experience, :racket, :address,
+          :years_of_experience, :affiliation, :age
+        ]
+      )
     end
+
 end
