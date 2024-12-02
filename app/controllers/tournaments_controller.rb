@@ -17,6 +17,13 @@ class TournamentsController < ApplicationController
   def tournament_management
   end
 
+  def tournament_ids
+    @tournaments = Tournament.all.select(:id, :name)
+    render json: {
+      tournaments: @tournaments
+    }
+  end
+
   # GET /tournaments/1 or /tournaments/1.json
   def show
     render json: { tournament: @tournament }
@@ -25,6 +32,47 @@ class TournamentsController < ApplicationController
   # GET /tournaments/new
   def new
     @tournament = Tournament.new
+  end
+
+  def add_player
+    TournamentPlayer.create!(player_id: params["player_id"], player_type: "User", tournament_id: params["tournament_id"])
+
+    render json: { success: true }
+  end
+
+  def add_new_player
+    begin
+      ActiveRecord::Base.transaction do
+        player = params["player"]
+        user = User.create!(email: player["email"], full_name: player["name"], password: "password")
+        Profile.create!(role: "Player", user_id: user.id, gender: player["gender"], date_of_birth: player["date_of_birth"], years_of_experience: player["years_of_experience"], age: player["age"])
+        TournamentPlayer.create!(player_id: user.id, player_type: "User", tournament_id: params["tournament_id"])
+      end
+
+      render json: { success: true }
+    rescue => e
+      render json: { success: false, error: e.message }, status: :unprocessable_entity
+    end
+  end
+
+  def add_new_team
+    begin
+      ActiveRecord::Base.transaction do
+        team = Team.create!(title: params["team"]["name"], members_count: params["team"]["numberOfPlayers"])
+
+        params["team"]["players"].each do |player|
+          user = User.create!(email: player["email"], full_name: player["name"], password: "password")
+          Profile.create!(role: "Player", age: player["age"], gender: player["gender"], user_id: user.id)
+          team.team_players.create!(user_id: user.id)
+        end
+
+        TournamentPlayer.create!(player_id: team.id, player_type: "Team", tournament_id: params["tournament_id"])
+      end
+
+      render json: { success: true }
+    rescue => e
+      render json: { success: false, error: e.message }, status: :unprocessable_entity
+    end
   end
 
   # GET /tournaments/1/edit
