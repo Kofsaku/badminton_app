@@ -1580,3 +1580,144 @@ section.left-sidebar-wrapper {
     width: 100px;
 }
 }
+
+.court-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #90ee90; /* Light green background */
+	padding: 20px;
+	border-radius: 8px;
+}
+
+.court {
+	position: relative;
+	width: 90%;
+	aspect-ratio: 2 / 1; /* Maintain a 2:1 aspect ratio */
+	background: linear-gradient(to bottom, #d3d3d3, #a9a9a9); /* Grey gradient */
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Court Lines */
+.line {
+	position: absolute;
+	background: white;
+}
+
+.line.horizontal {
+	height: 2px;
+	width: 100%;
+}
+
+.line.horizontal.top {
+	top: 25%;
+}
+
+.line.horizontal.bottom {
+	bottom: 25%;
+}
+
+.line.vertical {
+	width: 2px;
+	height: 100%;
+}
+
+.line.vertical.center {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.line.vertical.left {
+	left: 16.66%; /* Approximately 1/6th */
+}
+
+.line.vertical.right {
+	right: 16.66%;
+}
+
+/* Player Positions */
+.player {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: black;
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+}
+
+.player.top-left {
+	top: 10%;
+	left: 10%;
+}
+
+.player.top-right {
+	top: 10%;
+	right: 10%;
+}
+
+.player.bottom-left {
+	bottom: 10%;
+	left: 10%;
+}
+
+.player.bottom-right {
+	bottom: 10%;
+	right: 10%;
+}
+
+/* Serving Indicator */
+.serve-indicator {
+	position: absolute;
+	top: 25%;
+	left: 16.66%; /* Align with the left service area */
+	width: 12px;
+	height: 12px;
+	background-color: white;
+	border: 2px solid grey;
+	border-radius: 50%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Serving Indicator */
+.serve-indicator-pointer {
+  margin-left: 10px;
+	width: 20px;
+	height: 20px;
+	background-color: white;
+	border: 3px solid grey;
+	border-radius: 50%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.player-name {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.modal.show {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* grey semi-transparent background */
+  z-index: 1050; /* Ensure the backdrop is above other content but below the modal */
+}
+
+.modal {
+  z-index: 1051; /* Ensure the modal is above the backdrop */
+}

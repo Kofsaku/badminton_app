@@ -25,7 +25,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('/users/show_api_key', formData); // API endpoint to get API key
-      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true })); // Store API key in Redux
+      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true, fullName: response.data.full_name, role: response.data.role })); // Store API key in Redux
       console.log('User logged in:', response.data);
 
       // Redirect to the tournaments management page

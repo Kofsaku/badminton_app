@@ -30,18 +30,23 @@ Rails.application.routes.draw do
   get 'tournament-creation', to: 'tournaments#new'
   get 'tournament-management', to: 'tournaments#tournament_management'
   get 'players-management', to: 'users#index'
-  
-  resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index] do
+  get 'tournament-ids', to: 'tournaments#tournament_ids'
+
+  resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index] do 
     get 'categories', to: 'tournaments#categories'
-    resources :timetables, only: [:index, :new, :create, :show, :destroy] do
-      member do
-        post :generate_cells # Custom route for generating timetable cells dynamically
-      end
-    end
+    post 'add_player'
+    post 'add_new_player'
+    post 'add_new_team'
   end
-  
-  resources :profiles, only: [:edit, :update, :destroy, :show, :create]
-  
+
+  get 'scoreboard', to: 'scoreboard#index'
+
+  resources :categories do
+    get 'divisions', to: 'categories#divisions'
+  end
+
+  resources :profiles, only: %i[edit update destroy show create]
+
   resources :tournament_tables do
     post :league_select_players, on: :member # Original functionality preserved
     collection do
@@ -68,6 +73,20 @@ Rails.application.routes.draw do
     collection do
       post 'show_api_key'
       post 'regenerate_api_key'
+      get 'players-list', to: 'users#players_list'
+    end
+  end
+
+  resources :matches, only: %i[index show create update] do
+    member do
+      post 'add_log'
+      patch 'complete'
+      get 'scoreboard'
+    end
+
+    collection do
+      get 'all'
+      get 'new'
     end
   end
   

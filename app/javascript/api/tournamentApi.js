@@ -13,6 +13,47 @@ export const createTournament = async (tournamentData) => {
   }
 };
 
+// Add players in tournament
+export const addPlayersTournament = async (tournamentId, playerId) => {
+  try {
+    // Add `.json` suffix for the API format requirement
+    const response = await axiosInstance.post(`tournaments/${tournamentId}/add_player.json`, {"player_id": playerId});
+    return response.data;
+  } catch (error) {
+    console.error('Error creating tournament:', error);
+    throw error;
+  }
+};
+
+// Add new player to a tournament
+export const addNewPlayersTournament = async (tournamentId, playerData) => {
+  try {
+    const response = await axiosInstance.post(
+      `tournaments/${tournamentId}/add_new_player.json`, 
+      { player: playerData }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error adding new player to tournament:', error);
+    throw error;
+  }
+};
+
+// Add new team to a tournament
+export const addNewTeamsTournament = async (tournamentId, teamData) => {
+  try {
+    const response = await axiosInstance.post(
+      `tournaments/${tournamentId}/add_new_team.json`, 
+      { team: teamData }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error adding new team to tournament:', error);
+    throw error;
+  }
+};
+
+
 // Fetch tournaments with pagination
 export const fetchTournaments = async (page = 1, limit = 50) => {
   try {
@@ -29,6 +70,17 @@ export const fetchTournaments = async (page = 1, limit = 50) => {
     throw error;
   }
 };
+
+export const fetchTournamentIds = async() => {
+  try {
+    // Include `.json` suffix for the API format requirement
+    const response = await axiosInstance.get('tournament-ids.json');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching tournament Ids:', error);
+    throw error;
+  }
+}
 
 // Delete a tournament by ID
 export const deleteTournament = async (id) => {
