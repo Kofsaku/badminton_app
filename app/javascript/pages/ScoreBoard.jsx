@@ -225,7 +225,7 @@ const ScoreBoard = () => {
                 key.includes("player") ? (
                   <div className="player-name" key={index}>
                     <h4>{players.teamA[key]}</h4>
-                    {currentServer.team === "teamA" && currentServer.player === key && (
+                    {status != 'completed' && currentServer.team === "teamA" && currentServer.player === key && (
                       <div className="serve-indicator-pointer"></div>
                     )}
                   </div>
@@ -257,7 +257,7 @@ const ScoreBoard = () => {
                 key.includes("player") ? (
                   <div className="player-name" key={index}>
                     <h4>{players.teamB[key]}</h4>
-                    {currentServer.team === "teamB" && currentServer.player === key && (
+                    {status != 'completed' && currentServer.team === "teamB" && currentServer.player === key && (
                       <div className="serve-indicator-pointer"></div>
                     )}
                   </div>
@@ -275,32 +275,38 @@ const ScoreBoard = () => {
           </div>
 
           {/* Central Court Section */}
-          <div className="court-container">
-            <div className="court">
-              {/* Court Lines */}
-              <div className="line vertical center"></div>
-              <div className="line horizontal top"></div>
-              <div className="line horizontal bottom"></div>
-              <div className="line vertical left"></div>
-              <div className="line vertical right"></div>
+          <div className="court-container position-relative">
+            <img
+              src="/images/badminton-court.jpg"
+              alt="Badminton Court"
+              className="court-image"
+            />
 
-              {/* Player Positions */}
-              {matchType == 'single' ? (
-                <>
-                  <div className="player top-left">P1</div>
-                  <div className="player top-right">P2</div>
-                </>
-              ) : (
-                <>
-                  <div className="player top-left">P1</div>
-                  <div className="player bottom-left">P2</div>
-                  <div className="player top-right">P3</div>
-                  <div className="player bottom-right">P4</div>
-                </>
-              ) }
+            {/* Player Names */}
+            <div className="player-names player-left">
+              {Object.keys(players.teamA).map((key, index) =>
+                key.includes("player") ? (
+                  <div className="player-badge" key={index}>
+                    {players.teamA[key]}
+                    {status != 'completed' && currentServer.team === "teamA" && currentServer.player === key && (
+                      <img src="/images/shuttle.png" alt="shuttle image" className="shuttle-indicator"/>
+                    )}
+                  </div>
+                ) : null
+              )}
+            </div>
 
-              {/* Serving Indicator */}
-              <div className="serve-indicator"></div>
+            <div className="player-names player-right">
+              {Object.keys(players.teamB).map((key, index) =>
+                key.includes("player") ? (
+                  <div className="player-badge" key={index}>
+                    {players.teamB[key]}
+                    {status != 'completed' && currentServer.team === "teamB" && currentServer.player === key && (
+                      <img src="/images/shuttle.png" alt="shuttle image" className="shuttle-indicator"/>
+                    )}
+                  </div>
+                ) : null
+              )}
             </div>
           </div>
 
