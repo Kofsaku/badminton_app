@@ -63,7 +63,13 @@ class Api::V1::TournamentTablesController < ApplicationController
     players = @tournament_table.tournament.tournament_players
     numbers = @tournament_table.timetable.timetable_cells
 
-    render json: {table: table, players: players, match_numbers: numbers}
+    render json: {
+      table: table, 
+      players: players.as_json(include:{
+        player: {only: [:id, :full_name, :title]}
+      }), 
+      match_numbers: numbers
+    }
   end
 
   def updateTournamentTableById

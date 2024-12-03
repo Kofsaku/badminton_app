@@ -33,35 +33,6 @@ const EditTournamentTable = () => {
         )
       );
 
-      console.log(
-        Array.from({ length: tournament_table_players.length }).map((_, row) =>
-          Array(tournament_table_players.length)
-            .fill(0)
-            .map((_, col) => {
-              if (row < col) {
-                const cell = match_numbers.find(
-                  (cell) =>
-                    cell.tournament_player_id ===
-                      tournament_table_players[row].tournament_player_id &&
-                    cell.second_tournament_player_id ===
-                      tournament_table_players[col].tournament_player_id
-                );
-                return cell.number % 1000;
-              } else if (row > col) {
-                const cell = match_numbers.find(
-                  (cell) =>
-                    cell.tournament_player_id ===
-                      tournament_table_players[col].tournament_player_id &&
-                    cell.second_tournament_player_id ===
-                      tournament_table_players[row].tournament_player_id
-                );
-                return cell.number % 1000;
-              }
-              return 0;
-            })
-        )
-      );
-
       setMatchNumbers(
         Array.from({ length: tournament_table_players.length }).map((_, row) =>
           Array(tournament_table_players.length)
@@ -226,7 +197,9 @@ const EditTournamentTable = () => {
                       value={player.id}
                       checked={selectedPlayers.includes(player.id)}
                     />
-                    {" Player " + player.id}
+                    {player.player_type === "User"
+                      ? player.player.full_name
+                      : player.player.title}
                   </li>
                 ))}
               </ul>
@@ -237,19 +210,32 @@ const EditTournamentTable = () => {
                 <thead>
                   <tr>
                     <th>Player</th>
-                    {Array.from({ length: selectedPlayers.length }).map(
-                      (_, index) => (
-                        <th key={index}>Player {selectedPlayers[index]}</th>
+                    {selectedPlayers
+                      .map((playerId) =>
+                        tournamentPlayers.find(
+                          (player) => player.id === playerId
+                        )
                       )
-                    )}
+                      .map((player) => (
+                        <th key={player.id}>
+                          {player.player_type === "User"
+                            ? player.player.full_name
+                            : player.player.title}
+                        </th>
+                      ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {Array.from({ length: matchNumbers.length }).map(
-                    (_, rowIndex) => (
+                  {selectedPlayers
+                    .map((playerId) =>
+                      tournamentPlayers.find((player) => player.id === playerId)
+                    )
+                    .map((player, rowIndex) => (
                       <tr key={rowIndex}>
                         <th key={rowIndex}>
-                          Player {selectedPlayers[rowIndex]}
+                          {player.player_type === "User"
+                            ? player.player.full_name
+                            : player.player.title}
                         </th>
                         {Array.from({ length: matchNumbers.length }).map(
                           (_, colIndex) =>
@@ -277,8 +263,7 @@ const EditTournamentTable = () => {
                             )
                         )}
                       </tr>
-                    )
-                  )}
+                    ))}
                 </tbody>
               </table>
             ) : (

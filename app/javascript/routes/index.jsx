@@ -77,16 +77,45 @@ export default (
           </ProtectedRoute>
         }
       />
-      <Route path="/tournament-tables" element={<TournamentTables />} />
+      <Route
+        path="/tournament-tables"
+        element={
+          <ProtectedRoute>
+            <TournamentTables />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/tournament-tables/new-round-robin"
-        element={<NewRoundRobin />}
+        element={
+          <ProtectedRoute>
+            <NewRoundRobin />
+          </ProtectedRoute>
+        }
       />
-      <Route path="/tournament-tables/new-knockout" element={<NewKnockout />} />
-      <Route path="/tournament-tables/:id" element={<TournamentTable />} />
+      <Route
+        path="/tournament-tables/new-knockout"
+        element={
+          <ProtectedRoute>
+            <NewKnockout />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/tournament-tables/:id"
+        element={
+          <ProtectedRoute>
+            <TournamentTable />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/tournament-tables/:id/edit"
-        element={<EditTournamentTable />}
+        element={
+          <ProtectedRoute>
+            <EditTournamentTable />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/timetables"
@@ -96,8 +125,22 @@ export default (
           </ProtectedRoute>
         }
       />
-      <Route path="/timetables/new" element={<CreateTimetable />} />
-      <Route path="/timetables/:id" element={<ShowTimetable />} />
+      <Route
+        path="/timetables/new"
+        element={
+          <ProtectedRoute>
+            <CreateTimetable />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/timetables/:id"
+        element={
+          <ProtectedRoute>
+            <ShowTimetable />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/matches" element={<MatchList />} />
       <Route path="/matches/new" element={<NewMatch />} />
       <Route path="/matches/:id/scoreboard" element={<ScoreBoard />} />

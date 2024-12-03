@@ -18,13 +18,12 @@ Rails.application.routes.draw do
     end
   end
   # Root and homepage routes
+  get '', to: 'homepage#index'
   get 'about', to: 'homepage#about'
   get 'terms-of-service', to: 'homepage#terms_of_service'
   get 'faqs', to: 'homepage#faqs'
   get 'privacy-policy', to: 'homepage#privacy-policy'
   get 'contact', to: 'homepage#contact'
-  get 'create-account', to: 'homepage#create_account'
-  get 'login', to: 'homepage#login'
   
   # Tournament management routes
   get 'tournament-creation', to: 'tournaments#new'
@@ -59,15 +58,6 @@ Rails.application.routes.draw do
       post :assign_player # Assign a player or team to a tournament table
     end
   end
-  
-  # resources :timetables, only: [:index, :show, :edit, :new, :create] do
-  #   collection do
-  #     get :venues_for_tournament
-  #   end
-  #   member do
-  #     post :generate_cells
-  #   end
-  # end
   
   resources :users do
     collection do

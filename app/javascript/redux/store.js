@@ -3,6 +3,7 @@ import { createStore, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import userReducer from './userReducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const persistConfig = {
   key: 'root',
@@ -16,7 +17,7 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = createStore(persistedReducer);
+const store = createStore(persistedReducer,composeWithDevTools());
 const persistor = persistStore(store);
 
 export { store, persistor };

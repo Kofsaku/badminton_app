@@ -13,7 +13,22 @@ class Api::V1::TimetablesController < ApplicationController
     render json: @timetable.as_json(include: {
       tournament: {only: [:id, :name]},
       tournament_venue: {},
-      timetable_cells: {}
+      timetable_cells: {
+        include: {
+          tournament_player: {
+            only: [:player_type],
+            include: {
+              player: {}
+            }
+          },
+          second_tournament_player: {
+            only: [:player_type],
+            include: {
+              player: {}
+            }
+          }
+        }
+      }
     })
   end
 

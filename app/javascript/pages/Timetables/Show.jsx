@@ -41,32 +41,42 @@ const ShowTimetable = () => {
           timeCells.length % tournamentVenue.no_of_courts
             ? Array.from({
                 length: timeCells.length % tournamentVenue.no_of_courts,
-              }).map((_, colIndex) => (
-                <td key={colIndex}>
-                  {"Player " +
+              })
+                .map(
+                  (_, colIndex) =>
                     timeCells[
                       tournamentVenue.no_of_courts * rowIndex + colIndex
-                    ].tournament_player_id +
-                    " / Player " +
-                    timeCells[
-                      tournamentVenue.no_of_courts * rowIndex + colIndex
-                    ].second_tournament_player_id}
-                </td>
-              ))
-            : Array.from({ length: tournamentVenue.no_of_courts }).map(
-                (_, colIndex) => (
-                  <td key={colIndex}>
-                    {"Player " +
-                      timeCells[
-                        tournamentVenue.no_of_courts * rowIndex + colIndex
-                      ].tournament_player_id +
-                      " / Player " +
-                      timeCells[
-                        tournamentVenue.no_of_courts * rowIndex + colIndex
-                      ].second_tournament_player_id}
-                  </td>
+                    ]
                 )
-              )}
+                .map((timeCell) => (
+                  <td key={timeCell.id}>
+                    {(timeCell.tournament_player.player_type === "User"
+                      ? timeCell.tournament_player.player.full_name
+                      : timeCell.tournament_player.player.title) +
+                      " : " +
+                      (timeCell.second_tournament_player.player_type === "User"
+                        ? timeCell.second_tournament_player.player.full_name
+                        : timeCell.second_tournament_player.player.title)}
+                  </td>
+                ))
+            : Array.from({ length: tournamentVenue.no_of_courts })
+                .map(
+                  (_, colIndex) =>
+                    timeCells[
+                      tournamentVenue.no_of_courts * rowIndex + colIndex
+                    ]
+                )
+                .map((timeCell) => (
+                  <td key={timeCell.id}>
+                    {(timeCell.tournament_player.player_type === "User"
+                      ? timeCell.tournament_player.player.full_name
+                      : timeCell.tournament_player.player.title) +
+                      " : " +
+                      (timeCell.second_tournament_player.player_type === "User"
+                        ? timeCell.second_tournament_player.player.full_name
+                        : timeCell.second_tournament_player.player.title)}
+                  </td>
+                ))}
         </tr>
       );
     });

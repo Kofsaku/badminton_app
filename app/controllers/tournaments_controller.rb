@@ -58,7 +58,7 @@ class TournamentsController < ApplicationController
   def add_new_team
     begin
       ActiveRecord::Base.transaction do
-        team = Team.create!(title: params["team"]["name"], members_count: params["team"]["numberOfPlayers"])
+        team = Team.create!(title: params["team"]["teamName"], members_count: params["team"]["numberOfPlayers"])
 
         params["team"]["players"].each do |player|
           user = User.create!(email: player["email"], full_name: player["name"], password: "password")

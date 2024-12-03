@@ -65,71 +65,70 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {role === "Tournament Organizer" ||
-              (role === "Both" && (
-                <>
-                  <li>
-                    <NavLink
-                      to="/tournament-creation"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "left-menu-btn1 merriweather-font active"
-                          : "left-menu-btn1 merriweather-font"
-                      }
-                    >
-                      Tournament Creation
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="type-management#"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "left-menu-btn1 merriweather-font active"
-                          : "left-menu-btn1 merriweather-font"
-                      }
-                    >
-                      Type Management
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="split-management"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "left-menu-btn1 merriweather-font active"
-                          : "left-menu-btn1 merriweather-font"
-                      }
-                    >
-                      Split Management
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/players-management"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "left-menu-btn1 merriweather-font active"
-                          : "left-menu-btn1 merriweather-font"
-                      }
-                    >
-                      Player Management
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/tournament-tables"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "left-menu-btn1 merriweather-font active"
-                          : "left-menu-btn1 merriweather-font"
-                      }
-                    >
-                      League/Tournament Tables
-                    </NavLink>
-                  </li>
-                </>
-              ))}
+            {(role === "Tournament Organizer" || role === "Both") && (
+              <>
+                <li>
+                  <NavLink
+                    to="/tournament-creation"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
+                  >
+                    Tournament Creation
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="type-management#"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
+                  >
+                    Type Management
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="split-management"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
+                  >
+                    Split Management
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/players-management"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
+                  >
+                    Player Management
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/tournament-tables"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
+                  >
+                    League/Tournament Tables
+                  </NavLink>
+                </li>
+              </>
+            )}
 
             {(role === "Tournament Organizer" ||
               role === "Admin" ||
