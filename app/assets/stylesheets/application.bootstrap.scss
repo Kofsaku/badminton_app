@@ -1772,3 +1772,39 @@ section.left-sidebar-wrapper {
 .modal {
   z-index: 1051; /* Ensure the modal is above the backdrop */
 }
+
+.left-top-arrow-image {
+  width: 271px;
+  position: absolute;
+  top: -50px;
+  left: 160px;
+  transform: rotate(106deg);
+  max-width: 500px;
+}
+
+.left-bottom-arrow-image {
+  width: 280px;
+  position: absolute;
+  top: -50px;
+  left: 150px;
+  transform: rotate(70deg);
+  max-width: 500px;
+}
+
+.right-top-arrow-image {
+  width: 280px;
+  position: absolute;
+  top: -88px;
+  left: -316px;
+  transform: rotate(247deg);
+  max-width: 500px;
+}
+
+.right-bottom-arrow-image {
+  width: 280px;
+  position: absolute;
+  top: -90px;
+  left: -315px;
+  transform: rotate(288deg);
+  max-width: 500px;
+}

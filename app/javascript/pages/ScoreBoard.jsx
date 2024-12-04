@@ -289,7 +289,14 @@ const ScoreBoard = () => {
                   <div className="player-badge" key={index}>
                     {players.teamA[key]}
                     {status != 'completed' && currentServer.team === "teamA" && currentServer.player === key && (
-                      <img src="/images/shuttle.png" alt="shuttle image" className="shuttle-indicator"/>
+                      <>
+                        <img src="/images/shuttle.png" alt="shuttle image" className="shuttle-indicator"/>
+                        {currentServer.player === 'player1Name' ? (
+                          <img src="/images/arrow.png" alt="arrow image" className="left-top-arrow-image" />
+                        ) : (
+                          <img src="/images/arrow.png" alt="arrow image" className="left-bottom-arrow-image" />
+                        )}
+                      </>
                     )}
                   </div>
                 ) : null
@@ -302,7 +309,14 @@ const ScoreBoard = () => {
                   <div className="player-badge" key={index}>
                     {players.teamB[key]}
                     {status != 'completed' && currentServer.team === "teamB" && currentServer.player === key && (
-                      <img src="/images/shuttle.png" alt="shuttle image" className="shuttle-indicator"/>
+                      <>
+                        <img src="/images/shuttle.png" alt="shuttle image" className="shuttle-indicator"/>
+                        {currentServer.player === 'player1Name' ? (
+                          <img src="/images/arrow.png" alt="arrow image" className="right-top-arrow-image" />
+                        ) : (
+                          <img src="/images/arrow.png" alt="arrow image" className="right-bottom-arrow-image" />
+                        )}
+                      </>
                     )}
                   </div>
                 ) : null
