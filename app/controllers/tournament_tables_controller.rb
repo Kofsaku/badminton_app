@@ -1,105 +1,89 @@
-# app/controllers/tournament_tables_controller.rb
 class TournamentTablesController < ApplicationController
-  before_action :set_tournament_table, only: [:show, :edit, :update, :destroy]
+  before_action :set_tournament_table, only: [:show, :edit, :update, :destroy, :assign_player]
 
-  # 一覧表示
+  # List all tournament tables
   def index
     @tournament_tables = TournamentTable.includes(:tournament, :tournament_category, :tournament_division).order(:created_at)
   end
 
-  # 詳細表示
-# app/controllers/tournament_tables_controller.rb
-# app/controllers/tournament_tables_controller.rb
+  # Show a specific table
   def show
-    @tournament_table = TournamentTable.find(params[:id])
-    # 各 TournamentPlayer インスタンスのユーザー名を取得
-    @players = User.all
-    @players_options = @players.map { |user| [user.full_name, user.id] }
+    @players = @tournament_table.tournament_players
   end
 
-
-  # 新規作成フォーム
-  def new
-    @tournament_table = TournamentTable.new
-    load_form_data
+  # Initialize a new RoundRobinTable
+  def new_round_robin
+    @round_robin_table = RoundRobinTable.new
   end
 
-  # 作成処理
-  def create
-    # binding.pry
-    category_id = tournament_table_params[:tournament_category_id]
-    division_id = tournament_table_params[:tournament_division_id]
-  
-    division = TournamentDivision.find_by(id: division_id, tournament_category_id: category_id)
-    
-    if division.nil?
-      flash[:alert] = "選択されたディビジョンは、このカテゴリーに紐づいていません。"
-      load_form_data # データを読み込む
-      return render :new
-    end
-  
-    @tournament_table = TournamentTable.new(tournament_table_params)
-    if @tournament_table.save
-      redirect_to @tournament_table, notice: "Tournament table created successfully."
+  # Initialize a new KnockoutTable
+  def new_knockout
+    @knockout_table = KnockoutTable.new
+  end
+
+  # Assign a player or team to a table
+  def assign_player
+    player = TournamentPlayer.find(params[:player_id])
+    if @tournament_table.tournament_players.include?(player)
+      redirect_to @tournament_table, alert: "Player already assigned."
     else
-      load_form_data # データを読み込む
-      render :new
+      @tournament_table.tournament_players << player
+      redirect_to @tournament_table, notice: "Player assigned successfully."
     end
   end
-  
-  # 編集フォーム
-  def edit
-    load_form_data
+
+  # Create RoundRobinTable
+  def create_round_robin
+    @round_robin_table = RoundRobinTable.new(tournament_table_params)
+    if @round_robin_table.save
+      redirect_to tournament_table_url(@round_robin_table), notice: "Round robin table created successfully."
+    else
+      render :new_round_robin
+    end
   end
 
-  # 更新処理
+  # Create KnockoutTable
+  def create_knockout
+    @knockout_table = KnockoutTable.new(tournament_table_params)
+    if @knockout_table.save
+      redirect_to tournament_table_url(@knockout_table), notice: "Knockout table created successfully."
+    else
+      render :new_knockout
+    end
+  end
+
   def update
-    if @tournament_table.update(tournament_table_params)
+    if @tournament_table.update(update_table_params.slice(:name, :size, :bracket_direction))
+      if update_table_params[:player_ids].present?
+        @tournament_table.tournament_players = TournamentPlayer.where(id: update_table_params[:player_ids])
+      end
+
       redirect_to @tournament_table, notice: "Tournament table updated successfully."
     else
+      flash.now[:alert] = @tournament_table.errors.full_messages.to_sentence
       render :edit
     end
   end
-
-  # 削除処理
-  def destroy
-    @tournament_table.destroy
-    redirect_to tournament_tables_path, notice: "Tournament table deleted successfully."
-  end
-
-# app/controllers/tournament_tables_controller.rb
-  def league_select_players
-    @tournament_table = TournamentTable.find(params[:id])
-    selected_player_ids = params[:selected_players] || []
-
-    # 既存の関連を削除してから新しく追加
-    @tournament_table.tournament_table_players.destroy_all
-    selected_player_ids.each do |player_id|
-      @tournament_table.tournament_table_players.create(tournament_player_id: player_id)
-    end
-
-    redirect_to @tournament_table, notice: "Players selected successfully."
-  end
-
-
-
+  
   private
 
-  def load_form_data
-    @tournaments = Tournament.all
-    @categories = TournamentCategory.where(tournament_id: @tournaments.first&.id)
-    if @categories.any?
-      @divisions = TournamentDivision.where(tournament_category_id: @categories.first.id)
+  # Strong parameters for tournament tables
+  def tournament_table_params
+    if params[:knockout_table]
+      params.require(:knockout_table).permit(:name, :tournament_id, :tournament_category_id, :tournament_division_id, :size, :bracket_direction, :table_type)
+    elsif params[:round_robin_table]
+      params.require(:round_robin_table).permit(:name, :tournament_id, :tournament_category_id, :tournament_division_id, :size, :table_type)
     else
-      @divisions = TournamentDivision.none
+      raise ActionController::ParameterMissing, 'No valid table type parameter found'
     end
   end
 
-  def set_tournament_table
-    @tournament_table = TournamentTable.find(params[:id])
+  def update_table_params
+    params.require(:tournament_table).permit(:name, :size, :bracket_direction, player_ids: [])
   end
 
-  def tournament_table_params
-    params.require(:tournament_table).permit(:name, :table_type, :tournament_id, :tournament_category_id, :tournament_division_id, :size)
+  # Set a specific tournament table
+  def set_tournament_table
+    @tournament_table = TournamentTable.find(params[:id])
   end
 end

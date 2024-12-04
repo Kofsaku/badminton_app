@@ -1,55 +1,65 @@
-<form action="/tournament_tables" method="post">
-  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+<%= form_with(model: tournament_table, url: path, local: true) do |form| %>
+  <%# Hidden field to identify the table type (Round Robin or Knockout) %>
+  <% if tournament_table.is_a?(RoundRobinTable) %>
+    <%= form.hidden_field :table_type, value: 'league' %>
+  <% elsif tournament_table.is_a?(KnockoutTable) %>
+    <%= form.hidden_field :table_type, value: 'tournament' %>
+  <% end %>
 
-  <div>
-    <label for="tournament_table_name">Name</label>
-    <input type="text" name="tournament_table[name]" id="tournament_table_name">
+  <%# Input field for Tournament Name %>
+  <div class="form-group">
+    <%= form.label :name, 'Tournament Name' %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
   </div>
 
-  <div>
-    <label for="tournament_table_table_type">Select Table Type</label>
-    <select name="tournament_table[table_type]" id="tournament_table_table_type">
-      <% TournamentTable.table_types.keys.each do |type| %>
-        <option value="<%= type %>"><%= type.titleize %></option>
-      <% end %>
-    </select>
+  <%# Dropdown for Tournament selection %>
+  <div class="form-group">
+    <%= form.label :tournament_id, 'Tournament' %>
+    <%= form.collection_select :tournament_id, Tournament.all, :id, :name,
+      { prompt: 'Select Tournament' },
+      { class: 'form-control', id: 'tournament-dropdown', required: true } %>
   </div>
 
-  <div>
-    <label for="tournament_table_tournament_id">Select Tournament</label>
-    <select name="tournament_table[tournament_id]" id="tournament_table_tournament_id">
-      <% @tournaments.each do |tournament| %>
-        <option value="<%= tournament.id %>"><%= tournament.name %></option>
-      <% end %>
-    </select>
+  <%# Dropdown for Category selection, dynamically updated %>
+  <div class="form-group">
+    <%= form.label :tournament_category_id, 'Category' %>
+    <%= form.collection_select :tournament_category_id, [], :id, :category_type,
+      { prompt: 'Select Category' },
+      { class: 'form-control', id: 'category-dropdown', required: true } %>
   </div>
 
-  <div>
-    <label for="tournament_table_tournament_category_id">Select Category</label>
-    <select name="tournament_table[tournament_category_id]" id="tournament_table_tournament_category_id">
-      <% @categories.each do |category| %>
-        <option value="<%= category.id %>"><%= category.category_type %></option>
-      <% end %>
-    </select>
+  <%# Dropdown for Division selection, dynamically updated %>
+  <div class="form-group">
+    <%= form.label :tournament_division_id, 'Division' %>
+    <%= form.collection_select :tournament_division_id, [], :id, :division,
+      { prompt: 'Select Division' },
+      { class: 'form-control', id: 'division-dropdown', required: true } %>
   </div>
 
-  <div>
-    <label for="tournament_table_tournament_division_id">Select Division</label>
-    <select name="tournament_table[tournament_division_id]" id="tournament_table_tournament_division_id">
-      <% @divisions.each do |division| %>
-        <option value="<%= division.id %>"><%= division.division %></option>
-      <% end %>
-    </select>
-  </div>
+  <%# Additional fields for KnockoutTable or RoundRobinTable %>
+  <% if tournament_table.is_a?(KnockoutTable) %>
+    <div class="form-group">
+      <%= form.label :size, 'Bracket Size (e.g., 4, 8, 16)' %>
+      <%= form.number_field :size, value: tournament_table.size || 4,
+        class: 'form-control', min: 2, required: true %>
+    </div>
+    <div class="form-group">
+      <%= form.label :bracket_direction, 'Bracket Direction' %>
+      <%= form.select :bracket_direction, KnockoutTable.bracket_directions.keys,
+        { prompt: 'Select Direction' }, { class: 'form-control', required: true } %>
+    </div>
+  <% elsif tournament_table.is_a?(RoundRobinTable) %>
+    <div class="form-group">
+      <%= form.label :size, 'Number of Teams (e.g., 4, 6, 8)' %>
+      <%= form.number_field :size, value: tournament_table.size || 4,
+        class: 'form-control', min: 2, required: true %>
+    </div>
+  <% end %>
 
-  <div>
-    <label for="tournament_table_size">Table Size (e.g., 4 for 4x4)</label>
-    <input type="number" name="tournament_table[size]" id="tournament_table_size">
+  <%# Submit Button %>
+  <div class="form-group">
+    <%= form.submit 'Save', class: 'btn btn-primary' %>
   </div>
-
-  <div>
-    <input type="submit" value="Create Tournament Table">
-  </div>
-</form>
+<% end %>
 
 <%= javascript_include_tag 'tournament_table_create' %>
