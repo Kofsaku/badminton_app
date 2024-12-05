@@ -84,15 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.index ["user_id"], name: "index_team_players_on_user_id"
   end
 
-  create_table "team_players", force: :cascade do |t|
-    t.bigint "team_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_team_players_on_team_id"
-    t.index ["user_id"], name: "index_team_players_on_user_id"
-  end
-
   create_table "teams", force: :cascade do |t|
     t.string "title"
     t.string "members_count"
@@ -108,20 +99,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.integer "number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "timetable_cells", force: :cascade do |t|
-    t.bigint "timetable_id", null: false
-    t.bigint "tournament_table_id", null: false
-    t.bigint "tournament_player_id"
-    t.bigint "second_tournament_player_id"
-    t.integer "number", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["second_tournament_player_id"], name: "index_timetable_cells_on_second_tournament_player_id"
-    t.index ["timetable_id"], name: "index_timetable_cells_on_timetable_id"
-    t.index ["tournament_player_id"], name: "index_timetable_cells_on_tournament_player_id"
-    t.index ["tournament_table_id"], name: "index_timetable_cells_on_tournament_table_id"
     t.index ["second_tournament_player_id"], name: "index_timetable_cells_on_second_tournament_player_id"
     t.index ["timetable_id"], name: "index_timetable_cells_on_timetable_id"
     t.index ["tournament_player_id"], name: "index_timetable_cells_on_tournament_player_id"
@@ -133,8 +110,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "memos"
-    t.bigint "tournament_id", null: false
-    t.index ["tournament_id"], name: "index_timetables_on_tournament_id"
     t.bigint "tournament_id", null: false
     t.index ["tournament_id"], name: "index_timetables_on_tournament_id"
     t.index ["tournament_venue_id"], name: "index_timetables_on_tournament_venue_id"
@@ -161,9 +136,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.boolean "show_score"
     t.boolean "show_intervals"
     t.boolean "show_time_limit"
-    t.boolean "show_score"
-    t.boolean "show_intervals"
-    t.boolean "show_time_limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tournament_id"], name: "index_tournament_categories_on_tournament_id"
@@ -183,13 +155,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
   create_table "tournament_players", force: :cascade do |t|
     t.string "player_type", null: false
     t.bigint "player_id", null: false
-    t.string "player_type", null: false
-    t.bigint "player_id", null: false
     t.bigint "tournament_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["player_type", "player_id"], name: "index_tournament_players_on_player"
     t.index ["player_type", "player_id"], name: "index_tournament_players_on_player"
     t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
   end
@@ -216,14 +185,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.bigint "tournament_venue_id"
     t.bigint "timetable_id"
     t.index ["timetable_id"], name: "index_tournament_tables_on_timetable_id"
-    t.integer "bracket_direction"
-    t.bigint "tournament_venue_id"
-    t.bigint "timetable_id"
-    t.index ["timetable_id"], name: "index_tournament_tables_on_timetable_id"
     t.index ["tournament_category_id"], name: "index_tournament_tables_on_tournament_category_id"
     t.index ["tournament_division_id"], name: "index_tournament_tables_on_tournament_division_id"
     t.index ["tournament_id"], name: "index_tournament_tables_on_tournament_id"
-    t.index ["tournament_venue_id"], name: "index_tournament_tables_on_tournament_venue_id"
     t.index ["tournament_venue_id"], name: "index_tournament_tables_on_tournament_venue_id"
   end
 
@@ -292,7 +256,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
   add_foreign_key "matches", "timetable_cells"
   add_foreign_key "profiles", "users"
   add_foreign_key "team_members", "teams"
-  add_foreign_key "teams", "users"
   add_foreign_key "team_players", "teams"
   add_foreign_key "team_players", "users"
   add_foreign_key "timetable_cells", "timetables"
@@ -300,7 +263,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
   add_foreign_key "timetable_cells", "tournament_players", column: "second_tournament_player_id"
   add_foreign_key "timetable_cells", "tournament_tables", on_delete: :cascade
   add_foreign_key "timetables", "tournament_venues"
-  add_foreign_key "timetables", "tournaments"
   add_foreign_key "timetables", "tournaments"
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories"
@@ -310,7 +272,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
   add_foreign_key "tournament_tables", "timetables"
   add_foreign_key "tournament_tables", "tournament_categories"
   add_foreign_key "tournament_tables", "tournament_divisions"
-  add_foreign_key "tournament_tables", "tournament_venues"
   add_foreign_key "tournament_tables", "tournament_venues"
   add_foreign_key "tournament_tables", "tournaments"
   add_foreign_key "tournament_venues", "tournaments"

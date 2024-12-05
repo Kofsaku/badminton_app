@@ -13,21 +13,23 @@ class Api::V1::TournamentTablesController < ApplicationController
   def add_new_tournament_table
     @timetable = Timetable.find_or_initialize_by(tournament_id: tournament_table_params[:tournament_id], tournament_venue_id: tournament_table_params[:tournament_venue_id])
     
-    if tournament_table_params[:table_type] == "league"
-      @round_robin_table = RoundRobinTable.new(tournament_table_params.merge(timetable_id: @timetable.id))
-      if @round_robin_table.save
-        render json: {id: @round_robin_table.id, message: "league table successfully created"}
+    if @timetable.save
+      if tournament_table_params[:table_type] == "league"
+        @round_robin_table = RoundRobinTable.new(tournament_table_params.merge(timetable_id: @timetable.id))
+        if @round_robin_table.save
+          render json: {id: @round_robin_table.id, message: "league table successfully created"}
+        else
+          logger.info "#{@round_robin_table.errors.full_messages}"
+          render json: {message: "failed"}, status: :bad_request
+        end
       else
-        logger.info "#{@round_robin_table.errors.full_messages}"
-        render json: {message: "failed"}, status: :bad_request
-      end
-    else
-      @knockout_table = KnockoutTable.new(tournament_table_params.merge(timetable_id: @timetable.id))
-      if @knockout_table.save
-        render json: {id: @knockout_table.id, message: "tournament table successfully created"}
-      else
-        logger.info "#{@knockout_table.errors.full_messages}"
-        render json: {message: "failed"}, status: :bad_request
+        @knockout_table = KnockoutTable.new(tournament_table_params.merge(timetable_id: @timetable.id))
+        if @knockout_table.save
+          render json: {id: @knockout_table.id, message: "tournament table successfully created"}
+        else
+          logger.info "#{@knockout_table.errors.full_messages}"
+          render json: {message: "failed"}, status: :bad_request
+        end
       end
     end
   end

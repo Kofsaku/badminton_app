@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   root 'homepage#index'
   namespace :api do
     namespace :v1 do
-      get 'tournaments', to: 'tournaments#getAllTournaments'
-      get 'tournaments/:id/tournament-venues', to: 'tournaments#getVenuesByTournamentId'
-      get 'tournaments/:id/tournament-data', to: 'tournaments#getTournamentDataById'
+      get 'tournaments', to: 'tournaments#get_all_tournaments'
+      get 'tournaments/:id/tournament-venues', to: 'tournaments#get_venues_by_tournament_id'
+      get 'tournaments/:id/tournament-data', to: 'tournaments#get_tournament_data_by_id'
       get 'tournament-tables', to: 'tournament_tables#get_all_tournament_tables'
       get 'tournament-tables/:id', to: 'tournament_tables#get_tournament_table_by_id'
       post 'tournament-tables', to: 'tournament_tables#add_new_tournament_table'
@@ -26,13 +26,9 @@ Rails.application.routes.draw do
   get 'contact', to: 'homepage#contact'
   
   # Tournament management routes
-  
-  # Tournament management routes
   get 'tournament-creation', to: 'tournaments#new'
   get 'tournament-management', to: 'tournaments#tournament_management'
   get 'players-management', to: 'users#index'
-  get 'tournament-ids', to: 'tournaments#tournament_ids'
-
   get 'tournament-ids', to: 'tournaments#tournament_ids'
 
   resources :tournaments, only: [:edit, :update, :destroy, :show, :create, :index] do 
@@ -40,16 +36,10 @@ Rails.application.routes.draw do
     post 'add_player'
     post 'add_new_player'
     post 'add_new_team'
-    post 'add_player'
-    post 'add_new_player'
-    post 'add_new_team'
   end
 
   get 'scoreboard', to: 'scoreboard#index'
 
-  get 'scoreboard', to: 'scoreboard#index'
-
-  resources :categories do
   resources :categories do
     get 'divisions', to: 'categories#divisions'
   end
@@ -67,16 +57,6 @@ Rails.application.routes.draw do
     member do
       post :assign_player # Assign a player or team to a tournament table
     end
-    post :league_select_players, on: :member # Original functionality preserved
-    collection do
-      get :new_round_robin  # Form for creating a round-robin table
-      post :create_round_robin
-      get :new_knockout      # Form for creating a knockout table
-      post :create_knockout
-    end
-    member do
-      post :assign_player # Assign a player or team to a tournament table
-    end
   end
   
   resources :users do
@@ -84,30 +64,8 @@ Rails.application.routes.draw do
       post 'show_api_key'
       post 'regenerate_api_key'
       get 'players-list', to: 'users#players_list'
-      get 'players-list', to: 'users#players_list'
     end
   end
-
-  resources :matches, only: %i[index show create update] do
-    member do
-      post 'add_log'
-      patch 'complete'
-      get 'scoreboard'
-    end
-
-    collection do
-      get 'all'
-      get 'new'
-    end
-  end
-  
-  # Scoreboards for matches (accessible from timetables)
-  resources :scoreboards, only: [:show]
-  
-  # Catch-all route for debugging (optional, remove in production)
-  get '/*path' => 'homepage#index'
-  match '*path', to: 'application#not_found', via: :all
-end
 
   resources :matches, only: %i[index show create update] do
     member do
