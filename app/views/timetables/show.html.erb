@@ -1,25 +1,32 @@
-<h2><%= @timetable.tournament_venue.venue_name %> - タイムテーブル</h2>
+<h1>Timetable</h1>
 
-<table>
+<p>
+  <strong>Tournament:</strong> <%= @timetable.tournament.name %><br>
+  <strong>Venue:</strong> <%= @timetable.tournament_venue.venue_name %><br>
+  <strong>Rows:</strong> <%= @timetable.row_count %><br>
+  <strong>Columns (Courts):</strong> <%= @timetable.column_count %>
+</p>
+
+<h2>Timetable Cells</h2>
+<table class="table">
   <thead>
     <tr>
-      <th>時間</th> <!-- 左側に時間列 -->
-      <% @timetable.column_count.times do |i| %>
-        <th>コート <%= i + 1 %></th>
-      <% end %>
+      <th>Number</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% @timetable.row_count.times do |row_index| %>
+    <% @cells.each do |cell| %>
       <tr>
-        <!-- 時間の入力フィールド（空欄にもできる） -->
+        <td><%= cell.number %></td>
         <td>
-          <input type="text" name="time_slots[<%= row_index %>]" placeholder="時間を入力" style="width: 80px;">
+          <!-- Add links to assign players/teams to cells in the future -->
+          <%= link_to 'Assign Match', '#', class: 'btn btn-secondary disabled' %>
         </td>
-        <% @timetable.column_count.times do %>
-          <td>セル内容</td>
-        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= link_to 'Regenerate Cells', generate_cells_timetable_path(@timetable), method: :post, class: 'btn btn-warning' %>
+<%= link_to 'Back to Timetables', timetables_path, class: 'btn btn-secondary' %>

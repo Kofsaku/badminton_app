@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< Updated upstream
-ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
-=======
 ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
->>>>>>> Stashed changes
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,8 +28,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.index ["tournament_id"], name: "index_match_compositions_on_tournament_id"
   end
 
-<<<<<<< Updated upstream
-=======
   create_table "matches", force: :cascade do |t|
     t.string "match_type"
     t.string "player1"
@@ -52,7 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.index ["timetable_cell_id"], name: "index_matches_on_timetable_cell_id"
   end
 
->>>>>>> Stashed changes
   create_table "profiles", force: :cascade do |t|
     t.string "role"
     t.string "real_name"
@@ -82,21 +75,43 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.index ["team_id"], name: "index_team_members_on_team_id"
   end
 
-  create_table "teams", force: :cascade do |t|
-    t.string "title"
-    t.string "members_count"
+  create_table "team_players", force: :cascade do |t|
+    t.bigint "team_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_teams_on_user_id"
+    t.index ["team_id"], name: "index_team_players_on_team_id"
+    t.index ["user_id"], name: "index_team_players_on_user_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "title"
+    t.string "members_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "timetable_cells", force: :cascade do |t|
+    t.bigint "timetable_id", null: false
+    t.bigint "tournament_table_id", null: false
+    t.bigint "tournament_player_id"
+    t.bigint "second_tournament_player_id"
+    t.integer "number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["second_tournament_player_id"], name: "index_timetable_cells_on_second_tournament_player_id"
+    t.index ["timetable_id"], name: "index_timetable_cells_on_timetable_id"
+    t.index ["tournament_player_id"], name: "index_timetable_cells_on_tournament_player_id"
+    t.index ["tournament_table_id"], name: "index_timetable_cells_on_tournament_table_id"
   end
 
   create_table "timetables", force: :cascade do |t|
     t.bigint "tournament_venue_id", null: false
-    t.integer "row_count", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "memos"
+    t.bigint "tournament_id", null: false
+    t.index ["tournament_id"], name: "index_timetables_on_tournament_id"
     t.index ["tournament_venue_id"], name: "index_timetables_on_tournament_venue_id"
   end
 
@@ -118,6 +133,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.boolean "switch_between_games"
     t.string "match_composition"
     t.string "match_facilitator"
+    t.boolean "show_score"
+    t.boolean "show_intervals"
+    t.boolean "show_time_limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tournament_id"], name: "index_tournament_categories_on_tournament_id"
@@ -135,13 +153,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
   end
 
   create_table "tournament_players", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.string "player_type", null: false
+    t.bigint "player_id", null: false
     t.bigint "tournament_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["player_type", "player_id"], name: "index_tournament_players_on_player"
     t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
-    t.index ["user_id"], name: "index_tournament_players_on_user_id"
   end
 
   create_table "tournament_table_players", force: :cascade do |t|
@@ -162,9 +181,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
     t.integer "size", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "bracket_direction"
+    t.bigint "tournament_venue_id"
+    t.bigint "timetable_id"
+    t.index ["timetable_id"], name: "index_tournament_tables_on_timetable_id"
     t.index ["tournament_category_id"], name: "index_tournament_tables_on_tournament_category_id"
     t.index ["tournament_division_id"], name: "index_tournament_tables_on_tournament_division_id"
     t.index ["tournament_id"], name: "index_tournament_tables_on_tournament_id"
+    t.index ["tournament_venue_id"], name: "index_tournament_tables_on_tournament_venue_id"
   end
 
   create_table "tournament_venues", force: :cascade do |t|
@@ -232,30 +256,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
   add_foreign_key "matches", "timetable_cells"
   add_foreign_key "profiles", "users"
   add_foreign_key "team_members", "teams"
-<<<<<<< Updated upstream
   add_foreign_key "teams", "users"
-=======
   add_foreign_key "team_players", "teams"
   add_foreign_key "team_players", "users"
   add_foreign_key "timetable_cells", "timetables"
   add_foreign_key "timetable_cells", "tournament_players"
   add_foreign_key "timetable_cells", "tournament_players", column: "second_tournament_player_id"
   add_foreign_key "timetable_cells", "tournament_tables", on_delete: :cascade
->>>>>>> Stashed changes
   add_foreign_key "timetables", "tournament_venues"
+  add_foreign_key "timetables", "tournaments"
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"
-  add_foreign_key "tournament_players", "users"
   add_foreign_key "tournament_table_players", "tournament_players"
-<<<<<<< Updated upstream
-  add_foreign_key "tournament_table_players", "tournament_tables"
-=======
   add_foreign_key "tournament_table_players", "tournament_tables", on_delete: :cascade
   add_foreign_key "tournament_tables", "timetables"
->>>>>>> Stashed changes
   add_foreign_key "tournament_tables", "tournament_categories"
   add_foreign_key "tournament_tables", "tournament_divisions"
+  add_foreign_key "tournament_tables", "tournament_venues"
   add_foreign_key "tournament_tables", "tournaments"
   add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"

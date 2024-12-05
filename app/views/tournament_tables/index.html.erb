@@ -1,32 +1,29 @@
 <h1>Tournament Tables</h1>
-<table>
+<%= link_to 'New Round Robin Table', new_round_robin_tournament_tables_path, class: 'btn btn-primary' %>
+<%= link_to 'New Knockout Table', new_knockout_tournament_tables_path, class: 'btn btn-primary' %>
+
+<table class="table">
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Type</th>
       <th>Tournament</th>
       <th>Category</th>
       <th>Division</th>
-      <th>Type</th>
-      <th>Size</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @tournament_tables.each do |table| %>
       <tr>
-        <td><%= table.name %></td>
+        <td><%= table.table_type %></td>
         <td><%= table.tournament.name %></td>
         <td><%= table.tournament_category.category_type %></td>
         <td><%= table.tournament_division.division %></td>
-        <td><%= table.table_type %></td>
-        <td><%= table.size %>x<%= table.size %></td>
         <td>
-          <%= link_to 'Show', tournament_table_path(table) %>
-          <%= link_to 'Edit', edit_tournament_table_path(table) %>
-          <%= link_to 'Delete', tournament_table_path(table), method: :delete, data: { confirm: "Are you sure?" } %>
+          <%= link_to 'View', tournament_table_path(table), class: 'btn btn-info' %>
+          <%= link_to 'Delete', tournament_table_path(table), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to 'New Tournament Table', new_tournament_table_path %>

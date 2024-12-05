@@ -1,0 +1,15 @@
+export const ProfileModel = () => ({
+  role: '',
+  real_name: '',
+  pet_name: '',
+  telephone_number: '',
+  prefecture: '',
+  address: '',
+  city: '',
+  gender: '',
+  date_of_birth: '',
+  years_of_experience: '',
+  racket: '',
+  affiliation: '',
+  age: '',
+});
