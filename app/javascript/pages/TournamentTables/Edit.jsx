@@ -64,8 +64,6 @@ const EditTournamentTable = () => {
     });
   }, [id]);
 
-  useEffect(() => {}, [selectedPlayers]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -85,6 +83,7 @@ const EditTournamentTable = () => {
       .then((res) => {
         console.log(res.data);
 
+        alert("table updated successfully.");
         // const { table } = res.data;
         // setTournamentTable(table);
       });
@@ -121,10 +120,23 @@ const EditTournamentTable = () => {
   const showKnockout = () => {
     let match_pairs = [];
 
-    for (let i = 0; i < selectedPlayers.length; i += 2) {
+    for (let i = 0; i < selectedPlayers.length - 1; i += 2) {
+      const player_first = tournamentPlayers.find(
+        (player) => player.id === selectedPlayers[i]
+      );
+      const player_second = tournamentPlayers.find(
+        (player) => player.id === selectedPlayers[i + 1]
+      );
+
       match_pairs.push(
         <li key={i}>
-          Player {selectedPlayers[i]} - Player {selectedPlayers[i + 1]}
+          {player_first.player_type === "User"
+            ? player_first.player.full_name
+            : player_first.player.title}{" "}
+          -{" "}
+          {player_second.player_type === "User"
+            ? player_second.player.full_name
+            : player_second.player.title}
           <input
             type="number"
             className="form-control"
@@ -280,7 +292,8 @@ const EditTournamentTable = () => {
               disabled={
                 tournamentTable.table_type === "league"
                   ? selectedPlayers.length != tableSize
-                  : selectedPlayers.length % 2
+                  : selectedPlayers.length % 2 ||
+                    selectedPlayers.length > tableSize
               }
             />
             <Link to="/tournament-tables" className="btn btn-secondary">

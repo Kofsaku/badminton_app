@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 const TournamentTable = () => {
   const { id } = useParams();
   const [tournamentTable, setTournamentTable] = useState(null);
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
 
   useEffect(() => {
     const url = `/api/v1/tournament-tables/${id}`;
@@ -14,6 +15,14 @@ const TournamentTable = () => {
       console.log(res.data);
 
       const { table, players } = res.data;
+      setSelectedPlayers(
+        table.tournament_table_players.map((player) =>
+          players.find(
+            (tournamentPlayer) =>
+              tournamentPlayer.id === player.tournament_player_id
+          )
+        )
+      );
 
       setTournamentTable(table);
     });
@@ -65,6 +74,17 @@ const TournamentTable = () => {
                   {tournamentTable.bracket_direction}
                 </h5>
               )}
+
+              <h3>Assigned Players or Teams</h3>
+              <ul>
+                {selectedPlayers.map((player) => (
+                  <li key={player.id}>
+                    {player.player_type === "User"
+                      ? player.player.full_name
+                      : player.player.title}
+                  </li>
+                ))}
+              </ul>
 
               <Link to="edit" className="btn btn-primary">
                 Edit Table
