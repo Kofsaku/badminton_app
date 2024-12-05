@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< Updated upstream
 ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
+=======
+ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
+>>>>>>> Stashed changes
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +32,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
     t.index ["tournament_id"], name: "index_match_compositions_on_tournament_id"
   end
 
+<<<<<<< Updated upstream
+=======
+  create_table "matches", force: :cascade do |t|
+    t.string "match_type"
+    t.string "player1"
+    t.string "player2"
+    t.string "player3"
+    t.string "player4"
+    t.string "winner"
+    t.text "match_log"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "match_time"
+    t.integer "match_score_teamA", default: 0
+    t.integer "match_score_teamB", default: 0
+    t.bigint "timetable_cell_id"
+    t.index ["timetable_cell_id"], name: "index_matches_on_timetable_cell_id"
+  end
+
+>>>>>>> Stashed changes
   create_table "profiles", force: :cascade do |t|
     t.string "role"
     t.string "real_name"
@@ -204,16 +229,31 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
   end
 
   add_foreign_key "match_compositions", "tournaments"
+  add_foreign_key "matches", "timetable_cells"
   add_foreign_key "profiles", "users"
   add_foreign_key "team_members", "teams"
+<<<<<<< Updated upstream
   add_foreign_key "teams", "users"
+=======
+  add_foreign_key "team_players", "teams"
+  add_foreign_key "team_players", "users"
+  add_foreign_key "timetable_cells", "timetables"
+  add_foreign_key "timetable_cells", "tournament_players"
+  add_foreign_key "timetable_cells", "tournament_players", column: "second_tournament_player_id"
+  add_foreign_key "timetable_cells", "tournament_tables", on_delete: :cascade
+>>>>>>> Stashed changes
   add_foreign_key "timetables", "tournament_venues"
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"
   add_foreign_key "tournament_players", "users"
   add_foreign_key "tournament_table_players", "tournament_players"
+<<<<<<< Updated upstream
   add_foreign_key "tournament_table_players", "tournament_tables"
+=======
+  add_foreign_key "tournament_table_players", "tournament_tables", on_delete: :cascade
+  add_foreign_key "tournament_tables", "timetables"
+>>>>>>> Stashed changes
   add_foreign_key "tournament_tables", "tournament_categories"
   add_foreign_key "tournament_tables", "tournament_divisions"
   add_foreign_key "tournament_tables", "tournaments"
