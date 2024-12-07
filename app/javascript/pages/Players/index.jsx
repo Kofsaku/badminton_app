@@ -1,9 +1,25 @@
+<<<<<<< Updated upstream
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AdminHeader from '../../components/Shared/AdminHeader';
 import AdminSidebar from '../../components/Shared/AdminSidebar';
 import { fetchPlayers } from '../../api/userApi'; // Adjust the import paths
 import { fetchTournamentIds, addPlayersTournament, addNewPlayersTournament, addNewTeamsTournament } from '../../api/tournamentApi';
+=======
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import AdminHeader from "../../components/Shared/AdminHeader";
+import AdminSidebar from "../../components/Shared/AdminSidebar";
+import { fetchPlayers } from "../../api/userApi";
+import {
+  fetchTournamentIds,
+  addPlayersTournament,
+  addNewPlayersTournament,
+  addNewTeamsTournament,
+  fetchTournamentCategories,
+  fetchTournamentDivisions
+} from "../../api/tournamentApi";
+>>>>>>> Stashed changes
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 
 const Players = () => {
@@ -19,6 +35,8 @@ const Players = () => {
   const limit = 50;
   const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
+  const [tournamentCategories, setTournamentCategories] = useState([]);
+  const [tournamentDivisions, setTournamentDivisions] = useState([]);
 
   const [show, setShow] = useState(false);
 
@@ -27,6 +45,7 @@ const Players = () => {
 
 
   const [newPlayer, setNewPlayer] = useState({
+<<<<<<< Updated upstream
     name: '',
     email: '',
     gender: '',
@@ -36,6 +55,21 @@ const Players = () => {
   });
   const [newTeam, setNewTeam] = useState({
     teamName: '',
+=======
+    name: "",
+    email: "",
+    gender: "",
+    date_of_birth: "",
+    years_of_experience: "",
+    age: "",
+    tournament_category_id: "",
+    tournament_division_id: ""
+  });
+  const [newTeam, setNewTeam] = useState({
+    teamName: "",
+    tournament_category_id: "",
+    tournament_division_id: "",
+>>>>>>> Stashed changes
     numberOfPlayers: 0,
     players: [],
   });
@@ -57,11 +91,44 @@ const Players = () => {
     loadTournaments();
   }, []);
 
+  const getTournamentCategories = async () => {
+    if (!selectedTournament) {
+      return;
+    }
+
+    try {
+      const data = await fetchTournamentCategories(selectedTournament);
+      setTournamentCategories(data.tournament_categories);
+    } catch (error) {
+      console.error('Error fetching tournament categories:', error);
+    }
+  };
+
+  const getTournamentDivisions = async () => {
+    if (!selectedTournament) {
+      return;
+    }
+
+    try {
+      const data = await fetchTournamentDivisions(selectedTournament);
+      setTournamentDivisions(data.tournament_divisions);
+    } catch (error) {
+      console.error('Error fetching tournament divisions:', error);
+    }
+  };
+
   // Fetch players based on the page and selected tournament
   useEffect(() => {
     loadPlayers();
   }, [page, selectedTournament]);
 
+<<<<<<< Updated upstream
+=======
+  useEffect(() => {
+    getTournamentCategories();
+    getTournamentDivisions();
+  }, [selectedTournament]);
+>>>>>>> Stashed changes
 
   const loadPlayers = async () => {
     setLoading(true);
@@ -245,6 +312,42 @@ const Players = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentCategory">
+                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Select
+                          value={newPlayer.tournament_category_id}
+                          onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
+                        >
+                          <option value="">Select a category</option>
+                          {tournamentCategories.map((category) => (
+                            <option key={category[0]} value={category[0]}>
+                              {category[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentDivision">
+                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Select
+                          value={newPlayer.tournament_division_id}
+                          onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
+                        >
+                          <option value="">Select a division</option>
+                          {tournamentDivisions.map((division) => (
+                            <option key={division[0]} value={division[0]}>
+                              {division[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <Form.Group className="mb-3" controlId="formPlayerName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -290,7 +393,13 @@ const Players = () => {
                       type="number"
                       placeholder="Enter years of experience"
                       value={newPlayer.years_of_experience}
+<<<<<<< Updated upstream
                       onChange={(e) => handlePlayerChange("years_of_experience", e.target.value)}
+=======
+                      onChange={(e) =>
+                        handlePlayerChange("years_of_experience", e.target.value)
+                      }
+>>>>>>> Stashed changes
                     />
                   </Form.Group>
 
@@ -321,6 +430,42 @@ const Players = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentCategory">
+                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Select
+                          value={newTeam.tournament_category_id}
+                          onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
+                        >
+                          <option value="">Select a category</option>
+                          {tournamentCategories.map((category) => (
+                            <option key={category[0]} value={category[1]}>
+                              {category[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentDivision">
+                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Select
+                          value={newTeam.tournament_division_id}
+                          onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
+                        >
+                          <option value="">Select a division</option>
+                          {tournamentDivisions.map((division) => (
+                            <option key={division[0]} value={division[0]}>
+                              {division[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <Form.Group className="mb-3" controlId="formTeamName">
                     <Form.Label>Team Name</Form.Label>
                     <Form.Control

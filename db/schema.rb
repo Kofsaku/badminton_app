@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_05_140558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -131,6 +131,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_003828) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "tournament_category_id"
+    t.bigint "tournament_division_id"
+    t.index ["player_type", "player_id"], name: "index_tournament_players_on_player"
+    t.index ["tournament_category_id"], name: "index_tournament_players_on_tournament_category_id"
+    t.index ["tournament_division_id"], name: "index_tournament_players_on_tournament_division_id"
     t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
     t.index ["user_id"], name: "index_tournament_players_on_user_id"
   end

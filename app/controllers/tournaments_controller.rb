@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
   include Authenticable
   #before_action :authorize_request
-  before_action :set_tournament, only: %i[ show edit update destroy ]
+  before_action :set_tournament, only: %i[ show edit update destroy]
 
   # GET /tournaments or /tournaments.json
   def index
@@ -21,6 +21,23 @@ class TournamentsController < ApplicationController
     @tournaments = Tournament.all.select(:id, :name)
     render json: {
       tournaments: @tournaments
+    }
+  end
+
+  def tournament_categories
+    @tournament = Tournament.find(params["tournament_id"])
+    tournament_categories = @tournament.tournament_categories.pluck(:id, :category_type)
+    render json: {
+      tournament_categories: tournament_categories
+    }
+  end
+
+  def tournament_divisions
+    @tournament = Tournament.find(params["tournament_id"])
+    categories = @tournament.tournament_categories.pluck(:id)
+    tournament_divisions = TournamentDivision.where('tournament_category_id IN (?)', categories).pluck(:id, :division)
+    render json: {
+      tournament_divisions: tournament_divisions
     }
   end
 
@@ -46,7 +63,7 @@ class TournamentsController < ApplicationController
         player = params["player"]
         user = User.create!(email: player["email"], full_name: player["name"], password: "password")
         Profile.create!(role: "Player", user_id: user.id, gender: player["gender"], date_of_birth: player["date_of_birth"], years_of_experience: player["years_of_experience"], age: player["age"])
-        TournamentPlayer.create!(player_id: user.id, player_type: "User", tournament_id: params["tournament_id"])
+        TournamentPlayer.create!(player_id: user.id, player_type: "User", tournament_id: params["tournament_id"], tournament_category_id: player["tournament_category_id"], tournament_division_id: player["tournament_division_id"])
       end
 
       render json: { success: true }
@@ -66,7 +83,7 @@ class TournamentsController < ApplicationController
           team.team_players.create!(user_id: user.id)
         end
 
-        TournamentPlayer.create!(player_id: team.id, player_type: "Team", tournament_id: params["tournament_id"])
+        TournamentPlayer.create!(player_id: team.id, player_type: "Team", tournament_id: params["tournament_id"], tournament_category_id: params["team"]["tournament_category_id"], tournament_division_id: params["team"]["tournament_division_id"])
       end
 
       render json: { success: true }
