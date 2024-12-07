@@ -1,7 +1,7 @@
 class Api::V1::TournamentTablesController < ApplicationController
-  before_action :set_tournament_table, only: %i[getTournamentTableById updateTournamentTableById deleteTournamentTableById]
+  before_action :set_tournament_table, only: %i[get_tournament_table_by_id update_tournament_table_by_id delete_tournament_table_by_id]
 
-  def getAllTournamentTables
+  def get_all_tournament_tables
     @tournament_tables = TournamentTable.includes(:tournament, :tournament_category, :tournament_division).all
     render json: @tournament_tables.as_json(include: {
       tournament: {only: [:id, :name]},
@@ -10,10 +10,10 @@ class Api::V1::TournamentTablesController < ApplicationController
     })
   end
 
-  def addNewTournamentTable
-    @timetable = Timetable.find_by(tournament_id: tournament_table_params[:tournament_id], tournament_venue_id: tournament_table_params[:tournament_venue_id])
+  def add_new_tournament_table
+    @timetable = Timetable.find_or_initialize_by(tournament_id: tournament_table_params[:tournament_id], tournament_venue_id: tournament_table_params[:tournament_venue_id])
     
-    if @timetable.present?
+    if @timetable.save
       if tournament_table_params[:table_type] == "league"
         @round_robin_table = RoundRobinTable.new(tournament_table_params.merge(timetable_id: @timetable.id))
         if @round_robin_table.save
@@ -31,28 +31,10 @@ class Api::V1::TournamentTablesController < ApplicationController
           render json: {message: "failed"}, status: :bad_request
         end
       end
-    else
-      new_timetable = Timetable.new(tournament_id: tournament_table_params[:tournament_id], tournament_venue_id: tournament_table_params[:tournament_venue_id])
-      if new_timetable.save
-        if tournament_table_params[:table_type] == "league"
-          @round_robin_table = RoundRobinTable.new(tournament_table_params.merge(timetable_id: new_timetable.id))
-          if @round_robin_table.save
-            render json: {id: @round_robin_table.id, message: "league table successfully created"}
-          end
-        else
-          @knockout_table = KnockoutTable.new(tournament_table_params.merge(timetable_id: new_timetable.id))
-          if @knockout_table.save
-            render json: {id: @knockout_table.id, message: "tournament table successfully created"}
-          else
-            logger.info "#{@knockout_table.errors.full_messages}"
-            render json: {message: "failed"}, status: :bad_request
-          end
-        end
-      end
     end
   end
 
-  def getTournamentTableById
+  def get_tournament_table_by_id
     table = @tournament_table.as_json(include:{
       tournament: {only: [:id, :name]},
       tournament_venue: {only: [:id, :venue_name, :venue_date]},
@@ -72,10 +54,9 @@ class Api::V1::TournamentTablesController < ApplicationController
     }
   end
 
-  def updateTournamentTableById
+  def update_tournament_table_by_id
     selected_players = params[:players]
     match_numbers = params[:match_numbers]
-    logger.info "this is tournament table params #{tournament_table_params} #{selected_players} #{match_numbers}"
 
     if @tournament_table.update(tournament_table_params)
       if selected_players.is_a?(Array)
@@ -96,6 +77,12 @@ class Api::V1::TournamentTablesController < ApplicationController
 
             unless cell.save
               logger.error "error to save cell: #{cell.errors.full_messages}"
+            else
+              unless cell.match.present?
+                player1 = cell.tournament_player.player_type == "User" ? cell.tournament_player.player.full_name : cell.tournament_player.player.title
+                player2 = cell.second_tournament_player.player_type == "User" ? cell.second_tournament_player.player.full_name : cell.second_tournament_player.player.title
+                Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
+              end
             end
           end
         end
@@ -105,7 +92,7 @@ class Api::V1::TournamentTablesController < ApplicationController
     end
   end
 
-  def deleteTournamentTableById
+  def delete_tournament_table_by_id
     if @tournament_table.delete
       render json: {message: "table deleted successfully"}
     end
@@ -118,6 +105,6 @@ class Api::V1::TournamentTablesController < ApplicationController
   end
 
   def set_tournament_table
-    @tournament_table = TournamentTable.includes(:tournament, :tournament_venue, :tournament_category, :tournament_division).find(params[:id])
+    @tournament_table = TournamentTable.find(params[:id])
   end
 end

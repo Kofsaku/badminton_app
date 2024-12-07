@@ -31,6 +31,10 @@ const TournamentTables = () => {
         })
         .then((res) => {
           console.log(res.data);
+
+          setTournamentTables(
+            tournamentTables.filter((table) => table.id !== id)
+          );
         });
     }
   };

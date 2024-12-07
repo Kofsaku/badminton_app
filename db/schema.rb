@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_29_161241) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_04_162900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_29_161241) do
     t.string "match_time"
     t.integer "match_score_teamA", default: 0
     t.integer "match_score_teamB", default: 0
+    t.bigint "timetable_cell_id"
+    t.index ["timetable_cell_id"], name: "index_matches_on_timetable_cell_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -251,6 +253,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_29_161241) do
   end
 
   add_foreign_key "match_compositions", "tournaments"
+  add_foreign_key "matches", "timetable_cells"
   add_foreign_key "profiles", "users"
   add_foreign_key "team_members", "teams"
   add_foreign_key "team_players", "teams"
@@ -258,14 +261,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_29_161241) do
   add_foreign_key "timetable_cells", "timetables"
   add_foreign_key "timetable_cells", "tournament_players"
   add_foreign_key "timetable_cells", "tournament_players", column: "second_tournament_player_id"
-  add_foreign_key "timetable_cells", "tournament_tables"
+  add_foreign_key "timetable_cells", "tournament_tables", on_delete: :cascade
   add_foreign_key "timetables", "tournament_venues"
   add_foreign_key "timetables", "tournaments"
   add_foreign_key "tournament_categories", "tournaments"
   add_foreign_key "tournament_divisions", "tournament_categories"
   add_foreign_key "tournament_players", "tournaments"
   add_foreign_key "tournament_table_players", "tournament_players"
-  add_foreign_key "tournament_table_players", "tournament_tables"
+  add_foreign_key "tournament_table_players", "tournament_tables", on_delete: :cascade
   add_foreign_key "tournament_tables", "timetables"
   add_foreign_key "tournament_tables", "tournament_categories"
   add_foreign_key "tournament_tables", "tournament_divisions"
