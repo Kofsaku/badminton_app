@@ -34,7 +34,8 @@ const AdminSidebar = () => {
             {/* Links for role == 'Player' */}
             {(role === "Tournament Organizer" ||
               role === "Admin" ||
-              role === "Both") && (
+              role === "Both" ||
+              !role) && (
               <>
                 <li>
                   <NavLink
@@ -51,7 +52,7 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {role === "Admin" && (
+            {(role === "Admin" || !role) && (
               <>
                 <li>
                   <NavLink
@@ -65,7 +66,7 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {(role === "Tournament Organizer" || role === "Both") && (
+            {(role === "Tournament Organizer" || role === "Both" || !role) && (
               <>
                 <li>
                   <NavLink
@@ -132,7 +133,8 @@ const AdminSidebar = () => {
 
             {(role === "Tournament Organizer" ||
               role === "Admin" ||
-              role === "Both") && (
+              role === "Both" ||
+              !role) && (
               <>
                 <li>
                   <NavLink
@@ -161,7 +163,7 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {role === "Player" && (
+            {(role === "Player" || !role) && (
               <>
                 <li>
                   <NavLink
