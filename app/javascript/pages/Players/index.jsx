@@ -1,11 +1,3 @@
-<<<<<<< Updated upstream
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import AdminHeader from '../../components/Shared/AdminHeader';
-import AdminSidebar from '../../components/Shared/AdminSidebar';
-import { fetchPlayers } from '../../api/userApi'; // Adjust the import paths
-import { fetchTournamentIds, addPlayersTournament, addNewPlayersTournament, addNewTeamsTournament } from '../../api/tournamentApi';
-=======
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AdminHeader from "../../components/Shared/AdminHeader";
@@ -19,7 +11,6 @@ import {
   fetchTournamentCategories,
   fetchTournamentDivisions
 } from "../../api/tournamentApi";
->>>>>>> Stashed changes
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 
 const Players = () => {
@@ -45,17 +36,6 @@ const Players = () => {
 
 
   const [newPlayer, setNewPlayer] = useState({
-<<<<<<< Updated upstream
-    name: '',
-    email: '',
-    gender: '',
-    date_of_birth: '',
-    years_of_experience: '',
-    age: '',
-  });
-  const [newTeam, setNewTeam] = useState({
-    teamName: '',
-=======
     name: "",
     email: "",
     gender: "",
@@ -69,7 +49,6 @@ const Players = () => {
     teamName: "",
     tournament_category_id: "",
     tournament_division_id: "",
->>>>>>> Stashed changes
     numberOfPlayers: 0,
     players: [],
   });
@@ -122,13 +101,10 @@ const Players = () => {
     loadPlayers();
   }, [page, selectedTournament]);
 
-<<<<<<< Updated upstream
-=======
   useEffect(() => {
     getTournamentCategories();
     getTournamentDivisions();
   }, [selectedTournament]);
->>>>>>> Stashed changes
 
   const loadPlayers = async () => {
     setLoading(true);
@@ -393,13 +369,9 @@ const Players = () => {
                       type="number"
                       placeholder="Enter years of experience"
                       value={newPlayer.years_of_experience}
-<<<<<<< Updated upstream
-                      onChange={(e) => handlePlayerChange("years_of_experience", e.target.value)}
-=======
                       onChange={(e) =>
                         handlePlayerChange("years_of_experience", e.target.value)
                       }
->>>>>>> Stashed changes
                     />
                   </Form.Group>
 
