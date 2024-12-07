@@ -75,7 +75,7 @@ class TournamentsController < ApplicationController
   def add_new_team
     begin
       ActiveRecord::Base.transaction do
-        team = Team.create!(title: params["team"]["name"], members_count: params["team"]["numberOfPlayers"])
+        team = Team.create!(title: params["team"]["teamName"], members_count: params["team"]["numberOfPlayers"])
 
         params["team"]["players"].each do |player|
           user = User.create!(email: player["email"], full_name: player["name"], password: "password")
@@ -138,12 +138,12 @@ class TournamentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_tournament
-      @tournament = Tournament.find(params[:id])
-    end
+  def set_tournament
+    @tournament = Tournament.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-   def tournament_params
+  def tournament_params
     params.require(:tournament).permit(
       :name,                           # t.string "name"
       :event_date,                     # t.date "event_date"

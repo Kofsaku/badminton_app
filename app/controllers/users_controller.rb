@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  #before_action :authenticate_user, except: %i[create]
+  before_action :authenticate_user, only: %i[ show_api_key regenerate_api_key ]
   # GET /users or /users.json
   def index
   end

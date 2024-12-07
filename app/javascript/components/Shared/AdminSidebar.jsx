@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AdminSidebar = () => {
   const role = useSelector((state) => state.user.role);
@@ -9,26 +9,42 @@ const AdminSidebar = () => {
     <section className="left-sidebar-wrapper bg-white overflow-auto custom-scroll1">
       <div className="d-block w-100">
         <div className="d-lg-none d-sm-block d-block text-start">
-          <button id="admin-close-icon" className="border-0 bg-transparent px-3 py-3">
+          <button
+            id="admin-close-icon"
+            className="border-0 bg-transparent px-3 py-3"
+          >
             <i className="fa fa-times text-black text-20"> </i>
           </button>
         </div>
         <div className="d-block w-100 py-lg-5 py-md-5 pt-sm-2 pb-sm-5 pt-2 pb-5 text-center">
-          <img className="admin-logo" src="/images/badminton-admin-logo.png" alt="Admin Logo" />
+          <img
+            className="admin-logo"
+            src="/images/badminton-admin-logo.png"
+            alt="Admin Logo"
+          />
         </div>
         <div className="d-block w-100 px-3 mb-4">
-          <h3 className="text-black fw-bold text-20 merriweather-font"> Tournament Organizer </h3>
+          <h3 className="text-black fw-bold text-20 merriweather-font">
+            {" "}
+            Tournament Organizer{" "}
+          </h3>
         </div>
         <div className="d-block px-3 mb-4">
           <ul className="list-style-none p-0 m-0">
             {/* Links for role == 'Player' */}
-            {(role === 'Tournament Organizer' || role === 'Admin' || role === "Both") && (
+            {(role === "Tournament Organizer" ||
+              role === "Admin" ||
+              role === "Both" ||
+              !role) && (
               <>
                 <li>
                   <NavLink
                     to="/tournament-management"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Tournament Management
                   </NavLink>
@@ -36,7 +52,7 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {role === 'Admin' && (
+            {(role === "Admin" || !role) && (
               <>
                 <li>
                   <NavLink
@@ -50,13 +66,16 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {role === "Tournament Organizer" || role === "Both" && (
+            {(role === "Tournament Organizer" || role === "Both" || !role) && (
               <>
                 <li>
                   <NavLink
                     to="/tournament-creation"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Tournament Creation
                   </NavLink>
@@ -64,8 +83,11 @@ const AdminSidebar = () => {
                 <li>
                   <NavLink
                     to="type-management#"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Type Management
                   </NavLink>
@@ -73,8 +95,11 @@ const AdminSidebar = () => {
                 <li>
                   <NavLink
                     to="split-management"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Split Management
                   </NavLink>
@@ -82,17 +107,23 @@ const AdminSidebar = () => {
                 <li>
                   <NavLink
                     to="/players-management"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Player Management
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    to="/league-tournament-tables"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    to="/tournament-tables"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     League/Tournament Tables
                   </NavLink>
@@ -100,13 +131,19 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {(role === 'Tournament Organizer' || role === 'Admin' || role === "Both") && (
+            {(role === "Tournament Organizer" ||
+              role === "Admin" ||
+              role === "Both" ||
+              !role) && (
               <>
                 <li>
                   <NavLink
-                    to="/tournament-timetable"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    to="/timetables"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Timetable
                   </NavLink>
@@ -114,8 +151,11 @@ const AdminSidebar = () => {
                 <li>
                   <NavLink
                     to="/notifications-management"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Notification Management
                   </NavLink>
@@ -123,7 +163,7 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {(role === 'Player') && (
+            {(role === "Player" || !role) && (
               <>
                 <li>
                   <NavLink
@@ -140,7 +180,7 @@ const AdminSidebar = () => {
         </div>
       </div>
     </section>
-  )
+  );
 };
 
 export default AdminSidebar;
