@@ -82,6 +82,28 @@ export const fetchTournamentIds = async() => {
   }
 }
 
+export const fetchTournamentDivisions = async(tournamentId) => {
+  try {
+    // Include `.json` suffix for the API format requirement
+    const response = await axiosInstance.get(`tournaments/${tournamentId}/tournament_divisions.json`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching tournament Ids:', error);
+    throw error;
+  }
+}
+
+export const fetchTournamentCategories = async(tournamentId) => {
+  try {
+    // Include `.json` suffix for the API format requirement
+    const response = await axiosInstance.get(`tournaments/${tournamentId}/tournament_categories.json`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching tournament Ids:', error);
+    throw error;
+  }
+}
+
 // Delete a tournament by ID
 export const deleteTournament = async (id) => {
   try {

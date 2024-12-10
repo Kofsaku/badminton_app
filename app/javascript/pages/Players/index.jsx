@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AdminHeader from "../../components/Shared/AdminHeader";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
-import { fetchPlayers } from "../../api/userApi"; // Adjust the import paths
+import { fetchPlayers } from "../../api/userApi";
 import {
   fetchTournamentIds,
   addPlayersTournament,
   addNewPlayersTournament,
   addNewTeamsTournament,
+  fetchTournamentCategories,
+  fetchTournamentDivisions
 } from "../../api/tournamentApi";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 
@@ -24,6 +26,8 @@ const Players = () => {
   const limit = 50;
   const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
+  const [tournamentCategories, setTournamentCategories] = useState([]);
+  const [tournamentDivisions, setTournamentDivisions] = useState([]);
 
   const [show, setShow] = useState(false);
 
@@ -37,11 +41,15 @@ const Players = () => {
     date_of_birth: "",
     years_of_experience: "",
     age: "",
+    tournament_category_id: "",
+    tournament_division_id: ""
   });
   const [newTeam, setNewTeam] = useState({
     teamName: "",
+    tournament_category_id: "",
+    tournament_division_id: "",
     numberOfPlayers: 0,
-    players: [],
+    players: []
   });
 
   // Fetch tournaments for the dropdown
@@ -61,10 +69,41 @@ const Players = () => {
     loadTournaments();
   }, []);
 
+  const getTournamentCategories = async () => {
+    if (!selectedTournament) {
+      return;
+    }
+
+    try {
+      const data = await fetchTournamentCategories(selectedTournament);
+      setTournamentCategories(data.tournament_categories);
+    } catch (error) {
+      console.error('Error fetching tournament categories:', error);
+    }
+  };
+
+  const getTournamentDivisions = async () => {
+    if (!selectedTournament) {
+      return;
+    }
+
+    try {
+      const data = await fetchTournamentDivisions(selectedTournament);
+      setTournamentDivisions(data.tournament_divisions);
+    } catch (error) {
+      console.error('Error fetching tournament divisions:', error);
+    }
+  };
+
   // Fetch players based on the page and selected tournament
   useEffect(() => {
     loadPlayers();
   }, [page, selectedTournament]);
+
+  useEffect(() => {
+    getTournamentCategories();
+    getTournamentDivisions();
+  }, [selectedTournament]);
 
   const loadPlayers = async () => {
     setLoading(true);
@@ -250,6 +289,42 @@ const Players = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentCategory">
+                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Select
+                          value={newPlayer.tournament_category_id}
+                          onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
+                        >
+                          <option value="">Select a category</option>
+                          {tournamentCategories.map((category) => (
+                            <option key={category[0]} value={category[0]}>
+                              {category[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentDivision">
+                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Select
+                          value={newPlayer.tournament_division_id}
+                          onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
+                        >
+                          <option value="">Select a division</option>
+                          {tournamentDivisions.map((division) => (
+                            <option key={division[0]} value={division[0]}>
+                              {division[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <Form.Group className="mb-3" controlId="formPlayerName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -341,6 +416,42 @@ const Players = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentCategory">
+                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Select
+                          value={newTeam.tournament_category_id}
+                          onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
+                        >
+                          <option value="">Select a category</option>
+                          {tournamentCategories.map((category) => (
+                            <option key={category[0]} value={category[1]}>
+                              {category[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentDivision">
+                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Select
+                          value={newTeam.tournament_division_id}
+                          onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
+                        >
+                          <option value="">Select a division</option>
+                          {tournamentDivisions.map((division) => (
+                            <option key={division[0]} value={division[0]}>
+                              {division[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <Form.Group className="mb-3" controlId="formTeamName">
                     <Form.Label>Team Name</Form.Label>
                     <Form.Control

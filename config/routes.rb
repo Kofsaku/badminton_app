@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     post 'add_player'
     post 'add_new_player'
     post 'add_new_team'
+    get 'tournament_divisions'
+    get 'tournament_categories'
   end
 
   get 'scoreboard', to: 'scoreboard#index'
