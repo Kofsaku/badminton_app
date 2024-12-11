@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get 'tournaments', to: 'tournaments#get_all_tournaments'
+      post 'tournaments/q', to: 'tournaments#get_tournaments_by_query'
       get 'tournaments/:id/tournament-venues', to: 'tournaments#get_venues_by_tournament_id'
       get 'tournaments/:id/tournament-data', to: 'tournaments#get_tournament_data_by_id'
       get 'tournament-tables', to: 'tournament_tables#get_all_tournament_tables'

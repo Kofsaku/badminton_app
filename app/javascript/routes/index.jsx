@@ -10,6 +10,7 @@ import AccountForm from "../components/CreateAccount";
 import Login from "../components/Login";
 import Tournaments from "../pages/Tournaments";
 import CreateTournament from "../pages/Tournaments/Create";
+import ShowTournament from "../pages/Tournaments/Show";
 import EditTournament from "../pages/Tournaments/Edit";
 import CongratsProfile from "../components/CreateAccount/CongratsProfile";
 import Timetables from "../pages/Timetables";
@@ -61,6 +62,7 @@ export default (
           </ProtectedRoute>
         }
       />
+      <Route path="/tournament-details/:id" element={<ShowTournament />} />
       <Route
         path="/tournaments/:id/edit"
         element={
