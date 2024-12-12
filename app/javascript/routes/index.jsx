@@ -25,7 +25,10 @@ import ProtectedRoute from "./ProtectedRoute";
 import MatchList from "../pages/MatchList";
 import NewMatch from "../pages/NewMatch";
 import ScoreBoard from "../pages/ScoreBoard";
+import SelectPaymentMethod from "../components/PaymentScreens/SelectPaymentMethod";
+import PaymentConfirmation from '../components/PaymentScreens/PaymentConfirmation';
 
+<Route path="/payment-confirmation" element={<PaymentConfirmation />} />
 export default (
   <Router>
     <Routes>
@@ -37,6 +40,8 @@ export default (
       <Route path="/contact" element={<Contact />} />
       <Route path="/create-account" element={<AccountForm />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/select-payment-method" element={<SelectPaymentMethod />} />
+      <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
       <Route
         path="/tournament-creation"
         element={
