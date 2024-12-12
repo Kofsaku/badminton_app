@@ -19,6 +19,17 @@
  	})
  })
 
+ $(document).ready(function(){
+
+
+    $('#new-menu-toggle').click(function(){
+
+      $('body').toggleClass('new-menu-shown'); 
+    })
+
+
+
+})
 
 
  $('.scroll-link').on('click', function(event) {
