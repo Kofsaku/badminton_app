@@ -25,8 +25,7 @@ const AdminSidebar = () => {
         </div>
         <div className="d-block w-100 px-3 mb-4">
           <h3 className="text-black fw-bold text-20 merriweather-font">
-            {" "}
-            Tournament Organizer{" "}
+            {role != "Both" ? role : "Tournament Organizer"}
           </h3>
         </div>
         <div className="d-block px-3 mb-4">
@@ -34,8 +33,7 @@ const AdminSidebar = () => {
             {/* Links for role == 'Player' */}
             {(role === "Tournament Organizer" ||
               role === "Admin" ||
-              role === "Both" ||
-              !role) && (
+              role === "Both") && (
               <>
                 <li>
                   <NavLink
@@ -52,21 +50,38 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {(role === "Admin" || !role) && (
+            {role === "Admin" && (
               <>
                 <li>
                   <NavLink
                     to="/users-management"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
                   >
                     Users Management
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/organizer-management"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "left-menu-btn1 merriweather-font active"
+                        : "left-menu-btn1 merriweather-font"
+                    }
+                  >
+                    Organizer Management
                   </NavLink>
                 </li>
               </>
             )}
 
-            {(role === "Tournament Organizer" || role === "Both" || !role) && (
+            {(role === "Tournament Organizer" ||
+              role === "Both" ||
+              role === "Admin") && (
               <>
                 <li>
                   <NavLink
@@ -133,8 +148,7 @@ const AdminSidebar = () => {
 
             {(role === "Tournament Organizer" ||
               role === "Admin" ||
-              role === "Both" ||
-              !role) && (
+              role === "Both") && (
               <>
                 <li>
                   <NavLink
@@ -163,19 +177,20 @@ const AdminSidebar = () => {
               </>
             )}
 
-            {(role === "Player" || !role) && (
-              <>
-                <li>
-                  <NavLink
-                    to="/tournament-timetable"
-                    className="left-menu-btn1 merriweather-font"
-                    activeClassName="active"
-                  >
-                    Tournaments
-                  </NavLink>
-                </li>
-              </>
-            )}
+            <>
+              <li>
+                <NavLink
+                  to="/tournament-timetable"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "left-menu-btn1 merriweather-font active"
+                      : "left-menu-btn1 merriweather-font"
+                  }
+                >
+                  Tournaments
+                </NavLink>
+              </li>
+            </>
           </ul>
         </div>
       </div>
