@@ -27,7 +27,9 @@ class Api::V1::TournamentsController < ApplicationController
     @tournament_categories = @tournament.tournament_categories
 
     combined_json = {
-      tournament_players: @tournament_players,
+      tournament_players: @tournament_players.as_json(include: {
+        player: {only: %i[id full_name title]}
+      }),
       tournament_venues: @tournament_venues,
       tournament_categories: @tournament_categories
     }.to_json

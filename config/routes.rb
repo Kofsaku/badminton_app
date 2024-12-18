@@ -67,6 +67,9 @@ Rails.application.routes.draw do
       post 'show_api_key'
       post 'regenerate_api_key'
       get 'players-list', to: 'users#players_list'
+      get 'organizers-list', to: 'users#organizers_list'
+      get 'organizers-list/:id', to: 'users#get_organizer_by_id'
+      put 'organizers-list/:id', to: 'users#update_organizer_by_id'
     end
   end
 

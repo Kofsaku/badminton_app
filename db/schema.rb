@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_05_140558) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_17_092209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_05_140558) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "match_classes", force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.bigint "tournament_category_id", null: false
+    t.bigint "tournament_division_id", null: false
+    t.integer "size", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_category_id"], name: "index_match_classes_on_tournament_category_id"
+    t.index ["tournament_division_id"], name: "index_match_classes_on_tournament_division_id"
+    t.index ["tournament_id"], name: "index_match_classes_on_tournament_id"
   end
 
   create_table "match_compositions", force: :cascade do |t|
@@ -256,6 +268,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_05_140558) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "match_classes", "tournament_categories"
+  add_foreign_key "match_classes", "tournament_divisions"
+  add_foreign_key "match_classes", "tournaments"
   add_foreign_key "match_compositions", "tournaments"
   add_foreign_key "matches", "timetable_cells"
   add_foreign_key "profiles", "users"
