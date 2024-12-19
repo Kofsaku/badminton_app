@@ -11,6 +11,8 @@ const NewMatch = () => {
     player2: "",
     player3: "",
     player4: "",
+    server: "player_1",
+    receiver: "player_3"
   });
   const navigate = useNavigate();
 
@@ -95,6 +97,44 @@ const NewMatch = () => {
                 </div>
               </>
             )}
+
+            <div className="form-group">
+              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Select Server:</label>
+              <select
+                name="server"
+                value={match.server}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+              >
+                <option value="player_1">Player 1</option>
+                <option value="player_2">Player 2</option>
+                {match.match_type === "double" && (
+                  <>
+                    <option value="player_3">Player 3</option>
+                    <option value="player_4">Player 4</option>
+                  </>
+                )}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Select Receiver:</label>
+              <select
+                name="receiver"
+                value={match.receiver}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+              >
+                <option value="player_1">Player 1</option>
+                <option value="player_2">Player 2</option>
+                {match.match_type === "double" && (
+                  <>
+                    <option value="player_3">Player 3</option>
+                    <option value="player_4">Player 4</option>
+                  </>
+                )}
+              </select>
+            </div>
 
             <button
               type="submit"

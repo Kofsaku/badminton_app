@@ -11,10 +11,11 @@ const ScoreBoard = () => {
     teamB: { player1Name: "Player C", player2Name: "Player D", score: 0 },
   });
   const [timer, setTimer] = useState({ minutes: 0, seconds: 0, running: false });
-  const [matchLog, setMatchLog] = useState([]);
+  const [matchLog, setMatchLog] = useState([{ log: []}]);
   const [intervalId, setIntervalId] = useState(null);
   const [matchType, setMatchType] = useState('Doubles');
   const [winner, setWinner] = useState(null);
+  const [set, setSet] = useState(1);
   const [status, setStatus] = useState(null);
   const [currentServer, setCurrentServer] = useState({
     team: "teamA",
@@ -27,25 +28,28 @@ const ScoreBoard = () => {
       try {
         const response = await axios.get(`/matches/${id}`);
         const data = response.data;
+        const matchLog = JSON.parse(data.match_log) || [{ log: []}];
+        const set = matchLog[matchLog.length-1];
 
+        setSet(matchLog.length);
         setMatchType(data.match_type);
-        setWinner(data.winner);
+        // setWinner(set.winner);
         setStatus(data.status);
-        data.match_time && setTimer({ minutes: parseInt(data.match_time.split(':')[0]), seconds: parseInt(data.match_time.split(':')[1]), running: false });
+        set.match_time && setTimer({ minutes: parseInt(set.match_time.split(':')[0]), seconds: parseInt(set.match_time.split(':')[1]), running: false });
 
         if (data.match_type === "single") {
           setPlayers({
-            teamA: { player1Name: data.player1, score: data.match_score_teamA },
-            teamB: { player1Name: data.player2, score: data.match_score_teamB },
+            teamA: { player1Name: data.player1, score: set.match_score_teamA || 0 },
+            teamB: { player1Name: data.player2, score: set.match_score_teamB || 0 },
           });
         } else {
           setPlayers({
-            teamA: { player1Name: data.player1, player2Name: data.player2, score: data.match_score_teamA },
-            teamB: { player1Name: data.player3, player2Name: data.player4, score: data.match_score_teamB },
+            teamA: { player1Name: data.player1, player2Name: data.player2, score: set.match_score_teamA || 0 },
+            teamB: { player1Name: data.player3, player2Name: data.player4, score: set.match_score_teamB || 0 },
           });
         }
 
-        setMatchLog(JSON.parse(data.match_log) || []);
+        setMatchLog(matchLog);
       } catch (error) {
         console.error("Error fetching match data:", error);
       }
@@ -59,6 +63,12 @@ const ScoreBoard = () => {
       checkWinner();
     }
   }, [players]);
+
+  useEffect(() => {
+    if (set <= 3) {
+      setMatchLog((prev) => [...prev, { log: [] }]);
+    }
+  }, [set]);
 
   const toggleGame = (winner = '') => {
     if (!timer.running) {
@@ -79,13 +89,15 @@ const ScoreBoard = () => {
 
   const saveMatchData = async (winner = '') => {
     try {
+      const set = matchLog[matchLog.length-1]
+      set.set_winner =  winner
+      set.match_time = `${timer.minutes}:${timer.seconds}`
+      set.match_score_teamA = players.teamA.score
+      set.match_score_teamB = players.teamB.score
+
       const payload = {
         match_log: matchLog,
         status: winner.length > 0 ? "completed" : '',
-        match_time: `${timer.minutes}:${timer.seconds}`,
-        match_score_teamA: players.teamA.score,
-        match_score_teamB: players.teamB.score,
-        winner: winner
       };
 
       await axios.put(`/matches/${id}`, payload);
@@ -105,18 +117,38 @@ const ScoreBoard = () => {
       teamAScore >= WINNING_SCORE &&
       (teamAScore - teamBScore >= MIN_DIFFERENCE || teamAScore === MAX_SCORE)
     ) {
-      setWinner("Team A");
+      // setWinner("Team A");
       toggleGame("Team A");
-      alert("Team A has won the match!");
+      if (set >= 3) {
+        alert("Team A has won the match!");
+      } else {
+        alert("Team A has won the set! Start New Set");
+        setPlayers((prev) => ({
+          teamA: { ...prev.teamA, score: 0 },
+          teamB: { ...prev.teamB, score: 0 },
+        }));        
+        setSet(prev => prev + 1)
+        setTimer({ minutes: 0, seconds: 0, running: false });
+      }
     }
 
     if (
       teamBScore >= WINNING_SCORE &&
       (teamBScore - teamAScore >= MIN_DIFFERENCE || teamBScore === MAX_SCORE)
     ) {
-      setWinner("Team B");
+      // setWinner("Team B");
       toggleGame("Team B");
-      alert("Team B has won the match!");
+      if (set >= 3) {
+        alert("Team B has won the match!");
+      } else {
+        alert("Team B has won the set! Start New Set");
+        setPlayers((prev) => ({
+          teamA: { ...prev.teamA, score: 0 },
+          teamB: { ...prev.teamB, score: 0 },
+        }));
+        setSet(prev => prev + 1)
+        setTimer({ minutes: 0, seconds: 0, running: false });
+      }
     }
 
     return null;
@@ -182,7 +214,8 @@ const ScoreBoard = () => {
       updatedServer = currentServer 
     }
 
-    const rally = matchLog[matchLog.length-1]?.rally || 0;
+    const set = matchLog[matchLog.length-1].log
+    const rally = set[set.length-1]?.rally || 0;
     let log = {}
 
     if (matchType == 'single') {
@@ -207,7 +240,13 @@ const ScoreBoard = () => {
       }
     }
 
-    setMatchLog((prev) => [...prev, log]);
+    setMatchLog(prevMatchLog => {
+      const updatedMatchLog = [...prevMatchLog];
+      const lastSet = { ...updatedMatchLog[updatedMatchLog.length - 1] };
+      lastSet.log = [...lastSet.log, log];
+      updatedMatchLog[updatedMatchLog.length - 1] = lastSet;
+      return updatedMatchLog;
+    });
   };
 
   return (
@@ -216,7 +255,7 @@ const ScoreBoard = () => {
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
         <div className="container mt-4 text-center">
-          <h3>Badminton Scoreboard ({matchType})</h3>
+          <h3>Badminton Scoreboard ({matchType})-({set})</h3>
 
           {/* Score Section */}
           <div className="row my-4">
@@ -327,67 +366,82 @@ const ScoreBoard = () => {
           {/* Match Log */}
           <div className="table-responsive mt-5">
             <h4>Match Log</h4>
-            <div className="table-responsive">
-              <table className="table table-bordered text-center">
-                <thead>
-                  <tr>
-                    <th style={{ width: '300px' }}>Players</th>
-                    { !matchLog[matchLog.length-1] || matchLog[matchLog.length-1].rally <= 21 ? Array.from({ length: 21 }).map((_, index) => (
-                      <th key={index + 1}>{index + 1}</th>
-                    )) : (
-                      matchLog.map((log, index) => (
-                        <th key={index + 1}>{log.rally}</th>
-                      ))
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {matchType == 'single' ? (
-                    <>
+            {matchLog.map((set, index) => (
+              <div key={index}>
+                <h4>Set {index + 1}</h4>
+                <div className="table-responsive">
+                  <table className="table table-bordered text-center">
+                    <thead>
                       <tr>
-                        <td>{players.teamA.player1Name}</td>
-                        {matchLog.map((log, index) => (
-                          <td key={index}>{log.A}</td>
-                        ))}
+                        <th style={{ width: '300px' }}>Players</th>
+                        {set.log.length === 0 || set.log[set.log.length - 1]?.rally <= 21
+                          ? Array.from({ length: 21 }).map((_, rallyIndex) => (
+                              <th key={rallyIndex + 1}>{rallyIndex + 1}</th>
+                            ))
+                          : set.log.map((log) => (
+                              <th key={log.rally}>{log.rally}</th>
+                            ))}
                       </tr>
-                      <tr>
-                        <td>{players.teamB.player1Name}</td>
-                        {matchLog.map((log, index) => (
-                          <td key={index}>{log.B}</td>
-                        ))}
-                      </tr>
-                    </>
-                  ) : (
-                    <>
-                      <tr>
-                        <td>{players.teamA.player1Name}</td>
-                        {matchLog.map((log, index) => (
-                          <td key={index}>{log.A}</td>
-                        ))}
-                      </tr>
-                      <tr>
-                        <td>{players.teamA.player2Name}</td>
-                        {matchLog.map((log, index) => (
-                          <td key={index}>{log.B}</td>
-                        ))}
-                      </tr>
-                      <tr>
-                        <td>{players.teamB.player1Name}</td>
-                        {matchLog.map((log, index) => (
-                          <td key={index}>{log.C}</td>
-                        ))}
-                      </tr>
-                      <tr>
-                        <td>{players.teamB.player2Name}</td>
-                        {matchLog.map((log, index) => (
-                          <td key={index}>{log.D}</td>
-                        ))}
-                      </tr>
-                    </>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    </thead>
+                    <tbody>
+                      {players?.teamA && players?.teamB && (
+                        matchType === "single" ? (
+                          <>
+                            {/* Single Match */}
+                            <tr>
+                              <td>{players.teamA.player1Name}</td>
+                              <td>{(set.server == 'player_1' ? 'S' : (set.receiver == 'player_1' ? 'R' : ''))}</td>
+                              {set.log.map((log, logIndex) => (
+                                <td key={logIndex}>{log.A}</td>
+                              ))}
+                            </tr>
+                            <tr>
+                              <td>{players.teamB.player1Name}</td>
+                              <td>{(set.server == 'player_2' ? 'S' : (set.receiver == 'player_2' ? 'R' : ''))}</td>
+                              {set.log.map((log, logIndex) => (
+                                <td key={logIndex}>{log.B}</td>
+                              ))}
+                            </tr>
+                          </>
+                        ) : (
+                          <>
+                            {/* Double Match */}
+                            <tr>
+                              <td>{players.teamA.player1Name}</td>
+                              <td>{(set.server == 'player_1' ? 'S' : (set.receiver == 'player_1' ? 'R' : ''))}</td>
+                              {set.log.map((log, logIndex) => (
+                                <td key={logIndex}>{log.A}</td>
+                              ))}
+                            </tr>
+                            <tr>
+                              <td>{players.teamA.player2Name}</td>
+                              <td>{(set.server == 'player_2' ? 'S' : (set.receiver == 'player_2' ? 'R' : ''))}</td>
+                              {set.log.map((log, logIndex) => (
+                                <td key={logIndex}>{log.B}</td>
+                              ))}
+                            </tr>
+                            <tr>
+                              <td>{players.teamB.player1Name}</td>
+                              <td>{(set.server == 'player_3' ? 'S' : (set.receiver == 'player_3' ? 'R' : ''))}</td>
+                              {set.log.map((log, logIndex) => (
+                                <td key={logIndex}>{log.C}</td>
+                              ))}
+                            </tr>
+                            <tr>
+                              <td>{players.teamB.player2Name}</td>
+                              <td>{(set.server == 'player_4' ? 'S' : (set.receiver == 'player_4' ? 'R' : ''))}</td>
+                              {set.log.map((log, logIndex) => (
+                                <td key={logIndex}>{log.D}</td>
+                              ))}
+                            </tr>
+                          </>
+                        )
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
