@@ -19,7 +19,10 @@ class MatchesController < ApplicationController
 
   def create
     match = Match.new(match_params)
+    match_log = [{ server: params[:server], receiver: params[:receiver], log: [] }]
+    match.match_log = match_log.to_json
     match.status = 'pending'
+
     if match.save
       render json: match, status: :created
     else
