@@ -5,14 +5,14 @@ import AdminSidebar from "../../components/Shared/AdminSidebar";
 import { Link } from "react-router-dom";
 
 const MatchClasses = () => {
-  const [tournamentTables, setTournamentTables] = useState([]);
+  const [matchClasses, setMatchClasses] = useState([]);
 
   useEffect(() => {
-    const url = "/api/v1/tournament-tables";
+    const url = "/api/v1/match_classes";
     axios.get(url).then((res) => {
       console.log(res.data);
 
-      setTournamentTables(res.data);
+      setMatchClasses(res.data);
     });
   }, []);
 
@@ -53,8 +53,6 @@ const MatchClasses = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Type</th>
                 <th>Tournament</th>
                 <th>Category</th>
                 <th>Division</th>
@@ -63,16 +61,14 @@ const MatchClasses = () => {
               </tr>
             </thead>
             <tbody>
-              {tournamentTables.map((tournamentTable) => (
-                <tr key={tournamentTable.id}>
-                  <td>{tournamentTable.name}</td>
-                  <td>{tournamentTable.table_type}</td>
-                  <td>{tournamentTable.tournament.name}</td>
-                  <td>{tournamentTable.tournament_category.category_type}</td>
-                  <td>{tournamentTable.tournament_division.division}</td>
-                  <td>{tournamentTable.size}</td>
+              {matchClasses.map((matchClass) => (
+                <tr key={matchClass.id}>
+                  <td>{matchClass.tournament.name}</td>
+                  <td>{matchClass.tournament_category.category_type}</td>
+                  <td>{matchClass.tournament_division.division}</td>
+                  <td>{matchClass.size}</td>
                   <td>
-                    <Link
+                    {/* <Link
                       to={"/tournament-tables/" + tournamentTable.id}
                       className="btn btn-info"
                     >
@@ -89,7 +85,7 @@ const MatchClasses = () => {
                       onClick={() => handleDelete(tournamentTable.id)}
                     >
                       Delete
-                    </button>
+                    </button> */}
                   </td>
                 </tr>
               ))}

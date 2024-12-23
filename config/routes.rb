@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       get 'timetables', to: 'timetables#get_all_timetables'
       get 'timetables/:id', to: 'timetables#get_timetable_by_id'
       post 'timetables', to: 'timetables#add_new_timetable'
+      resources :match_classes do
+      end
       resources :categories do
         get 'divisions', to: 'categories#divisions'
       end

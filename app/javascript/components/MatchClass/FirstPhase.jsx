@@ -4,7 +4,7 @@ import AdminHeader from "../Shared/AdminHeader";
 import AdminSidebar from "../Shared/AdminSidebar";
 import { Link, useNavigate } from "react-router-dom";
 
-const NewPhase = ({
+const FirstPhase = ({
   selectedTournament,
   category,
   step,
@@ -148,15 +148,16 @@ const NewPhase = ({
   };
 
   const showPlayerName = (index, rowIndex) => {
-    const playerIndex = selectedPlayers[index][rowIndex];
-
-    console.log(playerIndex);
-
-    return (
-      String.fromCharCode("A".charCodeAt(0) + playerIndex / 2) +
-      " - " +
-      ((playerIndex % 2) + 1)
+    const player = tournamentPlayers.find(
+      (player) => player.id === selectedPlayers[index][rowIndex]
     );
+    console.log(player, selectedPlayers[index][rowIndex]);
+
+    return !player
+      ? "To be selected"
+      : player.player_type === "User"
+      ? player.player.full_name
+      : player.player.title;
   };
 
   const handleSubmit = (e) => {
@@ -164,8 +165,6 @@ const NewPhase = ({
 
     addMatch(formData);
   };
-
-  console.log(classData, step);
 
   return (
     <>
@@ -261,21 +260,13 @@ const NewPhase = ({
                             }
                           >
                             <option value="">Select</option>
-                            {Array.from({
-                              length:
-                                classData[step - 2].winnerCount *
-                                classData[step - 2].tableCount,
-                            }).map((_, index) => {
-                              return (
-                                <option key={index} value={index}>
-                                  {String.fromCharCode(
-                                    "A".charCodeAt(0) + index / 2
-                                  ) +
-                                    " - " +
-                                    ((index % 2) + 1)}
-                                </option>
-                              );
-                            })}
+                            {tournamentPlayers.map((player) => (
+                              <option key={player.id} value={player.id}>
+                                {player.player_type === "User"
+                                  ? player.player.full_name
+                                  : player.player.title}
+                              </option>
+                            ))}
                           </select>
                         </th>
                       )
@@ -333,4 +324,4 @@ const NewPhase = ({
   );
 };
 
-export default NewPhase;
+export default FirstPhase;

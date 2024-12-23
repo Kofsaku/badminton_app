@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import AdminHeader from "../../components/Shared/AdminHeader";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
+import FirstPhase from "../../components/MatchClass/FirstPhase";
 import NewPhase from "../../components/MatchClass/NewPhase";
 
 const NewMatchClass = () => {
@@ -84,6 +85,8 @@ const NewMatchClass = () => {
   const addMatch = (matchData) => {
     classData[step - 1] = matchData;
 
+    setClassData(classData);
+
     if (step < classSize) setStep(step + 1);
     else completeAdding();
   };
@@ -92,10 +95,13 @@ const NewMatchClass = () => {
     console.log("class data:", classData);
 
     const body = {
+      tournament: selectedTournament,
+      category: selectedCategory,
+      division: selectedDivision,
       class_size: classSize,
       class_data: classData,
     };
-    const url = "/api/v1/match-class";
+    const url = "/api/v1/match_classes";
     const token = document.querySelector('meta[name="csrf-token"]').content;
 
     axios
@@ -213,6 +219,7 @@ const NewMatchClass = () => {
                     name="tournament_division"
                     className="form-control"
                     onChange={(e) => onChange(e, setSelectedDivision)}
+                    value={selectedDivision}
                   >
                     {tournamentDivisions &&
                       tournamentDivisions.map((division) => (
@@ -246,6 +253,19 @@ const NewMatchClass = () => {
                 {/* </form> */}
               </div>
             </>
+          ) : step == 1 ? (
+            <FirstPhase
+              selectedTournament={tournaments.find(
+                (val) => val.id === selectedTournament
+              )}
+              category={tournamentCategories.find(
+                (val) => val.id === selectedCategory
+              )}
+              step={step}
+              classSize={classSize}
+              classData={classData}
+              addMatch={addMatch}
+            />
           ) : (
             <NewPhase
               selectedTournament={tournaments.find(
@@ -256,6 +276,7 @@ const NewMatchClass = () => {
               )}
               step={step}
               classSize={classSize}
+              classData={classData}
               addMatch={addMatch}
             />
           )}
