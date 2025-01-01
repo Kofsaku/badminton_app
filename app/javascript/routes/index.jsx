@@ -10,6 +10,7 @@ import AccountForm from "../components/CreateAccount";
 import Login from "../components/Login";
 import Tournaments from "../pages/Tournaments";
 import CreateTournament from "../pages/Tournaments/Create";
+import ShowTournament from "../pages/Tournaments/Show";
 import EditTournament from "../pages/Tournaments/Edit";
 import CongratsProfile from "../components/CreateAccount/CongratsProfile";
 import Timetables from "../pages/Timetables";
@@ -27,6 +28,11 @@ import NewMatch from "../pages/NewMatch";
 import ScoreBoard from "../pages/ScoreBoard";
 import SelectPaymentMethod from "../components/PaymentScreens/SelectPaymentMethod";
 import PaymentConfirmation from '../components/PaymentScreens/PaymentConfirmation';
+import MatchClass from "../pages/MatchClass/List";
+import NewMatchClass from "../pages/MatchClass/New";
+import TournamentOrganizers from "../pages/TournamentOrganizers/List";
+import TournamentOrganizer from "../pages/TournamentOrganizers/Show";
+import EditTournamentOrganizer from "../pages/TournamentOrganizers/Edit";
 
 <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
 export default (
@@ -59,6 +65,30 @@ export default (
         }
       />
       <Route
+        path="/organizer-management"
+        element={
+          <ProtectedRoute>
+            <TournamentOrganizers />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/organizer-management/:id"
+        element={
+          <ProtectedRoute>
+            <TournamentOrganizer />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/organizer-management/:id/edit"
+        element={
+          <ProtectedRoute>
+            <EditTournamentOrganizer />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/congrats-profile"
         element={
           <ProtectedRoute>
@@ -66,6 +96,7 @@ export default (
           </ProtectedRoute>
         }
       />
+      <Route path="/tournament-details/:id" element={<ShowTournament />} />
       <Route
         path="/tournaments/:id/edit"
         element={
@@ -79,6 +110,22 @@ export default (
         element={
           <ProtectedRoute>
             <Players />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/match-class"
+        element={
+          <ProtectedRoute>
+            <MatchClass />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/match-class/new"
+        element={
+          <ProtectedRoute>
+            <NewMatchClass />
           </ProtectedRoute>
         }
       />

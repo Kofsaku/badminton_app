@@ -10,6 +10,7 @@ const CreateAccount = () => {
     full_name: "",
     email: "",
     password: "",
+    role: "",
   });
 
   const dispatch = useDispatch();
@@ -26,12 +27,25 @@ const CreateAccount = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/users.json", formData); // Ensure your API endpoint is correct
-      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true })); // Store API key in Redux
-      console.log("User created:", response.data);
+      const response = await axios.post("/users.json", {
+        full_name: formData.full_name,
+        email: formData.email,
+        password: formData.password,
+        profile_attributes: {
+          role: formData.role,
+        },
+      }); // Ensure your API endpoint is correct
+      dispatch(
+        setUser({
+          apiKey: response.data.api_key,
+          isLoggedIn: true,
+          fullName: response.data.full_name,
+          role: response.data.role,
+        })
+      ); // Store API key in Redux
 
       // Redirect to the tournaments management page
-      navigate("/tournament-management");
+      navigate("/");
     } catch (error) {
       console.error(
         "Error creating user:",
@@ -119,6 +133,25 @@ const CreateAccount = () => {
                             value={formData.password}
                             onChange={handleChange}
                           />
+                        </div>
+                        <div className="form-field1 mb-3 px-3 py-2 d-flex w-100 align-items-center justify-content-start rounded-3 bg-silver1">
+                          <img
+                            src="images/role-icon.svg"
+                            className="me-2"
+                            alt="Role Icon"
+                          />
+                          <select
+                            name="role"
+                            className="text-black w-100 outline-none border-0 bg-transparent text-15"
+                            value={formData.role}
+                            onChange={handleChange}
+                          >
+                            <option value="Player">Player</option>
+                            <option value="Tournament Organizer">
+                              Tournament Organizer
+                            </option>
+                            <option value="Both">Both</option>
+                          </select>
                         </div>
                         <div className="d-block w-100">
                           <button
