@@ -127,3 +127,13 @@ export const showTournament = async (id) => {
     throw error;
   }
 };
+
+export const paymentTournament = async (tournamentId, formData) => {
+  try {
+    const response = await axiosInstance.post(`/api/v1/payments/charge.json`, formData);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating tournament:', error);
+    throw error;
+  }
+};

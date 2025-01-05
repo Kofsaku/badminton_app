@@ -30,6 +30,7 @@ module BadmintonApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # config.hosts << "4608-2405-4802-17c9-a120-5810-97ce-872-924e.ngrok-free.app"
 
     # Don't generate system test files.
     config.generators.system_tests = nil

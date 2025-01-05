@@ -19,6 +19,11 @@ Rails.application.routes.draw do
       resources :categories do
         get 'divisions', to: 'categories#divisions'
       end
+      resources :payments do
+        collection do
+          post :charge
+        end
+      end
     end
   end
   # Root and homepage routes
