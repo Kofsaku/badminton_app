@@ -11,8 +11,8 @@ const NewMatch = () => {
     player2: "",
     player3: "",
     player4: "",
-    server: "player_1",
-    receiver: "player_3"
+    number_of_sets: "",
+    winning_points: "",
   });
   const navigate = useNavigate();
 
@@ -38,7 +38,9 @@ const NewMatch = () => {
           </h1>
           <form onSubmit={handleSubmit} className="space-y-6 m-4">
             <div className="form-group">
-              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Match Type:</label>
+              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">
+                Match Type:
+              </label>
               <select
                 name="match_type"
                 value={match.match_type}
@@ -51,7 +53,9 @@ const NewMatch = () => {
             </div>
 
             <div className="form-group">
-              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Player1:</label>
+              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">
+                Player1:
+              </label>
               <input
                 name="player1"
                 value={match.player1}
@@ -62,7 +66,9 @@ const NewMatch = () => {
             </div>
 
             <div className="form-group">
-              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Player2:</label>
+              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">
+                Player2:
+              </label>
               <input
                 name="player2"
                 value={match.player2}
@@ -75,7 +81,9 @@ const NewMatch = () => {
             {match.match_type === "double" && (
               <>
                 <div className="form-group">
-                  <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Player3:</label>
+                  <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">
+                    Player3:
+                  </label>
                   <input
                     name="player3"
                     value={match.player3}
@@ -86,7 +94,9 @@ const NewMatch = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Player4:</label>
+                  <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">
+                    Player4:
+                  </label>
                   <input
                     name="player4"
                     value={match.player4}
@@ -99,41 +109,31 @@ const NewMatch = () => {
             )}
 
             <div className="form-group">
-              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Select Server:</label>
-              <select
-                name="server"
-                value={match.server}
+              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">
+                Number of Sets:
+              </label>
+              <input
+                name="number_of_sets"
+                value={match.number_of_sets}
+                type="number"
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
-              >
-                <option value="player_1">Player 1</option>
-                <option value="player_2">Player 2</option>
-                {match.match_type === "double" && (
-                  <>
-                    <option value="player_3">Player 3</option>
-                    <option value="player_4">Player 4</option>
-                  </>
-                )}
-              </select>
+                required
+              />
             </div>
 
             <div className="form-group">
-              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">Select Receiver:</label>
-              <select
-                name="receiver"
-                value={match.receiver}
+              <label className="block text-lg font-semibold text-gray-700 mb-2 me-4">
+                Wining points:
+              </label>
+              <input
+                name="winning_points"
+                value={match.winning_points}
+                type="number"
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
-              >
-                <option value="player_1">Player 1</option>
-                <option value="player_2">Player 2</option>
-                {match.match_type === "double" && (
-                  <>
-                    <option value="player_3">Player 3</option>
-                    <option value="player_4">Player 4</option>
-                  </>
-                )}
-              </select>
+                required
+              />
             </div>
 
             <button

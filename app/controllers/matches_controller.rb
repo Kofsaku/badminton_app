@@ -19,10 +19,7 @@ class MatchesController < ApplicationController
 
   def create
     match = Match.new(match_params)
-    match_log = [{ server: params[:server], receiver: params[:receiver], log: [] }]
-    match.match_log = match_log.to_json
     match.status = 'pending'
-
     if match.save
       render json: match, status: :created
     else
@@ -69,7 +66,7 @@ class MatchesController < ApplicationController
   end
 
   def match_params
-    params.require(:match).permit(:match_type, :player1, :player2, :player3, :player4)
+    params.require(:match).permit(:match_type, :player1, :player2, :player3, :player4, :number_of_sets, :winning_points)
   end
 
   def match_upate_params
