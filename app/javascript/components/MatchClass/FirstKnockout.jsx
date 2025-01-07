@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AdminHeader from "../../components/Shared/AdminHeader";
-import AdminSidebar from "../../components/Shared/AdminSidebar";
+import { Bracket, Seed, SeedItem, SeedTeam } from "react-brackets";
 
-const NewKnockout = ({
-  selectedTournament,
-  step,
-  classSize,
-  classData,
-  addMatch,
-}) => {
+import AdminHeader from "../Shared/AdminHeader";
+import AdminSidebar from "../Shared/AdminSidebar";
+
+const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
   const [tournamentVenues, setTournamentVenues] = useState([]);
+  const [tournamentPlayers, setTournamentPlayers] = useState([]);
 
   const [formData, setFormData] = useState({
     tableCount: 0,
@@ -28,8 +25,9 @@ const NewKnockout = ({
     axios.get(url).then((res) => {
       console.log(res.data);
 
-      const { tournament_venues } = res.data;
+      const { tournament_venues, tournament_players } = res.data;
       setTournamentVenues(tournament_venues);
+      setTournamentPlayers(tournament_players);
     });
   }, [selectedTournament]);
 
@@ -66,6 +64,79 @@ const NewKnockout = ({
       selectedPlayers,
       tables,
     });
+  };
+
+  const showBracket = (index) => {
+    let nPlayers = numberOfPlayers[index];
+    let matchArray = [];
+
+    while (nPlayers > 1) {
+      nPlayers = (nPlayers + 1) >> 1;
+      let matches = [];
+      for (let i = 0; i < nPlayers; i++) {
+        const match = {
+          id: i,
+          tableNumber: index,
+          round: matchArray.length,
+          teams: ["team 1", "team 2"],
+        };
+        matches.push(match);
+      }
+      const roundTitle = matchArray.length + 1;
+      matchArray.push({ title: `Round ${roundTitle}`, seeds: matches });
+    }
+    return matchArray;
+  };
+
+  const CustomSeed = ({ seed, breakpoint }) => {
+    const { round } = seed;
+
+    return (
+      <Seed mobileBreakpoint={breakpoint}>
+        <SeedItem>
+          <SeedTeam>
+            <div>
+              {!round && (
+                <select
+                  onChange={(e) =>
+                    handlePlayerChange(e, seed.tableNumber, seed.id * 2)
+                  }
+                >
+                  <option value="">Select</option>
+                  {tournamentPlayers.map((player) => (
+                    <option key={player.id} value={player.id}>
+                      {player.player_type === "User"
+                        ? player.player.full_name
+                        : player.player.title}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+          </SeedTeam>
+          <SeedTeam>
+            <div>
+              {!round && (
+                <select
+                  onChange={(e) =>
+                    handlePlayerChange(e, seed.tableNumber, seed.id * 2 + 1)
+                  }
+                >
+                  <option value="">Select</option>
+                  {tournamentPlayers.map((player) => (
+                    <option key={player.id} value={player.id}>
+                      {player.player_type === "User"
+                        ? player.player.full_name
+                        : player.player.title}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+          </SeedTeam>
+        </SeedItem>
+      </Seed>
+    );
   };
 
   const handleSubmit = (e) => {
@@ -112,30 +183,25 @@ const NewKnockout = ({
             </div>
           </div>
 
-          {Array.from({ length: numberOfPlayers[index] }).map((_, colIndex) => (
+          <Bracket
+            rounds={showBracket(index)}
+            renderSeedComponent={CustomSeed}
+          />
+          {/* {Array.from({ length: numberOfPlayers[index] }).map((_, colIndex) => (
             <select
               key={colIndex}
               onChange={(e) => handlePlayerChange(e, index, colIndex)}
             >
               <option value="">Select</option>
-              {Array.from({
-                length:
-                  classData[step - 2].winnerCount *
-                  classData[step - 2].tableCount,
-              }).map((_, index) => {
-                return (
-                  <option key={index} value={index}>
-                    {String.fromCharCode(
-                      "A".charCodeAt(0) +
-                        index / classData[step - 2].winnerCount
-                    ) +
-                      " - " +
-                      ((index % classData[step - 2].winnerCount) + 1)}
-                  </option>
-                );
-              })}
+              {tournamentPlayers.map((player) => (
+                <option key={player.id} value={player.id}>
+                  {player.player_type === "User"
+                    ? player.player.full_name
+                    : player.player.title}
+                </option>
+              ))}
             </select>
-          ))}
+          ))} */}
         </div>
       ))}
 
@@ -148,4 +214,4 @@ const NewKnockout = ({
   );
 };
 
-export default NewKnockout;
+export default FirstKnockout;

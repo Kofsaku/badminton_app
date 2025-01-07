@@ -133,14 +133,14 @@ const AdminSidebar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/tournament-tables"
+                    to="/match-management"
                     className={({ isActive }) =>
                       isActive
                         ? "left-menu-btn1 merriweather-font active"
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    League/Tournament Tables
+                    Match Management
                   </NavLink>
                 </li>
               </>

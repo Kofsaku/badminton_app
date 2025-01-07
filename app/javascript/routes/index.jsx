@@ -109,7 +109,7 @@ export default (
         }
       />
       <Route
-        path="/match-class"
+        path="/match-management"
         element={
           <ProtectedRoute>
             <MatchClass />
@@ -117,7 +117,7 @@ export default (
         }
       />
       <Route
-        path="/match-class/new"
+        path="/match-management/new"
         element={
           <ProtectedRoute>
             <NewMatchClass />

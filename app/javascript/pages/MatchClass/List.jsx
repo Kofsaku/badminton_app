@@ -19,7 +19,7 @@ const MatchClasses = () => {
   const handleDelete = (id) => {
     const confirmDelete = window.confirm("Are you sure?");
     if (confirmDelete) {
-      const url = `/api/v1/tournament-tables/${id}`;
+      const url = `/api/v1/match_classes/${id}`;
       const token = document.querySelector('meta[name="csrf-token"]').content;
 
       axios
@@ -32,9 +32,7 @@ const MatchClasses = () => {
         .then((res) => {
           console.log(res.data);
 
-          setTournamentTables(
-            tournamentTables.filter((table) => table.id !== id)
-          );
+          setMatchClasses(matchClasses.filter((match) => match.id !== id));
         });
     }
   };
@@ -46,7 +44,7 @@ const MatchClasses = () => {
         <AdminHeader />
         <div className="p-3">
           <h1>Match Classes</h1>
-          <Link to="/match-class/new" className="btn btn-primary">
+          <Link to="/match-management/new" className="btn btn-primary">
             New Match Class
           </Link>
 
@@ -79,13 +77,13 @@ const MatchClasses = () => {
                       className="btn btn-warning"
                     >
                       Edit
-                    </Link>
+                    </Link> */}
                     <button
                       className="btn btn-danger"
-                      onClick={() => handleDelete(tournamentTable.id)}
+                      onClick={() => handleDelete(matchClass.id)}
                     >
                       Delete
-                    </button> */}
+                    </button>
                   </td>
                 </tr>
               ))}

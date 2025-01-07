@@ -45,6 +45,17 @@ class Api::V1::MatchClassesController < ApplicationController
     end
   end
 
+  def destroy
+    item = MatchClass.find(params[:id])
+    item_attributes = item.attributes
+
+    if item.destroy
+      render json: { message: 'Item successfully deleted', item: item_attributes }
+    else
+      render json: { error: 'Failed to delete item' }, status: :unprocessable_entity
+    end
+  end
+
   def match_class_params
     params.permit(:tournament, :category, :division, :class_size)
   end

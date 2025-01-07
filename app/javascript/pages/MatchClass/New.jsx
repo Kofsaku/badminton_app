@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import AdminHeader from "../../components/Shared/AdminHeader";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
-import FirstPhase from "../../components/MatchClass/FirstPhase";
 import NewPhase from "../../components/MatchClass/NewPhase";
 
 const NewMatchClass = () => {
@@ -110,7 +109,7 @@ const NewMatchClass = () => {
       })
       .then((res) => {
         console.log(res.data);
-        navigate("/match-class");
+        navigate("/match-management");
       });
   };
 
@@ -247,25 +246,12 @@ const NewMatchClass = () => {
                   Next
                 </button>
                 {/* <input type="submit" value="Save" className="btn btn-primary" /> */}
-                <Link to="/match-class" className="btn btn-secondary">
+                <Link to="/match-management" className="btn btn-secondary">
                   Cancel
                 </Link>
                 {/* </form> */}
               </div>
             </>
-          ) : step == 1 ? (
-            <FirstPhase
-              selectedTournament={tournaments.find(
-                (val) => val.id === selectedTournament
-              )}
-              category={tournamentCategories.find(
-                (val) => val.id === selectedCategory
-              )}
-              step={step}
-              classSize={classSize}
-              classData={classData}
-              addMatch={addMatch}
-            />
           ) : (
             <NewPhase
               selectedTournament={tournaments.find(

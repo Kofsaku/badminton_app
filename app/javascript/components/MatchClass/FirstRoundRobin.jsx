@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const NewRoundRobin = ({
-  selectedTournament,
-  step,
-  classSize,
-  classData,
-  addMatch,
-}) => {
+const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
   const [tournamentVenues, setTournamentVenues] = useState([]);
+  const [tournamentPlayers, setTournamentPlayers] = useState([]);
 
   const [formData, setFormData] = useState({
     tableCount: 0,
@@ -27,8 +22,9 @@ const NewRoundRobin = ({
     axios.get(url).then((res) => {
       console.log(res.data);
 
-      const { tournament_venues } = res.data;
+      const { tournament_venues, tournament_players } = res.data;
       setTournamentVenues(tournament_venues);
+      setTournamentPlayers(tournament_players);
     });
   }, [selectedTournament]);
 
@@ -156,22 +152,13 @@ const NewRoundRobin = ({
                         onChange={(e) => handlePlayerChange(e, index, colIndex)}
                       >
                         <option value="">Select</option>
-                        {Array.from({
-                          length:
-                            classData[step - 2].winnerCount *
-                            classData[step - 2].tableCount,
-                        }).map((_, index) => {
-                          return (
-                            <option key={index} value={index}>
-                              {String.fromCharCode(
-                                "A".charCodeAt(0) +
-                                  index / classData[step - 2].winnerCount
-                              ) +
-                                " - " +
-                                ((index % classData[step - 2].winnerCount) + 1)}
-                            </option>
-                          );
-                        })}
+                        {tournamentPlayers.map((player) => (
+                          <option key={player.id} value={player.id}>
+                            {player.player_type === "User"
+                              ? player.player.full_name
+                              : player.player.title}
+                          </option>
+                        ))}
                       </select>
                     </th>
                   )
@@ -220,4 +207,4 @@ const NewRoundRobin = ({
   );
 };
 
-export default NewRoundRobin;
+export default FirstRoundRobin;
