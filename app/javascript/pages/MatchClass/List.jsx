@@ -5,21 +5,21 @@ import AdminSidebar from "../../components/Shared/AdminSidebar";
 import { Link } from "react-router-dom";
 
 const MatchClasses = () => {
-  const [tournamentTables, setTournamentTables] = useState([]);
+  const [matchClasses, setMatchClasses] = useState([]);
 
   useEffect(() => {
-    const url = "/api/v1/tournament-tables";
+    const url = "/api/v1/match_classes";
     axios.get(url).then((res) => {
       console.log(res.data);
 
-      setTournamentTables(res.data);
+      setMatchClasses(res.data);
     });
   }, []);
 
   const handleDelete = (id) => {
     const confirmDelete = window.confirm("Are you sure?");
     if (confirmDelete) {
-      const url = `/api/v1/tournament-tables/${id}`;
+      const url = `/api/v1/match_classes/${id}`;
       const token = document.querySelector('meta[name="csrf-token"]').content;
 
       axios
@@ -32,9 +32,7 @@ const MatchClasses = () => {
         .then((res) => {
           console.log(res.data);
 
-          setTournamentTables(
-            tournamentTables.filter((table) => table.id !== id)
-          );
+          setMatchClasses(matchClasses.filter((match) => match.id !== id));
         });
     }
   };
@@ -46,15 +44,13 @@ const MatchClasses = () => {
         <AdminHeader />
         <div className="p-3">
           <h1>Match Classes</h1>
-          <Link to="/match-class/new" className="btn btn-primary">
+          <Link to="/match-management/new" className="btn btn-primary">
             New Match Class
           </Link>
 
           <table className="table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Type</th>
                 <th>Tournament</th>
                 <th>Category</th>
                 <th>Division</th>
@@ -63,16 +59,14 @@ const MatchClasses = () => {
               </tr>
             </thead>
             <tbody>
-              {tournamentTables.map((tournamentTable) => (
-                <tr key={tournamentTable.id}>
-                  <td>{tournamentTable.name}</td>
-                  <td>{tournamentTable.table_type}</td>
-                  <td>{tournamentTable.tournament.name}</td>
-                  <td>{tournamentTable.tournament_category.category_type}</td>
-                  <td>{tournamentTable.tournament_division.division}</td>
-                  <td>{tournamentTable.size}</td>
+              {matchClasses.map((matchClass) => (
+                <tr key={matchClass.id}>
+                  <td>{matchClass.tournament.name}</td>
+                  <td>{matchClass.tournament_category.category_type}</td>
+                  <td>{matchClass.tournament_division.division}</td>
+                  <td>{matchClass.size}</td>
                   <td>
-                    <Link
+                    {/* <Link
                       to={"/tournament-tables/" + tournamentTable.id}
                       className="btn btn-info"
                     >
@@ -83,10 +77,10 @@ const MatchClasses = () => {
                       className="btn btn-warning"
                     >
                       Edit
-                    </Link>
+                    </Link> */}
                     <button
                       className="btn btn-danger"
-                      onClick={() => handleDelete(tournamentTable.id)}
+                      onClick={() => handleDelete(matchClass.id)}
                     >
                       Delete
                     </button>

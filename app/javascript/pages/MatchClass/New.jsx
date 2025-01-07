@@ -84,6 +84,8 @@ const NewMatchClass = () => {
   const addMatch = (matchData) => {
     classData[step - 1] = matchData;
 
+    setClassData(classData);
+
     if (step < classSize) setStep(step + 1);
     else completeAdding();
   };
@@ -92,10 +94,13 @@ const NewMatchClass = () => {
     console.log("class data:", classData);
 
     const body = {
+      tournament: selectedTournament,
+      category: selectedCategory,
+      division: selectedDivision,
       class_size: classSize,
       class_data: classData,
     };
-    const url = "/api/v1/match-class";
+    const url = "/api/v1/match_classes";
     const token = document.querySelector('meta[name="csrf-token"]').content;
 
     axios
@@ -104,7 +109,7 @@ const NewMatchClass = () => {
       })
       .then((res) => {
         console.log(res.data);
-        navigate("/match-class");
+        navigate("/match-management");
       });
   };
 
@@ -213,6 +218,7 @@ const NewMatchClass = () => {
                     name="tournament_division"
                     className="form-control"
                     onChange={(e) => onChange(e, setSelectedDivision)}
+                    value={selectedDivision}
                   >
                     {tournamentDivisions &&
                       tournamentDivisions.map((division) => (
@@ -240,7 +246,7 @@ const NewMatchClass = () => {
                   Next
                 </button>
                 {/* <input type="submit" value="Save" className="btn btn-primary" /> */}
-                <Link to="/match-class" className="btn btn-secondary">
+                <Link to="/match-management" className="btn btn-secondary">
                   Cancel
                 </Link>
                 {/* </form> */}
@@ -256,6 +262,7 @@ const NewMatchClass = () => {
               )}
               step={step}
               classSize={classSize}
+              classData={classData}
               addMatch={addMatch}
             />
           )}
