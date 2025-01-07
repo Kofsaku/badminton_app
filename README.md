@@ -5,26 +5,29 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
-3.1.0
+- Ruby version
+  3.1.0
 
-* System dependencies
+- System dependencies
   Node 18
   Rails 7+
   React
   Postresql
-  
-* Configuration
-  
-* Database creation
+- Configuration
+- Database creation
   rails db:migrate
 
-* Database initialization
+- Database initialization
   rails db:create
-* How to run the test suite
+- How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+- Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+- Deployment instructions
+  tmux attach
 
-* ...
+rake assets:clobber
+rails assets:precompile
+rails server -b 0.0.0.0 -p 3000
+
+- ...

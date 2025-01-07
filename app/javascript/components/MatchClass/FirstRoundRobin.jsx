@@ -76,15 +76,15 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
   };
 
   const showPlayerName = (index, rowIndex) => {
-    const playerIndex = selectedPlayers[index][rowIndex];
-
-    console.log(playerIndex);
-
-    return (
-      String.fromCharCode("A".charCodeAt(0) + playerIndex / 2) +
-      " - " +
-      ((playerIndex % 2) + 1)
+    const player = tournamentPlayers.find(
+      (player) => player.id === selectedPlayers[index][rowIndex]
     );
+    console.log(player, selectedPlayers[index][rowIndex]);
+    return !player
+      ? "To be selected"
+      : player.player_type === "User"
+      ? player.player.full_name
+      : player.player.title;
   };
 
   const handleSubmit = (e) => {
