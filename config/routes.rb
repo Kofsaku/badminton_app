@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'faqs', to: 'homepage#faqs'
   get 'privacy-policy', to: 'homepage#privacy-policy'
   get 'contact', to: 'homepage#contact'
+  get 'select-payment-method', to: 'homepage#select_payment_method'
   
   # Tournament management routes
   get 'tournament-creation', to: 'tournaments#new'
