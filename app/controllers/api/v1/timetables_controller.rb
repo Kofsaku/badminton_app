@@ -2,17 +2,15 @@ class Api::V1::TimetablesController < ApplicationController
   before_action :set_timetable, only: %i[get_timetable_by_id]
 
   def get_all_timetables
-    timetables = Timetable.includes(:tournament, :tournament_venue).all.order(:created_at)
-    render json: timetables.as_json(include: {
+    tournament_venues = TournamentVenue.all()
+    render json: tournament_venues.as_json(include: {
       tournament: {only: [:id, :name]},
-      tournament_venue: {only: [:id, :venue_name]}
-    }, only: [:id, :row_count])
+    })
   end
 
   def get_timetable_by_id
-    render json: @timetable.as_json(include: {
+    render json: @tournament_venue.as_json(include: {
       tournament: {only: [:id, :name]},
-      tournament_venue: {},
       timetable_cells: {
         include: {
           tournament_player: {
@@ -43,6 +41,6 @@ class Api::V1::TimetablesController < ApplicationController
   private
   
   def set_timetable
-    @timetable = Timetable.find(params[:id])
+    @tournament_venue = TournamentVenue.find(params[:id])
   end
 end

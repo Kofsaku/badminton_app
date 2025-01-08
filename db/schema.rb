@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_23_180210) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_08_163546) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -137,17 +137,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_23_180210) do
   end
 
   create_table "timetable_cells", force: :cascade do |t|
-    t.bigint "timetable_id", null: false
-    t.bigint "tournament_table_id", null: false
     t.bigint "tournament_player_id"
     t.bigint "second_tournament_player_id"
     t.integer "number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "tournament_venue_id"
+    t.bigint "match_group_id"
+    t.index ["match_group_id"], name: "index_timetable_cells_on_match_group_id"
     t.index ["second_tournament_player_id"], name: "index_timetable_cells_on_second_tournament_player_id"
-    t.index ["timetable_id"], name: "index_timetable_cells_on_timetable_id"
     t.index ["tournament_player_id"], name: "index_timetable_cells_on_tournament_player_id"
-    t.index ["tournament_table_id"], name: "index_timetable_cells_on_tournament_table_id"
+    t.index ["tournament_venue_id"], name: "index_timetable_cells_on_tournament_venue_id"
   end
 
   create_table "timetables", force: :cascade do |t|
@@ -315,10 +315,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_23_180210) do
   add_foreign_key "team_members", "teams"
   add_foreign_key "team_players", "teams"
   add_foreign_key "team_players", "users"
-  add_foreign_key "timetable_cells", "timetables"
+  add_foreign_key "timetable_cells", "match_groups"
   add_foreign_key "timetable_cells", "tournament_players"
   add_foreign_key "timetable_cells", "tournament_players", column: "second_tournament_player_id"
-  add_foreign_key "timetable_cells", "tournament_tables", on_delete: :cascade
+  add_foreign_key "timetable_cells", "tournament_venues"
   add_foreign_key "timetables", "tournament_venues"
   add_foreign_key "timetables", "tournaments"
   add_foreign_key "tournament_categories", "tournaments"
