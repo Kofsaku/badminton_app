@@ -27,8 +27,6 @@ const NewMatchClass = () => {
   useEffect(() => {
     const url = "/api/v1/tournaments";
     axios.get(url).then((res) => {
-      console.log(res.data);
-
       setTournaments(res.data);
       if (res.data.length) setSelectedTournament(res.data[0].id);
     });
@@ -39,8 +37,6 @@ const NewMatchClass = () => {
 
     const url = `/api/v1/tournaments/${selectedTournament}/tournament-data`;
     axios.get(url).then((res) => {
-      console.log(res.data);
-
       const { tournament_venues, tournament_categories, tournament_players } =
         res.data;
       //   setTournamentVenues(tournament_venues);
@@ -62,8 +58,6 @@ const NewMatchClass = () => {
 
     const url = `/api/v1/categories/${selectedCategory}/divisions`;
     axios.get(url).then((res) => {
-      console.log(res.data);
-
       const { divisions } = res.data;
       setTournamentDivisions(divisions);
 
@@ -72,9 +66,7 @@ const NewMatchClass = () => {
   }, [selectedCategory]);
 
   const onChange = (e, setFunction) => {
-    console.log(e.target.value);
-
-    setFunction(e.target.value);
+    setFunction(parseInt(e.target.value));
   };
 
   const goToFirstStep = () => {
@@ -255,10 +247,10 @@ const NewMatchClass = () => {
           ) : (
             <NewPhase
               selectedTournament={tournaments.find(
-                (val) => val.id === selectedTournament
+                (val) => val.id == selectedTournament
               )}
               category={tournamentCategories.find(
-                (val) => val.id === selectedCategory
+                (val) => val.id == selectedCategory
               )}
               step={step}
               classSize={classSize}
