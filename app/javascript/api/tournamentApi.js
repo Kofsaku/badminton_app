@@ -13,6 +13,18 @@ export const createTournament = async (tournamentData) => {
   }
 };
 
+// Create a new tournament
+export const updateTournament = async (tournamentData,tournamentId) => {
+  try {
+    // Add `.json` suffix for the API format requirement
+    const response = await axiosInstance.patch(`tournaments/${tournamentId}.json`, tournamentData);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating tournament:', error);
+    throw error;
+  }
+};
+
 // Add players in tournament
 export const addPlayersTournament = async (tournamentId, playerId) => {
   try {

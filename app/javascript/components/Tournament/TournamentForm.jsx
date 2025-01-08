@@ -50,6 +50,7 @@ const TournamentForm = ({ initialData }) => {
           nextStep={nextStep}
           prevStep={prevStep}
           formData={formData}
+          setFormData={setFormData}
           handleFormChange={handleFormChange}
         />
       );

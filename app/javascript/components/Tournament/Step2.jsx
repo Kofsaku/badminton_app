@@ -7,6 +7,13 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const [categories, setCategories] = useState([TournamentCategoryModel()]);
   const { t } = useTranslation();
 
+  useEffect(() => {
+    const categoryData = formData.tournament_categories_attributes
+    if (categoryData?.length > 0 && formData.id) {
+      setCategories(categoryData)
+    }
+  }, [formData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     nextStep();
@@ -66,9 +73,10 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   <select
                     className="field-style5"
                     name="category_type"
-                    value={category.category_type}
+                    value={category.category_type || ''}
                     onChange={(e) => handleCategoryChange(catIndex, e)}
                   >
+                    <option value="">{t('tournament.selectTournamentCategory')}</option> {/* Translation key */}
                     <option value="mens_singles_individual">{t('tournament.mensSinglesIndividual')}</option> {/* Translation key */}
                     <option value="womens_singles_individual">{t('tournament.womensSinglesIndividual')}</option> {/* Translation key */}
                     <option value="mens_doubles_individual">{t('tournament.mensDoublesIndividual')}</option> {/* Translation key */}

@@ -7,4 +7,11 @@ class Tournament < ApplicationRecord
   accepts_nested_attributes_for :tournament_categories, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :tournament_players, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :tournament_venues, reject_if: :all_blank, allow_destroy: true
+
+  def tournament_venues_attributes
+    tournament_venues.as_json()
+    end
+  def tournament_categories_attributes
+    tournament_categories.as_json()
+  end
 end

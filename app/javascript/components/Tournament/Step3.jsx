@@ -1,23 +1,85 @@
-import React from 'react';
-import { createTournament } from '../../api/tournamentApi';
+import React, { useState, useEffect } from 'react';
+
+import {createTournament, updateTournament} from '../../api/tournamentApi';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
+const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [listTitle, setListTitle] = useState([])
+  const [listOption, setListOption] = useState([])
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    handleFormChange(name, value);
+  const handleChange = (e, index) => {
+    const selectedCategoryType = e.target.value;
+    const selectedOption = listOption.find(option => option.category_type === selectedCategoryType);
+
+    if (selectedOption) {
+      const updatedFormData = {
+        ...formData,
+        tournament_venues_attributes: formData.tournament_venues_attributes.map((item, i) =>
+          i === index ? { ...item, category_type: selectedOption.category_type, division_number: selectedOption.division_number  } : item
+        )
+      };
+      setFormData(updatedFormData);
+
+    } else {
+      console.log("No valid option selected");
+    }
   };
+  const camelCaseToPascalCase = (text) => {
+    if (text) {
+      return text
+        .split('_')
+        .map((word, index) =>
+          index === 0
+            ? word.toLowerCase() // Keep the first word in lowercase
+            : word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join('');
+    }
+    return ''; // Return an empty string if text is falsy
+  };
+
+  useEffect(() => {
+    const dataRevenue = formData.tournament_venues_attributes
+    const dataCategory = formData.tournament_categories_attributes
+    if (dataRevenue) {
+      const titles = dataRevenue.map(item => {
+        if (item) {
+          const [year, month, day] = item.venue_date.split("-");
+          return `${day}/${month} ${item.venue_name.charAt(0).toUpperCase()}${item.venue_name.slice(1)}`;
+        } else {
+          return ''
+        }
+
+      });
+      setListTitle(titles)
+    }
+    if (dataRevenue) {
+      const categories = dataCategory.map(item => {
+        const formattedCategory = t(`tournament.${camelCaseToPascalCase(item.category_type)}`);
+        return {
+          category_type: item.category_type,
+          division_number: item.division_number,
+          title: `${formattedCategory} ${item.division_number} division`
+        };
+      });
+      setListOption(categories)
+    }
+
+  }, [formData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Submit form data using the API function
-      const result = await createTournament(formData);
-      console.log('Tournament created successfully:', result);
+      if (formData.id) {
+        await updateTournament(formData,formData.id);
+      } else {
+        await createTournament(formData);
+      }
+      // console.log('Tournament created successfully:', result);
 
       navigate('/tournament-management');
       // Handle success (e.g., redirect to another page or show success message)
@@ -44,68 +106,23 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData }) => {
       <div className="d-block w-100 bg-silver5 rounded-3 border border-color-silver2 px-4 py-4">
         <form onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>12/6 Tokyo Gym</label>
-                <select
-                  className="field-style5"
-                  name="tokyoGym1"
-                  value={formData.tokyoGym1}
-                  onChange={handleChange}
-
-                >
-                  <option value="">Select Division</option>
-                  <option value="mensSingle1">Men's single individual 1 division</option>
-                  <option value="mensSingle2">Men's single individual 2 division</option>
-                  <option value="mensSingle3">Men's single individual 3 division</option>
-                  <option value="womensDouble1">Woman doubles team 1 division</option>
-                  <option value="womensDouble2">Woman doubles team 2 division</option>
-                  <option value="womensDouble3">Woman doubles team 3 division</option>
-                </select>
+            {listTitle.map((title, index) => (
+              <div key={index} className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                <div className="form-field5">
+                  <label>{title}</label>
+                  <select
+                    className="field-style5"
+                    value={formData.tournament_venues_attributes[index].category_type || ''}
+                    onChange={(e) => handleChange(e, index)}
+                  >
+                    <option value="">Select Division</option>
+                    {listOption.map((option, ind) => (
+                      <option key={ind} value={option.category_type}>{option.title}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>12/7 Tokyo Gym</label>
-                <select
-                  className="field-style5"
-                  name="tokyoGym2"
-                  value={formData.tokyoGym2}
-                  onChange={handleChange}
-
-                >
-                  <option value="">Select Division</option>
-                  <option value="mensSingle1">Men's single individual 1 division</option>
-                  <option value="mensSingle2">Men's single individual 2 division</option>
-                  <option value="mensSingle3">Men's single individual 3 division</option>
-                  <option value="womensDouble1">Woman doubles team 1 division</option>
-                  <option value="womensDouble2">Woman doubles team 2 division</option>
-                  <option value="womensDouble3">Woman doubles team 3 division</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
-              <div className="form-field5">
-                <label>12/7 Hokkaido Gym</label>
-                <select
-                  className="field-style5"
-                  name="hokkaidoGym"
-                  value={formData.hokkaidoGym}
-                  onChange={handleChange}
-
-                >
-                  <option value="">Select Division</option>
-                  <option value="mensSingle1">Men's single individual 1 division</option>
-                  <option value="mensSingle2">Men's single individual 2 division</option>
-                  <option value="mensSingle3">Men's single individual 3 division</option>
-                  <option value="womensDouble1">Woman doubles team 1 division</option>
-                  <option value="womensDouble2">Woman doubles team 2 division</option>
-                  <option value="womensDouble3">Woman doubles team 3 division</option>
-                </select>
-              </div>
-            </div>
+            ))}
           </div>
           <div className="row pt-4">
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">

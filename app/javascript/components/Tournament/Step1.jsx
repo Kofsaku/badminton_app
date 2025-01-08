@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { TournamentVenueModel } from '../../models/TournamentVenueModel';
 import { useTranslation } from 'react-i18next';
 
 const Step1 = ({ nextStep, formData, handleFormChange }) => {
   const [venues, setVenues] = useState([TournamentVenueModel()]); // Call the model function
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const venueData = formData.tournament_venues_attributes
+    if (venueData?.length > 0) {
+      setVenues(venueData)
+    }
+
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -43,7 +43,7 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1 or /tournaments/1.json
   def show
-    render json: { tournament: @tournament }
+    render json: { tournament: @tournament.as_json(methods: [:tournament_venues_attributes, :tournament_categories_attributes] ) }
   end
 
   # GET /tournaments/new
@@ -103,20 +103,25 @@ class TournamentsController < ApplicationController
     if @tournament.save!
       render json: { tournament: @tournament, message: 'Tournament created successfully' }, status: :created
     else
-      render json: { errors: tournament.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @tournament.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /tournaments/1 or /tournaments/1.json
   def update
-    respond_to do |format|
-      if @tournament.update(tournament_params)
-        format.html { redirect_to tournament_url(@tournament), notice: "Tournament was successfully updated." }
-        format.json { render :show, status: :ok, location: @tournament }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @tournament.errors, status: :unprocessable_entity }
-      end
+    # respond_to do |format|
+    #   if @tournament.update(tournament_params)
+    #     format.html { redirect_to tournament_url(@tournament), notice: "Tournament was successfully updated." }
+    #     format.json { render :show, status: :ok, location: @tournament }
+    #   else
+    #     format.html { render :edit, status: :unprocessable_entity }
+    #     format.json { render json: @tournament.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    if @tournament.update(tournament_params)
+      render json: { tournament: @tournament, message: 'Tournament was successfully updated.' }, status: :ok
+    else
+      render json: { errors: @tournament.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -206,7 +211,7 @@ class TournamentsController < ApplicationController
         :id, :user_id, :status, :_destroy
       ],
       tournament_venues_attributes: [
-        :id, :venue_name, :venue_address, :no_of_courts, :venue_date, :_destroy
+        :id, :venue_name, :venue_address, :no_of_courts, :venue_date, :category_type, :division_number, :_destroy
       ]
     )
   end
