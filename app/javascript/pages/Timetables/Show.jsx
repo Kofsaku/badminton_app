@@ -11,7 +11,9 @@ const ShowTimetable = () => {
 
   const {
     tournament,
-    tournament_venue: tournamentVenue,
+    venue_name,
+    venue_date,
+    no_of_courts,
     timetable_cells: timeCells,
   } = timetable;
 
@@ -25,11 +27,8 @@ const ShowTimetable = () => {
   }, [id]);
 
   const showTableBody = () => {
-    const completedRows = parseInt(
-      timeCells.length / tournamentVenue.no_of_courts
-    );
-    const isIncompleted =
-      timeCells.length % tournamentVenue.no_of_courts ? 1 : 0;
+    const completedRows = parseInt(timeCells.length / no_of_courts);
+    const isIncompleted = timeCells.length % no_of_courts ? 1 : 0;
 
     const rowCount = completedRows + isIncompleted;
 
@@ -37,16 +36,12 @@ const ShowTimetable = () => {
       return (
         <tr key={rowIndex}>
           <td>Time {rowIndex + 1}</td>
-          {rowIndex === rowCount - 1 &&
-          timeCells.length % tournamentVenue.no_of_courts
+          {rowIndex === rowCount - 1 && timeCells.length % no_of_courts
             ? Array.from({
-                length: timeCells.length % tournamentVenue.no_of_courts,
+                length: timeCells.length % no_of_courts,
               })
                 .map(
-                  (_, colIndex) =>
-                    timeCells[
-                      tournamentVenue.no_of_courts * rowIndex + colIndex
-                    ]
+                  (_, colIndex) => timeCells[no_of_courts * rowIndex + colIndex]
                 )
                 .map((timeCell) => (
                   <td key={timeCell.id}>
@@ -62,12 +57,9 @@ const ShowTimetable = () => {
                     </Link>
                   </td>
                 ))
-            : Array.from({ length: tournamentVenue.no_of_courts })
+            : Array.from({ length: no_of_courts })
                 .map(
-                  (_, colIndex) =>
-                    timeCells[
-                      tournamentVenue.no_of_courts * rowIndex + colIndex
-                    ]
+                  (_, colIndex) => timeCells[no_of_courts * rowIndex + colIndex]
                 )
                 .map((timeCell) => (
                   <td key={timeCell.id}>
@@ -97,7 +89,7 @@ const ShowTimetable = () => {
         <AdminHeader />
         <div>
           <h1>Timetable</h1>
-          {tournamentVenue && (
+          {tournament && (
             <>
               <h5>
                 <strong>Tournament:</strong>
@@ -105,20 +97,15 @@ const ShowTimetable = () => {
               </h5>
               <h5>
                 <strong>Tournament Venue:</strong>
-                {" " +
-                  tournamentVenue.venue_name +
-                  " " +
-                  tournamentVenue.venue_date}
+                {" " + venue_name + " " + venue_date}
               </h5>
               <table className="table">
                 <thead>
                   <tr>
                     <th>Time / Court</th>
-                    {Array.from({ length: tournamentVenue.no_of_courts }).map(
-                      (_, index) => (
-                        <th key={index}>Court {index + 1}</th>
-                      )
-                    )}
+                    {Array.from({ length: no_of_courts }).map((_, index) => (
+                      <th key={index}>Court {index + 1}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>{showTableBody()}</tbody>

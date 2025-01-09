@@ -14,11 +14,18 @@ const NewRoundRobin = ({
     tableCount: 0,
     winnerCount: 1,
     numberOfPlayers: [],
+    selectedVenues: [],
     selectedPlayers: [],
     tables: [],
   });
-  const { tableCount, winnerCount, numberOfPlayers, selectedPlayers, tables } =
-    formData;
+  const {
+    tableCount,
+    winnerCount,
+    numberOfPlayers,
+    selectedVenues,
+    selectedPlayers,
+    tables,
+  } = formData;
 
   useEffect(() => {
     if (!selectedTournament) return;
@@ -55,6 +62,15 @@ const NewRoundRobin = ({
       numberOfPlayers,
       selectedPlayers,
       tables,
+    });
+  };
+
+  const handleVenueChange = (e, index) => {
+    selectedVenues[index] = parseInt(e.target.value);
+
+    setFormData({
+      ...formData,
+      selectedVenues,
     });
   };
 
@@ -100,7 +116,7 @@ const NewRoundRobin = ({
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Number of tables</label>
+        <label>リーグ表数</label>
         <input
           type="number"
           name="tableCount"
@@ -111,7 +127,7 @@ const NewRoundRobin = ({
       </div>
 
       <div>
-        <label>Number of winners</label>
+        <label>勝ち抜け数</label>
         <input
           type="number"
           name="winnerCount"
@@ -126,7 +142,7 @@ const NewRoundRobin = ({
           <h6>{String.fromCharCode("A".charCodeAt(0) + index)}</h6>
           <div className="border d-flex">
             <div className="flex-fill">
-              <label>Number of players</label>
+              <label>マスの数</label>
               <input
                 type="number"
                 className="form-control"
@@ -135,8 +151,11 @@ const NewRoundRobin = ({
               />
             </div>
             <div className="flex-fill">
-              <label>Match days</label>
-              <select name="" id="" className="form-control">
+              <label>試合日数</label>
+              <select
+                className="form-control"
+                onChange={(e) => handleVenueChange(e, index)}
+              >
                 {tournamentVenues.map((venue) => (
                   <option key={venue.id} value={venue.id}>
                     {venue.venue_name}
@@ -213,7 +232,7 @@ const NewRoundRobin = ({
 
       <input
         type="submit"
-        value={step < classSize ? `Proceed to Match ${step + 1}` : "Complete"}
+        value={step < classSize ? `第${step + 1}試合に進む` : "完了"}
         className="btn bg-green1 text-white w-100 mt-4"
       />
     </form>

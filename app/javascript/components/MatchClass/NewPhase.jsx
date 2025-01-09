@@ -30,12 +30,12 @@ const NewPhase = ({
 
   return (
     <>
-      <h1>New Match</h1>
+      <h3 className="fw-bold">マッチ作成</h3>
       <p>{selectedTournament.name + " " + category.category_type}</p>
 
       <div className="bg-light p-4">
         <div className="mb-3">
-          <label>Match Format</label>
+          <label>試合形式</label>
           <ul className="nav nav-pills">
             <li className="nav-item">
               <button
@@ -45,7 +45,7 @@ const NewPhase = ({
                 }`}
                 onClick={() => handleMatchTypeChange(false)}
               >
-                Round Robin
+                リーグ戦
               </button>
             </li>
             <li className="nav-item">
@@ -56,7 +56,7 @@ const NewPhase = ({
                 }`}
                 onClick={() => handleMatchTypeChange(true)}
               >
-                Knockout
+                トーナメント戦
               </button>
             </li>
           </ul>

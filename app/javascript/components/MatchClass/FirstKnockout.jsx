@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Bracket, Seed, SeedItem, SeedTeam } from "react-brackets";
 
-import AdminHeader from "../Shared/AdminHeader";
-import AdminSidebar from "../Shared/AdminSidebar";
-
 const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
   const [tournamentVenues, setTournamentVenues] = useState([]);
   const [tournamentPlayers, setTournamentPlayers] = useState([]);
@@ -13,10 +10,17 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
     tableCount: 0,
     winnerCount: 1,
     numberOfPlayers: [],
+    selectedVenues: [],
     selectedPlayers: [],
     tables: [],
   });
-  const { tableCount, numberOfPlayers, selectedPlayers, tables } = formData;
+  const {
+    tableCount,
+    numberOfPlayers,
+    selectedVenues,
+    selectedPlayers,
+    tables,
+  } = formData;
 
   useEffect(() => {
     if (!selectedTournament) return;
@@ -50,6 +54,15 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
       numberOfPlayers,
       selectedPlayers,
       tables,
+    });
+  };
+
+  const handleVenueChange = (e, index) => {
+    selectedVenues[index] = parseInt(e.target.value);
+
+    setFormData({
+      ...formData,
+      selectedVenues,
     });
   };
 
@@ -148,7 +161,7 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Number of tables</label>
+        <label>トーナメント表の数</label>
         <input
           type="number"
           name="tableCount"
@@ -163,7 +176,7 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
           <h6>{String.fromCharCode("A".charCodeAt(0) + index)}</h6>
           <div className="border d-flex">
             <div className="flex-fill">
-              <label>Number of blocks</label>
+              <label>ブロック数</label>
               <input
                 type="number"
                 className="form-control"
@@ -172,8 +185,11 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
               />
             </div>
             <div className="flex-fill">
-              <label>Match days</label>
-              <select name="" id="" className="form-control">
+              <label>試合日数</label>
+              <select
+                className="form-control"
+                onChange={(e) => handleVenueChange(e, index)}
+              >
                 {tournamentVenues.map((venue) => (
                   <option key={venue.id} value={venue.id}>
                     {venue.venue_name}
@@ -207,7 +223,7 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
 
       <input
         type="submit"
-        value={step < classSize ? `Proceed to Match ${step + 1}` : "Complete"}
+        value={step < classSize ? `第${step + 1}試合に進む` : "完了"}
         className="btn bg-green1 text-white w-100 mt-4"
       />
     </form>

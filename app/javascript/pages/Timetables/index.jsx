@@ -28,7 +28,9 @@ const Timetables = () => {
             <thead>
               <tr>
                 <th>Tournament</th>
-                <th>Venue</th>
+                <th>Venue Name</th>
+                <th>Venue Date</th>
+                <th>Venue Address</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -36,7 +38,9 @@ const Timetables = () => {
               {timetables.map((timetable) => (
                 <tr key={timetable.id}>
                   <td>{timetable.tournament.name}</td>
-                  <td>{timetable.tournament_venue.venue_name}</td>
+                  <td>{timetable.venue_name}</td>
+                  <td>{timetable.venue_date}</td>
+                  <td>{timetable.venue_address}</td>
                   <td>
                     <Link
                       to={"/timetables/" + timetable.id}
