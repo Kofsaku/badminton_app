@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
@@ -81,6 +81,13 @@ const SearchSection = () => {
     match_format: matchFormat,
     participation_type: participationType,
   } = formData;
+
+  useEffect(() => {
+    axiosInstance
+      .post("/api/v1/tournaments/q", formData)
+      .then((response) => setSearchResults(response.data))
+      .catch((e) => {});
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
