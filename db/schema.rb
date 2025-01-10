@@ -87,6 +87,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_08_163546) do
     t.string "match_time"
     t.integer "match_score_teamA", default: 0
     t.integer "match_score_teamB", default: 0
+    t.integer "winning_points"
+    t.integer "number_of_sets"
     t.bigint "timetable_cell_id"
     t.index ["timetable_cell_id"], name: "index_matches_on_timetable_cell_id"
   end

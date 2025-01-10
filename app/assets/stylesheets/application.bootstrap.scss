@@ -1600,18 +1600,18 @@ section.left-sidebar-wrapper {
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 50px;
 }
 
 .player-left {
-  top: 50%;
-  left: 230px;
+  top: 45%;
+  left: 280px;
   transform: translateY(-50%);
 }
 
 .player-right {
-  top: 50%;
-  right: 230px;
+  top: 45%;
+  right: 280px;
   transform: translateY(-50%);
 }
 
