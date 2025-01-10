@@ -6,11 +6,12 @@ class Api::V1::PaymentsController < ApplicationController
       card_cvv = params[:card_cvv]
       card_month = params[:card_month]
       card_year = params[:card_year]
-      card_name = 'Taro Yamada'
       amount = 1000
-      token = Stripe::CreateTokenService.new(card_number, card_cvv, card_month, card_year,card_name).execute
-      charge = Stripe::CreateChargeService.new(token.id, amount).execute
-      render json: { status: charge.captured }
+      application_fee_amount = 10
+      supplier_connect_account_id = 'acct_1MJwaIPN5sxegj2w'
+      payment_method = Stripe::CreatePaymentMethodService.new(card_number, card_cvv, card_month, card_year).execute
+      payment_intent = Stripe::CreatePaymentIntentService.new(payment_method.id, amount, application_fee_amount, supplier_connect_account_id).execute
+      render json: { status: payment_intent.status }
     rescue => e
       render json: { error: e.message }, status: 200
     end
