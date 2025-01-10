@@ -1,10 +1,7 @@
 class Timetable < ApplicationRecord
   belongs_to :tournament_venue
+  belongs_to :tournament
 
-  validates :row_count, presence: true, numericality: { only_integer: true, greater_than: 0 }
-
-  # コート数に基づいて列数を取得するメソッド
-  def column_count
-    tournament_venue.no_of_courts
-  end
+  has_many :tournament_tables, dependent: :destroy
+  has_many :timetable_cells, dependent: :destroy
 end

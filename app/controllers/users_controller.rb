@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  #before_action :authenticate_user, except: %i[create]
+  before_action :authenticate_user, only: %i[ show_api_key regenerate_api_key ]
   # GET /users or /users.json
   def index
   end
@@ -29,6 +29,56 @@ class UsersController < ApplicationController
     }
   end
 
+  def organizers_list
+    @users = User.includes(:profile)
+             .where(profile: { role: ["Tournament Organizer", "Both"] })
+
+    logger.info "this is logger from organizers list #{@users.inspect}"
+
+    render json: @users.as_json(
+      include: {
+        profile: {
+          only: [:id, :role, :date_of_birth, :gender]
+        }
+      }
+    )
+  end
+
+  def get_organizer_by_id
+    @user = User.find(params[:id])
+
+    logger.info "this is logger from organizers list #{@users.inspect}"
+
+    render json: @user.as_json(
+      include: {
+        profile: {
+          only: [:id, :role, :date_of_birth, :gender]
+        }
+      }
+    )
+  end
+
+  def update_organizer_by_id
+    @user = User.find(params[:id])
+    @user.full_name = user_params[:full_name]
+    @user.email = user_params[:email]
+
+    if @user.save!
+      @profile = @user.profile
+      @profile.gender = user_params[:profile_attributes][:gender]
+      @profile.role = user_params[:profile_attributes][:role]
+      @profile.date_of_birth = user_params[:profile_attributes][:date_of_birth]
+
+      if @profile.save!
+        render json: {message: "successfully updated"}
+      else
+        render json: {message: "incorrect params"}, status: :unprocessable_entity
+      end
+    else
+      render json: {message: "incorrect params"}, status: :unprocessable_entity
+    end
+  end
+
   # GET /users/1 or /users/1.json
   def show
   end
@@ -46,7 +96,9 @@ class UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save!
-      render json: { api_key: user.api_key, message: 'User created successfully' }, status: :created
+      profile = Profile.new(user: user, role: user_params[:profile_attributes][:role])
+
+      render json: { api_key: user.api_key, full_name: user.full_name, role: profile.role, message: 'User created successfully' }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -106,6 +158,7 @@ class UsersController < ApplicationController
         :email,
         :password,
         :password_confirmation,
+        :role,
         profile_attributes: [
           :role, :real_name, :pet_name, :telephone_number, :prefecture,
           :city, :gender, :date_of_birth, :experience, :racket, :address,

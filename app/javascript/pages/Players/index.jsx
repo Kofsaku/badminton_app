@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import AdminHeader from '../../components/Shared/AdminHeader';
-import AdminSidebar from '../../components/Shared/AdminSidebar';
-import { fetchPlayers } from '../../api/userApi'; // Adjust the import paths
-import { fetchTournamentIds, addPlayersTournament, addNewPlayersTournament, addNewTeamsTournament } from '../../api/tournamentApi';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import AdminHeader from "../../components/Shared/AdminHeader";
+import AdminSidebar from "../../components/Shared/AdminSidebar";
+import { fetchPlayers } from "../../api/userApi";
+import {
+  fetchTournamentIds,
+  addPlayersTournament,
+  addNewPlayersTournament,
+  addNewTeamsTournament,
+  fetchTournamentCategories,
+  fetchTournamentDivisions
+} from "../../api/tournamentApi";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 
 const Players = () => {
   const { tournament_id } = useParams();
   const [players, setPlayers] = useState([]);
   const [tournaments, setTournaments] = useState([]);
-  const [selectedTournament, setSelectedTournament] = useState('');
+  const [selectedTournament, setSelectedTournament] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -19,25 +26,30 @@ const Players = () => {
   const limit = 50;
   const [isPlayerModalOpen, setIsPlayerModalOpen] = useState(false);
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
+  const [tournamentCategories, setTournamentCategories] = useState([]);
+  const [tournamentDivisions, setTournamentDivisions] = useState([]);
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
   const [newPlayer, setNewPlayer] = useState({
-    name: '',
-    email: '',
-    gender: '',
-    date_of_birth: '',
-    years_of_experience: '',
-    age: '',
+    name: "",
+    email: "",
+    gender: "",
+    date_of_birth: "",
+    years_of_experience: "",
+    age: "",
+    tournament_category_id: "",
+    tournament_division_id: ""
   });
   const [newTeam, setNewTeam] = useState({
-    teamName: '',
+    teamName: "",
+    tournament_category_id: "",
+    tournament_division_id: "",
     numberOfPlayers: 0,
-    players: [],
+    players: []
   });
 
   // Fetch tournaments for the dropdown
@@ -48,7 +60,7 @@ const Players = () => {
         const data = await fetchTournamentIds();
         setTournaments(data.tournaments || []);
       } catch (error) {
-        console.error('Error fetching tournaments:', error);
+        console.error("Error fetching tournaments:", error);
       } finally {
         setLoadingTournaments(false);
       }
@@ -57,11 +69,41 @@ const Players = () => {
     loadTournaments();
   }, []);
 
+  const getTournamentCategories = async () => {
+    if (!selectedTournament) {
+      return;
+    }
+
+    try {
+      const data = await fetchTournamentCategories(selectedTournament);
+      setTournamentCategories(data.tournament_categories);
+    } catch (error) {
+      console.error('Error fetching tournament categories:', error);
+    }
+  };
+
+  const getTournamentDivisions = async () => {
+    if (!selectedTournament) {
+      return;
+    }
+
+    try {
+      const data = await fetchTournamentDivisions(selectedTournament);
+      setTournamentDivisions(data.tournament_divisions);
+    } catch (error) {
+      console.error('Error fetching tournament divisions:', error);
+    }
+  };
+
   // Fetch players based on the page and selected tournament
   useEffect(() => {
     loadPlayers();
   }, [page, selectedTournament]);
 
+  useEffect(() => {
+    getTournamentCategories();
+    getTournamentDivisions();
+  }, [selectedTournament]);
 
   const loadPlayers = async () => {
     setLoading(true);
@@ -70,7 +112,7 @@ const Players = () => {
       setPlayers(data.users || []);
       setTotalPages(data.totalPages || 1);
     } catch (error) {
-      console.error('Error fetching players:', error);
+      console.error("Error fetching players:", error);
     } finally {
       setLoading(false);
     }
@@ -78,18 +120,18 @@ const Players = () => {
 
   const handleAddPlayer = async (playerId) => {
     if (!selectedTournament) {
-      alert('Please select a tournament before adding a player.');
+      alert("Please select a tournament before adding a player.");
       return;
     }
 
-    setButtonStates((prevState) => ({ ...prevState, [playerId]: 'loading' }));
+    setButtonStates((prevState) => ({ ...prevState, [playerId]: "loading" }));
 
     try {
       await addPlayersTournament(selectedTournament, playerId);
-      setButtonStates((prevState) => ({ ...prevState, [playerId]: 'added' }));
+      setButtonStates((prevState) => ({ ...prevState, [playerId]: "added" }));
     } catch (error) {
-      console.error('Error adding player:', error);
-      setButtonStates((prevState) => ({ ...prevState, [playerId]: 'error' }));
+      console.error("Error adding player:", error);
+      setButtonStates((prevState) => ({ ...prevState, [playerId]: "error" }));
     }
   };
 
@@ -107,16 +149,16 @@ const Players = () => {
 
   const handleTeamChange = (field, value) => {
     setNewTeam((prev) => ({ ...prev, [field]: value }));
-    if (field === 'numberOfPlayers') {
+    if (field === "numberOfPlayers") {
       setNewTeam((prev) => ({
         ...prev,
         players: Array.from({ length: value }, () => ({
-          name: '',
-          email: '',
-          gender: '',
-          date_of_birth: '',
-          years_of_experience: '',
-          age: '',
+          name: "",
+          email: "",
+          gender: "",
+          date_of_birth: "",
+          years_of_experience: "",
+          age: "",
         })),
       }));
     }
@@ -129,63 +171,62 @@ const Players = () => {
   };
 
   const handlePlayerSubmit = async () => {
-    console.log('New Player Data:', newPlayer);
+    console.log("New Player Data:", newPlayer);
     // Add your API call logic here
 
     if (!selectedTournament) {
-      alert('Please select a tournament before adding a player.');
+      alert("Please select a tournament before adding a player.");
       return;
     }
 
     try {
-      console.log('New Player Data:', newPlayer);
+      console.log("New Player Data:", newPlayer);
 
       // Call API to add the new player
       await addNewPlayersTournament(selectedTournament, newPlayer);
 
       setIsPlayerModalOpen(false);
       setNewPlayer({
-        name: '',
-        email: '',
-        gender: '',
-        date_of_birth: '',
-        years_of_experience: '',
-        age: '',
+        name: "",
+        email: "",
+        gender: "",
+        date_of_birth: "",
+        years_of_experience: "",
+        age: "",
       }); // Reset player form
       loadPlayers();
-      alert('Player added successfully!');
+      alert("Player added successfully!");
     } catch (error) {
-      console.error('Error submitting player:', error);
-      alert('Failed to add player. Please try again.');
+      console.error("Error submitting player:", error);
+      alert("Failed to add player. Please try again.");
     }
   };
 
   const handleTeamSubmit = async () => {
     if (!selectedTournament) {
-      alert('Please select a tournament before adding a player.');
+      alert("Please select a tournament before adding a player.");
       return;
     }
 
     try {
-      console.log('New Team Data:', newTeam);
+      console.log("New Team Data:", newTeam);
 
       // Call API to add the new team
       await addNewTeamsTournament(selectedTournament, newTeam);
 
       setIsTeamModalOpen(false);
       setNewTeam({
-        teamName: '',
+        teamName: "",
         numberOfPlayers: 0,
         players: [],
       }); // Reset team form
       loadPlayers();
-      alert('Team added successfully!');
+      alert("Team added successfully!");
     } catch (error) {
-      console.error('Error submitting team:', error);
-      alert('Failed to add team. Please try again.');
+      console.error("Error submitting team:", error);
+      alert("Failed to add team. Please try again.");
     }
   };
-
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -234,7 +275,10 @@ const Players = () => {
               <Button variant="primary" onClick={handleAddPlayerModal}>
                 Add New Player
               </Button>
-              <button className="btn btn-secondary" onClick={handleAddTeamModal}>
+              <button
+                className="btn btn-secondary"
+                onClick={handleAddTeamModal}
+              >
                 Add New Team
               </button>
             </div>
@@ -245,13 +289,51 @@ const Players = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentCategory">
+                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Select
+                          value={newPlayer.tournament_category_id}
+                          onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
+                        >
+                          <option value="">Select a category</option>
+                          {tournamentCategories.map((category) => (
+                            <option key={category[0]} value={category[0]}>
+                              {category[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentDivision">
+                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Select
+                          value={newPlayer.tournament_division_id}
+                          onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
+                        >
+                          <option value="">Select a division</option>
+                          {tournamentDivisions.map((division) => (
+                            <option key={division[0]} value={division[0]}>
+                              {division[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <Form.Group className="mb-3" controlId="formPlayerName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter name"
                       value={newPlayer.name}
-                      onChange={(e) => handlePlayerChange("name", e.target.value)}
+                      onChange={(e) =>
+                        handlePlayerChange("name", e.target.value)
+                      }
                     />
                   </Form.Group>
 
@@ -261,7 +343,9 @@ const Players = () => {
                       type="email"
                       placeholder="Enter email"
                       value={newPlayer.email}
-                      onChange={(e) => handlePlayerChange("email", e.target.value)}
+                      onChange={(e) =>
+                        handlePlayerChange("email", e.target.value)
+                      }
                     />
                   </Form.Group>
 
@@ -271,7 +355,9 @@ const Players = () => {
                       type="text"
                       placeholder="Enter gender"
                       value={newPlayer.gender}
-                      onChange={(e) => handlePlayerChange("gender", e.target.value)}
+                      onChange={(e) =>
+                        handlePlayerChange("gender", e.target.value)
+                      }
                     />
                   </Form.Group>
 
@@ -280,7 +366,9 @@ const Players = () => {
                     <Form.Control
                       type="date"
                       value={newPlayer.date_of_birth}
-                      onChange={(e) => handlePlayerChange("date_of_birth", e.target.value)}
+                      onChange={(e) =>
+                        handlePlayerChange("date_of_birth", e.target.value)
+                      }
                     />
                   </Form.Group>
 
@@ -290,7 +378,12 @@ const Players = () => {
                       type="number"
                       placeholder="Enter years of experience"
                       value={newPlayer.years_of_experience}
-                      onChange={(e) => handlePlayerChange("years_of_experience", e.target.value)}
+                      onChange={(e) =>
+                        handlePlayerChange(
+                          "years_of_experience",
+                          e.target.value
+                        )
+                      }
                     />
                   </Form.Group>
 
@@ -300,7 +393,9 @@ const Players = () => {
                       type="number"
                       placeholder="Enter age"
                       value={newPlayer.age}
-                      onChange={(e) => handlePlayerChange("age", e.target.value)}
+                      onChange={(e) =>
+                        handlePlayerChange("age", e.target.value)
+                      }
                     />
                   </Form.Group>
                 </Form>
@@ -321,13 +416,51 @@ const Players = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentCategory">
+                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Select
+                          value={newTeam.tournament_category_id}
+                          onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
+                        >
+                          <option value="">Select a category</option>
+                          {tournamentCategories.map((category) => (
+                            <option key={category[0]} value={category[1]}>
+                              {category[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6}>
+                      <Form.Group className="mb-3" controlId="formTournamentDivision">
+                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Select
+                          value={newTeam.tournament_division_id}
+                          onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
+                        >
+                          <option value="">Select a division</option>
+                          {tournamentDivisions.map((division) => (
+                            <option key={division[0]} value={division[0]}>
+                              {division[1]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <Form.Group className="mb-3" controlId="formTeamName">
                     <Form.Label>Team Name</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter team name"
                       value={newTeam.teamName}
-                      onChange={(e) => handleTeamChange("teamName", e.target.value)}
+                      onChange={(e) =>
+                        handleTeamChange("teamName", e.target.value)
+                      }
                     />
                   </Form.Group>
 
@@ -337,7 +470,9 @@ const Players = () => {
                       type="number"
                       placeholder="Enter number of players"
                       value={newTeam.numberOfPlayers}
-                      onChange={(e) => handleTeamChange("numberOfPlayers", e.target.value)}
+                      onChange={(e) =>
+                        handleTeamChange("numberOfPlayers", e.target.value)
+                      }
                     />
                   </Form.Group>
 
@@ -346,35 +481,62 @@ const Players = () => {
                       <h5>Player {index + 1}</h5>
                       <Row>
                         <Col md={4}>
-                          <Form.Group className="mb-3" controlId={`playerName${index}`}>
+                          <Form.Group
+                            className="mb-3"
+                            controlId={`playerName${index}`}
+                          >
                             <Form.Label>Name</Form.Label>
                             <Form.Control
                               type="text"
                               placeholder="Enter player name"
                               value={player.name}
-                              onChange={(e) => handlePlayerInTeamChange(index, "name", e.target.value)}
+                              onChange={(e) =>
+                                handlePlayerInTeamChange(
+                                  index,
+                                  "name",
+                                  e.target.value
+                                )
+                              }
                             />
                           </Form.Group>
                         </Col>
                         <Col md={4}>
-                          <Form.Group className="mb-3" controlId={`playerEmail${index}`}>
+                          <Form.Group
+                            className="mb-3"
+                            controlId={`playerEmail${index}`}
+                          >
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                               type="email"
                               placeholder="Enter player email"
                               value={player.email}
-                              onChange={(e) => handlePlayerInTeamChange(index, "email", e.target.value)}
+                              onChange={(e) =>
+                                handlePlayerInTeamChange(
+                                  index,
+                                  "email",
+                                  e.target.value
+                                )
+                              }
                             />
                           </Form.Group>
                         </Col>
                         <Col md={4}>
-                          <Form.Group className="mb-3" controlId={`playerEmail${index}`}>
+                          <Form.Group
+                            className="mb-3"
+                            controlId={`playerEmail${index}`}
+                          >
                             <Form.Label>Age</Form.Label>
                             <Form.Control
                               type="number"
                               placeholder="Enter player email"
                               value={player.age}
-                              onChange={(e) => handlePlayerInTeamChange(index, "age", e.target.value)}
+                              onChange={(e) =>
+                                handlePlayerInTeamChange(
+                                  index,
+                                  "age",
+                                  e.target.value
+                                )
+                              }
                             />
                           </Form.Group>
                         </Col>
@@ -403,36 +565,67 @@ const Players = () => {
                   <table className="w-100">
                     <thead>
                       <tr>
-                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">Name</th>
-                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">Email</th>
-                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">Date of Birth</th>
-                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">Prefecture</th>
-                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">Gender</th>
-                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">Experience</th>
-                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">Status</th>
+                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
+                          Name
+                        </th>
+                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
+                          Email
+                        </th>
+                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
+                          Date of Birth
+                        </th>
+                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
+                          Prefecture
+                        </th>
+                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
+                          Gender
+                        </th>
+                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
+                          Experience
+                        </th>
+                        <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
+                          Status
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       {players.map((player, index) => (
                         <tr key={player.id}>
-                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">{player.full_name}</td>
-                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">{player.email}</td>
-                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">{player.profile.date_of_birth}</td>
-                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">{player.profile.prefecture}</td>
-                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">{player.profile.gender}</td>
-                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">{player.profile.years_of_experience}</td>
                           <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
-                            {player.part_of_tournament || buttonStates[player.id] === 'added' ? (
+                            {player.full_name}
+                          </td>
+                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
+                            {player.email}
+                          </td>
+                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
+                            {player.profile.date_of_birth}
+                          </td>
+                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
+                            {player.profile.prefecture}
+                          </td>
+                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
+                            {player.profile.gender}
+                          </td>
+                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
+                            {player.profile.years_of_experience}
+                          </td>
+                          <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
+                            {player.part_of_tournament ||
+                            buttonStates[player.id] === "added" ? (
                               <span className="text-muted">
-                                {player.part_of_tournament ? 'Already in Tournament' : 'Added'}
+                                {player.part_of_tournament
+                                  ? "Already in Tournament"
+                                  : "Added"}
                               </span>
                             ) : (
                               <button
                                 className="btn btn-primary"
-                                disabled={buttonStates[player.id] === 'loading'}
+                                disabled={buttonStates[player.id] === "loading"}
                                 onClick={() => handleAddPlayer(player.id)}
                               >
-                                {buttonStates[player.id] === 'loading' ? 'Adding...' : 'Add It'}
+                                {buttonStates[player.id] === "loading"
+                                  ? "Adding..."
+                                  : "Add It"}
                               </button>
                             )}
                           </td>
@@ -441,7 +634,10 @@ const Players = () => {
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td className="bg-silver4 px-3 py-3 merriweather-font fw-medium text-14 border border-color-silver2 text-end" colSpan="7">
+                        <td
+                          className="bg-silver4 px-3 py-3 merriweather-font fw-medium text-14 border border-color-silver2 text-end"
+                          colSpan="7"
+                        >
                           <div className="d-flex justify-content-end">
                             <button
                               className="bg-white border-0 mx-1 shadow-sm rounded-3 px-2 py-1"
@@ -454,7 +650,9 @@ const Players = () => {
                               <button
                                 key={i + 1}
                                 className={`border-0 dmsans-font mx-1 shadow-sm rounded-3 px-2 py-1 ${
-                                  page === i + 1 ? 'bg-green1 text-white' : 'bg-silver2'
+                                  page === i + 1
+                                    ? "bg-green1 text-white"
+                                    : "bg-silver2"
                                 }`}
                                 onClick={() => handlePageChange(i + 1)}
                               >

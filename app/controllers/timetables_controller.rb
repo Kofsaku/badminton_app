@@ -1,54 +1,67 @@
 class TimetablesController < ApplicationController
+  before_action :set_timetable, only: [:show, :edit, :update, :destroy, :generate_cells]
+
+  # List all timetables
   def index
-    @timetables = Timetable.all
+    @timetables = Timetable.all.order(:created_at)
   end
 
+  # Show a specific timetable
+  def show
+    @cells = @timetable.timetable_cells.order(:number) # Load timetable cells for display
+  end
+
+  # Form for creating a new timetable
   def new
     @timetable = Timetable.new
-    @tournaments = Tournament.all  #memo this should be ones associated with the current user
   end
 
-  def show
-    @timetable = Timetable.find(params[:id])
-  end
-  
-  # 大会に関連する体育館情報と日程リストを取得するアクション
-  def venues_for_tournament
-    tournament = Tournament.find(params[:tournament_id])
-    @tournament_venues = tournament.tournament_venues  # 大会に関連するすべての体育館と日程
-
-    render json: @tournament_venues.map { |venue| { id: venue.id, venue_name: venue.venue_name, venue_date: venue.venue_date } }
-  end
-
+  # Create a new timetable
   def create
-    @timetable = Timetable.new(timetable_params)  
-    
+    @timetable = Timetable.new(timetable_params)
     if @timetable.save
-      redirect_to @timetable, notice: 'タイムテーブルが作成されました'
+      @timetable.generate_cells # Automatically generate timetable cells after creation
+      redirect_to @timetable, notice: 'Timetable created and cells generated successfully.'
     else
-      Rails.logger.debug(@timetable.errors.full_messages)  # エラー内容をログに出力
-      @tournaments = Tournament.all  # エラー時に @tournaments を再設定
-      render :new, status: :unprocessable_entity
+      flash.now[:alert] = @timetable.errors.full_messages.to_sentence
+      render :new
     end
   end
 
-  def get_memos
-    memos || []
+  # Form for editing a timetable
+  def edit
   end
 
-  # 時間情報を追加または更新
-  def update_memo(row_index, time_value)
-    updated_memos = get_memos
-    updated_memos[row_index] = time_value
-    update(memos: updated_memos)
+  # Update a timetable
+  def update
+    if @timetable.update(timetable_params)
+      @timetable.generate_cells if params[:regenerate_cells] # Regenerate cells if requested
+      redirect_to @timetable, notice: 'Timetable updated successfully.'
+    else
+      flash.now[:alert] = @timetable.errors.full_messages.to_sentence
+      render :edit
+    end
   end
-  
+
+  # Delete a timetable
+  def destroy
+    @timetable.destroy
+    redirect_to timetables_path, notice: 'Timetable deleted successfully.'
+  end
+
+  # Generate timetable cells dynamically
+  def generate_cells
+    @timetable.generate_cells
+    redirect_to @timetable, notice: 'Timetable cells regenerated successfully.'
+  end
 
   private
 
-  def timetable_params
-    puts params
-    params.require(:timetable).permit(:tournament_venue_id, :row_count, :memos )
+  def set_timetable
+    @timetable = Timetable.find(params[:id])
   end
-  
+
+  def timetable_params
+    params.require(:timetable).permit(:tournament_id, :tournament_venue_id, :row_count)
+  end
 end

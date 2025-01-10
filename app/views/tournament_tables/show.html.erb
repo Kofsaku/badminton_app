@@ -1,36 +1,47 @@
-<h1><%= @tournament_table.name %> - League Table</h1>
+<h1><%= @tournament_table.name %></h1>
 
-<%= form_with url: league_select_players_tournament_table_path(@tournament_table), method: :post, local: true do %>
-  <table style="width: 100%; border-collapse: collapse; border: 1px solid black;" data-size="<%= @tournament_table.size %>" data-players="<%= @players_options.to_json %>">
-    <thead>
-      <tr>
-        <th style="border: 1px solid black; padding: 8px;">Player</th>
-        <% @tournament_table.size.times do |index| %>
-          <th style="border: 1px solid black; padding: 8px;">
-            <%= select_tag "selected_players[#{index}]",
-                options_for_select(@players_options),
-                data: { index: index },
-                class: "player-select" %>
-          </th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tournament_table.size.times do |row_index| %>
-        <tr>
-          
-          <th style="border: 1px solid black; padding: 8px;" class="player-name" data-index="<%= row_index %>">
-          </th>
-          <% @tournament_table.size.times do %>
-            <td style="border: 1px solid black; padding: 8px;">
-              <%= select_tag "match_numbers[]", options_for_select((1..@tournament_table.size*@tournament_table.size).to_a) %>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= submit_tag "Save Selections" %>
+<p>
+  <strong>Table Type:</strong>
+  <%= @tournament_table.table_type.humanize %>
+</p>
+
+<p>
+  <strong>Tournament:</strong>
+  <%= @tournament_table.tournament.name %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @tournament_table.tournament_category.category_type %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @tournament_table.tournament_division.division %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @tournament_table.size %>
+</p>
+
+<% if @tournament_table.tournament? %>
+  <p>
+    <strong>Bracket Direction:</strong>
+    <%= @tournament_table.bracket_direction.humanize %>
+  </p>
 <% end %>
 
-<%= javascript_include_tag 'tournament_tables' %>
+<h2>Assigned Players</h2>
+<% if @tournament_table.tournament_players.any? %>
+  <ul>
+    <% @tournament_table.tournament_players.each do |player| %>
+      <li><%= player.player.full_name %> (<%= player.status %>)</li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No players assigned yet.</p>
+<% end %>
+
+<%= link_to 'Edit Table', edit_tournament_table_path(@tournament_table), class: 'btn btn-primary' %>
+<%= link_to 'Back to List', tournament_tables_path, class: 'btn btn-secondary' %>
