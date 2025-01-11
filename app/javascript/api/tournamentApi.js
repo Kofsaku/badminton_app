@@ -13,17 +13,15 @@ export const createTournament = async (tournamentData) => {
   }
 };
 
-// Create a new tournament
-export const updateTournament = async (tournamentData,tournamentId) => {
+export const updateTournament = async (tournamentData) => {
   try {
-    // Add `.json` suffix for the API format requirement
-    const response = await axiosInstance.patch(`tournaments/${tournamentId}.json`, tournamentData);
+    const response = await axiosInstance.put(`tournaments/${tournamentData.id}.json`, tournamentData)
     return response.data;
   } catch (error) {
-    console.error('Error creating tournament:', error);
+    consolog.error('Error updating tournament', error);
     throw error;
   }
-};
+}
 
 // Add players in tournament
 export const addPlayersTournament = async (tournamentId, playerId) => {
@@ -50,6 +48,20 @@ export const addNewPlayersTournament = async (tournamentId, playerData) => {
     throw error;
   }
 };
+
+// Remove player from a tournament
+export const removePlayerFromTournament = async (tournamentId, playerId) => {
+  try {
+    const response = await axiosInstance.delete(
+      `tournaments/${tournamentId}/remove_player_from_tournament.json`,
+      { params: { "player_id": playerId }}
+    );
+    return response.data;
+  } catch (e) {
+    console.error('Error removing player from to tournament', error);
+    throw error;
+  }
+}
 
 // Add new team to a tournament
 export const addNewTeamsTournament = async (tournamentId, teamData) => {

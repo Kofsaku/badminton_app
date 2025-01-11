@@ -9,7 +9,7 @@ const CreateTournament = () => {
       <AdminSidebar />
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
-        <TournamentForm />
+        <TournamentForm editMode={false} />
       </section>
     </main>
   );

@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get 'categories', to: 'tournaments#categories'
     post 'add_player'
     post 'add_new_player'
+    delete 'remove_player_from_tournament'
     post 'add_new_team'
     get 'tournament_divisions'
     get 'tournament_categories'
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
       get 'organizers-list', to: 'users#organizers_list'
       get 'organizers-list/:id', to: 'users#get_organizer_by_id'
       put 'organizers-list/:id', to: 'users#update_organizer_by_id'
+      delete 'organizers-list/:id', to: 'users#destroy_organizer_by_id'
     end
   end
 

@@ -4,11 +4,12 @@ import {createTournament, updateTournament} from '../../api/tournamentApi';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData }) => {
+const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, editMode }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [listTitle, setListTitle] = useState([])
   const [listOption, setListOption] = useState([])
+  const [updateMode, setUpdateMode] = useState(editMode)
 
   const handleChange = (e, index) => {
     const selectedCategoryType = e.target.value;
@@ -70,8 +71,7 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData }) 
 
   }, [formData]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleCreate = async () => {
     try {
       // Submit form data using the API function
       if (formData.id) {
@@ -86,6 +86,30 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData }) 
     } catch (error) {
       // Handle error (e.g., show error message)
       console.error('Failed to create tournament:', error);
+    }
+  }
+
+  const handleUpdate = async () => {
+    try {
+      // Submit form data using the API function
+      const result = await updateTournament(formData);
+      console.log('Tournament created successfully:', result);
+
+      navigate('/tournament-management');
+      // Handle success (e.g., redirect to another page or show success message)
+    } catch (error) {
+      // Handle error (e.g., show error message)
+      console.error('Failed to create tournament:', error);
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (updateMode) {
+      handleUpdate()
+    } else {
+      handleCreate()
     }
   };
 

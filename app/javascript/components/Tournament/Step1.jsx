@@ -12,7 +12,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
       setVenues(venueData)
     }
 
-  }, [formData]);
+  }, [formData.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -128,7 +128,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t('tournament.venue_name')}
                         className="field-style5"
                         name="venue_name"
-                        value={venue.venue_name}
+                        value={venue.venue_name || ''}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>
@@ -141,7 +141,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t('tournament.venue_address')}
                         className="field-style5"
                         name="venue_address"
-                        value={venue.venue_address}
+                        value={venue.venue_address || ''}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>
@@ -154,7 +154,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t('tournament.number_of_courts')}
                         className="field-style5"
                         name="no_of_courts"
-                        value={venue.no_of_courts}
+                        value={venue.no_of_courts || ''}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>
@@ -167,7 +167,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t('tournament.venue_date')} 
                         className="field-style5"
                         name="venue_date"
-                        value={venue.venue_date}
+                        value={venue.venue_date || ''}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>

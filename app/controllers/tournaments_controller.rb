@@ -43,7 +43,9 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1 or /tournaments/1.json
   def show
-    render json: { tournament: @tournament.as_json(methods: [:tournament_venues_attributes, :tournament_categories_attributes] ) }
+    render json: {
+      tournament: show_full_data(@tournament)
+    }
   end
 
   # GET /tournaments/new
@@ -70,6 +72,17 @@ class TournamentsController < ApplicationController
     rescue => e
       render json: { success: false, error: e.message }, status: :unprocessable_entity
     end
+  end
+
+  def remove_player_from_tournament
+    ActiveRecord::Base.transaction do
+      player = TournamentPlayer.find_by(player_id: params[:player_id], tournament_id: params[:tournament_id])
+      player.destroy!
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { success: false, error: e.message }, status: :unprocessable_entity
+    end
+
+    render json: { success: true }
   end
 
   def add_new_team
@@ -109,17 +122,8 @@ class TournamentsController < ApplicationController
 
   # PATCH/PUT /tournaments/1 or /tournaments/1.json
   def update
-    # respond_to do |format|
-    #   if @tournament.update(tournament_params)
-    #     format.html { redirect_to tournament_url(@tournament), notice: "Tournament was successfully updated." }
-    #     format.json { render :show, status: :ok, location: @tournament }
-    #   else
-    #     format.html { render :edit, status: :unprocessable_entity }
-    #     format.json { render json: @tournament.errors, status: :unprocessable_entity }
-    #   end
-    # end
     if @tournament.update(tournament_params)
-      render json: { tournament: @tournament, message: 'Tournament was successfully updated.' }, status: :ok
+      render json: { tournament: @tournament, message: 'Tournament updated successfully.' }, status: :ok
     else
       render json: { errors: @tournament.errors.full_messages }, status: :unprocessable_entity
     end
@@ -216,4 +220,20 @@ class TournamentsController < ApplicationController
     )
   end
 
+  def show_full_data(tournament)
+    tournament.attributes.merge(
+      tournament_categories_attributes: tournament_categories_data(tournament),
+      tournament_venues_attributes: tournament.tournament_venues.map(&:attributes),
+    )
+  end
+
+  def tournament_categories_data(tournament)
+    tournament.tournament_categories
+              .map do |category|
+                category.attributes.merge(
+                  tournament_divisions_attributes: category.tournament_divisions
+                                                           .map(&:attributes)
+                )
+              end
+  end
 end
