@@ -5,6 +5,7 @@ import About from "../components/About";
 import Faqs from "../components/Faqs";
 import TermsOfService from "../components/TermsOfService";
 import PrivacyPolicy from "../components/PrivacyPolicy";
+import TransactionsLaw from "../components/TransactionsLaw";
 import Contact from "../components/Contact";
 import AccountForm from "../components/CreateAccount";
 import Login from "../components/Login";
@@ -46,6 +47,7 @@ export default (
       <Route path="/faqs" element={<Faqs />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/transactions-law" element={<TransactionsLaw />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/create-account" element={<AccountForm />} />
       <Route path="/login" element={<Login />} />

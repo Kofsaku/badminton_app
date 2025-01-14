@@ -30,7 +30,8 @@ Rails.application.routes.draw do
   get 'about', to: 'homepage#about'
   get 'terms-of-service', to: 'homepage#terms_of_service'
   get 'faqs', to: 'homepage#faqs'
-  get 'privacy-policy', to: 'homepage#privacy-policy'
+  get 'privacy-policy', to: 'homepage#privacy_policy'
+  get 'transactions-law', to: 'homepage#transactions_law'
   get 'contact', to: 'homepage#contact'
   get 'select-payment-method', to: 'homepage#select_payment_method'
   

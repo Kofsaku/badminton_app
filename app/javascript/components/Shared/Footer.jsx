@@ -16,7 +16,8 @@ const Footer = () => {
     { path: '/contact', text: footer_translation('footer.bottomLinks.1') },
     { path: '/privacy-policy', text: footer_translation('footer.bottomLinks.2') },
     { path: '#', text: footer_translation('footer.bottomLinks.3') },
-    { path: '/terms-of-service', text: footer_translation('footer.bottomLinks.4') }
+    { path: '/terms-of-service', text: footer_translation('footer.bottomLinks.4') },
+    { path: '/transactions-law', text: '特定商取引法' }
   ];
 
   return (

@@ -14,6 +14,9 @@ class HomepageController < ApplicationController
   def privacy_policy
   end
 
+  def transactions_law
+  end
+
   def contact
   end
 end
