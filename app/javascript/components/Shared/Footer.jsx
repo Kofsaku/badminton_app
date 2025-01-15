@@ -2,6 +2,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
+  const socialLinks = [
+    { icon: 'fb-green-icon.svg', alt: t('footer.social.facebook') },
+    { icon: 'twitter-green-icon.svg', alt: t('footer.social.twitter') },
+    { icon: 'linkedin-green-icon.svg', alt: t('footer.social.linkedin') }
+  ];
+
+  const bottomLinks = [
+    { path: '/about', text: t('footer.bottomLinks.0') },
+    { path: '/contact', text: t('footer.bottomLinks.1') },
+    { path: '/privacy-policy', text: t('footer.bottomLinks.2') },
+    { path: '#', text: t('footer.bottomLinks.3') },
+    { path: '/terms-of-service', text: t('footer.bottomLinks.4') }
+  ];
+
   return (
     <footer>
       <div className="d-block w-100 border-bottom py-5">
@@ -171,7 +187,7 @@ const Footer = () => {
             </div>
             <div className="col-lg-5 col-md-5 col-sm-12 col-12 mt-lg-0 mt-md-0 mt-3">
               <p className="text-lg-end text-md-end text-start text-muted p-0 m-0 mob-text-14 text-14">
-                © 2023 Badminton. All rights reserved.
+                {t('footer.copyright')}
               </p>
             </div>
           </div>
