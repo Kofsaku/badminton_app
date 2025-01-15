@@ -69,6 +69,16 @@ class Api::V1::MatchClassesController < ApplicationController
     end
   end
 
+  def show
+    @match_class = MatchClass.find(params[:id])
+
+    render json: @match_class.as_json(include: {
+      tournament: {only: [:id, :name]},
+      tournament_category: {only: [:id, :category_type]},
+      tournament_division: {only:[:id, :division]}
+    })
+  end
+
   def destroy
     item = MatchClass.find(params[:id])
     item_attributes = item.attributes

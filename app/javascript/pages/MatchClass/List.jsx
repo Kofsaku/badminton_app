@@ -66,18 +66,19 @@ const MatchClasses = () => {
                   <td>{matchClass.tournament_division.division}</td>
                   <td>{matchClass.size}</td>
                   <td>
-                    {/* <Link
-                      to={"/tournament-tables/" + tournamentTable.id}
+                    <Link
+                      to={"/match-management/" + matchClass.id}
                       className="btn btn-info"
                     >
                       Show
                     </Link>
-                    <Link
+                    {/* <Link
                       to={"/tournament-tables/" + tournamentTable.id + "/edit"}
                       className="btn btn-warning"
                     >
                       Edit
-                    </Link> */}
+                    </Link>{" "}
+                    */}
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(matchClass.id)}
