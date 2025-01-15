@@ -29,9 +29,21 @@ class MatchesController < ApplicationController
 
   def update
     rally_log = params[:match_log]
-    @match.update(match_log: rally_log.to_json)
+    status = params[:status]
 
-    if @match.update(match_upate_params)
+    @match.update(match_log: rally_log.to_json, status: status)
+    
+    if status == "completed"
+      rally_log.each do |log|
+        if log[:match_score_teamA] > log[:match_score_teamB]
+          @match.match_score_teamA += 1
+        else
+          @match.match_score_teamB += 1
+        end
+      end
+    end
+
+    if @match.save
       render json: @match, status: :created
     else
       render json: { errors: @match.errors.full_messages }, status: :unprocessable_entity

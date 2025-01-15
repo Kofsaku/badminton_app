@@ -21,73 +21,16 @@ const ShowMatchClass = () => {
     });
   }, []);
 
-  const onChange = (e, setFunction) => {
-    setFunction(parseInt(e.target.value));
-  };
-
   const goToFirstStep = () => {
     setStep(1);
   };
 
-  const addMatch = (matchData) => {
-    classData[step - 1] = matchData;
-
-    setClassData(classData);
-
-    if (step < classSize) setStep(step + 1);
-    else completeAdding();
+  const goToPrev = () => {
+    setStep(step - 1);
   };
 
-  const completeAdding = () => {
-    console.log("class data:", classData);
-
-    const body = {
-      tournament: selectedTournament,
-      category: selectedCategory,
-      division: selectedDivision,
-      class_size: classSize,
-      class_data: classData,
-    };
-    const url = "/api/v1/match_classes";
-    const token = document.querySelector('meta[name="csrf-token"]').content;
-
-    axios
-      .post(url, body, {
-        headers: { "X-CSRF-Token": token, "Content-Type": "application/json" },
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate("/match-management");
-      });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // console.log(classData);
-
-    // const body = {
-    //   table_type: "league",
-    //   // name: tableName,
-    //   tournament_id: selectedTournament,
-    //   //   tournament_venue_id: selectedTournamentVenue,
-    //   tournament_category_id: selectedCategory,
-    //   tournament_division_id: selectedDivision,
-    //   size: classSize,
-    // };
-    // const url = "/api/v1/tournament-tables";
-    // const token = document.querySelector('meta[name="csrf-token"]').content;
-
-    // axios
-    //   .post(url, body, {
-    //     headers: { "X-CSRF-Token": token, "Content-Type": "application/json" },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     navigate(`/tournament-tables/${res.data.id}`);
-    //   });
-
-    // console.log(token, body);
+  const goToNext = () => {
+    setStep(step + 1);
   };
 
   return (
@@ -98,82 +41,47 @@ const ShowMatchClass = () => {
         <div className="p-3">
           {!step ? (
             <>
-              <h1>Show Match Class</h1>
-              <p>Tournament name</p>
-
-              <div className="bg-light p-4">
-                <div className="mb-3">
-                  <label>Tournament</label>
-                </div>
-
-                <div className="mb-3">
-                  <label>Tournament Category</label>
-                  <select
-                    name="tournament_category"
-                    className="form-control"
-                    onChange={(e) => onChange(e, setSelectedCategory)}
-                  >
-                    {tournamentCategories &&
-                      tournamentCategories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                          {category.category_type}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-
-                <div className="mb-3">
-                  <label>Tournament Division</label>
-                  <select
-                    name="tournament_division"
-                    className="form-control"
-                    onChange={(e) => onChange(e, setSelectedDivision)}
-                    value={selectedDivision}
-                  >
-                    {tournamentDivisions &&
-                      tournamentDivisions.map((division) => (
-                        <option key={division.id} value={division.id}>
-                          {division.division}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-
-                <div className="mb-3">
-                  <label>Class Size</label>
-                  <input
-                    type="number"
-                    name="size"
-                    className="form-control"
-                    value={classSize}
-                    min={1}
-                    onKeyDown={(e) => e.preventDefault()}
-                    onChange={(e) => onChange(e, setClassSize)}
-                  />
-                </div>
-
-                <button className="btn btn-primary" onClick={goToFirstStep}>
-                  Next
-                </button>
-                {/* <input type="submit" value="Save" className="btn btn-primary" /> */}
+              <div className="d-flex justify-content-between align-items-center">
+                <h1>Show Match Class</h1>
                 <Link to="/match-management" className="btn btn-secondary">
-                  Cancel
+                  Back
                 </Link>
-                {/* </form> */}
               </div>
+
+              {matchData && (
+                <div className="bg-light p-4">
+                  <div className="mb-3">
+                    <p>Tournament</p>
+                    <h5>{matchData.tournament.name}</h5>
+                  </div>
+
+                  <div className="mb-3">
+                    <p>Tournament Category</p>
+                    <h5>{matchData.tournament_category.category_type}</h5>
+                  </div>
+
+                  <div className="mb-3">
+                    <p>Tournament Division</p>
+                    <h5>{matchData.tournament_division.division}</h5>
+                  </div>
+
+                  <div className="mb-3">
+                    <p>Match Size</p>
+                    <h6>{matchData.size}</h6>
+                  </div>
+
+                  <button className="btn btn-primary" onClick={goToFirstStep}>
+                    Next
+                  </button>
+                </div>
+              )}
             </>
           ) : (
             <ShowPhase
-              selectedTournament={tournaments.find(
-                (val) => val.id == selectedTournament
-              )}
-              category={tournamentCategories.find(
-                (val) => val.id == selectedCategory
-              )}
               step={step}
-              classSize={classSize}
-              classData={classData}
-              addMatch={addMatch}
+              matchData={matchData}
+              goToPrev={goToPrev}
+              goToNext={goToNext}
             />
           )}
         </div>
