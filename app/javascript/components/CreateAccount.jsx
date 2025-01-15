@@ -2,19 +2,21 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/actions"; // Action to set user in Redux store
+import { useTranslation } from 'react-i18next';
+import { setUser } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
     password: "",
     role: "",
   });
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,12 +49,15 @@ const CreateAccount = () => {
       // Redirect to the tournaments management page
       navigate("/");
     } catch (error) {
-      console.error(
-        "Error creating user:",
-        error.response?.data || error.message
-      );
+      console.error("Error creating user:", error.response?.data || error.message);
     }
   };
+
+  const socialButtons = [
+    { icon: "google-icon.svg", alt: t('createAccount.socialLogin.google.alt') },
+    { icon: "apple-icon.svg", alt: t('createAccount.socialLogin.apple.alt') },
+    { icon: "fb-icon.svg", alt: t('createAccount.socialLogin.facebook.alt') }
+  ];
 
   return (
     <section className="all-wrapper">
@@ -62,7 +67,7 @@ const CreateAccount = () => {
             <img
               className="logo-image-1"
               src="images/badminton-white-logo.png"
-              alt="Logo"
+              alt={t('createAccount.logo.alt')}
             />
           </div>
         </div>
@@ -72,16 +77,16 @@ const CreateAccount = () => {
               <img
                 className="logo-image-3"
                 src="images/logo-square.png"
-                alt="Logo"
+                alt={t('createAccount.logo.alt')}
               />
             </div>
             <div className="d-block w-100">
               <div className="d-block w-100 text-center">
                 <h5 className="text-black1 mb-1 text-capitalize text-25 mob-text-22 fw-bold">
-                  create an account
+                  {t('createAccount.title')}
                 </h5>
                 <p className="text-grey1 mt-0 mb-4 text-14">
-                  Fill in your details.
+                  {t('createAccount.subtitle')}
                 </p>
               </div>
               <div className="d-block w-100 mb-3">
@@ -154,11 +159,8 @@ const CreateAccount = () => {
                           </select>
                         </div>
                         <div className="d-block w-100">
-                          <button
-                            type="submit"
-                            className="custom-btn3 w-100 mb-3"
-                          >
-                            Create An Account
+                          <button type="submit" className="custom-btn3 w-100 mb-3">
+                            {t('createAccount.button')}
                           </button>
                         </div>
                       </div>
@@ -168,43 +170,27 @@ const CreateAccount = () => {
               </div>
               <div className="d-block w-100 text-center px-2 mb-5">
                 <h5 className="text-grey1 text-16 mt-0 mb-3">
-                  Or continue to be a habit
+                  {t('createAccount.socialLogin.title')}
                 </h5>
                 <div className="d-flex w-100 align-items-center justify-content-center">
-                  <div className="d-inline-block text-center mx-2">
-                    <button className="bg-silver2 d-flex align-items-center justify-content-center rounded-circle p-3 border-0">
-                      <img
-                        className="social-icon1"
-                        src="images/google-icon.svg"
-                        alt="Google Icon"
-                      />
-                    </button>
-                  </div>
-                  <div className="d-inline-block text-center mx-2">
-                    <button className="bg-silver2 d-flex align-items-center justify-content-center rounded-circle p-3 border-0">
-                      <img
-                        className="social-icon1"
-                        src="images/apple-icon.svg"
-                        alt="Apple Icon"
-                      />
-                    </button>
-                  </div>
-                  <div className="d-inline-block text-center mx-2">
-                    <button className="bg-silver2 d-flex align-items-center justify-content-center rounded-circle p-3 border-0">
-                      <img
-                        className="social-icon1"
-                        src="images/fb-icon.svg"
-                        alt="Facebook Icon"
-                      />
-                    </button>
-                  </div>
+                  {socialButtons.map((button, index) => (
+                    <div key={index} className="d-inline-block text-center mx-2">
+                      <button className="bg-silver2 d-flex align-items-center justify-content-center rounded-circle p-3 border-0">
+                        <img
+                          className="social-icon1"
+                          src={`images/${button.icon}`}
+                          alt={button.alt}
+                        />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="d-block w-100 px-2">
                 <p className="text-center w-100 text-14">
-                  Already have an account?&nbsp;
+                  {t('createAccount.login.text')}&nbsp;
                   <Link to="/login" className="text-green2">
-                    Sign In
+                    {t('createAccount.login.link')}
                   </Link>
                 </p>
               </div>

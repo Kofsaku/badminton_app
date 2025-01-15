@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ContactForm = () => {
-  // State variables to hold form data
+  const { t } = useTranslation();
+  
   const [formData, setFormData] = useState({
     fullName: '',
     emailAddress: '',
@@ -9,7 +11,6 @@ const ContactForm = () => {
     message: ''
   });
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -18,12 +19,10 @@ const ContactForm = () => {
     });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform any form submission logic here (e.g., send data to server)
-    console.log(formData); // Example: Log form data
-    // You can add further logic to handle form submission (e.g., API call)
+    console.log(formData);
+    // Add your form submission logic here
   };
 
   return (
@@ -31,7 +30,9 @@ const ContactForm = () => {
       <section className="py-5 my-4">
         <div className="container">
           <div className="d-block w-100 mb-5 text-center">
-            <h3 className="text-32 text-green3 mob-text-26 fw-bold m-0">Please fill out the form below</h3>
+            <h3 className="text-32 text-green3 mob-text-26 fw-bold m-0">
+              {t('contact.form.title')}
+            </h3>
           </div>
           <div className="d-block w-100">
             <div className="row justify-content-center">
@@ -43,11 +44,12 @@ const ContactForm = () => {
                         <input
                           type="text"
                           className="field-style3"
-                          placeholder="Full Name*"
+                          placeholder={t('contact.form.fields.fullName.placeholder')}
                           name="fullName"
                           value={formData.fullName}
                           onChange={handleInputChange}
                           required
+                          aria-label={t('contact.form.fields.fullName.label')}
                         />
                       </div>
                     </div>
@@ -56,11 +58,12 @@ const ContactForm = () => {
                         <input
                           type="email"
                           className="field-style3"
-                          placeholder="Email Address*"
+                          placeholder={t('contact.form.fields.email.placeholder')}
                           name="emailAddress"
                           value={formData.emailAddress}
                           onChange={handleInputChange}
                           required
+                          aria-label={t('contact.form.fields.email.label')}
                         />
                       </div>
                     </div>
@@ -69,11 +72,12 @@ const ContactForm = () => {
                         <input
                           type="tel"
                           className="field-style3"
-                          placeholder="Telephone Number*"
+                          placeholder={t('contact.form.fields.telephone.placeholder')}
                           name="telephoneNumber"
                           value={formData.telephoneNumber}
                           onChange={handleInputChange}
                           required
+                          aria-label={t('contact.form.fields.telephone.label')}
                         />
                       </div>
                     </div>
@@ -81,12 +85,13 @@ const ContactForm = () => {
                       <div className="form-field3">
                         <textarea
                           className="field-style3"
-                          placeholder="How can we help?"
+                          placeholder={t('contact.form.fields.message.placeholder')}
                           name="message"
                           value={formData.message}
                           onChange={handleInputChange}
                           rows="5"
                           required
+                          aria-label={t('contact.form.fields.message.label')}
                         ></textarea>
                       </div>
                     </div>
@@ -96,7 +101,7 @@ const ContactForm = () => {
                           type="submit"
                           className="px-4 border-0 bg-hover-black py-2 text-15 lh-lg text-white rounded-pill bg-green1"
                         >
-                          Submit
+                          {t('contact.form.submit')}
                         </button>
                       </div>
                     </div>

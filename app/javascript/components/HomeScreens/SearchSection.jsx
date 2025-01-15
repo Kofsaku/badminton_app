@@ -110,6 +110,7 @@ const SearchSection = () => {
         </div>
         <div className="d-block w-100 mb-5">
           <div className="row">
+            {/* Tournament Name Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -124,6 +125,8 @@ const SearchSection = () => {
                 />
               </div>
             </div>
+
+            {/* Classification Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -176,9 +179,13 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* Dates Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
-                <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">Dates</h5>
+                <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
+                  {t('home.search.fields.dates')}
+                </h5>
                 <div className="row align-items-center">
                   <div className="col-lg-5 col-md-5 col-sm-5 col-5">
                     <input type="date" className="field-style4 w-100" />
@@ -194,6 +201,8 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* Status Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -245,6 +254,8 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* Region Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -408,6 +419,8 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* Venue Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">Venue</h5>
@@ -457,6 +470,8 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* Match Format Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -508,6 +523,8 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
+
+            {/* Participation Type Field */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -572,6 +589,7 @@ const SearchSection = () => {
               </button>
             </div> */}
 
+            {/* Search with Conditions Link */}
             <div className="d-block w-100">
               <button
                 className="bg-green1 bg-hover-black text-white rounded-pill px-4 py-2 lh-lg border-0 text-16"

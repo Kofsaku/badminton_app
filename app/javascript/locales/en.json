@@ -91,6 +91,609 @@
       "previous": "Previous",
       "addCategory": "Add Category",
       "next": "Next"
+    },
+    "home": {
+      "features": {
+        "title": "Lorem ipsum dolor sit amet consectetur. Natok Premium ID when sitting.",
+        "items": {
+          "affordablePrice": "Affordable price",
+          "apps": "iOS and Android apps",
+          "playerFriendly": "Player Friendly",
+          "maintenance": "Maintenance",
+          "easyToUse": "Easy to use",
+          "allFeatures": "Access to all features"
+        },
+        "joinButton": "Join Us"
+      },
+      "hero": {
+        "tagline": "Limitless control on one platform",
+        "title": {
+          "part1": "The best",
+          "part2": "Badminton app."
+        },
+        "description": "Lorem ipsum dolor sit amet consectetur. Faletra dignissim brandit kiss org. Proin mattis Phasellus Phasellus facilis vulputate dictumst non-consequat. Fringilla of elite bellproinhendrerit adipisingeget.",
+        "toggleButtons": {
+          "player": "I'm a player",
+          "organizer": "I am a tournament organizer"
+        },
+        "approvedSection": {
+          "title": "Approved By"
+        }
+      },
+      "pickOut": {
+        "subtitle": "Pick up competition",
+        "title": "Pick Out",
+        "seeAll": "See All",
+        "tournament": {
+          "prefecture": "prefecture",
+          "dates": "Dates",
+          "meetingPlace": "meeting place",
+          "classification": "Tournament Classification",
+          "deadline": "Deadline",
+          "available": "Available",
+          "daysLeft": "days left",
+          "extraRoom": "Extra room"
+        }
+      },
+      "products": {
+        "title": "Impressive new products",
+        "storeName": "Store Name",
+        "itemName": "Item Name"
+      },
+      "results": {
+        "subtitle": "Tournament Result",
+        "title": "Result",
+        "seeAll": "See All",
+        "tournament": {
+          "prefecture": "prefecture",
+          "dates": "Dates",
+          "meetingPlace": "meeting place",
+          "classification": "Tournament Classification",
+          "deadline": "Deadline",
+          "available": "Available",
+          "daysLeft": "days left",
+          "extraRoom": "Extra room"
+        }
+      },
+      "search": {
+        "title": "SEARCH",
+        "fields": {
+          "tournamentName": "Name of Tournament / Event",
+          "classification": "Classification",
+          "dates": "Dates",
+          "status": "Status",
+          "region": "Region",
+          "venue": "Venue",
+          "matchFormat": "Match Format",
+          "participationType": "Participation Type"
+        },
+        "options": {
+          "all": "all",
+          "tournament": "tournament",
+          "event": "event",
+          "mainVenue": "main venue",
+          "remoteVenue": "remote venue",
+          "team": "team",
+          "single": "single",
+          "domestic": "domestic",
+          "international": "international"
+        },
+        "regions": {
+          "hokkaido": "Hokkaido",
+          "northeast": "northeast",
+          "kanto": "Kanto",
+          "hokuriku": "Hokuriku",
+          "koshinetsu": "Koshinetsu",
+          "tokai": "Tokai",
+          "china": "China",
+          "shikoku": "Shikoku",
+          "kinki": "Kinki",
+          "kyushu": "Kyushu"
+        },
+        "searchButton": "Search",
+        "searchWithConditions": "Search for tournaments with these conditions"
+      },
+      "teamSearch": {
+        "title": "Team member search, pair matching",
+        "buttonText": "Go to Team Member Search"
+      },
+      "tournament": {
+        "subtitle": "Tournaments that allow web entry",
+        "title": "Tournament",
+        "seeAll": "See All",
+        "details": {
+          "prefecture": "prefecture",
+          "dates": "Dates",
+          "meetingPlace": "meeting place",
+          "classification": "Tournament Classification",
+          "deadline": "Deadline",
+          "available": "Available",
+          "daysLeft": "days left",
+          "extraRoom": "Extra room"
+        }
+      },
+      "use": {
+        "title": "Use?",
+        "points": {
+          "1": {
+            "title": "Point 1",
+            "description": "Lorem ipsum dolor sit amet consectetur. Tortor at scelerisque nunc donec magna nullam semper egestas. Eleifend nulla nisl dolor arcu nulla. Habitant laoreet amet nec praesent. Consectetur posuere tempus nunc enim tortor a pharetra ac."
+          },
+          "2": {
+            "title": "Point 2",
+            "description": "Lorem ipsum dolor sit amet consectetur. Tortor at scelerisque nunc donec magna nullam semper egestas. Eleifend nulla nisl dolor arcu nulla. Habitant laoreet amet nec praesent. Consectetur posuere tempus nunc enim tortor a pharetra ac."
+          },
+          "3": {
+            "title": "Point 3",
+            "description": "Lorem ipsum dolor sit amet consectetur. Tortor at scelerisque nunc donec magna nullam semper egestas. Eleifend nulla nisl dolor arcu nulla. Habitant laoreet amet nec praesent. Consectetur posuere tempus nunc enim tortor a pharetra ac."
+          },
+          "4": {
+            "title": "Point 4",
+            "description": "Lorem ipsum dolor sit amet consectetur. Tortor at scelerisque nunc donec magna nullam semper egestas. Eleifend nulla nisl dolor arcu nulla. Habitant laoreet amet nec praesent. Consectetur posuere tempus nunc enim tortor a pharetra ac."
+          },
+          "5": {
+            "title": "Point 5",
+            "description": "Lorem ipsum dolor sit amet consectetur. Tortor at scelerisque nunc donec magna nullam semper egestas. Eleifend nulla nisl dolor arcu nulla. Habitant laoreet amet nec praesent. Consectetur posuere tempus nunc enim tortor a pharetra ac."
+          },
+          "6": {
+            "title": "Point 6",
+            "description": "Lorem ipsum dolor sit amet consectetur. Tortor at scelerisque nunc donec magna nullam semper egestas. Eleifend nulla nisl dolor arcu nulla. Habitant laoreet amet nec praesent. Consectetur posuere tempus nunc enim tortor a pharetra ac."
+          }
+        }
+      }
+    },
+    "about": {
+      "cultureAndValues": {
+        "title": "Our Culture and Values",
+        "values": {
+          "genuine": {
+            "title": "genuine",
+            "description": "Lorem ipsum dolor sit amet consectetur. Consequat varius mi adipiscing mauris tincidunt non. A id lorem id pellentesque arcu."
+          },
+          "global": {
+            "title": "global",
+            "description": "Lorem ipsum dolor sit amet consectetur. Consequat varius mi adipiscing mauris tincidunt non. A id lorem id pellentesque arcu."
+          },
+          "thanks": {
+            "title": "thanks",
+            "description": "Lorem ipsum dolor sit amet consectetur. Consequat varius mi adipiscing mauris tincidunt non. A id lorem id pellentesque arcu."
+          },
+          "honesty": {
+            "title": "Honesty",
+            "description": "Lorem ipsum dolor sit amet consectetur. Consequat varius mi adipiscing mauris tincidunt non. A id lorem id pellentesque arcu."
+          }
+        }
+      },
+      "hero": {
+        "title": "About the Badminton",
+        "description": "Lorem ipsum dolor sit amet consectetur. Magnis placerat eros id adipiscing non. Egestas pellentesque sed aliquam dolor quis."
+      },
+      "partners": {
+        "title": "Our Partners",
+        "altText": "Partner logo"
+      },
+      "story": {
+        "title": "Our Story",
+        "since": "Since 2002",
+        "paragraphs": [
+          "Lorem ipsum dolor sit amet consectetur. Facilisi facilisi integer elementum duis gravida neque eu porta. Quis mauris sed hendrerit purus ultrices pellentesque ultrices sed.",
+          "Lorem ipsum dolor sit amet consectetur. Facilisi facilisi integer elementum duis gravida neque eu porta. Quis mauris sed hendrerit purus ultrices pellentesque ultrices sed.",
+          "Lorem ipsum dolor sit amet consectetur. Facilisi facilisi integer elementum duis gravida neque eu porta. Quis mauris sed hendrerit purus ultrices pellentesque ultrices sed."
+        ]
+      },
+      "team": {
+        "title": "Badminton Team",
+        "subtitle": "dedication. . Expertise. . passion.",
+        "members": [
+          {
+            "name": "Ben Cobert",
+            "title": "FOUNDER & CEO",
+            "email": "email@email.com"
+          },
+          {
+            "name": "Ben Cobert",
+            "title": "FOUNDER & CEO",
+            "email": "email@email.com"
+          },
+          {
+            "name": "Ben Cobert",
+            "title": "FOUNDER & CEO",
+            "email": "email@email.com"
+          }
+        ]
+      },
+      "vision": {
+        "label": "our vision",
+        "title": "Lorem ipsum dolor sit amet consectetur.",
+        "paragraphs": [
+          "Lorem ipsum dolor sit amet consectetur. Facilisi facilisi integer elementum duis gravida neque eu porta. Quis mauris sed hendrerit purus ultrices pellentesque ultrices sed.",
+          "Lorem ipsum dolor sit amet consectetur. Facilisi facilisi integer elementum duis gravida neque eu porta. Quis mauris sed hendrerit purus ultrices pellentesque ultrices sed."
+        ]
+      }
+    },
+    "contact": {
+      "form": {
+        "title": "Please fill out the form below",
+        "fields": {
+          "fullName": {
+            "label": "Full Name",
+            "placeholder": "Full Name*"
+          },
+          "email": {
+            "label": "Email Address",
+            "placeholder": "Email Address*"
+          },
+          "telephone": {
+            "label": "Telephone Number",
+            "placeholder": "Telephone Number*"
+          },
+          "message": {
+            "label": "Message",
+            "placeholder": "How can we help?"
+          }
+        },
+        "submit": "Submit"
+      },
+      "hero": {
+        "title": "inquiry!",
+        "description": "Lorem ipsum dolor sit amet consectetur. Magnis placerat eros id adipiscing non. Egestas pellentesque sed aliquam dolor quis."
+      },
+      "contactMethods": [
+        {
+          "title": "talk with us",
+          "description": "We are here for you in real time.",
+          "alt": "Talk with us"
+        },
+        {
+          "title": "Contact us by phone",
+          "description": "You can contact us 24 hours a day, 365 days a year.",
+          "alt": "Contact us by phone"
+        },
+        {
+          "title": "Please contact us by email",
+          "description": "You can contact us 24 hours a day, 365 days a year.",
+          "alt": "Please contact us by email"
+        },
+        {
+          "title": "join our community",
+          "description": "You can contact us 24 hours a day, 365 days a year.",
+          "alt": "Join our community"
+        },
+        {
+          "title": "file a complaint",
+          "description": "You can contact us 24 hours a day, 365 days a year.",
+          "alt": "File a complaint"
+        }
+      ],
+      "booking": {
+        "title": "Book meetings like Calendly",
+        "description": "Lorem ipsum dolor sit amet consectetur. Faretra dignissim brandit kiss org. Proin mattis Phasellus Phasellus facilis vulputate dictumst non-consequat. Fringilla of elite bellproinhendrerit adipisingeget.",
+        "button": "Book now",
+        "alt": "Book meetings"
+      }
+    },
+    "signup": {
+      "step1": {
+        "title": "create an account",
+        "subtitle": "Fill in your details.",
+        "fields": {
+          "fullName": {
+            "placeholder": "Full Name"
+          },
+          "email": {
+            "placeholder": "Email Address"
+          },
+          "password": {
+            "placeholder": "Password"
+          }
+        },
+        "createButton": "Create An Account",
+        "socialLogin": {
+          "title": "Or continue to be a habit",
+          "google": "Continue with Google",
+          "apple": "Continue with Apple",
+          "facebook": "Continue with Facebook"
+        },
+        "login": {
+          "text": "Already have an account?",
+          "link": "Sign In"
+        }
+      },
+      "step2": {
+        "welcome": "Welcome to the badminton app, {{name}}",
+        "subtitle": "Choose Your Role",
+        "roles": {
+          "player": "Player",
+          "organizer": "Tournament Organizer",
+          "both": "Both"
+        }
+      },
+      "step3": {
+        "title": "Next, let's find out",
+        "subtitle": "Creating a personalized profile allows you to tailor it to your customers' preferences",
+        "fields": {
+          "realName": {
+            "placeholder": "Real Name"
+          },
+          "petName": {
+            "placeholder": "Pet Name"
+          },
+          "telephone": {
+            "placeholder": "Telephone Number"
+          },
+          "prefecture": {
+            "placeholder": "Prefecture"
+          },
+          "cityTown": {
+            "placeholder": "City/Town"
+          },
+          "gender": {
+            "label": "Gender",
+            "placeholder": "Select Gender",
+            "options": {
+              "male": "Male",
+              "female": "Female",
+              "other": "Other"
+            }
+          },
+          "dateOfBirth": {
+            "label": "Date of Birth",
+            "placeholder": "Date of Birth"
+          },
+          "experience": {
+            "placeholder": "Years of Experience (optional)"
+          },
+          "racket": {
+            "placeholder": "My Racket (optional)"
+          }
+        },
+        "continue": "Continue"
+      }
+    },
+    "createAccount": {
+      "title": "create an account",
+      "subtitle": "Fill in your details.",
+      "fields": {
+        "fullName": {
+          "placeholder": "Full Name",
+          "alt": "User Icon"
+        },
+        "email": {
+          "placeholder": "Email Address",
+          "alt": "Email Icon"
+        },
+        "password": {
+          "placeholder": "Password",
+          "alt": "Password Icon"
+        }
+      },
+      "button": "Create An Account",
+      "socialLogin": {
+        "title": "Or continue to be a habit",
+        "google": {
+          "alt": "Google Icon"
+        },
+        "apple": {
+          "alt": "Apple Icon"
+        },
+        "facebook": {
+          "alt": "Facebook Icon"
+        }
+      },
+      "login": {
+        "text": "Already have an account?",
+        "link": "Sign In"
+      },
+      "logo": {
+        "alt": "Logo"
+      }
+    },
+    "faqs": {
+      "title": "FAQs",
+      "questions": [
+        {
+          "question": "Question #1",
+          "answer": "Lorem ipsum dolor sit amet consectetur. Lacus lectus elementum sollicitudin elementum tellus sed egestas. Nec amet felis sed facilisi sed ut eros feugiat pretium. Volutpat bibendum odio hac tincidunt sollicitudin aliquam. Sit laoreet eu id turpis non non nisi quam. In vestibulum a nec rhoncus eget. Ridiculus cras viverra nec mi justo euismod morbi. Mi praesent laoreet auctor purus et auctor senectus in. Lacinia gravida nascetur bibendum mattis at nunc. Nibh ac in sed enim aliquam viverra tincidunt."
+        },
+        {
+          "question": "Question #2",
+          "answer": "This is the second item's accordion body. It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the accordion-body, though the transition does limit overflow."
+        },
+        {
+          "question": "Question #3",
+          "answer": "This is the third item's accordion body. It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the accordion-body, though the transition does limit overflow."
+        },
+        {
+          "question": "Question #4",
+          "answer": "This is the fourth item's accordion body. It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the accordion-body, though the transition does limit overflow."
+        },
+        {
+          "question": "Question #5",
+          "answer": "This is the fifth item's accordion body. It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the accordion-body, though the transition does limit overflow."
+        },
+        {
+          "question": "Question #6",
+          "answer": "This is the sixth item's accordion body. It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the accordion-body, though the transition does limit overflow."
+        }
+      ]
+    },
+    "login": {
+      "title": "Please sign in to continue",
+      "subtitle": "Please enter your details below",
+      "fields": {
+        "email": {
+          "placeholder": "Email Address",
+          "alt": "Email Icon"
+        },
+        "password": {
+          "placeholder": "Password",
+          "alt": "Password Icon"
+        }
+      },
+      "button": "Sign In",
+      "socialLogin": {
+        "title": "or continue",
+        "google": {
+          "alt": "Google Icon"
+        },
+        "apple": {
+          "alt": "Apple Icon"
+        },
+        "facebook": {
+          "alt": "Facebook Icon"
+        }
+      },
+      "createAccount": {
+        "text": "Don't have an account?",
+        "link": "Create an account"
+      },
+      "logo": {
+        "alt": "Logo"
+      },
+      "error": {
+        "default": "An error occurred. Please try again."
+      }
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "paragraphs": [
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat."
+      ]
+    },
+    "termsOfService": {
+      "title": "Terms Of Service",
+      "paragraphs": [
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat.",
+        "Lorem ipsum dolor sit amet consectetur. At viverra massa pharetra id hac. Gravida pharetra tortor consectetur laoreet etiam porttitor. Facilisis mauris sociis enim facilisis vestibulum viverra. Proin cras id nibh vel pellentesque imperdiet at diam ac. Pellentesque gravida quis at mattis arcu vitae et placerat enim. A risus enim sed in. Enim pellentesque ultricies in mattis sit. Aenean in condimentum pretium pretium sed pharetra. Massa viverra felis hac ut sodales. Placerat elementum vestibulum felis orci non tristique rutrum. Lectus blandit habitasse vivamus nibh at dictumst non purus quisque. Quis amet cras viverra faucibus elementum. Commodo nunc malesuada adipiscing vitae faucibus libero erat."
+      ]
+    },
+    "header": {
+      "logo": {
+        "alt": "Logo"
+      },
+      "menu": {
+        "home": "Home",
+        "about": "About",
+        "services": "Service",
+        "faqs": "FAQ's",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service",
+        "contact": "Contact"
+      },
+      "auth": {
+        "dashboard": "Dashboard",
+        "signout": "Signout",
+        "signup": "Signup"
+      },
+      "hamburger": {
+        "alt": "Menu"
+      }
+    },
+    "footer": {
+      "logo": {
+        "alt": "Badminton Logo"
+      },
+      "slogan": {
+        "main": "Main Slogan here,",
+        "supporting": "Supporting line here"
+      },
+      "social": {
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "linkedin": "LinkedIn"
+      },
+      "sections": {
+        "usefulLinks": {
+          "title": "Useful links",
+          "links": [
+            "Home",
+            "For players",
+            "For tournament organizers"
+          ]
+        },
+        "company": {
+          "title": "Our Company",
+          "links": [
+            "Link #1",
+            "Link #2",
+            "Link #3"
+          ]
+        },
+        "contact": {
+          "title": "Contact Us",
+          "phone": "Phone: (123) 000-00000",
+          "email": "Email: email@email.com",
+          "location": "Location: Location"
+        }
+      },
+      "bottomLinks": [
+        "About Us",
+        "Contact",
+        "Privacy Policy",
+        "How to Use",
+        "Terms of Service"
+      ],
+      "copyright": "© 2023 Badminton. All rights reserved."
+    },
+    "ctaSection": {
+      "title": "Download the app",
+      "stores": {
+        "apple": {
+          "alt": "Apple Store"
+        },
+        "google": {
+          "alt": "Google Store"
+        }
+      }
+    },
+    "adminSidebar": {
+      "logo": {
+        "alt": "Admin Logo"
+      },
+      "title": "Tournament Organizer",
+      "menu": {
+        "tournamentManagement": "Tournament Management",
+        "usersManagement": "Users Management",
+        "tournamentCreation": "Tournament Creation",
+        "typeManagement": "Type Management",
+        "splitManagement": "Split Management",
+        "playerManagement": "Player Management",
+        "leagueTables": "League/Tournament Tables",
+        "timetable": "Timetable",
+        "notificationManagement": "Notification Management",
+        "tournaments": "Tournaments"
+      }
+    },
+    "adminHeader": {
+      "search": {
+        "placeholder": "Search",
+        "button": {
+          "alt": "Search"
+        }
+      },
+      "notifications": {
+        "alt": "Notifications",
+        "menu": {
+          "action": "Action",
+          "anotherAction": "Another action",
+          "somethingElse": "Something else here"
+        }
+      },
+      "userMenu": {
+        "alt": "User Menu",
+        "items": {
+          "profile": "Profile",
+          "logout": "Logout",
+          "login": "Login"
+        }
+      }
     }
   }
 }

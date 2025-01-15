@@ -5,11 +5,21 @@ import { setUser, logoutUser } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  // Logout function
+  const menuItems = [
+    { path: '/', text: t('header.menu.home') },
+    { path: '/about', text: t('header.menu.about') },
+    { path: '/services', text: t('header.menu.services') },
+    { path: '/faqs', text: t('header.menu.faqs') },
+    { path: '/privacy-policy', text: t('header.menu.privacyPolicy') },
+    { path: '/terms-of-service', text: t('header.menu.termsOfService') },
+    { path: '/contact', text: t('header.menu.contact') }
+  ];
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(logoutUser()); // Dispatch LOGOUT_USER action
@@ -54,12 +64,12 @@ const Header = () => {
                     Dashboard
                   </Link>
                   <button className="header-btn1" onClick={logout}>
-                    Signout
+                    {t('header.auth.signout')}
                   </button>
                 </>
               ) : (
                 <Link to="/create-account" className="header-btn1">
-                  Signup
+                  {t('header.auth.signup')}
                 </Link>
               )}
             </div>
