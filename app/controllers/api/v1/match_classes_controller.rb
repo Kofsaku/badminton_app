@@ -69,6 +69,47 @@ class Api::V1::MatchClassesController < ApplicationController
     end
   end
 
+  def show
+    @match_class = MatchClass.find(params[:id])
+
+    render json: @match_class.as_json(include: {
+      tournament: {
+        only: [:id, :name]
+      },
+      tournament_category: {only: [:id, :category_type]},
+      tournament_division: {only:[:id, :division]},
+      match_round: {
+        include: {
+          match_group: {
+            include: {
+              group_player: {
+                include: {
+                  tournament_player: {
+                    only: [],
+                    include: {
+                      player: {
+                        only: [:id, :full_name, :title]
+                      }
+                    }
+                  }
+                }
+              },
+              timetable_cell: {
+                include: {
+                  match: {}
+                }
+              }
+            }
+          } 
+        }
+      }
+    }, except: [
+      :tournament_id,
+      :tournament_category_id,
+      :tournament_division_id
+    ])
+  end
+
   def destroy
     item = MatchClass.find(params[:id])
     item_attributes = item.attributes

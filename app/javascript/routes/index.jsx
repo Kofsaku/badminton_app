@@ -27,14 +27,15 @@ import MatchList from "../pages/MatchList";
 import NewMatch from "../pages/NewMatch";
 import ScoreBoard from "../pages/ScoreBoard";
 import SelectPaymentMethod from "../components/PaymentScreens/SelectPaymentMethod";
-import PaymentConfirmation from '../components/PaymentScreens/PaymentConfirmation';
+import PaymentConfirmation from "../components/PaymentScreens/PaymentConfirmation";
 import MatchClass from "../pages/MatchClass/List";
 import NewMatchClass from "../pages/MatchClass/New";
+import ShowMatchClass from "../pages/MatchClass/Show";
 import TournamentOrganizers from "../pages/TournamentOrganizers/List";
 import TournamentOrganizer from "../pages/TournamentOrganizers/Show";
 import EditTournamentOrganizer from "../pages/TournamentOrganizers/Edit";
 
-<Route path="/payment-confirmation" element={<PaymentConfirmation />} />
+<Route path="/payment-confirmation" element={<PaymentConfirmation />} />;
 export default (
   <Router>
     <Routes>
@@ -126,6 +127,14 @@ export default (
         element={
           <ProtectedRoute>
             <NewMatchClass />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/match-management/:id"
+        element={
+          <ProtectedRoute>
+            <ShowMatchClass />
           </ProtectedRoute>
         }
       />
