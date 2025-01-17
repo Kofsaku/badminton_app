@@ -203,6 +203,7 @@ const NewKnockout = ({
                 className="form-control"
                 onChange={(e) => handleVenueChange(e, index)}
               >
+                <option>Select</option>
                 {tournamentVenues.map((venue) => (
                   <option key={venue.id} value={venue.id}>
                     {venue.venue_name}

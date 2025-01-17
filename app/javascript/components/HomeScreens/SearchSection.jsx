@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
 import axiosInstance from "../../api/axiosInstance";
+import { start } from "@popperjs/core";
 
 const sliderSettings = {
   dots: true,
@@ -63,24 +64,79 @@ const sliderSettings = {
 const SearchSection = () => {
   const [formData, setFormData] = useState({
     name: "",
-    classification: "all",
-    status: "all",
+    // classification: "all",
+    start_date: "",
+    end_date: "",
+    // status: "all",
     region: "all",
+    prefecture: "",
     venue: "all",
     match_format: "all",
-    participation_type: "all",
+    // participation_type: "all",
   });
   const [searchResults, setSearchResults] = useState([]);
 
   const {
     name,
-    classification,
-    status,
+    // classification,
+    start_date,
+    end_date,
+    // status,
     region,
-    venue,
+    // venue,
     match_format: matchFormat,
-    participation_type: participationType,
+    // participation_type: participationType,
   } = formData;
+
+  const prefectures = [
+    "北海道",
+    "青森県",
+    "岩手県",
+    "宮城県",
+    "秋田県",
+    "山形県",
+    "福島県",
+    "茨城県",
+    "栃木県",
+    "群馬県",
+    "埼玉県",
+    "千葉県",
+    "東京都",
+    "神奈川県",
+    "新潟県",
+    "富山県",
+    "石川県",
+    "福井県",
+    "山梨県",
+    "長野県",
+    "岐阜県",
+    "静岡県",
+    "愛知県",
+    "三重県",
+    "滋賀県",
+    "京都府",
+    "大阪府",
+    "兵庫県",
+    "奈良県",
+    "和歌山県",
+    "鳥取県",
+    "島根県",
+    "岡山県",
+    "広島県",
+    "山口県",
+    "徳島県",
+    "香川県",
+    "愛媛県",
+    "高知県",
+    "福岡県",
+    "佐賀県",
+    "長崎県",
+    "熊本県",
+    "大分県",
+    "宮崎県",
+    "鹿児島県",
+    "沖縄県",
+  ];
 
   useEffect(() => {
     axiosInstance
@@ -131,7 +187,7 @@ const SearchSection = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
+            {/* <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
                   Classification
@@ -182,13 +238,19 @@ const SearchSection = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">Dates</h5>
                 <div className="row align-items-center">
                   <div className="col-lg-5 col-md-5 col-sm-5 col-5">
-                    <input type="date" className="field-style4 w-100" />
+                    <input
+                      type="date"
+                      name="start_date"
+                      className="field-style4 w-100"
+                      value={start_date}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                     <span className="d-block text-center text-16 text-block">
@@ -196,12 +258,18 @@ const SearchSection = () => {
                     </span>
                   </div>
                   <div className="col-lg-5 col-md-5 col-sm-5 col-5">
-                    <input type="date" className="field-style4 w-100" />
+                    <input
+                      type="date"
+                      name="end_date"
+                      className="field-style4 w-100"
+                      value={end_date}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
+            {/* <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
                   Status
@@ -251,7 +319,7 @@ const SearchSection = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -417,51 +485,17 @@ const SearchSection = () => {
             </div>
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
-                <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">Venue</h5>
-                <div className="d-flex w-100 align-items-start justify-content-start flex-wrap checkbox-selector-all">
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-4 me-2 py-2 position-relative ${
-                      venue === "all" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">all</span>
-                    <input
-                      type="radio"
-                      name="venue"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="all"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 me-2 py-2 position-relative ${
-                      venue === "main" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">main venue</span>
-                    <input
-                      type="radio"
-                      name="venue"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="main"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 py-2 position-relative ${
-                      venue === "remote" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">remote venue</span>
-                    <input
-                      type="radio"
-                      name="venue"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="remote"
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
+                <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
+                  Prefecture
+                </h5>
+                <select name="prefecture" onChange={handleChange}>
+                  <option value="">Select</option>
+                  {prefectures.map((prefecture, index) => (
+                    <option key={index} value={prefecture}>
+                      {prefecture}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
@@ -512,10 +546,24 @@ const SearchSection = () => {
                       onChange={handleChange}
                     />
                   </div>
+                  <div
+                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 py-2 position-relative ${
+                      matchFormat === "double" && "checkbox-selector-active"
+                    }`}
+                  >
+                    <span className="text-14 d-inline-block">double</span>
+                    <input
+                      type="radio"
+                      name="match_format"
+                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
+                      value="double"
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
+            {/* <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
                   Participation Type
@@ -569,7 +617,7 @@ const SearchSection = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
               <button
                 type="button"
@@ -612,7 +660,7 @@ const SearchSection = () => {
                   <h5 className="text-grey1 text-14 mt-0 mb-2">
                     prefecture
                     <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      Shimane
+                      {tournament.prefecture}
                     </span>
                   </h5>
                   <h5 className="text-grey1 text-14">
