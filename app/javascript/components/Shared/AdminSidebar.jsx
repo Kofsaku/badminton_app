@@ -1,32 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useTranslation } from 'react-i18next';
 
 const AdminSidebar = () => {
-  const { t } = useTranslation();
   const role = useSelector((state) => state.user.role);
-
-  const menuItems = {
-    organizer: [
-      { path: '/tournament-management', text: t('adminSidebar.menu.tournamentManagement') },
-      { path: '/tournament-creation', text: t('adminSidebar.menu.tournamentCreation') },
-      { path: 'type-management#', text: t('adminSidebar.menu.typeManagement') },
-      { path: 'split-management', text: t('adminSidebar.menu.splitManagement') },
-      { path: '/players-management', text: t('adminSidebar.menu.playerManagement') },
-      { path: '/tournament-tables', text: t('adminSidebar.menu.leagueTables') }
-    ],
-    admin: [
-      { path: '/users-management', text: t('adminSidebar.menu.usersManagement') }
-    ],
-    common: [
-      { path: '/timetables', text: t('adminSidebar.menu.timetable') },
-      { path: '/notifications-management', text: t('adminSidebar.menu.notificationManagement') }
-    ],
-    player: [
-      { path: '/tournament-timetable', text: t('adminSidebar.menu.tournaments') }
-    ]
-  };
 
   return (
     <section className="left-sidebar-wrapper bg-white overflow-auto custom-scroll1">
@@ -43,7 +20,7 @@ const AdminSidebar = () => {
           <img
             className="admin-logo"
             src="/images/badminton-admin-logo.png"
-            alt={t('adminSidebar.logo.alt')}
+            alt="Admin Logo"
           />
         </div>
         <div className="d-block w-100 px-3 mb-4">
@@ -60,17 +37,17 @@ const AdminSidebar = () => {
               <>
                 <li>
                   <NavLink
-                    to={item.path}
+                    to="/tournament-management"
                     className={({ isActive }) =>
                       isActive
                         ? "left-menu-btn1 merriweather-font active"
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    {item.text}
+                    Tournament Management
                   </NavLink>
                 </li>
-              ))
+              </>
             )}
 
             {role === "Admin" && (
@@ -84,7 +61,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    {item.text}
+                    Users Management
                   </NavLink>
                 </li>
                 <li>
@@ -108,14 +85,14 @@ const AdminSidebar = () => {
               <>
                 <li>
                   <NavLink
-                    to={item.path}
+                    to="/tournament-creation"
                     className={({ isActive }) =>
                       isActive
                         ? "left-menu-btn1 merriweather-font active"
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    {item.text}
+                    Tournament Creation
                   </NavLink>
                 </li>
                 <li>
