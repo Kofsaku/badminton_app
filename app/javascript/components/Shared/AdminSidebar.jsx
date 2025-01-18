@@ -14,19 +14,36 @@ const AdminSidebar = () => {
       { path: 'type-management#', text: t('adminSidebar.menu.typeManagement') },
       { path: 'split-management', text: t('adminSidebar.menu.splitManagement') },
       { path: '/players-management', text: t('adminSidebar.menu.playerManagement') },
-      { path: '/tournament-tables', text: t('adminSidebar.menu.leagueTables') }
+      { path: '/tournament-tables', text: t('adminSidebar.menu.leagueTables') },
     ],
     admin: [
-      { path: '/users-management', text: t('adminSidebar.menu.usersManagement') }
+      { path: '/users-management', text: t('adminSidebar.menu.usersManagement') },
+      { path: '/organizer-management', text: t('adminSidebar.menu.organizerManagement') },
     ],
     common: [
       { path: '/timetables', text: t('adminSidebar.menu.timetable') },
-      { path: '/notifications-management', text: t('adminSidebar.menu.notificationManagement') }
+      { path: '/notifications-management', text: t('adminSidebar.menu.notificationManagement') },
     ],
     player: [
-      { path: '/tournament-timetable', text: t('adminSidebar.menu.tournaments') }
-    ]
+      { path: '/tournament-timetable', text: t('adminSidebar.menu.tournaments') },
+    ],
   };
+
+  const renderMenu = (items) =>
+    items.map((item, index) => (
+      <li key={index}>
+        <NavLink
+          to={item.path}
+          className={({ isActive }) =>
+            isActive
+              ? "left-menu-btn1 merriweather-font active"
+              : "left-menu-btn1 merriweather-font"
+          }
+        >
+          {item.text}
+        </NavLink>
+      </li>
+    ));
 
   return (
     <section className="left-sidebar-wrapper bg-white overflow-auto custom-scroll1">
@@ -48,172 +65,23 @@ const AdminSidebar = () => {
         </div>
         <div className="d-block w-100 px-3 mb-4">
           <h3 className="text-black fw-bold text-20 merriweather-font">
-            {role != "Both" ? role : "Tournament Organizer"}
+            {role !== "Both" ? role : "Tournament Organizer"}
           </h3>
         </div>
         <div className="d-block px-3 mb-4">
           <ul className="list-style-none p-0 m-0">
-            {/* Links for role == 'Player' */}
-            {(role === "Tournament Organizer" ||
-              role === "Admin" ||
-              role === "Both") && (
-              <>
-                <li>
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    {item.text}
-                  </NavLink>
-                </li>
-              ))
-            )}
+            {/* Common Menu */}
+            {renderMenu(menuItems.common)}
 
-            {role === "Admin" && (
-              <>
-                <li>
-                  <NavLink
-                    to="/users-management"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    {item.text}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/organizer-management"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    Organizer Management
-                  </NavLink>
-                </li>
-              </>
-            )}
+            {/* Admin Menu */}
+            {(role === "Admin" || role === "Both") && renderMenu(menuItems.admin)}
 
-            {(role === "Tournament Organizer" ||
-              role === "Both" ||
-              role === "Admin") && (
-              <>
-                <li>
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    {item.text}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="type-management#"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    Type Management
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="split-management"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    Split Management
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/players-management"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    Player Management
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/match-management"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    Match Management
-                  </NavLink>
-                </li>
-              </>
-            )}
+            {/* Organizer Menu */}
+            {(role === "Tournament Organizer" || role === "Both") &&
+              renderMenu(menuItems.organizer)}
 
-            {(role === "Tournament Organizer" ||
-              role === "Admin" ||
-              role === "Both") && (
-              <>
-                <li>
-                  <NavLink
-                    to="/timetables"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    Timetable
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/notifications-management"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "left-menu-btn1 merriweather-font active"
-                        : "left-menu-btn1 merriweather-font"
-                    }
-                  >
-                    Notification Management
-                  </NavLink>
-                </li>
-              </>
-            )}
-
-            <>
-              <li>
-                <NavLink
-                  to="/tournament-timetable"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "left-menu-btn1 merriweather-font active"
-                      : "left-menu-btn1 merriweather-font"
-                  }
-                >
-                  Tournaments
-                </NavLink>
-              </li>
-            </>
+            {/* Player Menu */}
+            {role === "Player" && renderMenu(menuItems.player)}
           </ul>
         </div>
       </div>
