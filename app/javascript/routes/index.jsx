@@ -37,6 +37,7 @@ import ShowMatchClass from "../pages/MatchClass/Show";
 import TournamentOrganizers from "../pages/TournamentOrganizers/List";
 import TournamentOrganizer from "../pages/TournamentOrganizers/Show";
 import EditTournamentOrganizer from "../pages/TournamentOrganizers/Edit";
+import Dashboard from "../pages/dashboard";
 
 <Route path="/payment-confirmation" element={<PaymentConfirmation />} />;
 export default (
@@ -211,6 +212,11 @@ export default (
       <Route path="/matches/:id/scoreboard" element={<ScoreBoard />} />
       <Route path="/tournament/:id/entry" element={<Entry />} />
       <Route path="/tournament/:id/entry/payment" element={<EntryPayment />} />
+      <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      } />
     </Routes>
   </Router>
 );

@@ -10,6 +10,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const role = useSelector((state) => state.user.role);
 
   const menuItems = [
     { path: '/', text: translation('header.menu.home') },
@@ -46,7 +47,7 @@ const Header = () => {
             <div className="d-inline-block">
               {isLoggedIn ? (
                 <>
-                  <Link to="/tournament-management" className="header-btn1 ml-20">
+                  <Link to={role === 'player' ? '/dashboard' : '/tournament-management'} className="header-btn1 ml-20">
                     Dashboard
                   </Link>
                   <button className="header-btn1" onClick={logout}>

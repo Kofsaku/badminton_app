@@ -19,4 +19,6 @@ class HomepageController < ApplicationController
 
   def contact
   end
+  def dashboard
+  end
 end
