@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { footer_translation } = useTranslation();
 
   const socialLinks = [
-    { icon: 'fb-green-icon.svg', alt: t('footer.social.facebook') },
-    { icon: 'twitter-green-icon.svg', alt: t('footer.social.twitter') },
-    { icon: 'linkedin-green-icon.svg', alt: t('footer.social.linkedin') }
+    { icon: 'fb-green-icon.svg', alt: footer_translation('footer.social.facebook') },
+    { icon: 'twitter-green-icon.svg', alt: footer_translation('footer.social.twitter') },
+    { icon: 'linkedin-green-icon.svg', alt: footer_translation('footer.social.linkedin') }
   ];
 
   const bottomLinks = [
-    { path: '/about', text: t('footer.bottomLinks.0') },
-    { path: '/contact', text: t('footer.bottomLinks.1') },
-    { path: '/privacy-policy', text: t('footer.bottomLinks.2') },
-    { path: '#', text: t('footer.bottomLinks.3') },
-    { path: '/terms-of-service', text: t('footer.bottomLinks.4') }
+    { path: '/about', text: footer_translation('footer.bottomLinks.0') },
+    { path: '/contact', text: footer_translation('footer.bottomLinks.1') },
+    { path: '/privacy-policy', text: footer_translation('footer.bottomLinks.2') },
+    { path: '#', text: footer_translation('footer.bottomLinks.3') },
+    { path: '/terms-of-service', text: footer_translation('footer.bottomLinks.4') }
   ];
 
   return (
@@ -40,15 +40,11 @@ const Footer = () => {
                   Supporting line here
                 </p>
                 <div className="d-flex align-items-center justify-content-start">
-                  <Link to="#" className="me-2">
-                    <img src="/images/fb-green-icon.svg" alt="Facebook" />
-                  </Link>
-                  <Link to="#" className="me-2">
-                    <img src="/images/twitter-green-icon.svg" alt="Twitter" />
-                  </Link>
-                  <Link to="#" className="me-2">
-                    <img src="/images/linkedin-green-icon.svg" alt="LinkedIn" />
-                  </Link>
+                  {socialLinks.map((link, index) => (
+                    <Link to="#" key={index} className="me-2">
+                      <img src={`/images/${link.icon}`} alt={link.alt} />
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
@@ -60,30 +56,16 @@ const Footer = () => {
                       Useful links
                     </h3>
                     <ul className="list-style-none m-0 p-0">
-                      <li className="mb-2">
-                        <Link
-                          to="/"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          家
-                        </Link>
-                      </li>
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          For players
-                        </Link>
-                      </li>
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          For tournament organizers
-                        </Link>
-                      </li>
+                      {bottomLinks.slice(0, 3).map((link, index) => (
+                        <li className="mb-2" key={index}>
+                          <Link
+                            to={link.path}
+                            className="text-grey1 text-14 m-0 text-hover-black"
+                          >
+                            {link.text}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -93,63 +75,16 @@ const Footer = () => {
                       Our Company
                     </h3>
                     <ul className="list-style-none m-0 p-0">
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          Link #1
-                        </Link>
-                      </li>
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          Link #2
-                        </Link>
-                      </li>
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          Link #3
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-4 col-12">
-                  <div className="d-block w-100 mt-3">
-                    <h3 className="text-green3 mt-0 mb-3 fw-bold text-18">
-                      Contact Us
-                    </h3>
-                    <ul className="list-style-none m-0 p-0">
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          Phone: (123) 000-00000
-                        </Link>
-                      </li>
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          Email: email@email.com
-                        </Link>
-                      </li>
-                      <li className="mb-2">
-                        <Link
-                          to="#"
-                          className="text-grey1 text-14 m-0 text-hover-black"
-                        >
-                          Location: Location
-                        </Link>
-                      </li>
+                      {bottomLinks.slice(3).map((link, index) => (
+                        <li className="mb-2" key={index}>
+                          <Link
+                            to={link.path}
+                            className="text-grey1 text-14 m-0 text-hover-black"
+                          >
+                            {link.text}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -163,32 +98,20 @@ const Footer = () => {
           <div className="row">
             <div className="col-lg-7 col-md-7 col-sm-12 col-12">
               <div className="d-flex flex-wrap align-items-center justify-content-start">
-                <Link to="/about" className="text-muted text-14 ms-0 me-3">
-                  About Us
-                </Link>
-                <Link to="/contact" className="text-muted text-14 ms-0 me-3">
-                  Contact
-                </Link>
-                <Link
-                  to="/privacy-policy"
-                  className="text-muted text-14 ms-0 me-3"
-                >
-                  Privacy Policy
-                </Link>
-                <Link to="#" className="text-muted text-14 ms-0 me-3">
-                  How to Use
-                </Link>
-                <Link
-                  to="/terms-of-service"
-                  className="text-muted text-14 ms-0 me-3"
-                >
-                  Terms of Service
-                </Link>
+                {bottomLinks.map((link, index) => (
+                  <Link
+                    key={index}
+                    to={link.path}
+                    className="text-muted text-14 ms-0 me-3"
+                  >
+                    {link.text}
+                  </Link>
+                ))}
               </div>
             </div>
             <div className="col-lg-5 col-md-5 col-sm-12 col-12 mt-lg-0 mt-md-0 mt-3">
               <p className="text-lg-end text-md-end text-start text-muted p-0 m-0 mob-text-14 text-14">
-                {t('footer.copyright')}
+                {footer_translation('footer.copyright')}
               </p>
             </div>
           </div>
