@@ -161,3 +161,13 @@ export const paymentTournament = async (tournamentId, formData) => {
     throw error;
   }
 };
+
+export const reOrderTeamMatch = async (matchId, formData) => {
+  try {
+    const response = await axiosInstance.patch(`matches/${matchId}/reorder_team_match`, formData)
+    return response.data
+  } catch (e) {
+    console.error(`Failed to submit order`)
+    throw e
+  }
+}
