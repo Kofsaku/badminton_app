@@ -115,7 +115,6 @@ class UsersController < ApplicationController
   end
 
   def show_api_key
-    set_current_user
     render json: { api_key: @current_user.api_key, full_name: @current_user.full_name, role: @current_user.profile&.role }
   end
 

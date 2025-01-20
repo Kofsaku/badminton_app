@@ -641,9 +641,7 @@
         "matchManagement": "試合管理",
         "timetable": "タイムテーブル",
         "notificationManagement": "通知管理",
-        "tournaments": "トーナメント",
-        "teamMatches": "参加予定試合管理",
-        "teamOrder": "詳細ページ"
+        "tournaments": "トーナメント"
       }
     },
     "adminHeader": {

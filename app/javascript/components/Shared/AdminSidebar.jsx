@@ -53,10 +53,6 @@ const AdminSidebar = () => {
         path: "/tournament-timetable",
         text: t("adminSidebar.menu.tournaments"),
       },
-      {
-        path: "/team-matches",
-        text: t("adminSidebar.menu.teamMatches")
-      }
     ],
   };
 

@@ -91,11 +91,8 @@ class TournamentsController < ApplicationController
         team = Team.create!(title: params["team"]["teamName"], members_count: params["team"]["numberOfPlayers"])
 
         params["team"]["players"].each do |player|
-          user = User.find_by(email: player["email"])
-
-          user = User.create!(email: player["email"] , full_name: player["name"], password: "password") if user.blank?
-          user.create_profile!(role: "Player", age: player["age"], gender: player["gender"]) if user.profile.blank?
-
+          user = User.create!(email: player["email"], full_name: player["name"], password: "password")
+          Profile.create!(role: "Player", age: player["age"], gender: player["gender"], user_id: user.id)
           team.team_players.create!(user_id: user.id)
         end
 
