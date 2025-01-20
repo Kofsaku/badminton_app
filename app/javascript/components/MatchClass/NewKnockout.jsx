@@ -120,13 +120,22 @@ const NewKnockout = ({
                   }
                 >
                   <option value="">Select</option>
-                  {tournamentPlayers.map((player) => (
-                    <option key={player.id} value={player.id}>
-                      {player.player_type === "User"
-                        ? player.player.full_name
-                        : player.player.title}
-                    </option>
-                  ))}
+                  {Array.from({
+                    length:
+                      classData[step - 2].winnerCount *
+                      classData[step - 2].tableCount,
+                  }).map((_, index) => {
+                    return (
+                      <option key={index} value={index}>
+                        {String.fromCharCode(
+                          "A".charCodeAt(0) +
+                            index / classData[step - 2].winnerCount
+                        ) +
+                          " - " +
+                          ((index % classData[step - 2].winnerCount) + 1)}
+                      </option>
+                    );
+                  })}
                 </select>
               )}
             </div>
