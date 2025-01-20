@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TournamentVenueModel } from "../../models/TournamentVenueModel";
 import { useTranslation } from "react-i18next";
 
 const Step1 = ({ nextStep, formData, handleFormChange }) => {
   const [venues, setVenues] = useState([TournamentVenueModel()]); // Call the model function
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const venueData = formData.tournament_venues_attributes;
+    if (venueData?.length > 0) {
+      setVenues(venueData);
+    }
+  }, [formData.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -253,7 +260,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t("tournament.venue_name")}
                         className="field-style5"
                         name="venue_name"
-                        value={venue.venue_name}
+                        value={venue.venue_name || ""}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>
@@ -269,7 +276,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t("tournament.venue_address")}
                         className="field-style5"
                         name="venue_address"
-                        value={venue.venue_address}
+                        value={venue.venue_address || ""}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>
@@ -285,7 +292,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t("tournament.number_of_courts")}
                         className="field-style5"
                         name="no_of_courts"
-                        value={venue.no_of_courts}
+                        value={venue.no_of_courts || ""}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>
@@ -300,7 +307,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                         placeholder={t("tournament.venue_date")}
                         className="field-style5"
                         name="venue_date"
-                        value={venue.venue_date}
+                        value={venue.venue_date || ""}
                         onChange={(e) => handleVenueChange(index, e)}
                       />
                     </div>

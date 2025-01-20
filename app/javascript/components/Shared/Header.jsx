@@ -1,15 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, logoutUser } from "../../redux/actions";
+import { logoutUser } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
+  const { t: translation } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  // Logout function
+  const menuItems = [
+    { path: '/', text: translation('header.menu.home') },
+    { path: '/about', text: translation('header.menu.about') },
+    { path: '/services', text: translation('header.menu.services') },
+    { path: '/faqs', text: translation('header.menu.faqs') },
+    { path: '/privacy-policy', text: translation('header.menu.privacyPolicy') },
+    { path: '/terms-of-service', text: translation('header.menu.termsOfService') },
+    { path: '/transactions-law', text: '特定商取引法' },
+    { path: '/contact', text: translation('header.menu.contact') }
+  ];
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(logoutUser()); // Dispatch LOGOUT_USER action
@@ -26,40 +38,24 @@ const Header = () => {
             </Link>
           </div>
           <div className="navbar-custom">
-            <div className="menu-item-btn menu-active-btn">
-              <Link to="/">家</Link>
-            </div>
-            <div className="menu-item-btn">
-              <Link to="/about">About</Link>
-            </div>
-            <div className="menu-item-btn">
-              <Link to="/services">Service</Link>
-            </div>
-            <div className="menu-item-btn">
-              <Link to="/faqs">FAQ's</Link>
-            </div>
-            <div className="menu-item-btn">
-              <Link to="/privacy-policy">Privacy Policy</Link>
-            </div>
-            <div className="menu-item-btn">
-              <Link to="/terms-of-service">Terms of Service</Link>
-            </div>
-            <div className="menu-item-btn">
-              <Link to="/contact">Contact</Link>
-            </div>
+            {menuItems.map((item, index) => (
+              <div key={index} className={`menu-item-btn ${item.path === '/' ? 'menu-active-btn' : ''}`}>
+                <Link to={item.path}>{item.text}</Link>
+              </div>
+            ))}
             <div className="d-inline-block">
               {isLoggedIn ? (
                 <>
-                  <Link to="/tournament-management" className="header-btn1">
+                  <Link to="/tournament-management" className="header-btn1 ml-20">
                     Dashboard
                   </Link>
                   <button className="header-btn1" onClick={logout}>
-                    Signout
+                    {translation('header.auth.signout')}
                   </button>
                 </>
               ) : (
                 <Link to="/create-account" className="header-btn1">
-                  Signup
+                  {translation('header.auth.signup')}
                 </Link>
               )}
             </div>

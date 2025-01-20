@@ -25,6 +25,7 @@ const Tournaments = () => {
   }, [currentPage]);
 
   const handleDelete = async (id) => {
+    console.log('deleting')
     try {
       await deleteTournament(id);
       setTournaments(tournaments.filter(tournament => tournament.id !== id));

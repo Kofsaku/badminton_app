@@ -7,6 +7,14 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const [categories, setCategories] = useState([TournamentCategoryModel()]);
   const { t } = useTranslation();
 
+  useEffect(() => {
+      const categoriesData = formData.tournament_categories_attributes
+      if (categoriesData?.length > 0) {
+        setCategories(categoriesData)
+      }
+  
+    }, [formData.id]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     nextStep();
@@ -66,9 +74,10 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   <select
                     className="field-style5"
                     name="category_type"
-                    value={category.category_type}
+                    value={category.category_type || ''}
                     onChange={(e) => handleCategoryChange(catIndex, e)}
                   >
+                    <option value="">{t('tournament.selectTournamentCategory')}</option> {/* Translation key */}
                     <option value="mens_singles_individual">{t('tournament.mensSinglesIndividual')}</option> {/* Translation key */}
                     <option value="womens_singles_individual">{t('tournament.womensSinglesIndividual')}</option> {/* Translation key */}
                     <option value="mens_doubles_individual">{t('tournament.mensDoublesIndividual')}</option> {/* Translation key */}
@@ -167,18 +176,19 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   </label>
                   <div className="d-flex w-100 align-items-center justify-content-start">
                     <div className="checkbox-style1 me-2 d-inline-block">
+                      {category.show_time_limit}
                       <input
                         className="m-0 min-width-clear mt-0"
                         type="checkbox"
                         name="show_time_limit"
-                        value={category.show_time_limit}
+                        checked={category.show_time_limit}
                         onChange={(e) => handleCategoryChange(catIndex, e)}
                       />
                     </div>
                     <select
                       className="field-style5"
                       name="time_limit"
-                      value={category.time_limit}
+                      value={category.time_limit || t('tournament.selectTimeLimit')}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                       disabled={!category.show_time_limit}
                     >
@@ -201,7 +211,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                         className="m-0 min-width-clear mt-0"
                         type="checkbox"
                         name="show_intervals"
-                        value={category.show_intervals}
+                        checked={category.show_intervals}
                         onChange={(e) => handleCategoryChange(catIndex, e)}
                       />
                     </div>

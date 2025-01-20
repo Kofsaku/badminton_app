@@ -6,6 +6,7 @@ import { fetchPlayers } from "../../api/userApi";
 import {
   fetchTournamentIds,
   addPlayersTournament,
+  removePlayerFromTournament,
   addNewPlayersTournament,
   addNewTeamsTournament,
   fetchTournamentCategories,
@@ -94,6 +95,19 @@ const Players = () => {
       console.error('Error fetching tournament divisions:', error);
     }
   };
+
+  const handleRemovePlayer = async (playerId) => {
+    setButtonStates((prevState) => ({ ...prevState, [playerId]: "loading" }));
+
+    try {
+      await removePlayerFromTournament(selectedTournament, playerId);
+      loadPlayers()
+      setButtonStates((prevState) => ({ ...prevState, [playerId]: "removed" }));
+    } catch (error) {
+      console.error("Error adding player:", error);
+      setButtonStates((prevState) => ({ ...prevState, [playerId]: "error" }));
+    }
+  }
 
   // Fetch players based on the page and selected tournament
   useEffect(() => {
@@ -612,11 +626,20 @@ const Players = () => {
                           <td className="bg-silver4 px-3 py-2 merriweather-font fw-medium text-14 border border-color-silver2">
                             {player.part_of_tournament ||
                             buttonStates[player.id] === "added" ? (
-                              <span className="text-muted">
-                                {player.part_of_tournament
-                                  ? "Already in Tournament"
-                                  : "Added"}
-                              </span>
+                              <div>
+                                <span className="text-muted">
+                                  {player.part_of_tournament
+                                    ? "Already in Tournament"
+                                    : "Added"}
+                                </span>
+                                <button
+                                  className="btn btn-danger"
+                                  disabled={buttonStates[player.id] === 'loading'}
+                                  onClick={() => handleRemovePlayer(player.id)}
+                                >
+                                  Remove Player
+                                </button>
+                              </div>
                             ) : (
                               <button
                                 className="btn btn-primary"

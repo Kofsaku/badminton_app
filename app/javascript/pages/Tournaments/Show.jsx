@@ -46,14 +46,20 @@ export default function () {
         </div>
         <div className="p-5">
           <h6 className="text-green2 fw-bold mb-3">
-            エントリーの種類を選んでください
+            <a href={`/tournament/${params.id}/entry`}>
+              エントリーの種類を選んでください
+            </a>
           </h6>
-          <img src="/images/result-2.png" alt="tournament" />
-          <h5 className="fw-bold mt-5">エントリーの種類を選んでください</h5>
+          <img src="/images/result-2.png" alt="tournament"/>
+          <h5 className="fw-bold mt-5">
+            <a href={`/tournament/${params.id}/entry`}>
+              エントリーの種類を選んでください
+            </a>
+          </h5>
           <div className="mt-5">
             <h6>◆クロスミントン◆</h6>
             <p>
-              「クロスミントン」は欧米で話題の新スポーツで、一言で言えば「ネットのないバドミントン」です。
+            「クロスミントン」は欧米で話題の新スポーツで、一言で言えば「ネットのないバドミントン」です。
             </p>
             <p>
               いつでもどこでも誰とでも遊べるのが特徴です。ヨーロッパを中心に世界中で人気があり、世界各国でトーナメン
@@ -88,11 +94,13 @@ export default function () {
               </li>
             </ul>
           </div>
-          <h5 className="fw-bold mt-5">エントリーの種類を選んでください</h5>
+          <h5 className="fw-bold mt-5">
+            <a href={`/tournament/${params.id}/entry`}>エントリーの種類を選んでください</a>
+          </h5>
           <div className="mt-5">
             <h6>◆クロスミントン◆</h6>
             <p>
-              「クロスミントン」は欧米で話題の新スポーツで、一言で言えば「ネットのないバドミントン」です。
+            「クロスミントン」は欧米で話題の新スポーツで、一言で言えば「ネットのないバドミントン」です。
             </p>
             <p>
               いつでもどこでも誰とでも遊べるのが特徴です。ヨーロッパを中心に世界中で人気があり、世界各国でトーナメン
@@ -129,7 +137,7 @@ export default function () {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer/>
     </>
   );
 }

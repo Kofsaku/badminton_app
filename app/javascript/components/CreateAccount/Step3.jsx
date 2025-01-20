@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import StepLayout from "./StepLayout";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -6,30 +7,44 @@ import { useNavigate } from "react-router-dom";
 import { setUser } from '../../redux/actions';
 
 const Step3 = ({ formData, handleFormChange }) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     const updatedProfileAttributes = {
-      ...formData.profile_attributes, [name]: value,
+      ...formData.profile_attributes,
+      [name]: value,
     };
     handleFormChange("profile_attributes", updatedProfileAttributes);
   };
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/users.json', formData); // Ensure your API endpoint is correct
-      dispatch(setUser({ apiKey: response.data.api_key, isLoggedIn: true, fullName: formData.full_name, role: formData.profile_attributes.role })); // Store API key in Redux
-      console.log('User created:', response.data);
-
-      // Redirect to the tournaments management page
+      const response = await axios.post('/users.json', formData);
+      dispatch(setUser({
+        apiKey: response.data.api_key,
+        isLoggedIn: true,
+        fullName: formData.full_name,
+        role: formData.profile_attributes.role
+      }));
       navigate('/congrats-profile');
     } catch (error) {
       console.error('Error creating user:', error.response?.data || error.message);
     }
   };
+
+  const formFields = [
+    { name: 'real_name', type: 'text', translationKey: 'realName' },
+    { name: 'pet_name', type: 'text', translationKey: 'petName' },
+    { name: 'telephone_number', type: 'number', translationKey: 'telephone' },
+    { name: 'prefecture', type: 'text', translationKey: 'prefecture' },
+    { name: 'city_town', type: 'text', translationKey: 'cityTown' },
+    { name: 'years_of_experience', type: 'text', translationKey: 'experience' },
+    { name: 'my_racket', type: 'text', translationKey: 'racket' }
+  ];
 
   return (
     <StepLayout>
@@ -41,80 +56,35 @@ const Step3 = ({ formData, handleFormChange }) => {
         </div>
         <div className="d-block w-100 text-center mb-5">
           <h5 className="text-black1 mb-2 text-capitalize text-25 tab-text-22 fw-bold">
-            Next, let's find out
+            {t('signup.step3.title')}
           </h5>
           <p className="text-grey1 mt-0 mb-4 text-14 small-width1">
-            Creating a personalized profile allows you to tailor it to your customers' preferences
+            {t('signup.step3.subtitle')}
           </p>
         </div>
         <div className="d-block w-100 mb-3">
           <div className="row m-0 justify-content-center">
             <div className="col-lg-10 col-md-10 col-sm-11 col-11">
               <div className="row m-0">
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-                  <div className="form-field2">
-                    <input
-                      type="text"
-                      className="field-style2 outline-none"
-                      placeholder="Real Name"
-                      name="real_name"
-                      value={formData.profile_attributes.real_name || ""}
-                      onChange={handleProfileChange}
-                    />
+                {formFields.map((field) => (
+                  <div key={field.name} className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                    <div className="form-field2">
+                      <input
+                        type={field.type}
+                        className="field-style2 outline-none"
+                        placeholder={t(`signup.step3.fields.${field.translationKey}.placeholder`)}
+                        name={field.name}
+                        value={formData.profile_attributes[field.name] || ""}
+                        onChange={handleProfileChange}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-                  <div className="form-field2">
-                    <input
-                      type="text"
-                      className="field-style2 outline-none"
-                      placeholder="Pet Name"
-                      name="pet_name"
-                      value={formData.profile_attributes.pet_name || ""}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-                  <div className="form-field2">
-                    <input
-                      type="number"
-                      className="field-style2 outline-none"
-                      placeholder="Telephone Number"
-                      name="telephone_number"
-                      value={formData.profile_attributes.telephone_number || ""}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-                  <div className="form-field2">
-                    <input
-                      type="text"
-                      className="field-style2 outline-none"
-                      placeholder="Prefecture"
-                      name="prefecture"
-                      value={formData.profile_attributes.prefecture || ""}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-                  <div className="form-field2">
-                    <input
-                      type="text"
-                      className="field-style2 outline-none"
-                      placeholder="City/Town"
-                      name="city_town"
-                      value={formData.profile_attributes.city_town || ""}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                </div>
+                ))}
+
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
                   <div className="form-field2 position-relative">
                     <span className="d-block w-100 position-absolute top-0 ms-1 start-0 px-3 text-muted text-14">
-                      Gender
+                      {t('signup.step3.fields.gender.label')}
                     </span>
                     <select
                       className="field-style2 outline-none"
@@ -122,60 +92,38 @@ const Step3 = ({ formData, handleFormChange }) => {
                       value={formData.profile_attributes.gender || ""}
                       onChange={handleProfileChange}
                     >
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
+                      <option value="">{t('signup.step3.fields.gender.placeholder')}</option>
+                      {Object.entries(t('signup.step3.fields.gender.options', { returnObjects: true })).map(([key, value]) => (
+                        <option key={key} value={value}>{value}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
+
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
                   <div className="form-field2 position-relative">
                     <input
                       type="date"
                       className="field-style2 outline-none"
-                      placeholder="Date of Birth"
+                      placeholder={t('signup.step3.fields.dateOfBirth.placeholder')}
                       name="date_of_birth"
                       value={formData.profile_attributes.date_of_birth || ""}
                       onChange={handleProfileChange}
                     />
                     <span className="d-block w-100 position-absolute top-0 start-0 px-3 text-muted text-14">
-                      Date of Birth
+                      {t('signup.step3.fields.dateOfBirth.label')}
                     </span>
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-                  <div className="form-field2">
-                    <input
-                      type="text"
-                      className="field-style2 outline-none"
-                      placeholder="Years of Experience (optional)"
-                      name="years_of_experience"
-                      value={formData.profile_attributes.years_of_experience || ""}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-                  <div className="form-field2">
-                    <input
-                      type="text"
-                      className="field-style2 outline-none"
-                      placeholder="My Racket (optional)"
-                      name="my_racket"
-                      value={formData.profile_attributes.my_racket || ""}
-                      onChange={handleProfileChange}
-                    />
-                  </div>
-                </div>
               </div>
+
               <div className="row m-0 justify-content-end">
                 <div className="mt-4 col-lg-6 col-md-6 col-sm-6 col-12">
                   <button
                     className="custom-btn3 px-4 d-flex w-100 align-items-center justify-content-between"
                     onClick={handleSubmit}
                   >
-                    <span className="d-inline-block pe-5">Continue</span>
+                    <span className="d-inline-block pe-5">{t('signup.step3.continue')}</span>
                     <i className="fa fa-arrow-right"></i>
                   </button>
                 </div>

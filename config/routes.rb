@@ -19,13 +19,19 @@ Rails.application.routes.draw do
       resources :categories do
         get 'divisions', to: 'categories#divisions'
       end
+      resources :payments do
+        collection do
+          post :charge
+        end
+      end
     end
   end
   # Root and homepage routes
   get 'about', to: 'homepage#about'
   get 'terms-of-service', to: 'homepage#terms_of_service'
   get 'faqs', to: 'homepage#faqs'
-  get 'privacy-policy', to: 'homepage#privacy-policy'
+  get 'privacy-policy', to: 'homepage#privacy_policy'
+  get 'transactions-law', to: 'homepage#transactions_law'
   get 'contact', to: 'homepage#contact'
   get 'select-payment-method', to: 'homepage#select_payment_method'
   
@@ -39,6 +45,7 @@ Rails.application.routes.draw do
     get 'categories', to: 'tournaments#categories'
     post 'add_player'
     post 'add_new_player'
+    delete 'remove_player_from_tournament'
     post 'add_new_team'
     get 'tournament_divisions'
     get 'tournament_categories'
@@ -73,6 +80,7 @@ Rails.application.routes.draw do
       get 'organizers-list', to: 'users#organizers_list'
       get 'organizers-list/:id', to: 'users#get_organizer_by_id'
       put 'organizers-list/:id', to: 'users#update_organizer_by_id'
+      delete 'organizers-list/:id', to: 'users#destroy_organizer_by_id'
     end
   end
 
