@@ -591,19 +591,11 @@
       "sections": {
         "usefulLinks": {
           "title": "便利なリンク",
-          "links": [
-            "ホーム",
-            "プレイヤー向け",
-            "トーナメント主催者向け"
-          ]
+          "links": ["ホーム", "プレイヤー向け", "トーナメント主催者向け"]
         },
         "company": {
           "title": "会社情報",
-          "links": [
-            "リンク #1",
-            "リンク #2",
-            "リンク #3"
-          ]
+          "links": ["リンク #1", "リンク #2", "リンク #3"]
         },
         "contact": {
           "title": "お問い合わせ",
@@ -640,11 +632,13 @@
       "menu": {
         "tournamentManagement": "トーナメント管理",
         "usersManagement": "ユーザー管理",
+        "organizerManagement": "主催者管理",
         "tournamentCreation": "トーナメント作成",
         "typeManagement": "タイプ管理",
         "splitManagement": "分割管理",
         "playerManagement": "プレイヤー管理",
         "leagueTables": "リーグ/トーナメントテーブル",
+        "matchManagement": "試合管理",
         "timetable": "タイムテーブル",
         "notificationManagement": "通知管理",
         "tournaments": "トーナメント"

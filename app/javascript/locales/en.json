@@ -614,19 +614,11 @@
       "sections": {
         "usefulLinks": {
           "title": "Useful links",
-          "links": [
-            "Home",
-            "For players",
-            "For tournament organizers"
-          ]
+          "links": ["Home", "For players", "For tournament organizers"]
         },
         "company": {
           "title": "Our Company",
-          "links": [
-            "Link #1",
-            "Link #2",
-            "Link #3"
-          ]
+          "links": ["Link #1", "Link #2", "Link #3"]
         },
         "contact": {
           "title": "Contact Us",
@@ -663,11 +655,13 @@
       "menu": {
         "tournamentManagement": "Tournament Management",
         "usersManagement": "Users Management",
+        "organizerManagement": "Organizer Management",
         "tournamentCreation": "Tournament Creation",
         "typeManagement": "Type Management",
         "splitManagement": "Split Management",
         "playerManagement": "Player Management",
         "leagueTables": "League/Tournament Tables",
+        "matchManagement": "Match Management",
         "timetable": "Timetable",
         "notificationManagement": "Notification Management",
         "tournaments": "Tournaments"
