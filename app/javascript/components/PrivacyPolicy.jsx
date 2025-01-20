@@ -5,6 +5,7 @@ import CtaSection from './Shared/CtaSection';
 import Footer from './Shared/Footer';
 
 const PrivacyPolicy = () => {
+  const { t } = useTranslation();
 
   return (
     <div>
