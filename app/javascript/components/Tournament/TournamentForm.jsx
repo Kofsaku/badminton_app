@@ -4,7 +4,7 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import { TournamentFormModel } from '../../models/TournamentFormModel';
 
-const TournamentForm = ({ initialData }) => {
+const TournamentForm = ({ initialData, editMode }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(TournamentFormModel);
 
@@ -50,7 +50,9 @@ const TournamentForm = ({ initialData }) => {
           nextStep={nextStep}
           prevStep={prevStep}
           formData={formData}
+          setFormData={setFormData}
           handleFormChange={handleFormChange}
+          editMode={editMode}
         />
       );
     default:

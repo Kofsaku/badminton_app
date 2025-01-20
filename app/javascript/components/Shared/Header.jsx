@@ -18,6 +18,7 @@ const Header = () => {
     { path: '/faqs', text: translation('header.menu.faqs') },
     { path: '/privacy-policy', text: translation('header.menu.privacyPolicy') },
     { path: '/terms-of-service', text: translation('header.menu.termsOfService') },
+    { path: '/transactions-law', text: '特定商取引法' },
     { path: '/contact', text: translation('header.menu.contact') }
   ];
 
@@ -45,7 +46,7 @@ const Header = () => {
             <div className="d-inline-block">
               {isLoggedIn ? (
                 <>
-                  <Link to="/tournament-management" className="header-btn1">
+                  <Link to="/tournament-management" className="header-btn1 ml-20">
                     Dashboard
                   </Link>
                   <button className="header-btn1" onClick={logout}>

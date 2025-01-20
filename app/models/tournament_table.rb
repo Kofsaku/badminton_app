@@ -1,7 +1,7 @@
 class TournamentTable < ApplicationRecord
   belongs_to :tournament
   belongs_to :tournament_venue
-  belongs_to :tournament_category
+  belongs_to :tournament_category, optional: true
   belongs_to :tournament_division
   belongs_to :timetable
   has_many :tournament_table_players, dependent: :destroy

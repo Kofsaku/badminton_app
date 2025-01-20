@@ -5,12 +5,15 @@ import About from "../components/About";
 import Faqs from "../components/Faqs";
 import TermsOfService from "../components/TermsOfService";
 import PrivacyPolicy from "../components/PrivacyPolicy";
+import TransactionsLaw from "../components/TransactionsLaw";
 import Contact from "../components/Contact";
 import AccountForm from "../components/CreateAccount";
 import Login from "../components/Login";
 import Tournaments from "../pages/Tournaments";
 import CreateTournament from "../pages/Tournaments/Create";
 import ShowTournament from "../pages/Tournaments/Show";
+import Entry from "../pages/Entry/index";
+import EntryPayment from "../pages/Entry/payment";
 import EditTournament from "../pages/Tournaments/Edit";
 import CongratsProfile from "../components/CreateAccount/CongratsProfile";
 import Timetables from "../pages/Timetables";
@@ -44,6 +47,7 @@ export default (
       <Route path="/faqs" element={<Faqs />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/transactions-law" element={<TransactionsLaw />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/create-account" element={<AccountForm />} />
       <Route path="/login" element={<Login />} />
@@ -205,6 +209,8 @@ export default (
       <Route path="/matches" element={<MatchList />} />
       <Route path="/matches/new" element={<NewMatch />} />
       <Route path="/matches/:id/scoreboard" element={<ScoreBoard />} />
+      <Route path="/tournament/:id/entry" element={<Entry />} />
+      <Route path="/tournament/:id/entry/payment" element={<EntryPayment />} />
     </Routes>
   </Router>
 );

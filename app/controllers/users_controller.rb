@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show edit update destroy destroy_organizer_by_id ]
   before_action :authenticate_user, only: %i[ show_api_key regenerate_api_key ]
   # GET /users or /users.json
   def index
@@ -56,6 +56,16 @@ class UsersController < ApplicationController
         }
       }
     )
+  end
+
+  def destroy_organizer_by_id
+    ApplicationRecord.transaction do
+      @user.destroy!
+    rescue ActiveRecord::RecordInvalid
+      render json: { message: 'Organizer destroys failed' }
+    end
+  
+    render json: { message: 'Organizer is successfully destroy' }
   end
 
   def update_organizer_by_id

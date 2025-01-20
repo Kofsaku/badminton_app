@@ -25,7 +25,7 @@ const EditTournament = () => {
     };
 
     fetchTournament();
-  }, [id]);
+  }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -36,7 +36,7 @@ const EditTournament = () => {
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
         {tournamentData && (
-          <TournamentForm initialData={tournamentData} />
+          <TournamentForm initialData={tournamentData} editMode={true} />
         )}
       </section>
     </main>
