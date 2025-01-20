@@ -24,6 +24,7 @@ Rails.application.routes.draw do
           post :charge
         end
       end
+      resources :profiles
     end
   end
   # Root and homepage routes
@@ -34,7 +35,8 @@ Rails.application.routes.draw do
   get 'transactions-law', to: 'homepage#transactions_law'
   get 'contact', to: 'homepage#contact'
   get 'select-payment-method', to: 'homepage#select_payment_method'
-  
+  get 'dashboard', to: 'homepage#dashboard'
+
   # Tournament management routes
   get 'tournament-creation', to: 'tournaments#new'
   get 'tournament-management', to: 'tournaments#tournament_management'

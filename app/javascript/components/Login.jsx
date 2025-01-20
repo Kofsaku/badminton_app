@@ -34,7 +34,7 @@ const Login = () => {
         fullName: response.data.full_name,
         role: response.data.role
       }));
-      navigate('/tournament-management');
+      navigate('/');
     } catch (error) {
       setError(error.response?.data?.error || t('login.error.default'));
     }
