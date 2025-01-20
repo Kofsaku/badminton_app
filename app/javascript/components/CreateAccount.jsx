@@ -15,7 +15,7 @@ const CreateAccount = () => {
     full_name: "",
     email: "",
     password: "",
-    role: "",
+    role: "player",
   });
 
   const handleChange = (e) => {
