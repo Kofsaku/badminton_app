@@ -7,13 +7,13 @@ import Profile from '../components/Mypage/Profile';
 import Entry from '../components/Mypage/Entry';
 import { fetchProfile } from '../api/profileApi'
 import {logoutUser} from "../redux/actions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-
 
 export default function () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const role = useSelector((state) => state.user.role);
   const sidebar = [
     { key: 'profile', title: 'あなたのプロフィール', sidebarTitle: 'プロフィール'},
     { key: 'team', title: '参加予定試合管理', sidebarTitle: '参加予定試合管理'},
@@ -30,8 +30,12 @@ export default function () {
   }
 
   useEffect(async () => {
-    const profile = await fetchProfile();
-    setUserData(profile)
+    if( role !== 'player') {
+      navigate('/')
+    } else {
+      const profile = await fetchProfile();
+      setUserData(profile)
+    }
   }, []);
 
   const logout = (e) => {
@@ -44,26 +48,24 @@ export default function () {
     <>
       <Header />
       <main>
-        <div className="w-100 d-flex justify-content-between p-12-0-sm box-shadow-1">
+        <div className="w-100 d-flex justify-content-between p-12-0-sm box-shadow-1 position-relative">
           <div className="container">
-              <div className="d-flex gap-32 align-items-center justify-content-center w-100-sm pd-67">
+              <div className="d-flex gap-32 align-items-center justify-content-center w-100-sm pd-67 pd-0-sm gap-12-sm">
                 <img src="/images/avatar-1.png" alt=""
                      className="width-123 height-123 border-radius-50 width-80-sm height-80-sm"/>
                 <div className="">
-                  <div className="text-green3 fz-44 fw-bold text-decoration-underline">{sidebarActive.title}</div>
+                  <div className="text-green3 fz-44 fw-bold text-decoration-underline fz-24-sm text-decoration-none-sm">{sidebarActive.title}</div>
                 </div>
               </div>
           </div>
         </div>
         <div className="pad-top-60 pad-bot-100 w-100 pd-0-sm bg-silver6">
-          <div className="container pd-40-0-sm">
+          <div className="container">
             <div className="d-flex gap-70">
-              <div className="left-item">
+              <div className="left-item d-none-sm pd-40-0-60-sm">
                 {sidebar.map((item) => (
                   <div
-                    className={`pd-17-21 d-flex justify-content-between
-      width-316 height-60 border-b-1 fz-18 c-grey-1 cursor-pointer align-items-center
-      ${item.key === sidebarActive.key ? 'active-sidebar' : ''}`}
+                    className={`pd-17-21 d-flex justify-content-between width-316 height-60 border-b-1 fz-18 c-grey-1 cursor-pointer align-items-center ${item.key === sidebarActive.key ? 'active-sidebar' : ''}`}
                     key={item.key}
                     onClick={() => changeActiveSidebar(item.key)}
                   >
