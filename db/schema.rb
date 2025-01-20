@@ -286,6 +286,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_08_164340) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "region"
+    t.string "prefecture"
     t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 

@@ -7,11 +7,35 @@ class Api::V1::TournamentsController < ApplicationController
   end
 
   def get_tournaments_by_query
-    search_params = params.permit(:name, :classification, :status, :region, :venue, :match_format, :participation_type)
+    search_params = params.permit(:name, :classification, :region, :prefecture, :start_date, :end_date, :status, :region, :venue, :match_format, :participation_type)
 
     @tournaments = Tournament.all
     @tournaments = @tournaments.where('name' => search_params[:name]) if search_params[:name] != ""
-    @tournaments = @tournaments.where('event_category' => search_params[:classification]) if search_params[:classification] != "all"
+    # @tournaments = @tournaments.where('event_category' => search_params[:classification]) if search_params[:classification] != "all"
+    @tournaments = @tournaments.where('region' => search_params[:region]) if search_params[:region] != "all"
+    logger.info "hello how are you #{search_params[:prefecture]}"
+    
+    @tournaments = @tournaments.where('prefecture' => search_params[:prefecture]) if search_params[:prefecture] != ""
+
+    if search_params[:start_date] == ""
+      if search_params[:end_date] != ""
+        @tournaments = @tournaments.where('event_date <= ?', search_params[:end_date])
+      end
+    else
+      if search_params[:end_date] == ""
+        @tournaments = @tournaments.where('event_date >= ?', search_params[:start_date])
+      else
+        @tournaments = @tournaments.where(event_date: search_params[:start_date]..search_params[:end_date]) 
+      end
+    end
+
+    if search_params[:match_format] == "single"
+      @tournaments = @tournaments.joins(:tournament_categories).where('tournament_categories.category_type LIKE ?', '%シングルス%').distinct
+    elsif search_params[:match_format] == "double"
+      @tournaments = @tournaments.joins(:tournament_categories).where('tournament_categories.category_type LIKE ?', '%ダブルス%').distinct
+    elsif search_params[:match_format] == "team"
+      @tournaments = @tournaments.joins(:tournament_categories).where('tournament_categories.category_type LIKE ?', '%団体%').distinct
+    end
 
     render json: @tournaments  
   end

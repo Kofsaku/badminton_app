@@ -4,6 +4,8 @@
       "add_new_tournament": "Add New Tournament",
       "selectCategory": "Select Category",
       "name": "Name",
+      "region": "Region",
+      "prefecture": "Prefecture",
       "event_date_time": "Event Date Time",
       "registration_time": "Registration Start Time",
       "organization_name": "Organization Name",
