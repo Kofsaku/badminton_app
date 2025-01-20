@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 import axiosInstance from "../../api/axiosInstance";
 
 const sliderSettings = {
@@ -106,6 +106,8 @@ const SearchSection = () => {
       console.log(response.data);
     } catch (e) {}
   };
+
+  const { t } = useTranslation();
 
   return (
     <section className="py-5">
