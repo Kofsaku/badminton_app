@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
-  const { footer_translation } = useTranslation();
+  const { t: footer_translation } = useTranslation();
 
   const socialLinks = [
     { icon: 'fb-green-icon.svg', alt: footer_translation('footer.social.facebook') },
