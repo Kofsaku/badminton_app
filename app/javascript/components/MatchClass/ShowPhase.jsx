@@ -8,6 +8,8 @@ const ShowPhase = ({ step, matchData, goToPrev, goToNext }) => {
   const navigate = useNavigate();
 
   const roundData = matchData.match_round[step - 1];
+  const prevNoOfWinners =
+    matchData.match_round[step - 2]?.number_of_winners ?? 0;
 
   return (
     <>
@@ -28,12 +30,14 @@ const ShowPhase = ({ step, matchData, goToPrev, goToNext }) => {
           <ShowRoundRobin
             roundData={roundData}
             step={step}
+            prevNoOfWinners={prevNoOfWinners}
             matchSize={matchData.size}
           />
         ) : (
           <ShowKnockout
             roundData={roundData}
             step={step}
+            prevNoOfWinners={prevNoOfWinners}
             matchSize={matchData.size}
           />
         )}

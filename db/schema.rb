@@ -146,6 +146,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_17_095914) do
     t.datetime "updated_at", null: false
     t.bigint "tournament_venue_id"
     t.bigint "match_group_id"
+    t.integer "player_key"
+    t.integer "second_player_key"
     t.index ["match_group_id"], name: "index_timetable_cells_on_match_group_id"
     t.index ["second_tournament_player_id"], name: "index_timetable_cells_on_second_tournament_player_id"
     t.index ["tournament_player_id"], name: "index_timetable_cells_on_tournament_player_id"

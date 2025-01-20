@@ -35,6 +35,8 @@ class Api::V1::MatchClassesController < ApplicationController
                 else
                   @group_player = GroupPlayer.new(match_group_id: @match_group.id, player_key: selected_player)
                   if @group_player.save
+                  else
+                    logger.error "error to save player: #{@group_player.errors.full_messages}" 
                   end
                 end
               end
@@ -54,6 +56,27 @@ class Api::V1::MatchClassesController < ApplicationController
                         unless cell.match.present?
                           player1 = cell.tournament_player.player_type == "User" ? cell.tournament_player.player.full_name : cell.tournament_player.player.title
                           player2 = cell.second_tournament_player.player_type == "User" ? cell.second_tournament_player.player.full_name : cell.second_tournament_player.player.title
+                          Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
+                        end
+                      end
+                    end
+                  end
+                end
+              else
+                group_data.each_with_index do |match_row, row_index|
+                  match_row.each_with_index do |match_cell, col_index|
+                    if col_index > row_index && match_cell
+                      cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], player_key: selected_players_in_group[row_index], second_player_key: selected_players_in_group[col_index])
+                      cell.number = @match_group.id * 1000 + match_cell
+          
+                      unless cell.save
+                        logger.error "error to save cell: #{cell.errors.full_messages}"
+                      else
+                        unless cell.match.present?
+                          @prev_round = MatchRound.find_by(round_number: round_index - 1)
+
+                          player1 = ("A".ord + cell.player_key / @prev_round.number_of_winners).chr
+                          player2 = ("A".ord + cell.second_player_key / @prev_round.number_of_winners).chr
                           Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
                         end
                       end
