@@ -4,8 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
 import { reOrderTeamMatch } from "../../api/tournamentApi";
 
-const MatchOrder = () => {
-  const { id } = useParams();
+const MatchOrder = ({id, setViewDetail}) => {
   const [match, setMatch] = useState({})
   const [timetableCell, setTimetableCell] = useState({})
   const [opponent, setOpponent] = useState({})
@@ -55,11 +54,17 @@ const MatchOrder = () => {
     }
   }
 
+  const previosStep = () => {
+    setViewDetail(false)
+  }
+
   return (
     <main className="admin-wrapper d-flex w-100 flex-wrap bg-EEEEEE">
-      <AdminSidebar />
-      <section className="right-content-wrapper custom-scroll1 text-center">
+      <section className="custom-scroll1 text-center">
         <div className="header-wrapper px-5 pt-5">
+            <button onClick={previosStep} className="bg-green1 p-2 rounded-2 d-flex align-items-center justify-content-center">
+              <i className="fa fa-arrow-left text-14 text-white"></i>
+            </button>
           <h1 className="">オーダー登録</h1>
         </div>
         

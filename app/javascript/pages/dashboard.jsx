@@ -9,6 +9,7 @@ import { fetchProfile } from '../api/profileApi'
 import {logoutUser} from "../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import MatchList from "./TeamMatchList/TeamMatchList";
 
 export default function () {
   const dispatch = useDispatch();
@@ -85,7 +86,7 @@ export default function () {
                            setUserData={setUserData}
                   />
                 ) : sidebarActive.key === 'team' ? (
-                  <div>Teams Content</div>
+                  <MatchList detail={false}/>
                 ) : sidebarActive.key === 'entry' ? (
                   <Entry />
                 ) : sidebarActive.key === 'notice' ? (

@@ -106,7 +106,7 @@ export default (
         }
       />
       <Route
-        path="/team-matches/:id/match-order"
+        path="/team-matches/match-order"
         element={
           <ProtectedRoute>
             <MatchOrder />
