@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {createTournament, updateTournament} from '../../api/tournamentApi';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import {Spinner} from "react-bootstrap";
+import Loading from "../Loading";
 
 const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, editMode }) => {
   const navigate = useNavigate();
@@ -10,6 +12,7 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, ed
   const [listTitle, setListTitle] = useState([])
   const [listOption, setListOption] = useState([])
   const [updateMode, setUpdateMode] = useState(editMode)
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const handleChange = (e, index) => {
     const selectedCategoryType = e.target.value;
@@ -105,12 +108,13 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, ed
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (updateMode) {
-      handleUpdate()
-    } else {
-      handleCreate()
-    }
+    setIsSubmit(true)
+    console.log(111)
+    // if (updateMode) {
+    //   handleUpdate()
+    // } else {
+    //   handleCreate()
+    // }
   };
 
   return (
@@ -118,12 +122,14 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, ed
       <div className="d-block w-100 mb-3">
         <div className="d-flex w-100 align-items-center justify-content-start">
           <div className="d-inline-block me-3">
-            <button onClick={prevStep} className="bg-green1 p-2 rounded-2 d-flex align-items-center justify-content-center">
+            <button onClick={prevStep}
+                    className="bg-green1 p-2 rounded-2 d-flex align-items-center justify-content-center">
               <i className="fa fa-arrow-left text-14 text-white"> </i>
             </button>
           </div>
           <div className="d-inline-block min-width-clear">
-            <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0">{ t('tournament.selectTournamentTimetable') }</h3>
+            <h3
+              className="text-black text-20 mob-text-18 fw-bold merriweather-font m-0">{t('tournament.selectTournamentTimetable')}</h3>
           </div>
         </div>
       </div>
@@ -150,13 +156,15 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, ed
           </div>
           <div className="row pt-4">
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-              <button type="submit" className="bg-green1 text-white text-15 w-100 px-3 py-2 rounded-3 merriweather-font border-0">
+              <button type="submit" disabled={isSubmit}
+                      className="bg-green1 text-white text-15 w-100 px-3 py-2 rounded-3 merriweather-font border-0">
                 Next
               </button>
             </div>
           </div>
         </form>
       </div>
+      <Loading isShow={isSubmit}/>
     </div>
   );
 };
