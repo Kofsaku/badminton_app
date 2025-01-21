@@ -40,7 +40,7 @@ import EditTournamentOrganizer from "../pages/TournamentOrganizers/Edit";
 import Dashboard from "../pages/dashboard";
 import TeamMatchList from "../pages/TeamMatchList/TeamMatchList";
 import MatchOrder from "../pages/TeamMatchList/MatchOrder";
-import TeamMatchDetails from '../pages/TeamMatchList/TeamMatchDetails'
+import TeamMatchDetails from '../pages/TeamMatchList/TeamMatchDetails';
 
 <Route path="/payment-confirmation" element={<PaymentConfirmation />} />;
 export default (

@@ -34,15 +34,15 @@ const AdminSidebar = () => {
     admin: [
       {
         path: "/players-management",
-        text: t("adminSidebar.menu.usersManagement"),
+        text: t("adminSidebar.menu.usersManagementAdmin"),
       },
       {
         path: "/organizer-management",
-        text: t("adminSidebar.menu.organizerManagement"),
+        text: t("adminSidebar.menu.organizerManagementAdmin"),
       },
       {
         path: "/tournament-management",
-        text: t("adminSidebar.menu.tournamentManagement"),
+        text: t("adminSidebar.menu.tournamentManagementAdmin"),
       },
     ],
     common: [

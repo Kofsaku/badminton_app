@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def players_list
     @users = User.includes(:profile)
-             .where(profiles: { role: ["Player", "Both"] })
+             .where(profiles: { role: ["Player", "Both", "player"] })
              .page(params[:page])
              .per(params[:per_page] || 50)
 

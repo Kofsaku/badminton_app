@@ -114,6 +114,7 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments or /tournaments.json
   def create
+    binding.pry
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save!
