@@ -109,12 +109,11 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, ed
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmit(true)
-    console.log(111)
-    // if (updateMode) {
-    //   handleUpdate()
-    // } else {
-    //   handleCreate()
-    // }
+    if (updateMode) {
+      handleUpdate()
+    } else {
+      handleCreate()
+    }
   };
 
   return (
