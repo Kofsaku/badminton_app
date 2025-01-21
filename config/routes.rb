@@ -91,11 +91,15 @@ Rails.application.routes.draw do
       post 'add_log'
       patch 'complete'
       get 'scoreboard'
+      get 'match_order'
+      patch 'reorder_team_match'
     end
 
     collection do
       get 'all'
       get 'new'
+      get 'team_matches'
+      #get 'display_all_team_matches' # first design of tournament tables for team match
     end
   end
   

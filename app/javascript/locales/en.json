@@ -664,7 +664,9 @@
         "matchManagement": "Match Management",
         "timetable": "Timetable",
         "notificationManagement": "Notification Management",
-        "tournaments": "Tournaments"
+        "tournaments": "Tournaments",
+        "teamMatches": "Scheduled match management",
+        "teamOrder": "Order Details"
       }
     },
     "adminHeader": {
