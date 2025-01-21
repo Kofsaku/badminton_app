@@ -10,14 +10,17 @@ import {logoutUser} from "../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import MatchList from "./TeamMatchList/TeamMatchList";
+import { useTranslation } from 'react-i18next';
 
 export default function () {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const role = useSelector((state) => state.user.role);
   const sidebar = [
     { key: 'profile', title: 'あなたのプロフィール', sidebarTitle: 'プロフィール'},
-    { key: 'team', title: '参加予定試合管理', sidebarTitle: '参加予定試合管理'},
+    { key: 'team', title: t('adminHeader.userMenu.items.teamMatches'), sidebarTitle: t('adminHeader.userMenu.items.teamMatches')},
     { key: 'entry', title: 'あなたのエントリー・決済履歴', sidebarTitle: 'エントリー履歴・　決済'},
     { key: 'notice', title: 'お知らせ', sidebarTitle: 'お知らせ'},
     { key: 'setting', title: 'システム設定', sidebarTitle: 'システム設定'},

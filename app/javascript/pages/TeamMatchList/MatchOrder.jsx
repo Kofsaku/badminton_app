@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import AdminSidebar from "../../components/Shared/AdminSidebar";
+import { useNavigate } from "react-router-dom";
 import { reOrderTeamMatch } from "../../api/tournamentApi";
+import { useTranslation } from "react-i18next";
 
 const MatchOrder = ({id, setViewDetail}) => {
+  const { t } = useTranslation()
+
   const [match, setMatch] = useState({})
   const [timetableCell, setTimetableCell] = useState({})
   const [opponent, setOpponent] = useState({})
@@ -65,21 +67,21 @@ const MatchOrder = ({id, setViewDetail}) => {
             <button onClick={previosStep} className="bg-green1 p-2 rounded-2 d-flex align-items-center justify-content-center">
               <i className="fa fa-arrow-left text-14 text-white"></i>
             </button>
-          <h1 className="">オーダー登録</h1>
+          <h1 className="">{t('teamMatches.details.orderRegistration')}</h1>
         </div>
         
         <div className="content-wrapper bg-white m-5 overflow-visible p-4">
           <div className="detail-section">
             <div className="d-flex justify-content-center align-item-center p-2">
-              <div className="p-2">試合日程</div>
+              <div className="p-2">{t('teamMatches.details.matchScheduled')}</div>
               <div className="border bg-light p-2 w-25 text-center">{match.name}</div>
             </div>
             <div className="d-flex justify-content-center align-item-center p-2">
-              <div className="p-2">試合番号</div>
+              <div className="p-2">{t('teamMatches.details.matchNumber')}</div>
               <div className="border bg-light p-2 w-25 text-center">{timetableCell.number}</div>
             </div>
             <div className="d-flex justify-content-center align-item-center p-2">
-              <div className="p-2">対戦相手</div>
+              <div className="p-2">{t('teamMatches.details.opponent')}</div>
               <div className="border bg-light p-2 w-25 text-center">{opponent.title}</div>
             </div>
           </div>
@@ -88,8 +90,8 @@ const MatchOrder = ({id, setViewDetail}) => {
                 <table className="m-auto mt-4">
                   <thead>
                     <tr>
-                      <th className="border bg-light w-25">選手名</th>
-                      <th className="border bg-light w-25">順番</th>
+                      <th className="border bg-light w-25">{t('teamMatches.details.playerName')}</th>
+                      <th className="border bg-light w-25">{t('teamMatches.details.order')}</th>
                     </tr>
                   </thead>
                   <tbody>

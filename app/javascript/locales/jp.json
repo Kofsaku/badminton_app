@@ -641,9 +641,7 @@
         "matchManagement": "試合管理",
         "timetable": "タイムテーブル",
         "notificationManagement": "通知管理",
-        "tournaments": "トーナメント",
-        "teamMatches": "参加予定試合管理",
-        "teamOrder": "詳細ページ"
+        "tournaments": "トーナメント"
       }
     },
     "adminHeader": {
@@ -666,8 +664,24 @@
         "items": {
           "profile": "プロフィール",
           "logout": "ログアウト",
-          "login": "ログイン"
+          "login": "ログイン",
+          "teamMatches": "参加予定試合管理"
         }
+      }
+      
+    },
+    "teamMatches": {
+      "status": "ステータス",
+      "actions": "アクション",
+      "name": "名前",
+      "members": "メンバー",
+      "details": {
+        "orderRegistration": "オーダー登録",
+        "matchScheduled": "試合日程",
+        "matchNumber": "試合番号",
+        "opponent": "対戦相手",
+        "playerName": "選手名",
+        "order": "順番"
       }
     }
   }

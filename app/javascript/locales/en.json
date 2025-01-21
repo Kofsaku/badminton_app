@@ -664,9 +664,7 @@
         "matchManagement": "Match Management",
         "timetable": "Timetable",
         "notificationManagement": "Notification Management",
-        "tournaments": "Tournaments",
-        "teamMatches": "Scheduled match management",
-        "teamOrder": "Order Details"
+        "tournaments": "Tournaments"
       }
     },
     "adminHeader": {
@@ -689,8 +687,23 @@
         "items": {
           "profile": "Profile",
           "logout": "Logout",
-          "login": "Login"
+          "login": "Login",
+          "teamMatches": "Scheduled match management"
         }
+      }
+    },
+    "teamMatches": {
+      "status": "Status",
+      "actions": "Actions",
+      "name": "Name",
+      "members": "Members",
+      "details": {
+        "orderRegistration": "Order Registration",
+        "matchScheduled": "Match Scheduled",
+        "matchNumber": "Match Number",
+        "opponent": "Opponent",
+        "playerName": "Player Name",
+        "order": "Order"
       }
     }
   }

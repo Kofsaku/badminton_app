@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import MatchOrder from "./MatchOrder";
+import { useTranslation } from 'react-i18next';
 
 const MatchList = ({detail}) => {
+  const { t } = useTranslation();
+
   const [matches, setMatches] = useState([]);
   const [viewDetail, setViewDetail] = useState(detail || false)
   const [detailId, setDetailId] = useState(0)
@@ -34,10 +37,10 @@ const MatchList = ({detail}) => {
                     <table className="table mt-4">
                       <thead>
                         <tr>
-                          <th className="text-center border-1 border-secondary">Name</th>
-                          <th colSpan={3} className="text-center border-1 border-secondary">Members</th>
-                          <th className="text-center border-1 border-secondary">Status</th>
-                          <th className="text-center border-1 border-secondary">Actions</th>
+                          <th className="text-center border-1 border-secondary">{t('teamMatches.name')}</th>
+                          <th colSpan={3} className="text-center border-1 border-secondary">{t('teamMatches.members')}</th>
+                          <th className="text-center border-1 border-secondary">{t('teamMatches.status')}</th>
+                          <th className="text-center border-1 border-secondary">{t('teamMatches.actions')}</th>
                         </tr>
                       </thead>
                       <tbody>
