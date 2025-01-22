@@ -26,7 +26,6 @@ class Api::V1::TimetablesController < ApplicationController
             }
           },
           match: {
-            only: [:id]
           }
         }
       }

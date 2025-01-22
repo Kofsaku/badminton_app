@@ -65,7 +65,7 @@ class Api::V1::MatchClassesController < ApplicationController
               else
                 group_data.each_with_index do |match_row, row_index|
                   match_row.each_with_index do |match_cell, col_index|
-                    if col_index > row_index && match_cell
+                    if col_index > row_index && match_cell != 0
                       cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], player_key: selected_players_in_group[row_index], second_player_key: selected_players_in_group[col_index])
                       cell.number = @match_group.id * 1000 + match_cell
           
@@ -75,8 +75,13 @@ class Api::V1::MatchClassesController < ApplicationController
                         unless cell.match.present?
                           @prev_round = MatchRound.find_by(round_number: round_index - 1)
 
-                          player1 = ("A".ord + cell.player_key / @prev_round.number_of_winners).chr
-                          player2 = ("A".ord + cell.second_player_key / @prev_round.number_of_winners).chr
+                          player1_group = ("A".ord + cell.player_key / @prev_round.number_of_winners).chr
+                          player1_no = cell.player_key % @prev_round.number_of_winners + 1
+                          player1 = "#{player1_group}-#{player1_no}"
+
+                          player2_group = ("A".ord + cell.second_player_key / @prev_round.number_of_winners).chr
+                          player2_no = cell.second_player_key % @prev_round.number_of_winners + 1
+                          player2 = "#{player2_group}-#{player2_no}"
                           Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
                         end
                       end
