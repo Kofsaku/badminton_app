@@ -32,15 +32,10 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
   end
 
   create_table "match_classes", force: :cascade do |t|
-    t.bigint "tournament_id", null: false
-    t.bigint "tournament_category_id", null: false
-    t.bigint "tournament_division_id", null: false
-    t.integer "size", null: false
+    t.string "name"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tournament_category_id"], name: "index_match_classes_on_tournament_category_id"
-    t.index ["tournament_division_id"], name: "index_match_classes_on_tournament_division_id"
-    t.index ["tournament_id"], name: "index_match_classes_on_tournament_id"
   end
 
   create_table "match_compositions", force: :cascade do |t|
@@ -238,21 +233,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
   end
 
   create_table "tournament_tables", force: :cascade do |t|
-    t.string "name", null: false
     t.integer "table_type", null: false
-    t.bigint "tournament_id", null: false
-    t.bigint "tournament_category_id", null: false
-    t.bigint "tournament_division_id", null: false
+    t.bigint "match_classes_id", null: false
     t.integer "size", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bracket_direction"
     t.bigint "tournament_venue_id"
     t.bigint "timetable_id"
+    t.index ["match_classes_id"], name: "index_tournament_tables_on_match_classes_id"
     t.index ["timetable_id"], name: "index_tournament_tables_on_timetable_id"
-    t.index ["tournament_category_id"], name: "index_tournament_tables_on_tournament_category_id"
-    t.index ["tournament_division_id"], name: "index_tournament_tables_on_tournament_division_id"
-    t.index ["tournament_id"], name: "index_tournament_tables_on_tournament_id"
     t.index ["tournament_venue_id"], name: "index_tournament_tables_on_tournament_venue_id"
   end
 
@@ -323,9 +313,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
 
   add_foreign_key "group_players", "match_groups"
   add_foreign_key "group_players", "tournament_players"
-  add_foreign_key "match_classes", "tournament_categories"
-  add_foreign_key "match_classes", "tournament_divisions"
-  add_foreign_key "match_classes", "tournaments"
   add_foreign_key "match_compositions", "tournaments"
   add_foreign_key "match_groups", "match_rounds"
   add_foreign_key "match_groups", "tournament_venues"
@@ -346,11 +333,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
   add_foreign_key "tournament_players", "tournaments"
   add_foreign_key "tournament_table_players", "tournament_players"
   add_foreign_key "tournament_table_players", "tournament_tables", on_delete: :cascade
+  add_foreign_key "tournament_tables", "match_classes", column: "match_classes_id"
   add_foreign_key "tournament_tables", "timetables"
-  add_foreign_key "tournament_tables", "tournament_categories"
-  add_foreign_key "tournament_tables", "tournament_divisions"
   add_foreign_key "tournament_tables", "tournament_venues"
-  add_foreign_key "tournament_tables", "tournaments"
   add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"
 end
