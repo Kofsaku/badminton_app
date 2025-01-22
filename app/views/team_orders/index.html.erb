@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>オーダー表登録</h2>
+  
+  <%= form_with(url: tournament_player_team_orders_path(@tournament_player), local: true) do |f| %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>順番</th>
+          <th>選手名</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% 5.times do |i| %>
+          <tr>
+            <td><%= i + 1 %></td>
+            <td>
+              <%= select_tag "order[]", 
+                  options_from_collection_for_select(@available_players, :id, :user_name),
+                  include_blank: '選手を選択',
+                  class: 'form-control' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+      <%= f.submit 'オーダー表を保存', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
