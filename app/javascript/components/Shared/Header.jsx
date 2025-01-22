@@ -47,7 +47,7 @@ const Header = () => {
             <div className="d-inline-block">
               {isLoggedIn ? (
                 <>
-                  <Link to={role === 'player' ? '/dashboard' : '/tournament-management'} className="header-btn1 ml-20">
+                  <Link to={role === 'Player' ? '/dashboard' : '/tournament-management'} className="header-btn1 ml-20">
                     Dashboard
                   </Link>
                   <button className="header-btn1" onClick={logout}>
