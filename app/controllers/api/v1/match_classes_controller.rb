@@ -101,11 +101,11 @@ class Api::V1::MatchClassesController < ApplicationController
       },
       tournament_category: {only: [:id, :category_type]},
       tournament_division: {only:[:id, :division]},
-      match_round: {
+      match_rounds: {
         include: {
-          match_group: {
+          match_groups: {
             include: {
-              group_player: {
+              group_players: {
                 include: {
                   tournament_player: {
                     only: [],

@@ -7,9 +7,9 @@ import ShowKnockout from "./ShowKnockout";
 const ShowPhase = ({ step, matchData, goToPrev, goToNext }) => {
   const navigate = useNavigate();
 
-  const roundData = matchData.match_round[step - 1];
+  const roundData = matchData.match_rounds[step - 1];
   const prevNoOfWinners =
-    matchData.match_round[step - 2]?.number_of_winners ?? 0;
+    matchData.match_rounds[step - 2]?.number_of_winners ?? 0;
 
   return (
     <>
