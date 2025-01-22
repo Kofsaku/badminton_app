@@ -25,6 +25,11 @@ Rails.application.routes.draw do
         end
       end
       resources :profiles
+      resources :tournament_players do
+        resources :team_orders, only: [:index, :create] do
+          get :available_players, on: :collection
+        end
+      end
     end
   end
   # Root and homepage routes
