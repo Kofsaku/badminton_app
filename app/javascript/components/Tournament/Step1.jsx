@@ -105,7 +105,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
         <div className="d-flex w-100 align-items-center justify-content-start">
           <div className="d-inline-block me-3">
             <a
-              href="tournament-management.html"
+              href="tournament-management"
               className="bg-green1 p-2 rounded-2 d-flex align-items-center justify-content-center"
             >
               <i className="fa fa-arrow-left text-14 text-white"> </i>
@@ -139,7 +139,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
               {
                 label: t("tournament.registration_time"),
                 name: "registration_time",
-                type: "time",
+                type: "date",
               },
               {
                 label: t("tournament.organization_name"),
@@ -149,7 +149,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
               {
                 label: t("tournament.payment_method"),
                 name: "payment_method",
-                type: "text",
+                type: "select",
               },
               {
                 label: t("tournament.match_start_time"),
@@ -213,11 +213,6 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 type: "text",
               },
               {
-                label: t("tournament.participation_payment_method"),
-                name: "participation_payment_method",
-                type: "text",
-              },
-              {
                 label: t("tournament.application_method"),
                 name: "application_method",
                 type: "text",
@@ -228,19 +223,14 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 type: "date",
               },
               {
-                label: t("tournament.pairing_selection_method"),
-                name: "pairing_selection_method",
-                type: "text",
-              },
-              {
                 label: t("tournament.award_details"),
                 name: "award_details",
                 type: "text",
               },
               {
                 label: t("tournament.member_changes"),
-                name: "member_changes",
-                type: "text",
+                name: "presence_of_member_changes",
+                type: "select",
               },
               {
                 label: t("tournament.entry_in_multiple_events"),
@@ -294,7 +284,10 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                       onChange={handleChange}
                     />
                   ) : name == "region" ? (
-                    <select>
+                    <select
+                      value={formData[name] || ""}
+                      onChange={handleChange}
+                    >
                       {regions.map((region) => (
                         <option key={region} value={region}>
                           {t(`home.search.regions.${region}`)}
@@ -302,12 +295,35 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                       ))}
                     </select>
                   ) : name == "prefecture" ? (
-                    <select>
+                    <select
+                      value={formData[name] || ""}
+                      onChange={handleChange}
+                    >
                       {prefectures.map((prefecture) => (
                         <option key={prefecture} value={prefecture}>
                           {prefecture}
                         </option>
                       ))}
+                    </select>
+                  ) : name == "payment_method" ? (
+                    <select
+                      value={formData[name] || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="local_cash">
+                        {t("tournament.local_cash")}
+                      </option>
+                      <option value="credit_card">
+                        {t("tournament.credit_card")}
+                      </option>
+                    </select>
+                  ) : name == "presence_of_member_changes" ? (
+                    <select
+                      value={formData[name] || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
                     </select>
                   ) : (
                     <input
