@@ -10,6 +10,8 @@
       "registration_time": "Registration Start Time",
       "organization_name": "Organization Name",
       "payment_method": "Payment Method",
+      "local_cash": "Local Cash",
+      "credit_card": "Credit Card",
       "match_start_time": "Match Start Time",
       "match_overview": "Match Overview",
       "organizer": "Organizer",

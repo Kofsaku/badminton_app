@@ -14,12 +14,11 @@ const AdminSidebar = () => {
         text: t("adminSidebar.menu.tournamentManagement"),
       },
       {
-        path: "/tournament-creation",
-        text: t("adminSidebar.menu.tournamentCreation"),
+        path: "/type-management#",
+        text: t("adminSidebar.menu.typeManagement"),
       },
-      { path: "type-management#", text: t("adminSidebar.menu.typeManagement") },
       {
-        path: "split-management",
+        path: "/split-management",
         text: t("adminSidebar.menu.splitManagement"),
       },
       {
@@ -33,16 +32,12 @@ const AdminSidebar = () => {
     ],
     admin: [
       {
-        path: "/players-management",
-        text: t("adminSidebar.menu.usersManagementAdmin"),
+        path: "/users-management",
+        text: t("adminSidebar.menu.usersManagement"),
       },
       {
         path: "/organizer-management",
-        text: t("adminSidebar.menu.organizerManagementAdmin"),
-      },
-      {
-        path: "/tournament-management",
-        text: t("adminSidebar.menu.tournamentManagementAdmin"),
+        text: t("adminSidebar.menu.organizerManagement"),
       },
     ],
     common: [
@@ -59,8 +54,8 @@ const AdminSidebar = () => {
       },
       {
         path: "/team-matches",
-        text: t("adminSidebar.menu.teamMatches")
-      }
+        text: t("adminSidebar.menu.teamMatches"),
+      },
     ],
   };
 
@@ -105,19 +100,17 @@ const AdminSidebar = () => {
         </div>
         <div className="d-block px-3 mb-4">
           <ul className="list-style-none p-0 m-0">
-            {/* Common Menu */}
-            {renderMenu(menuItems.common)}
-
             {/* Admin Menu */}
-            {(role === "Admin" || role === "Both") &&
-              renderMenu(menuItems.admin)}
+            {role === "Admin" && renderMenu(menuItems.admin)}
 
             {/* Organizer Menu */}
-            {(role === "Tournament Organizer" || role === "Both") &&
-              renderMenu(menuItems.organizer)}
+            {role !== "Player" && renderMenu(menuItems.organizer)}
 
             {/* Player Menu */}
             {role === "Player" && renderMenu(menuItems.player)}
+
+            {/* Common Menu */}
+            {renderMenu(menuItems.common)}
           </ul>
         </div>
       </div>

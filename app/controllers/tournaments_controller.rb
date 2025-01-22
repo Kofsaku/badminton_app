@@ -114,7 +114,7 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments or /tournaments.json
   def create
-    binding.pry
+    # binding.pry
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save!
@@ -159,8 +159,10 @@ class TournamentsController < ApplicationController
   def tournament_params
     params.require(:tournament).permit(
       :name,                           # t.string "name"
+      :region,
+      :prefecture,
       :event_date,                     # t.date "event_date"
-      :registeration_time,              # t.time "registeration_time" (corrected spelling)
+      :registeration_time,              # t.date "registeration_time" (corrected spelling)
       :organization_name,               # t.string "organization_name"
       :payment_method,                  # t.string "payment_method"
       :match_start_time,                # t.time "match_start_time"
@@ -182,6 +184,7 @@ class TournamentsController < ApplicationController
       :application_deadline,            # t.string "application_deadline"
       :pairing_selection_method,        # t.string "pairing_selection_method"
       :award_details,                   # t.text "award_details"
+      :presence_of_member_changes,
       :entry_in_multiple_events,        # t.string "entry_in_multiple_events"
       :cancellation_after_application,  # t.string "cancellation_after_application"
       :participation_fee,               # t.string "participation_fee"
