@@ -23,35 +23,35 @@ const TournamentOrganizer = () => {
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
         <div className="p-3">
-          <h1>Tournament Organizers</h1>
+          <h1>トーナメント主催者</h1>
 
           {tournamentOrganizer && (
             <>
               <div>
-                <h4>Name</h4>
+                <h4>名前</h4>
                 <p>{tournamentOrganizer.full_name}</p>
               </div>
               <div>
-                <h4>Email</h4>
+                <h4>電子メール</h4>
                 <p>{tournamentOrganizer.email}</p>
               </div>
               <div>
-                <h4>Gender</h4>
+                <h4>性別</h4>
                 <p>{tournamentOrganizer.profile.gender}</p>
               </div>
               <div>
-                <h4>Role</h4>
+                <h4>役割</h4>
                 <p>{tournamentOrganizer.profile.role}</p>
               </div>
               <div>
-                <h4>Date of Birth</h4>
+                <h4>生年月日</h4>
                 <p>{tournamentOrganizer.profile.date_of_birth}</p>
               </div>
             </>
           )}
 
           <Link to="/organizer-management" className="btn btn-primary">
-            Back to List
+            戻る
           </Link>
         </div>
       </section>
