@@ -46,14 +46,7 @@ const ShowTimetable = () => {
                 .map((timeCell) => (
                   <td key={timeCell.id}>
                     <Link to={`/matches/${timeCell.match?.id}/scoreboard`}>
-                      {(timeCell.tournament_player.player_type === "User"
-                        ? timeCell.tournament_player.player.full_name
-                        : timeCell.tournament_player.player.title) +
-                        " : " +
-                        (timeCell.second_tournament_player.player_type ===
-                        "User"
-                          ? timeCell.second_tournament_player.player.full_name
-                          : timeCell.second_tournament_player.player.title)}
+                      {timeCell.match.player1 + " : " + timeCell.match.player2}
                     </Link>
                   </td>
                 ))
@@ -64,14 +57,7 @@ const ShowTimetable = () => {
                 .map((timeCell) => (
                   <td key={timeCell.id}>
                     <Link to={`/matches/${timeCell.match?.id}/scoreboard`}>
-                      {(timeCell.tournament_player.player_type === "User"
-                        ? timeCell.tournament_player.player.full_name
-                        : timeCell.tournament_player.player.title) +
-                        " : " +
-                        (timeCell.second_tournament_player.player_type ===
-                        "User"
-                          ? timeCell.second_tournament_player.player.full_name
-                          : timeCell.second_tournament_player.player.title)}
+                      {timeCell.match.player1 + " : " + timeCell.match.player2}
                     </Link>
                   </td>
                 ))}
