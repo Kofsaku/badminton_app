@@ -34,7 +34,7 @@ export default function () {
   }
 
   useEffect(async () => {
-    if( role !== 'player') {
+    if( role !== 'Player') {
       navigate('/')
     } else {
       const profile = await fetchProfile();
