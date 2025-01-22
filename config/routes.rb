@@ -110,3 +110,10 @@ Rails.application.routes.draw do
   get '/*path' => 'homepage#index'
   match '*path', to: 'application#not_found', via: :all
 end
+
+# team_orders routes
+Rails.application.routes.draw do
+  resources :tournament_players do
+    resources :team_orders, only: [:index, :create]
+  end
+end
