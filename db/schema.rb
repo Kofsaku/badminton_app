@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,6 +87,10 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
     t.integer "number_of_sets"
     t.string "name", default: "", null: false
     t.integer "status", default: 0
+    t.string "player1"
+    t.string "player2"
+    t.string "player3"
+    t.string "player4"
     t.index ["timetable_cell_id"], name: "index_matches_on_timetable_cell_id"
   end
 
