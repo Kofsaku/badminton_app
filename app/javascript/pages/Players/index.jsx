@@ -134,7 +134,7 @@ const Players = () => {
 
   const handleAddPlayer = async (playerId) => {
     if (!selectedTournament) {
-      alert("Please select a tournament before adding a player.");
+      alert("プレイヤーを追加する前に、トーナメントを選択してください。");
       return;
     }
 
@@ -235,7 +235,7 @@ const Players = () => {
         players: [],
       }); // Reset team form
       loadPlayers();
-      alert("Team added successfully!");
+      alert("チームが正常に追加されました！");
     } catch (error) {
       console.error("Error submitting team:", error);
       alert("Failed to add team. Please try again.");
@@ -266,7 +266,7 @@ const Players = () => {
               <div className="col-md-12 col-sm-12">
                 {loadingTournaments ? (
                   <select className="form-select" disabled>
-                    <option>Loading tournaments...</option>
+                    <option>トーナメントを読み込み中 ...</option>
                   </select>
                 ) : (
                   <select
@@ -274,7 +274,7 @@ const Players = () => {
                     value={selectedTournament}
                     onChange={handleTournamentChange}
                   >
-                    <option value="">All Tournaments</option>
+                    <option value="">すべてのトーナメント</option>
                     {tournaments.map((tournament) => (
                       <option key={tournament.id} value={tournament.id}>
                         {tournament.name}
@@ -287,31 +287,31 @@ const Players = () => {
 
             <div className="d-flex justify-content-between mb-4">
               <Button variant="primary" onClick={handleAddPlayerModal}>
-                Add New Player
+                新しいプレイヤーを追加
               </Button>
               <button
                 className="btn btn-secondary"
                 onClick={handleAddTeamModal}
               >
-                Add New Team
+                新しいチームを追加
               </button>
             </div>
 
             <Modal show={isPlayerModalOpen} onHide={handleAddPlayerModal}>
               <Modal.Header closeButton>
-                <Modal.Title>Add New Player</Modal.Title>
+                <Modal.Title>新しいプレイヤーを追加</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form>
                   <Row>
                     <Col md={6}>
                       <Form.Group className="mb-3" controlId="formTournamentCategory">
-                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Label>トーナメントカテゴリー</Form.Label>
                         <Form.Select
                           value={newPlayer.tournament_category_id}
                           onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
                         >
-                          <option value="">Select a category</option>
+                          <option value="">カテゴリーを選択してください</option>
                           {tournamentCategories.map((category) => (
                             <option key={category[0]} value={category[0]}>
                               {category[1]}
@@ -323,12 +323,12 @@ const Players = () => {
 
                     <Col md={6}>
                       <Form.Group className="mb-3" controlId="formTournamentDivision">
-                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Label>トーナメント部門</Form.Label>
                         <Form.Select
                           value={newPlayer.tournament_division_id}
                           onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
                         >
-                          <option value="">Select a division</option>
+                          <option value="">部門を選択してください</option>
                           {tournamentDivisions.map((division) => (
                             <option key={division[0]} value={division[0]}>
                               {division[1]}
@@ -340,10 +340,10 @@ const Players = () => {
                   </Row>
 
                   <Form.Group className="mb-3" controlId="formPlayerName">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>名前</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter name"
+                      placeholder="名前を入力してください"
                       value={newPlayer.name}
                       onChange={(e) =>
                         handlePlayerChange("name", e.target.value)
@@ -352,10 +352,10 @@ const Players = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formPlayerEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>メールアドレス</Form.Label>
                     <Form.Control
                       type="email"
-                      placeholder="Enter email"
+                      placeholder="メールアドレスを入力してください"
                       value={newPlayer.email}
                       onChange={(e) =>
                         handlePlayerChange("email", e.target.value)
@@ -364,10 +364,10 @@ const Players = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formPlayerGender">
-                    <Form.Label>Gender</Form.Label>
+                    <Form.Label>性別</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter gender"
+                      placeholder="性別を入力してください"
                       value={newPlayer.gender}
                       onChange={(e) =>
                         handlePlayerChange("gender", e.target.value)
@@ -376,7 +376,7 @@ const Players = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formPlayerDOB">
-                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Label>生年月日</Form.Label>
                     <Form.Control
                       type="date"
                       value={newPlayer.date_of_birth}
@@ -387,10 +387,10 @@ const Players = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formPlayerExperience">
-                    <Form.Label>Years of Experience</Form.Label>
+                    <Form.Label>経験年数</Form.Label>
                     <Form.Control
                       type="number"
-                      placeholder="Enter years of experience"
+                      placeholder="経験年数を入力してください"
                       value={newPlayer.years_of_experience}
                       onChange={(e) =>
                         handlePlayerChange(
@@ -402,10 +402,10 @@ const Players = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formPlayerAge">
-                    <Form.Label>Age</Form.Label>
+                    <Form.Label>年齢</Form.Label>
                     <Form.Control
                       type="number"
-                      placeholder="Enter age"
+                      placeholder="年齢を入力してください"
                       value={newPlayer.age}
                       onChange={(e) =>
                         handlePlayerChange("age", e.target.value)
@@ -416,29 +416,29 @@ const Players = () => {
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleAddPlayerModal}>
-                  Close
+                  閉じる
                 </Button>
                 <Button variant="primary" onClick={handlePlayerSubmit}>
-                  Submit
+                  送信する
                 </Button>
               </Modal.Footer>
             </Modal>
 
             <Modal show={isTeamModalOpen} onHide={handleAddTeamModal}>
               <Modal.Header closeButton>
-                <Modal.Title>Add New Team</Modal.Title>
+                <Modal.Title>新しいチームを追加</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form>
                   <Row>
                     <Col md={6}>
                       <Form.Group className="mb-3" controlId="formTournamentCategory">
-                        <Form.Label>Tournament Category</Form.Label>
+                        <Form.Label>トーナメントカテゴリー</Form.Label>
                         <Form.Select
                           value={newTeam.tournament_category_id}
                           onChange={(e) => handlePlayerChange("tournament_category_id", e.target.value)}
                         >
-                          <option value="">Select a category</option>
+                          <option value="">カテゴリーを選択してください</option>
                           {tournamentCategories.map((category) => (
                             <option key={category[0]} value={category[1]}>
                               {category[1]}
@@ -450,12 +450,12 @@ const Players = () => {
 
                     <Col md={6}>
                       <Form.Group className="mb-3" controlId="formTournamentDivision">
-                        <Form.Label>Tournament Division</Form.Label>
+                        <Form.Label>トーナメント部門</Form.Label>
                         <Form.Select
                           value={newTeam.tournament_division_id}
                           onChange={(e) => handlePlayerChange("tournament_division_id", e.target.value)}
                         >
-                          <option value="">Select a division</option>
+                          <option value="">部門を選択してください</option>
                           {tournamentDivisions.map((division) => (
                             <option key={division[0]} value={division[0]}>
                               {division[1]}
@@ -467,10 +467,10 @@ const Players = () => {
                   </Row>
 
                   <Form.Group className="mb-3" controlId="formTeamName">
-                    <Form.Label>Team Name</Form.Label>
+                    <Form.Label>チーム名</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter team name"
+                      placeholder="チーム名を入力してください"
                       value={newTeam.teamName}
                       onChange={(e) =>
                         handleTeamChange("teamName", e.target.value)
@@ -479,10 +479,10 @@ const Players = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formNumberOfPlayers">
-                    <Form.Label>Number of Players</Form.Label>
+                    <Form.Label>プレイヤー数</Form.Label>
                     <Form.Control
                       type="number"
-                      placeholder="Enter number of players"
+                      placeholder="プレイヤー数を入力してください"
                       value={newTeam.numberOfPlayers}
                       onChange={(e) =>
                         handleTeamChange("numberOfPlayers", e.target.value)
@@ -492,7 +492,7 @@ const Players = () => {
 
                   {newTeam.players.map((player, index) => (
                     <div key={index} className="mb-3 border p-3 rounded">
-                      <h5>Player {index + 1}</h5>
+                      <h5>プレイヤー {index + 1}</h5>
                       <Row>
                         <Col md={4}>
                           <Form.Group
@@ -502,7 +502,7 @@ const Players = () => {
                             <Form.Label>Name</Form.Label>
                             <Form.Control
                               type="text"
-                              placeholder="Enter player name"
+                              placeholder="プレイヤー名を入力してください"
                               value={player.name}
                               onChange={(e) =>
                                 handlePlayerInTeamChange(
@@ -519,10 +519,10 @@ const Players = () => {
                             className="mb-3"
                             controlId={`playerEmail${index}`}
                           >
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>メールアドレス</Form.Label>
                             <Form.Control
                               type="email"
-                              placeholder="Enter player email"
+                              placeholder="プレイヤーのメールアドレスを入力してください"
                               value={player.email}
                               onChange={(e) =>
                                 handlePlayerInTeamChange(
@@ -539,10 +539,10 @@ const Players = () => {
                             className="mb-3"
                             controlId={`playerEmail${index}`}
                           >
-                            <Form.Label>Age</Form.Label>
+                            <Form.Label>年齢</Form.Label>
                             <Form.Control
                               type="number"
-                              placeholder="Enter player email"
+                              placeholder="年齢"
                               value={player.age}
                               onChange={(e) =>
                                 handlePlayerInTeamChange(
@@ -561,10 +561,10 @@ const Players = () => {
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleAddTeamModal}>
-                  Close
+                  閉じる
                 </Button>
                 <Button variant="primary" onClick={handleTeamSubmit}>
-                  Submit
+                  送信する
                 </Button>
               </Modal.Footer>
             </Modal>
@@ -580,25 +580,25 @@ const Players = () => {
                     <thead>
                       <tr>
                         <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                          Name
+                          名前
                         </th>
                         <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                          Email
+                          メールアドレス
                         </th>
                         <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                          Date of Birth
+                          生年月日
                         </th>
                         <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                          Prefecture
+                          都道府県
                         </th>
                         <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                          Gender
+                          性別
                         </th>
                         <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                          Experience
+                          経験
                         </th>
                         <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                          Status
+                          ステータス
                         </th>
                       </tr>
                     </thead>
@@ -629,15 +629,15 @@ const Players = () => {
                               <div>
                                 <span className="text-muted">
                                   {player.part_of_tournament
-                                    ? "Already in Tournament"
-                                    : "Added"}
+                                    ? "すでにトーナメントに参加しています"
+                                    : "追加されました"}
                                 </span>
                                 <button
                                   className="btn btn-danger"
                                   disabled={buttonStates[player.id] === 'loading'}
                                   onClick={() => handleRemovePlayer(player.id)}
                                 >
-                                  Remove Player
+                                  プレイヤーを削除する
                                 </button>
                               </div>
                             ) : (
@@ -647,8 +647,8 @@ const Players = () => {
                                 onClick={() => handleAddPlayer(player.id)}
                               >
                                 {buttonStates[player.id] === "loading"
-                                  ? "Adding..."
-                                  : "Add It"}
+                                  ? "追加中..."
+                                  : "それを追加する"}
                               </button>
                             )}
                           </td>

@@ -635,9 +635,12 @@
       },
       "title": "トーナメント主催者",
       "menu": {
-        "tournamentManagement": "トーナメント管理",
+        "tournamentManagement": "大会管理",
+        "tournamentManagementAdmin": "トーナメント管理",
         "usersManagement": "ユーザー管理",
+        "usersManagementAdmin": "プレイヤー管理",
         "organizerManagement": "主催者管理",
+        "organizerManagementAdmin": "大会運営者管理",
         "tournamentCreation": "トーナメント作成",
         "typeManagement": "タイプ管理",
         "splitManagement": "分割管理",
