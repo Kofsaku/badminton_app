@@ -74,13 +74,13 @@ const TournamentOrganizer = () => {
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
         <div className="p-3">
-          <h1>Tournament Organizers</h1>
+          <h1>トーナメント主催者</h1>
 
           <form onSubmit={handleSubmit}>
             {tournamentOrganizer && (
               <>
                 <div>
-                  <label>Name</label>
+                  <label>名前</label>
                   <input
                     type="text"
                     name="full_name"
@@ -89,7 +89,7 @@ const TournamentOrganizer = () => {
                   />
                 </div>
                 <div>
-                  <label>Email</label>
+                  <label>電子メール</label>
                   <input
                     type="text"
                     name="email"
@@ -98,25 +98,25 @@ const TournamentOrganizer = () => {
                   />
                 </div>
                 <div>
-                  <label>Gender</label>
+                  <label>性別</label>
                   <select
                     name="gender"
                     value={tournamentOrganizer.gender}
                     onChange={handleChange}
                   >
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="">性別を選択してください</option>
+                    <option value="male">男性</option>
+                    <option value="female">女性</option>
                   </select>
                 </div>
                 <div>
-                  <label>Role</label>
+                  <label>役割</label>
                   <select
                     name="role"
                     value={tournamentOrganizer.role}
                     onChange={handleChange}
                   >
-                    <option value="">Select Role</option>
+                    <option value="">役割の選択</option>
                     <option value="Player">Player</option>
                     <option value="Tournament Organizer">
                       Tournament Organizer
@@ -125,7 +125,7 @@ const TournamentOrganizer = () => {
                   </select>
                 </div>
                 <div>
-                  <label>Date of Birth</label>
+                  <label>生年月日</label>
                   <input
                     type="date"
                     name="date_of_birth"
@@ -136,9 +136,9 @@ const TournamentOrganizer = () => {
               </>
             )}
 
-            <input type="submit" value="Save" className="btn btn-success" />
+            <input type="submit" value="保存" className="btn btn-success"/>
             <Link to="/organizer-management" className="btn btn-primary">
-              Back to List
+              戻る
             </Link>
           </form>
         </div>

@@ -35,17 +35,17 @@ const TournamentOrganizers = () => {
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
         <div className="p-3">
-          <h1>Tournament Organizers</h1>
+          <h1>トーナメント主催者</h1>
 
           <table className="table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Gender</th>
-                <th>Role</th>
-                <th>Date of Birth</th>
-                <th>Actions</th>
+                <th>名前</th>
+                <th>電子メール</th>
+                <th>性別</th>
+                <th>役割</th>
+                <th>生年月日</th>
+                <th>アクション</th>
               </tr>
             </thead>
             <tbody>
@@ -61,19 +61,19 @@ const TournamentOrganizers = () => {
                       to={"/organizer-management/" + organizer.id}
                       className="btn btn-info"
                     >
-                      Show
+                      詳細
                     </Link>
                     <Link
                       to={"/organizer-management/" + organizer.id + "/edit"}
                       className="btn btn-warning"
                     >
-                      Edit
+                      編集
                     </Link>
                     <Link
                       onClick={() => handleDelete(organizer.id)}
                       className="btn btn-danger"
                     >
-                      Delete
+                      消去
                     </Link>
                   </td>
                 </tr>
