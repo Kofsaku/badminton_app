@@ -165,6 +165,8 @@
           "dates": "Dates",
           "status": "Status",
           "region": "Region",
+          "prefecture": "Prefecture",
+          "tournamentType": "Tournament Type",
           "venue": "Venue",
           "matchFormat": "Match Format",
           "participationType": "Participation Type"
@@ -177,19 +179,20 @@
           "remoteVenue": "remote venue",
           "team": "team",
           "single": "single",
+          "double": "double",
           "domestic": "domestic",
           "international": "international"
         },
         "regions": {
           "hokkaido": "Hokkaido",
-          "northeast": "northeast",
+          "tohoku": "Tohoku",
           "kanto": "Kanto",
           "hokuriku": "Hokuriku",
           "koshinetsu": "Koshinetsu",
           "tokai": "Tokai",
-          "china": "China",
-          "shikoku": "Shikoku",
           "kinki": "Kinki",
+          "chugoku": "Chugoku",
+          "shikoku": "Shikoku",
           "kyushu": "Kyushu"
         },
         "searchButton": "Search",

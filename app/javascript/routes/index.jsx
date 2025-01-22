@@ -19,11 +19,6 @@ import CongratsProfile from "../components/CreateAccount/CongratsProfile";
 import Timetables from "../pages/Timetables";
 import CreateTimetable from "../pages/Timetables/New";
 import ShowTimetable from "../pages/Timetables/Show";
-import TournamentTables from "../pages/TournamentTables";
-import NewRoundRobin from "../pages/TournamentTables/NewRoundRobin";
-import NewKnockout from "../pages/TournamentTables/NewKnockout";
-import TournamentTable from "../pages/TournamentTables/Show";
-import EditTournamentTable from "../pages/TournamentTables/Edit";
 import Players from "../pages/Players";
 import ProtectedRoute from "./ProtectedRoute";
 import MatchList from "../pages/MatchList";
@@ -40,7 +35,7 @@ import EditTournamentOrganizer from "../pages/TournamentOrganizers/Edit";
 import Dashboard from "../pages/dashboard";
 import TeamMatchList from "../pages/TeamMatchList/TeamMatchList";
 import MatchOrder from "../pages/TeamMatchList/MatchOrder";
-import TeamMatchDetails from '../pages/TeamMatchList/TeamMatchDetails'
+import TeamMatchDetails from "../pages/TeamMatchList/TeamMatchDetails";
 
 <Route path="/payment-confirmation" element={<PaymentConfirmation />} />;
 export default (
@@ -117,7 +112,7 @@ export default (
         path="/team-matches-details"
         element={
           <ProtectedRoute>
-            <TeamMatchDetails/>
+            <TeamMatchDetails />
           </ProtectedRoute>
         }
       />
@@ -171,46 +166,6 @@ export default (
         }
       />
       <Route
-        path="/tournament-tables"
-        element={
-          <ProtectedRoute>
-            <TournamentTables />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/tournament-tables/new-round-robin"
-        element={
-          <ProtectedRoute>
-            <NewRoundRobin />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/tournament-tables/new-knockout"
-        element={
-          <ProtectedRoute>
-            <NewKnockout />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/tournament-tables/:id"
-        element={
-          <ProtectedRoute>
-            <TournamentTable />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/tournament-tables/:id/edit"
-        element={
-          <ProtectedRoute>
-            <EditTournamentTable />
-          </ProtectedRoute>
-        }
-      />
-      <Route
         path="/timetables"
         element={
           <ProtectedRoute>
@@ -239,11 +194,14 @@ export default (
       <Route path="/matches/:id/scoreboard" element={<ScoreBoard />} />
       <Route path="/tournament/:id/entry" element={<Entry />} />
       <Route path="/tournament/:id/entry/payment" element={<EntryPayment />} />
-      <Route path="/dashboard" element={
-        <ProtectedRoute>
-          <Dashboard />
-        </ProtectedRoute>
-      } />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   </Router>
 );

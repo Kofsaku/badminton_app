@@ -88,6 +88,19 @@ const SearchSection = () => {
     // participation_type: participationType,
   } = formData;
 
+  const regions = [
+    "hokkaido",
+    "tohoku",
+    "kanto",
+    "hokuriku",
+    "koshinetsu",
+    "tokai",
+    "kinki",
+    "chugoku",
+    "shikoku",
+    "kyushu",
+  ];
+
   const prefectures = [
     "北海道",
     "青森県",
@@ -170,7 +183,7 @@ const SearchSection = () => {
       <div className="container">
         <div className="d-block w-100 mb-5">
           <h3 className="text-green3 fw-bold text-32 mob-text-28 m-0">
-            SEARCH
+            {t("home.search.title")}
           </h3>
         </div>
         <div className="d-block w-100 mb-5">
@@ -179,7 +192,7 @@ const SearchSection = () => {
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
-                  Name of Tournament / Event
+                  {t("home.search.fields.tournamentName")}
                 </h5>
                 <input
                   type="text"
@@ -190,58 +203,7 @@ const SearchSection = () => {
                 />
               </div>
             </div>
-            {/* <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
-              <div className="d-block w-100">
-                <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
-                  Classification
-                </h5>
-                <div className="d-flex w-100 align-items-start justify-content-start flex-wrap checkbox-selector-all">
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-4 me-2 py-2 position-relative ${
-                      classification === "all" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">all</span>
-                    <input
-                      type="radio"
-                      name="classification"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="all"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 me-2 py-2 position-relative ${
-                      classification === "tournament" &&
-                      "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">tournament</span>
-                    <input
-                      type="radio"
-                      name="classification"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="tournament"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 py-2 position-relative ${
-                      classification === "event" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">event</span>
-                    <input
-                      type="radio"
-                      name="classification"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="event"
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> */}
+
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
@@ -274,61 +236,11 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
-              <div className="d-block w-100">
-                <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
-                  Status
-                </h5>
-                <div className="d-flex w-100 align-items-start justify-content-start flex-wrap checkbox-selector-all">
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-4 me-2 py-2 position-relative ${
-                      status === "all" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">all</span>
-                    <input
-                      type="radio"
-                      name="status"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="all"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 me-2 py-2 position-relative ${
-                      status === "tournament" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">tournament</span>
-                    <input
-                      type="radio"
-                      name="status"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="tournament"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 py-2 position-relative ${
-                      status === "event" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">event</span>
-                    <input
-                      type="radio"
-                      name="status"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="event"
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> */}
+
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
-                  Region
+                  {t("home.search.fields.region")}
                 </h5>
                 <div className="d-flex w-100 align-items-start justify-content-start flex-wrap checkbox-selector-all">
                   <div
@@ -336,7 +248,9 @@ const SearchSection = () => {
                       region === "all" && "checkbox-selector-active"
                     }`}
                   >
-                    <span className="text-14 d-inline-block">all</span>
+                    <span className="text-14 d-inline-block">
+                      {t("home.search.options.all")}
+                    </span>
                     <input
                       type="radio"
                       name="region"
@@ -345,146 +259,24 @@ const SearchSection = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div
-                    className={`d-inline-block mb-2 checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 me-2 py-2 position-relative ${
-                      region === "Hokkaido" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Hokkaido</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Hokkaido"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 mb-2 me-2 px-2 py-2 position-relative ${
-                      region === "northeast" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">northeast</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="northeast"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 mb-2 me-2 px-2 py-2 position-relative ${
-                      region === "Kanto" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Kanto</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Kanto"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 me-2 mb-2 px-2 py-2 position-relative ${
-                      region === "Hokuriku" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Hokuriku</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Hokuriku"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 me-2 mb-2 px-2 py-2 position-relative ${
-                      region === "Koshinetsu" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Koshinetsu</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Koshinetsu"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 me-2 mb-2 px-2 py-2 position-relative ${
-                      region === "Tokai" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Tokai</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Tokai"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 me-2 mb-2 px-2 py-2 position-relative ${
-                      region === "China" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">China</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="China"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 me-2 mb-2 px-2 py-2 position-relative ${
-                      region === "Shikoku" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Shikoku</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Shikoku"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 me-2 mb-2 px-2 py-2 position-relative ${
-                      region === "Kinki" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Kinki</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Kinki"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 me-2 mb-2 px-2 py-2 position-relative ${
-                      region === "Kyushu" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">Kyushu</span>
-                    <input
-                      type="radio"
-                      name="region"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="Kyushu"
-                      onChange={handleChange}
-                    />
-                  </div>
+                  {regions.map((curRegion) => (
+                    <div
+                      className={`d-inline-block mb-2 checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 me-2 py-2 position-relative ${
+                        region === curRegion && "checkbox-selector-active"
+                      }`}
+                    >
+                      <span className="text-14 d-inline-block">
+                        {t(`home.search.regions.${curRegion}`)}
+                      </span>
+                      <input
+                        type="radio"
+                        name="region"
+                        className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
+                        value={curRegion}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -493,10 +285,10 @@ const SearchSection = () => {
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
-                  Prefecture
+                  {t("home.search.fields.prefecture")}
                 </h5>
                 <select name="prefecture" onChange={handleChange}>
-                  <option value="">Select</option>
+                  <option value="">{t(`home.search.options.all`)}</option>
                   {prefectures.map((prefecture, index) => (
                     <option key={index} value={prefecture}>
                       {prefecture}
@@ -510,7 +302,7 @@ const SearchSection = () => {
             <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
               <div className="d-block w-100">
                 <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
-                  Match Format
+                  {t("home.search.fields.tournamentType")}
                 </h5>
                 <div className="d-flex w-100 align-items-start justify-content-start flex-wrap checkbox-selector-all">
                   <div
@@ -518,7 +310,9 @@ const SearchSection = () => {
                       matchFormat === "all" && "checkbox-selector-active"
                     }`}
                   >
-                    <span className="text-14 d-inline-block">all</span>
+                    <span className="text-14 d-inline-block">
+                      {t("home.search.options.all")}
+                    </span>
                     <input
                       type="radio"
                       name="match_format"
@@ -532,7 +326,9 @@ const SearchSection = () => {
                       matchFormat === "team" && "checkbox-selector-active"
                     }`}
                   >
-                    <span className="text-14 d-inline-block">team</span>
+                    <span className="text-14 d-inline-block">
+                      {t("home.search.options.team")}
+                    </span>
                     <input
                       type="radio"
                       name="match_format"
@@ -546,7 +342,9 @@ const SearchSection = () => {
                       matchFormat === "single" && "checkbox-selector-active"
                     }`}
                   >
-                    <span className="text-14 d-inline-block">single</span>
+                    <span className="text-14 d-inline-block">
+                      {t("home.search.options.single")}
+                    </span>
                     <input
                       type="radio"
                       name="match_format"
@@ -560,7 +358,9 @@ const SearchSection = () => {
                       matchFormat === "double" && "checkbox-selector-active"
                     }`}
                   >
-                    <span className="text-14 d-inline-block">double</span>
+                    <span className="text-14 d-inline-block">
+                      {t("home.search.options.double")}
+                    </span>
                     <input
                       type="radio"
                       name="match_format"
@@ -572,69 +372,6 @@ const SearchSection = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="col-lg-3 col-md-3 col-sm-6 col-12 mb-5">
-              <div className="d-block w-100">
-                <h5 className="text-green3 mt-0 mb-3 text-18 fw-bold">
-                  Participation Type
-                </h5>
-                <div className="d-flex w-100 align-items-start justify-content-start flex-wrap checkbox-selector-all">
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-4 me-2 py-2 position-relative ${
-                      participationType === "all" && "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">all</span>
-                    <input
-                      type="checkbox"
-                      name="participation_type"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="all"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 me-2 py-2 position-relative ${
-                      participationType === "domestic" &&
-                      "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">domestic</span>
-                    <input
-                      type="checkbox"
-                      name="participation_type"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="domestic"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div
-                    className={`d-inline-block checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 py-2 position-relative ${
-                      participationType === "international" &&
-                      "checkbox-selector-active"
-                    }`}
-                  >
-                    <span className="text-14 d-inline-block">
-                      international
-                    </span>
-                    <input
-                      type="checkbox"
-                      name="participation_type"
-                      className="position-absolute checkbox-selector-1 opacity-0 top-0 start-0 w-100 h-100"
-                      value="international"
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> */}
-            {/* <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
-              <button
-                type="button"
-                className="btn btn-primary btn-lg text-16 text-white bg-green3 d-inline-flex align-items-center justify-content-center"
-              >
-                Search
-              </button>
-            </div> */}
 
             {/* Search with Conditions Link */}
             <div className="d-block w-100">

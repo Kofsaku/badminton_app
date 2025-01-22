@@ -3,6 +3,8 @@
     "tournament": {
       "add_new_tournament": "新しいトーナメントを追加",
       "name": "名前",
+      "region": "地域",
+      "prefecture": "都道府",
       "event_date_time": "イベント日時",
       "registration_time": "登録開始時間",
       "organization_name": "組織名",
@@ -142,32 +144,35 @@
           "dates": "日付",
           "status": "状態",
           "region": "地域",
+          "prefecture": "都道府",
+          "tournamentType": "トーナメントタイプ",
           "venue": "会場",
           "matchFormat": "試合形式",
           "participationType": "参加タイプ"
         },
         "options": {
-          "all": "すべて",
+          "all": "全て",
           "tournament": "トーナメント",
           "event": "イベント",
           "mainVenue": "メイン会場",
           "remoteVenue": "リモート会場",
           "team": "チーム",
           "single": "シングル",
+          "double": "ダブル",
           "domestic": "国内",
           "international": "国際"
         },
         "regions": {
           "hokkaido": "北海道",
-          "northeast": "東北",
+          "tohoku": "東北",
           "kanto": "関東",
           "hokuriku": "北陸",
           "koshinetsu": "甲信越",
           "tokai": "東海",
-          "china": "中国",
-          "shikoku": "四国",
           "kinki": "近畿",
-          "kyushu": "九州"
+          "chugoku": "中国",
+          "shikoku": "四国",
+          "kyushu": "九州・沖縄"
         },
         "searchButton": "検索",
         "searchWithConditions": "これらの条件でトーナメントを検索"
@@ -668,7 +673,6 @@
           "teamMatches": "参加予定試合管理"
         }
       }
-      
     },
     "teamMatches": {
       "status": "ステータス",
