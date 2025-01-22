@@ -2,20 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Bracket, Seed, SeedItem, SeedTeam } from "react-brackets";
 
 const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
-  const { match_group, round_size, round_number } = roundData;
+  const { match_groups, round_size, round_number } = roundData;
 
-  let tables = match_group.map((group) => {
+  let tables = match_groups.map((group) => {
     let temp = Array.from({ length: group.group_size }).map((_) =>
       Array.from({ length: group.group_size })
     );
 
-    const { group_player, timetable_cell } = group;
+    const { group_players, timetable_cell } = group;
     timetable_cell.forEach((cell) => {
       if (!round_number) {
-        const firstPlayerIndex = group_player.findIndex(
+        const firstPlayerIndex = group_players.findIndex(
           (player) => player.tournament_player_id == cell.tournament_player_id
         );
-        const secondPlayerIndex = group_player.findIndex(
+        const secondPlayerIndex = group_players.findIndex(
           (player) =>
             player.tournament_player_id == cell.second_tournament_player_id
         );
@@ -24,10 +24,10 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
         temp[secondPlayerIndex][firstPlayerIndex] =
           cell.match.match_score_teamB;
       } else {
-        const firstPlayerIndex = group_player.findIndex(
+        const firstPlayerIndex = group_players.findIndex(
           (player) => player.player_key == cell.player_key
         );
-        const secondPlayerIndex = group_player.findIndex(
+        const secondPlayerIndex = group_players.findIndex(
           (player) => player.player_key == cell.second_player_key
         );
         temp[firstPlayerIndex][secondPlayerIndex] =
@@ -71,7 +71,7 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
             tables[index][i * 2 + 1][i],
           ],
           round: matchArray.length,
-          teams: [group.group_player[i * 2], group.group_player[i * 2 + 1]],
+          teams: [group.group_players[i * 2], group.group_players[i * 2 + 1]],
         };
         matches.push(match);
       }
@@ -112,7 +112,7 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
         <p>Number of tournament brackets</p>
         <h5>{round_size}</h5>
       </div>
-      {match_group.map((group, index) => (
+      {match_groups.map((group, index) => (
         <Bracket
           key={group.id}
           rounds={showBracket(group, index)}

@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 
 const ShowRoundRobin = ({ roundData, step, matchSize }) => {
-  const { match_group, round_size, round_number, number_of_winners } =
+  const { match_groups, round_size, round_number, number_of_winners } =
     roundData;
 
-  let tables = match_group.map((group) => {
+  let tables = match_groups.map((group) => {
     let temp = Array.from({ length: group.group_size }).map((_) =>
       Array.from({ length: group.group_size })
     );
 
-    const { group_player, timetable_cell } = group;
+    const { group_players, timetable_cell } = group;
     timetable_cell.forEach((cell) => {
       if (!round_number) {
-        const firstPlayerIndex = group_player.findIndex(
+        const firstPlayerIndex = group_players.findIndex(
           (player) => player.tournament_player_id == cell.tournament_player_id
         );
-        const secondPlayerIndex = group_player.findIndex(
+        const secondPlayerIndex = group_players.findIndex(
           (player) =>
             player.tournament_player_id == cell.second_tournament_player_id
         );
@@ -26,10 +26,10 @@ const ShowRoundRobin = ({ roundData, step, matchSize }) => {
           firstPlayerIndex
         ] = `${cell.match.match_score_teamB} : ${cell.match.match_score_teamA}`;
       } else {
-        const firstPlayerIndex = group_player.findIndex(
+        const firstPlayerIndex = group_players.findIndex(
           (player) => player.player_key == cell.player_key
         );
-        const secondPlayerIndex = group_player.findIndex(
+        const secondPlayerIndex = group_players.findIndex(
           (player) => player.player_key == cell.second_player_key
         );
         temp[firstPlayerIndex][
@@ -74,18 +74,18 @@ const ShowRoundRobin = ({ roundData, step, matchSize }) => {
         <p>Number of winners</p>
         <h5>{number_of_winners}</h5>
       </div>
-      {match_group.map((group, index) => (
+      {match_groups.map((group, index) => (
         <table key={group.id} className="table">
           <thead>
             <tr>
               <th></th>
-              {group.group_player.map((player) => (
+              {group.group_players.map((player) => (
                 <th key={player.id}>{showPlayerName(player)}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {group.group_player.map((player, rowIndex) => (
+            {group.group_players.map((player, rowIndex) => (
               <tr key={rowIndex}>
                 <th>{showPlayerName(player)}</th>
                 {tables[index][rowIndex].map((col, colIndex) => (
