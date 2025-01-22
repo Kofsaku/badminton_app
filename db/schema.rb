@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_23_045520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,6 +127,18 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_team_members_on_team_id"
+  end
+
+  create_table "team_orders", force: :cascade do |t|
+    t.bigint "tournament_player_id", null: false
+    t.bigint "team_player_id", null: false
+    t.integer "order_number", null: false
+    t.string "status", default: "未入力"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_player_id"], name: "index_team_orders_on_team_player_id"
+    t.index ["tournament_player_id", "order_number"], name: "index_team_orders_on_tournament_player_id_and_order_number", unique: true
+    t.index ["tournament_player_id"], name: "index_team_orders_on_tournament_player_id"
   end
 
   create_table "team_players", force: :cascade do |t|
@@ -320,6 +332,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_124953) do
   add_foreign_key "matches", "timetable_cells"
   add_foreign_key "profiles", "users"
   add_foreign_key "team_members", "teams"
+  add_foreign_key "team_orders", "team_players"
+  add_foreign_key "team_orders", "tournament_players"
   add_foreign_key "team_players", "teams"
   add_foreign_key "team_players", "users"
   add_foreign_key "timetable_cells", "match_groups"
