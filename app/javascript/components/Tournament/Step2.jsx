@@ -8,12 +8,13 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    if (formData.id) {
       const categoriesData = formData.tournament_categories_attributes
       if (categoriesData?.length > 0) {
         setCategories(categoriesData)
       }
-  
-    }, [formData.id]);
+    }
+  }, [formData.id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
