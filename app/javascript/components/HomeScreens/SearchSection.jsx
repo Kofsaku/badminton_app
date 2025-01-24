@@ -5,62 +5,6 @@ import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/axiosInstance";
 import { start } from "@popperjs/core";
 
-const sliderSettings = {
-  dots: true,
-  infinite: true,
-  speed: 300,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  arrows: true,
-  autoplay: true,
-  focusOnSelect: false,
-  pauseOnHover: false,
-  autoplaySpeed: 2000,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 700,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
 const SearchSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -177,6 +121,68 @@ const SearchSection = () => {
   };
 
   const { t } = useTranslation();
+
+  const getSliderSettings = () => {
+    const numberOfSlides = searchResults.length;
+
+    const sliderSettings = {
+      dots: true,
+      infinite: numberOfSlides > 1,
+      speed: 300,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: true,
+      autoplay: true,
+      focusOnSelect: false,
+      pauseOnHover: false,
+      autoplaySpeed: 2000,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: numberOfSlides > 1,
+            dots: true,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: numberOfSlides > 1,
+            dots: true,
+          },
+        },
+        {
+          breakpoint: 700,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: numberOfSlides > 1,
+            dots: true,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    };
+
+    return sliderSettings;
+  };
 
   return (
     <section className="py-5">
@@ -386,7 +392,7 @@ const SearchSection = () => {
           </div>
         </div>
         <div className="d-block w-100">
-          <Slider {...sliderSettings} className="custom-slider1 arrows-1">
+          <Slider {...getSliderSettings()} className="custom-slider1 arrows-1">
             {searchResults.map((tournament) => (
               <div className="d-block px-3" key={tournament.id}>
                 <div className="d-block w-100">
@@ -404,12 +410,6 @@ const SearchSection = () => {
                   </h3>
                 </div>
                 <div className="d-block w-100 mb-3">
-                  <h5 className="text-grey1 text-14 mt-0 mb-2">
-                    prefecture
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      {tournament.prefecture}
-                    </span>
-                  </h5>
                   <h5 className="text-grey1 text-14">
                     Dates
                     <span className="text-green4 d-inline-block ms-1 fw-bold">
@@ -417,9 +417,16 @@ const SearchSection = () => {
                     </span>
                   </h5>
                   <h5 className="text-grey1 text-14">
-                    meeting place
+                    Region
                     <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      Hirata Gymnasium
+                      {tournament.region &&
+                        t(`home.search.regions.${tournament.region}`)}
+                    </span>
+                  </h5>
+                  <h5 className="text-grey1 text-14 mt-0 mb-2">
+                    Prefecture
+                    <span className="text-green4 d-inline-block ms-1 fw-bold">
+                      {tournament.prefecture}
                     </span>
                   </h5>
                   <h5 className="text-grey1 text-14">

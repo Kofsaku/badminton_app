@@ -68,7 +68,7 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
           id: i,
           scores: [
             tables[index][i * 2][i * 2 + 1],
-            tables[index][i * 2 + 1][i],
+            tables[index][i * 2 + 1][i * 2],
           ],
           round: matchArray.length,
           teams: [group.group_players[i * 2], group.group_players[i * 2 + 1]],
