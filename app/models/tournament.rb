@@ -4,8 +4,8 @@ class Tournament < ApplicationRecord
   has_many :tournament_players, dependent: :destroy
   has_many :tournament_venues, dependent: :destroy
   has_many :tournament_tables, through: :tournament_venues
-  has_many :tags, as: :taggable, dependent: :destroy
-  has_one_attached :banner
+  # has_many :tags, as: :taggable, dependent: :destroy
+  # has_one_attached :banner
 
   accepts_nested_attributes_for :tournament_categories, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :tournament_players, reject_if: :all_blank, allow_destroy: true

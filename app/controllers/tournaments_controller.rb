@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
   include Authenticable
   #before_action :authorize_request
-  before_action :set_tournament, only: %i[show edit update destroy]
+  before_action :set_tournament, only: %i[ show edit update destroy]
 
   # GET /tournaments or /tournaments.json
   def index
@@ -233,8 +233,7 @@ class TournamentsController < ApplicationController
   def show_full_data(tournament)
     tournament.attributes.merge(
       tournament_categories_attributes: tournament_categories_data(tournament),
-      tournament_venues_attributes: tournament.tournament_venues.map(&:attributes),
-      tags: tournament.tags.as_json
+      tournament_venues_attributes: tournament.tournament_venues.map(&:attributes)
     )
   end
 

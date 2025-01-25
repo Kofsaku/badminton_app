@@ -15,9 +15,7 @@ export const createTournament = async (tournamentData) => {
 
 export const updateTournament = async (tournamentData, banner) => {
   try {
-    const formData = new FormData
-    formData.append('banner', banner)
-    const response = await axiosInstance.put(`tournaments/${tournamentData.id}.json`, {...tournamentData, banner: formData})
+    const response = await axiosInstance.put(`tournaments/${tournamentData.id}.json`, {...tournamentData})
     return response.data;
   } catch (error) {
     console.error('Error updating tournament', error);
