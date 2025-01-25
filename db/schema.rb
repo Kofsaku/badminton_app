@@ -348,6 +348,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_25_000756) do
     t.string "costume_detail"
     t.string "transport_information"
     t.text "note_for_participants"
+    t.string "banner"
     t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 
