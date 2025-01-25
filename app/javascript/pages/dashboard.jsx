@@ -11,9 +11,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import MatchList from "./TeamMatchList/TeamMatchList";
 import { useTranslation } from 'react-i18next';
+import { useLocation } from "react-router-dom";
+
 
 export default function () {
   const { t } = useTranslation();
+  const location = useLocation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,6 +42,10 @@ export default function () {
     } else {
       const profile = await fetchProfile();
       setUserData(profile)
+    }
+    const hash = location.hash.replace("#", "");
+    if (hash) {
+      changeActiveSidebar(hash)
     }
   }, []);
 

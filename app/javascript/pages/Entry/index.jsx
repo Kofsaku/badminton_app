@@ -1,20 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import Header from "../../components/Shared/Header";
 import Footer from "../../components/Shared/Footer";
 import CtaSection from '../../components/Shared/CtaSection';
-
-
-import axiosInstance from "../../api/axiosInstance";
+import {useTranslation} from "react-i18next";
+import {showTournament} from "../../api/tournamentApi";
+import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 
 export default function () {
+  const { t } = useTranslation();
   const params = useParams();
-  const [tournamentData, setTournamentData] = useState(null);
+  const [tournament, setTournament] = useState(null);
+  const [categories, setCategories] = useState();
+  const [participationFee, setParticipationFee] = useState(0);
+  const [teamMember, setTeamMember] = useState([]);
+  const [newMemberName, setNewMemberName] = useState("");
+  const [isAddMember, setIsAddMember] = useState(false);
 
-  useEffect(() => {
-    console.log(1112)
-  }, []);
+  useEffect(async () => {
+    if (params.id){
+      const res = await showTournament(params.id)
+      setCategories(res.tournament.tournament_categories_attributes)
+      setParticipationFee(res.tournament.participation_fee)
+    }
+  }, [params.id]);
+
+  const showModalAddMember = () => {
+    setIsAddMember(true)
+  }
+  const handleCloseAddMemberModal = () => {
+    setNewMemberName("");
+    setIsAddMember(false)
+  }
+  const handleSubmitAddMemberModal = () => {
+    if (newMemberName.trim() !== "") {
+      setTeamMember([...teamMember, newMemberName]);
+      handleCloseAddMemberModal();
+    } else {
+      alert("名前を入力してください"); // Alert if the input is empty
+    }
+  }
+  const handleRemoveMember = (index) => {
+    setTeamMember((prevMembers) => prevMembers.filter((_, i) => i !== index));
+  }
 
   return (
     <>
@@ -48,23 +76,16 @@ export default function () {
           </div>
           <div className="container mt-4 mt-0-sm p-t-64-sm">
             <div className="fw-bold fz-28 text-green3 fz-20-sm">エントリーの種類を選んでください</div>
-            <div className="d-flex gap-10 mt-1 flex-direction-column-sm">
-              <div className="d-flex gap-10 height-60 bg-silver6 border-radius-06 pd-20 flex-grow-1 align-items-baseline fz-16-sm">
-                <i className="fa-solid fa-circle-check height-20 width-20"></i>
-                <div>男子2部1位</div>
-              </div>
-              <div className="d-flex gap-10 height-60 bg-silver6 border-radius-06 pd-20 flex-grow-1 align-items-baseline fz-16-sm">
-                <i className="fa-solid fa-circle-check height-20 width-20"></i>
-                <div>男子ダブルス2位</div>
-              </div>
-              <div className="d-flex gap-10 height-60 bg-silver6 border-radius-06 pd-20 flex-grow-1 align-items-baseline fz-16-sm">
-                <i className="fa-solid fa-circle-check height-20 width-20"></i>
-                <div>女子ダブルス1位</div>
-              </div>
-              <div className="d-flex gap-10 height-60 bg-silver6 border-radius-06 pd-20 flex-grow-1 align-items-baseline fz-16-sm">
-                <i className="fa-solid fa-circle-check height-20 width-20"></i>
-                <div>女子ダブルス2位</div>
-              </div>
+            <div className="d-flex gap-10 mt-1 flex-direction-column-sm flex-wrap">
+              {categories?.map((category, index) => (
+                <div
+                  key={index}
+                  className="d-flex flex-1-1 gap-10 height-60 bg-silver6 border-radius-06 pd-20 flex-grow-1 align-items-baseline fz-16-sm mw-100-sm"
+                >
+                  <i className="fa-solid fa-circle-check height-20 width-20"></i>
+                  <div>{t(`tournament.${category.category_type}`)}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -73,38 +94,35 @@ export default function () {
             <div className="d-flex gap-70 flex-direction-column-sm gap-0-sm">
               <div className="flex-2-5">
                 <div>
-                  <div className="fz-24 bg-green3 height-76 text-white pd-25-40 fw-bold fz-18-sm pd-22-12-sm">男子ダブルス１位</div>
+                  <div
+                    className="fz-24 bg-green3 height-76 text-white pd-25-40 fw-bold fz-18-sm pd-22-12-sm">男子ダブルス１位
+                  </div>
                   <div className="bg-white pd-25-40 pd-28-12-sm">
-                    <div className="fz-24 fz-16-sm">メンバー：１ペア</div>
+                    <div className="fz-24 fz-16-sm">メンバー：{teamMember.length}名</div>
                     <div className="bg-green4 pd-30 mt-15 border-radius-08 pd-25-sm">
-                      <div className="d-flex align-items-center justify-content-between">
-                        <img
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6th-oTbkDMbDOPGU_kkRMM55lfvRYgM8JA&s"
-                          alt="" className="width-80 height-80 border-radius-50 width-86-sm height-86-sm"/>
-                        <div className="d-flex align-items-center gap-16 gap-03-sm flex-direction-column-sm align-items-flex-start-sm">
-                          <div className="text-green3 fw-bold fz-24 fz-20-sm">Kofworkshard</div>
-                          <select name="" id="" className="height-60 border-0 pd-17-19 border-radius-08 height-38-sm border-radius-06-sm pd-0-13-sm fz-14-sm">
-                            <option value="1">通常参加費：2,000円</option>
-                          </select>
-                          <div className="fz-18 cursor-pointer fz-14-sm align-self-flex-end-sm">削除</div>
+                      { teamMember.map((member, index)=> (
+                        <div key={index} className={`d-flex align-items-center justify-content-between ${index !== 0 ? 'mt-30' : ''}`}>
+                          <img
+                            src="/images/avatar-1.png"
+                            alt="" className="width-80 height-80 border-radius-50 width-86-sm height-86-sm"/>
+                          <div
+                            className="d-flex align-items-center gap-16 gap-03-sm flex-direction-column-sm align-items-flex-start-sm">
+                            <div className="text-green3 fw-bold fz-24 fz-20-sm">{member}</div>
+                            <select name="" id=""
+                                    className="height-60 border-0 pd-17-19 border-radius-08 height-38-sm border-radius-06-sm pd-0-13-sm fz-14-sm">
+                              <option value="1">通常参加費：{Number(participationFee).toLocaleString()}円</option>
+                            </select>
+                            <div className="fz-18 cursor-pointer fz-14-sm align-self-flex-end-sm"
+                                 onClick={() => handleRemoveMember(index)}
+                            >削除</div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-30">
-                        <img
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6th-oTbkDMbDOPGU_kkRMM55lfvRYgM8JA&s"
-                          alt="" className="width-80 height-80 border-radius-50 width-86-sm height-86-sm"/>
-                        <div className="d-flex align-items-center gap-16 gap-03-sm flex-direction-column-sm align-items-flex-start-sm">
-                          <div className="text-green3 fw-bold fz-24 fz-20-sm">Kofworkshard</div>
-                          <select name="" id="" className="height-60 border-0 pd-17-19 border-radius-08 height-38-sm border-radius-06-sm pd-0-13-sm fz-14-sm">
-                            <option value="1">通常参加費：2,000円</option>
-                          </select>
-                          <div className="fz-18 cursor-pointer fz-14-sm align-self-flex-end-sm">削除</div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                     <div className="w-100 height-60 bg-silver7 border-radius-08
-                    align-content-center text-center cursor-pointer mt-20 fz-14-sm pd-22-12-sm">ダブルスの参加者を追加
-                    </div>
+                    align-content-center text-center cursor-pointer mt-20 fz-14-sm pd-22-12-sm"
+                         onClick={showModalAddMember}
+                    >ダブルスの参加者を追加</div>
                   </div>
                 </div>
                 <div className="mt-20 mt-10-sm">
@@ -131,9 +149,9 @@ export default function () {
                   <div className="fz-24 bg-green3 height-76 text-white pd-25-40 fw-bold">エントリー金額</div>
                   <div className="pd-25-40 bg-white pd-22-12-sm">
                     <div className="fz-24 fz-18-sm">男子ダブルス</div>
-                    <div className="fz-18 mt-30 fz-14-sm">通常参加費：2,000円×2名</div>
-                    <div className="fz-18 fz-14-sm">小計4,000円</div>
-                    <div className="text-right fz-24 fw-bold mt-57 fz-17-sm">合計：4,000円</div>
+                    <div className="fz-18 mt-30 fz-14-sm">通常参加費：{Number(participationFee).toLocaleString()}円×{teamMember.length}名</div>
+                    <div className="fz-18 fz-14-sm">小計{Number(participationFee * teamMember.length).toLocaleString()}円</div>
+                    <div className="text-right fz-24 fw-bold mt-57 fz-17-sm">合計：{Number(participationFee * teamMember.length).toLocaleString()}円</div>
                   </div>
                   <div className="pd-0-12-sm pb-22-sm bg-white-sm">
                     <div
@@ -149,7 +167,9 @@ export default function () {
                 className="bg-white text-green3 width-180 height-70 fw-bold fz-26 text-center border-radius-10
                  align-content-center cursor-pointer fz-16-sm height-52-sm width-111-sm border-radius-06-sm">キャンセル
               </div>
-              <a href={`/tournament/${params.id}/entry/payment`}>
+              <a href={`/tournament/${params.id}/entry/payment?teamMembers=${encodeURIComponent(
+                JSON.stringify(teamMember)
+              )}`}>
                 <div
                   className="text-white bg-green3 width-300 height-70 fw-bold fz-26 text-center
                    border-radius-10 align-content-center cursor-pointer fz-16-sm height-52-sm width-220-sm border-radius-06-sm">エントリーに進む
@@ -161,6 +181,33 @@ export default function () {
       </main>
       <CtaSection/>
       <Footer/>
+      <Modal show={isAddMember} onHide={handleCloseAddMemberModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add new Member</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="formTeamName">
+              <Form.Label>名前</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="名前"
+                value={newMemberName}
+                onChange={(e) => setNewMemberName(e.target.value)}
+              />
+            </Form.Group>
+
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAddMemberModal}>
+            閉じる
+          </Button>
+          <Button variant="primary" onClick={handleSubmitAddMemberModal}>
+            追加
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
