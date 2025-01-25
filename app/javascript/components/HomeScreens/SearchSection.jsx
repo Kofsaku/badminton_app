@@ -5,62 +5,6 @@ import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/axiosInstance";
 import { start } from "@popperjs/core";
 
-const sliderSettings = {
-  dots: true,
-  infinite: true,
-  speed: 300,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  arrows: true,
-  autoplay: true,
-  focusOnSelect: false,
-  pauseOnHover: false,
-  autoplaySpeed: 2000,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 700,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
 const SearchSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -177,6 +121,68 @@ const SearchSection = () => {
   };
 
   const { t } = useTranslation();
+
+  const getSliderSettings = () => {
+    const numberOfSlides = searchResults.length;
+
+    const sliderSettings = {
+      dots: true,
+      infinite: numberOfSlides > 1,
+      speed: 300,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: true,
+      autoplay: true,
+      focusOnSelect: false,
+      pauseOnHover: false,
+      autoplaySpeed: 2000,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: numberOfSlides > 1,
+            dots: true,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: numberOfSlides > 1,
+            dots: true,
+          },
+        },
+        {
+          breakpoint: 700,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: numberOfSlides > 1,
+            dots: true,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    };
+
+    return sliderSettings;
+  };
 
   return (
     <section className="py-5">
@@ -386,60 +392,51 @@ const SearchSection = () => {
           </div>
         </div>
         <div className="d-block w-100">
-          <Slider {...sliderSettings} className="custom-slider1 arrows-1">
+          <Slider {...getSliderSettings()} className="custom-slider1 arrows-1">
             {searchResults.map((tournament) => (
-              <NavLink to={`/tournament-details/${tournament.id}`}>
-                <div className="d-block px-3" key={tournament.id}>
-                  <div className="d-block w-100">
-                    <img
-                      className="w-100"
-                      src="images/result-1.png"
-                      alt="Result 1"
-                    />
-                  </div>
-                  <div className="d-block py-3">
-                    <h3 className="text-green4 text-22 fw-bold m-0">
-                      <Link to={`/tournament-details/${tournament.id}`}>
-                        {tournament.name}
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="d-block w-100 mb-3">
-                    <h5 className="text-grey1 text-14 mt-0 mb-2">
-                      prefecture
-                      <span className="text-green4 d-inline-block ms-1 fw-bold">
-                        {tournament.prefecture}
-                      </span>
-                    </h5>
-                    <h5 className="text-grey1 text-14">
-                      Dates
-                      <span className="text-green4 d-inline-block ms-1 fw-bold">
-                        {new Date(tournament.event_date).toDateString()}
-                      </span>
-                    </h5>
-                    <h5 className="text-grey1 text-14">
-                      meeting place
-                      <span className="text-green4 d-inline-block ms-1 fw-bold">
-                        Hirata Gymnasium
-                      </span>
-                    </h5>
-                    <h5 className="text-grey1 text-14">
-                      Tournament Classification
-                      <span className="text-green4 d-inline-block ms-1 fw-bold">
-                        Team Competition (Open)
-                      </span>
-                    </h5>
-                  </div>
-                  <div className="d-flex align-items-center justify-content-start w-100">
-                    <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
-                      Deadline: 10 days left
-                    </span>
-                    <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
-                      Available: Extra room
-                    </span>
-                  </div>
+              <div className="d-block px-3" key={tournament.id}>
+                <div className="d-block w-100">
+                  <img
+                    className="w-100"
+                    src="images/result-1.png"
+                    alt="Result 1"
+                  />
                 </div>
-              </NavLink>
+                <div className="d-block py-3">
+                  <h3 className="text-green4 text-22 fw-bold m-0">
+                    <Link to={`/tournament-details/${tournament.id}`}>
+                      {tournament.name}
+                    </Link>
+                  </h3>
+                </div>
+                <div className="d-block w-100 mb-3">
+                  <h5 className="text-grey1 text-14">
+                    Dates
+                    <span className="text-green4 d-inline-block ms-1 fw-bold">
+                      {new Date(tournament.event_date).toDateString()}
+                    </span>
+                  </h5>
+                  <h5 className="text-grey1 text-14">
+                    Region
+                    <span className="text-green4 d-inline-block ms-1 fw-bold">
+                      {tournament.region &&
+                        t(`home.search.regions.${tournament.region}`)}
+                    </span>
+                  </h5>
+                  <h5 className="text-grey1 text-14 mt-0 mb-2">
+                    Prefecture
+                    <span className="text-green4 d-inline-block ms-1 fw-bold">
+                      {tournament.prefecture}
+                    </span>
+                  </h5>
+                  <h5 className="text-grey1 text-14">
+                    Tournament Classification
+                    <span className="text-green4 d-inline-block ms-1 fw-bold">
+                      Team Competition (Open)
+                    </span>
+                  </h5>
+                </div>
+              </div>
             ))}
           </Slider>
         </div>
