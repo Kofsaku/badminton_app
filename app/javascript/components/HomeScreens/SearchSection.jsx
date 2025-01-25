@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/axiosInstance";
 import { start } from "@popperjs/core";
@@ -388,56 +388,58 @@ const SearchSection = () => {
         <div className="d-block w-100">
           <Slider {...sliderSettings} className="custom-slider1 arrows-1">
             {searchResults.map((tournament) => (
-              <div className="d-block px-3" key={tournament.id}>
-                <div className="d-block w-100">
-                  <img
-                    className="w-100"
-                    src="images/result-1.png"
-                    alt="Result 1"
-                  />
-                </div>
-                <div className="d-block py-3">
-                  <h3 className="text-green4 text-22 fw-bold m-0">
-                    <Link to={`/tournament-details/${tournament.id}`}>
-                      {tournament.name}
-                    </Link>
-                  </h3>
-                </div>
-                <div className="d-block w-100 mb-3">
-                  <h5 className="text-grey1 text-14 mt-0 mb-2">
-                    prefecture
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      {tournament.prefecture}
+              <NavLink to={`/tournament-details/${tournament.id}`}>
+                <div className="d-block px-3" key={tournament.id}>
+                  <div className="d-block w-100">
+                    <img
+                      className="w-100"
+                      src="images/result-1.png"
+                      alt="Result 1"
+                    />
+                  </div>
+                  <div className="d-block py-3">
+                    <h3 className="text-green4 text-22 fw-bold m-0">
+                      <Link to={`/tournament-details/${tournament.id}`}>
+                        {tournament.name}
+                      </Link>
+                    </h3>
+                  </div>
+                  <div className="d-block w-100 mb-3">
+                    <h5 className="text-grey1 text-14 mt-0 mb-2">
+                      prefecture
+                      <span className="text-green4 d-inline-block ms-1 fw-bold">
+                        {tournament.prefecture}
+                      </span>
+                    </h5>
+                    <h5 className="text-grey1 text-14">
+                      Dates
+                      <span className="text-green4 d-inline-block ms-1 fw-bold">
+                        {new Date(tournament.event_date).toDateString()}
+                      </span>
+                    </h5>
+                    <h5 className="text-grey1 text-14">
+                      meeting place
+                      <span className="text-green4 d-inline-block ms-1 fw-bold">
+                        Hirata Gymnasium
+                      </span>
+                    </h5>
+                    <h5 className="text-grey1 text-14">
+                      Tournament Classification
+                      <span className="text-green4 d-inline-block ms-1 fw-bold">
+                        Team Competition (Open)
+                      </span>
+                    </h5>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-start w-100">
+                    <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
+                      Deadline: 10 days left
                     </span>
-                  </h5>
-                  <h5 className="text-grey1 text-14">
-                    Dates
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      {new Date(tournament.event_date).toDateString()}
+                    <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
+                      Available: Extra room
                     </span>
-                  </h5>
-                  <h5 className="text-grey1 text-14">
-                    meeting place
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      Hirata Gymnasium
-                    </span>
-                  </h5>
-                  <h5 className="text-grey1 text-14">
-                    Tournament Classification
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      Team Competition (Open)
-                    </span>
-                  </h5>
+                  </div>
                 </div>
-                <div className="d-flex align-items-center justify-content-start w-100">
-                  <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
-                    Deadline: 10 days left
-                  </span>
-                  <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
-                    Available: Extra room
-                  </span>
-                </div>
-              </div>
+              </NavLink>
             ))}
           </Slider>
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TournamentVenueModel } from "../../models/TournamentVenueModel";
 import { useTranslation } from "react-i18next";
 
-const Step1 = ({ nextStep, formData, handleFormChange }) => {
+const Step1 = ({ nextStep, formData, banner, setBanner , handleFormChange }) => {
   const [venues, setVenues] = useState([TournamentVenueModel()]); // Call the model function
   const { t } = useTranslation();
 
@@ -80,6 +80,11 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
     const { name, value } = e.target;
     handleFormChange(name, value);
   };
+
+  const handleFile = (e) => {
+    const { files } = e.target
+    setBanner(files[0])
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -253,15 +258,41 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 type: "text",
               },
               {
+                label: 'Costume',
+                name: 'costume_detail',
+                type: 'text'
+              },
+              {
+                label: 'Transport',
+                name: 'transport_information',
+                type: 'text'
+              },
+              {
                 label: t("tournament.announcements"),
                 name: "announcements",
                 type: "textarea",
+              },
+              {
+                label: 'Description',
+                name: 'description',
+                type: 'textarea'
               },
               {
                 label: t("tournament.notes_for_organizers"),
                 name: "notes_for_organizers",
                 type: "textarea",
               },
+              {
+                label: 'Other Note',
+                name: 'note_for_participants',
+                type: 'textarea'
+              },
+              {
+                label: 'Banner',
+                name: 'banner',
+                type: 'file',
+                accept: "image/png, image/jpeg"
+              }
             ].map(({ label, name, type }) => (
               <div
                 className={
@@ -325,6 +356,8 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
                     </select>
+                  ) : name == 'banner' ? (
+                    <input type={type} accept="image/*" onChange={handleFile} name={name} />
                   ) : (
                     <input
                       type={type}

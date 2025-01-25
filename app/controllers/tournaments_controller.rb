@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
   include Authenticable
   #before_action :authorize_request
-  before_action :set_tournament, only: %i[ show edit update destroy]
+  before_action :set_tournament, only: %i[show edit update destroy]
 
   # GET /tournaments or /tournaments.json
   def index
@@ -114,7 +114,6 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments or /tournaments.json
   def create
-    # binding.pry
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save!
@@ -193,6 +192,10 @@ class TournamentsController < ApplicationController
       :inquiry_contact_information,     # t.string "inquiry_contact_information"
       :notes_for_organizers,
       :user_id,
+      :costume_detail,
+      :description,
+      :transport_information,
+      :banner,
       tournament_categories_attributes: [
         :id,
         :category_type,
@@ -231,6 +234,7 @@ class TournamentsController < ApplicationController
     tournament.attributes.merge(
       tournament_categories_attributes: tournament_categories_data(tournament),
       tournament_venues_attributes: tournament.tournament_venues.map(&:attributes),
+      tags: tournament.tags.as_json
     )
   end
 

@@ -3,10 +3,12 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import { TournamentFormModel } from '../../models/TournamentFormModel';
+import { Form } from 'react-router-dom';
 
 const TournamentForm = ({ initialData, editMode }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(TournamentFormModel);
+  const [banner, setBanner] = useState()
 
   useEffect(() => {
     if (initialData) {
@@ -31,6 +33,7 @@ const TournamentForm = ({ initialData, editMode }) => {
         <Step1
           nextStep={nextStep}
           formData={formData}
+          setBanner={setBanner}
           handleFormChange={handleFormChange}
           addCategory={addCategory}
         />
@@ -50,6 +53,7 @@ const TournamentForm = ({ initialData, editMode }) => {
           nextStep={nextStep}
           prevStep={prevStep}
           formData={formData}
+          banner={banner}
           setFormData={setFormData}
           handleFormChange={handleFormChange}
           editMode={editMode}

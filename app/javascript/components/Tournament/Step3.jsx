@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 import {createTournament, updateTournament} from '../../api/tournamentApi';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {Spinner} from "react-bootstrap";
 import Loading from "../Loading";
 
-const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, editMode }) => {
+const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setFormData, editMode }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [listTitle, setListTitle] = useState([])
@@ -77,10 +77,17 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, ed
   const handleCreate = async () => {
     try {
       // Submit form data using the API function
+      const newFormData = new FormData ()
+      for (var key in formData) {
+        newFormData.append(key, formData[key])
+      }
+
+      newFormData.append('banner', banner)
+
       if (formData.id) {
-        await updateTournament(formData,formData.id);
+        await updateTournament(newFormData, formData.id);
       } else {
-        await createTournament(formData);
+        await createTournament(newFormData);
       }
       // console.log('Tournament created successfully:', result);
 
@@ -95,7 +102,13 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, formData, setFormData, ed
   const handleUpdate = async () => {
     try {
       // Submit form data using the API function
-      const result = await updateTournament(formData);
+      // const newFormData = new FormData ()
+      // for (var key in formData) {
+      //   newFormData.append(key, formData[key])
+      // }
+
+      // newFormData.append('banner', banner)
+      const result = await updateTournament(formData, banner);
       console.log('Tournament created successfully:', result);
 
       navigate('/tournament-management');
