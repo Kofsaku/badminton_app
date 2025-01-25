@@ -77,17 +77,11 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setForm
   const handleCreate = async () => {
     try {
       // Submit form data using the API function
-      const newFormData = new FormData ()
-      for (var key in formData) {
-        newFormData.append(key, formData[key])
-      }
-
-      newFormData.append('banner', banner)
 
       if (formData.id) {
-        await updateTournament(newFormData, formData.id);
+        await updateTournament(formData, banner);
       } else {
-        await createTournament(newFormData);
+        await createTournament(formData);
       }
       // console.log('Tournament created successfully:', result);
 
