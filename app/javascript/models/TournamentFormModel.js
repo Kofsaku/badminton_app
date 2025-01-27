@@ -8,7 +8,8 @@ export const TournamentFormModel = () => ({
   region: "hokkaido",
   prefecture: "北海道",
   event_date: "", // t.date "event_date"
-  registration_time: "", // t.date "registration_time"
+  // registration_time: "", // t.date "registration_time"
+  registeration_time: "", 
   organization_name: "", // t.string "organization_name"
   payment_method: "local_cash", // t.string "payment_method"
   match_start_time: "", // t.time "match_start_time"
@@ -39,6 +40,7 @@ export const TournamentFormModel = () => ({
   notes_for_organizers: "", // t.text "notes_for_organizers"
   user_id: null, // t.bigint "user_id"
   banner: new Blob (),
+  note_for_participants: "",
 
   tournament_categories_attributes: [TournamentCategoryModel], // Using category model
   tournament_venues_attributes: [TournamentVenueModel], // Array of venue models
