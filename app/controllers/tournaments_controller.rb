@@ -195,6 +195,7 @@ class TournamentsController < ApplicationController
       :costume_detail,
       :description,
       :transport_information,
+      :note_for_participants,
       :banner,
       tournament_categories_attributes: [
         :id,
@@ -220,12 +221,24 @@ class TournamentsController < ApplicationController
         tournament_divisions_attributes: [
           :id, :division, :_destroy
         ],
+        games: [
+          :interval_duration,
+          :switch_ends,
+          :switch_score_during_game
+        ]
       ],
       tournament_players_attributes: [
         :id, :user_id, :status, :_destroy
       ],
       tournament_venues_attributes: [
-        :id, :venue_name, :venue_address, :no_of_courts, :venue_date, :category_type, :division_number, :_destroy
+        :id,
+        :venue_name, 
+        :venue_address, 
+        :no_of_courts, 
+        :venue_date, 
+        :division_number, 
+        :_destroy,
+        category_type: [], 
       ]
     )
   end
