@@ -45,7 +45,7 @@ puts "Creating tournaments with events and divisions..."
   tournament = Tournament.create!(
     name: "大会#{i + 1}",
     event_date: Date.today + i.days,
-    registeration_time: "10:00",
+    registration_date: "10:00",
     organization_name: "バドミントン協会",
     user: organizer
   )

@@ -1,43 +1,48 @@
 import React, { useState, useEffect } from 'react';
-
-import {createTournament, updateTournament} from '../../api/tournamentApi';
-import { Form, useNavigate } from 'react-router-dom';
+import { createTournament, updateTournament } from '../../api/tournamentApi';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {Spinner} from "react-bootstrap";
 import Loading from "../Loading";
 
 const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setFormData, editMode }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [listTitle, setListTitle] = useState([])
-  const [listOption, setListOption] = useState([])
-  const [updateMode, setUpdateMode] = useState(editMode)
-  const [isSubmit, setIsSubmit] = useState(false)
+  const [listTitle, setListTitle] = useState([]);
+  const [listOption, setListOption] = useState([]);
+  const [updateMode, setUpdateMode] = useState(editMode);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e, index) => {
-    const selectedCategoryType = e.target.value;
-    const selectedOption = listOption.find(option => option.category_type === selectedCategoryType);
+    // Array.from()を使用して選択された値を配列として取得
+    const selectedValues = Array.from(e.target.selectedOptions, option => option.value);
 
-    if (selectedOption) {
-      const updatedFormData = {
-        ...formData,
-        tournament_venues_attributes: formData.tournament_venues_attributes.map((item, i) =>
-          i === index ? { ...item, category_type: selectedOption.category_type, division_number: selectedOption.division_number  } : item
-        )
-      };
-      setFormData(updatedFormData);
+    const updatedFormData = {
+      ...formData,
+      tournament_venues_attributes: formData.tournament_venues_attributes.map((item, i) =>
+        i === index 
+          ? { 
+              ...item, 
+              category_type: selectedValues
+            }
+          : item
+      )
+    };
 
-    } else {
-      console.log("No valid option selected");
-    }
+    setFormData(updatedFormData);
+    handleFormChange('tournament_venues_attributes', updatedFormData.tournament_venues_attributes);
+
+    // デバッグ用ログ
+    console.log('Selected values:', selectedValues);
+    console.log('Updated formData:', updatedFormData);
   };
+
   const camelCaseToPascalCase = (text) => {
     if (text) {
       return text
         .split('_')
         .map((word, index) =>
           index === 0
-            ? word.toLowerCase() // Keep the first word in lowercase
+            ? word.toLowerCase()
             : word.charAt(0).toUpperCase() + word.slice(1)
         )
         .join('');
@@ -46,44 +51,42 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setForm
   };
 
   useEffect(() => {
-    const dataRevenue = formData.tournament_venues_attributes
-    const dataCategory = formData.tournament_categories_attributes
+    const dataRevenue = formData.tournament_venues_attributes;
+    const dataCategory = formData.tournament_categories_attributes;
+    
     if (dataRevenue) {
       const titles = dataRevenue.map(item => {
-        if (item) {
+        if (item && item.venue_date && item.venue_name) {
           const [year, month, day] = item.venue_date.split("-");
           return `${day}/${month} ${item.venue_name.charAt(0).toUpperCase()}${item.venue_name.slice(1)}`;
         } else {
-          return ''
+          return '';
         }
-
       });
-      setListTitle(titles)
+      setListTitle(titles);
     }
-    if (dataRevenue) {
-      const categories = dataCategory.map(item => {
+
+    if (dataCategory) {
+      const categories = dataCategory.flatMap(item => {
         const formattedCategory = t(`tournament.${camelCaseToPascalCase(item.category_type)}`);
-        return {
-          category_type: item.category_type,
-          division_number: item.division_number,
-          title: `${formattedCategory} ${item.division_number} division`
-        };
+        return Array.from({ length: item.division_number }, (_, index) => ({
+          category_type: `${item.category_type}_division${index + 1}`,
+          division_number: index + 1,
+          title: `${formattedCategory} ${index + 1}部`
+        }));
       });
-      setListOption(categories)
+      setListOption(categories);
     }
-
-  }, [formData]);
+  }, [formData.tournament_categories_attributes]); // 依存配列を修正
 
   const handleCreate = async () => {
     try {
       // Submit form data using the API function
-
       if (formData.id) {
         await updateTournament(formData, banner);
       } else {
         await createTournament(formData);
       }
-      // console.log('Tournament created successfully:', result);
 
       navigate('/tournament-management');
       // Handle success (e.g., redirect to another page or show success message)
@@ -95,32 +98,26 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setForm
 
   const handleUpdate = async () => {
     try {
-      // Submit form data using the API function
-      // const newFormData = new FormData ()
-      // for (var key in formData) {
-      //   newFormData.append(key, formData[key])
-      // }
-
-      // newFormData.append('banner', banner)
       const result = await updateTournament(formData, banner);
-      console.log('Tournament created successfully:', result);
+      console.log('Tournament updated successfully:', result);
 
       navigate('/tournament-management');
       // Handle success (e.g., redirect to another page or show success message)
     } catch (error) {
       // Handle error (e.g., show error message)
-      console.error('Failed to create tournament:', error);
+      console.error('Failed to update tournament:', error);
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmit(true)
+    setIsSubmit(true);
     if (updateMode) {
-      handleUpdate()
+      await handleUpdate();
     } else {
-      handleCreate()
+      await handleCreate();
     }
+    setIsSubmit(false); // リセット
   };
 
   return (
@@ -148,12 +145,17 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setForm
                   <label>{title}</label>
                   <select
                     className="field-style5"
-                    value={formData.tournament_venues_attributes[index].category_type || ''}
+                    multiple // マルチセレクトを有効にする
+                    size="5" // 表示するオプションの数を設定（必要に応じて調整）
+                    value={formData.tournament_venues_attributes[index].category_type || []} // 初期値を配列に設定
                     onChange={(e) => handleChange(e, index)}
+                    style={{ minHeight: '150px' }} // 選択エリアの高さを調整
                   >
                     <option value="">Select Division</option>
                     {listOption.map((option, ind) => (
-                      <option key={ind} value={option.category_type}>{option.title}</option>
+                      <option key={ind} value={option.category_type}>
+                        {option.title}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -164,13 +166,13 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setForm
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
               <button type="submit" disabled={isSubmit}
                       className="bg-green1 text-white text-15 w-100 px-3 py-2 rounded-3 merriweather-font border-0">
-                Next
+                保存
               </button>
             </div>
           </div>
         </form>
       </div>
-      <Loading isShow={isSubmit}/>
+      <Loading isShow={isSubmit} />
     </div>
   );
 };

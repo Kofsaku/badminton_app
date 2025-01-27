@@ -20,5 +20,6 @@ export const TournamentCategoryModel = () => ({
   show_score: true,
   show_intervals: false,
   show_time_limit: false,              // t.string "match_facilitator"
-  tournament_divisions_attributes: [TournamentDivisionModel()]
+  tournament_divisions_attributes: [TournamentDivisionModel()],
+  games: [],
 });

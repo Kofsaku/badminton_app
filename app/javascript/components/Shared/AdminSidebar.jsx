@@ -13,14 +13,14 @@ const AdminSidebar = () => {
         path: "/tournament-management",
         text: t("adminSidebar.menu.tournamentManagement"),
       },
-      {
-        path: "/type-management#",
-        text: t("adminSidebar.menu.typeManagement"),
-      },
-      {
-        path: "/split-management",
-        text: t("adminSidebar.menu.splitManagement"),
-      },
+      // {
+      //   path: "/type-management#",
+      //   text: t("adminSidebar.menu.typeManagement"),
+      // },
+      // {
+      //   path: "/split-management",
+      //   text: t("adminSidebar.menu.splitManagement"),
+      // },
       {
         path: "/players-management",
         text: t("adminSidebar.menu.playerManagement"),
@@ -42,10 +42,10 @@ const AdminSidebar = () => {
     ],
     common: [
       { path: "/timetables", text: t("adminSidebar.menu.timetable") },
-      {
-        path: "/notifications-management",
-        text: t("adminSidebar.menu.notificationManagement"),
-      },
+      // {
+      //   path: "/notifications-management",
+      //   text: t("adminSidebar.menu.notificationManagement"),
+      // },
     ],
     player: [
       {

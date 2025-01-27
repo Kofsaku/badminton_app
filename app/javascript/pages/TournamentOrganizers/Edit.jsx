@@ -119,7 +119,7 @@ const TournamentOrganizer = () => {
                     <option value="">役割の選択</option>
                     <option value="Player">Player</option>
                     <option value="Tournament Organizer">
-                      Tournament Organizer
+                      大会運営者
                     </option>
                     <option value="Both">Both</option>
                   </select>
