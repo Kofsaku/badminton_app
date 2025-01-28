@@ -20,9 +20,12 @@ const ShowTimetable = () => {
   useEffect(() => {
     const url = `/api/v1/timetables/${id}`;
     axios.get(url).then((res) => {
-      console.log(res.data);
+      const { timetable_cells } = res.data;
 
-      setTimetable(res.data);
+      timetable_cells.sort((a, b) => a.number - b.number);
+      console.log(timetable_cells);
+
+      setTimetable({ ...res.data, timetable_cells });
     });
   }, [id]);
 

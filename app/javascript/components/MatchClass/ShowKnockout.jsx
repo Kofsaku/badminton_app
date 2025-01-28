@@ -20,12 +20,26 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
           if (cell.tournament_player_id && cell.second_tournament_player_id) {
             tables[index][0][cellIndex] = cell.number;
 
-            addChildMatch(index, timetable_cell, cell.number, 1, cellIndex);
+            addChildMatch(
+              index,
+              timetable_cell,
+              cell.number,
+              1,
+              cellIndex,
+              group_size / 2
+            );
             cellIndex++;
           }
         } else {
           tables[index][0][cellIndex] = cell.number;
-          addChildMatch(index, timetable_cell, cell.number, 1, cellIndex);
+          addChildMatch(
+            index,
+            timetable_cell,
+            cell.number,
+            1,
+            cellIndex,
+            group_size / 2
+          );
           cellIndex++;
         }
       });
@@ -50,10 +64,19 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
     return { nMatches, nRounds };
   };
 
-  const addChildMatch = (index, timetable_cell, number, round, cellIndex) => {
+  const addChildMatch = (
+    index,
+    timetable_cell,
+    number,
+    round,
+    cellIndex,
+    block_size
+  ) => {
     if (!tables[index][round]) return;
 
-    const cell = timetable_cell.find((item) => item.player_key == number);
+    const cell = timetable_cell.find(
+      (item, no) => item.player_key == number && no >= block_size
+    );
 
     if (!cell) return;
 
@@ -73,7 +96,8 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
       timetable_cell,
       cell.number,
       round + 1,
-      parseInt(cellIndex / 2)
+      parseInt(cellIndex / 2),
+      block_size
     );
   };
 
@@ -197,7 +221,7 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
               <>
                 <p>
                   Round {round} -{" "}
-                  {tables[tableNumber][round - 2][(id * 2 + 1) * 2]}
+                  {tables[tableNumber][round - 2][(id * 2 + 1) * 2]}:
                 </p>
                 <p>{scores[1]}</p>
               </>
@@ -206,7 +230,7 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
               <>
                 <p>
                   Round {round} -{" "}
-                  {tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1]}
+                  {tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1]}:
                 </p>
                 <p>{scores[1]}</p>
               </>
