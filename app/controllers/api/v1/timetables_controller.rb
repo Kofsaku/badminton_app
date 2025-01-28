@@ -2,7 +2,9 @@ class Api::V1::TimetablesController < ApplicationController
   before_action :set_timetable, only: %i[get_timetable_by_id]
 
   def get_all_timetables
-    tournament_venues = TournamentVenue.all()
+    logger.info "this is user id: --------------------------------------#{session[:current_user_id]}"
+
+    tournament_venues = TournamentVenue.joins(:tournament).where(tournaments: {user_id: session[:current_user_id]})
     render json: tournament_venues.as_json(include: {
       tournament: {only: [:id, :name]},
     })

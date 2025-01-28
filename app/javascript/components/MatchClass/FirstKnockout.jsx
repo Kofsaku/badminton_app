@@ -5,6 +5,7 @@ import { Bracket, Seed, SeedItem, SeedTeam } from "react-brackets";
 const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
   const [tournamentVenues, setTournamentVenues] = useState([]);
   const [tournamentPlayers, setTournamentPlayers] = useState([]);
+  const [venueCounts, setVenueCounts] = useState([]);
 
   const [formData, setFormData] = useState({
     tableCount: 0,
@@ -40,11 +41,29 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
   }, [tables]);
 
   const handleTableCountChange = (e) => {
-    setFormData({ ...formData, tableCount: parseInt(e.target.value) });
+    numberOfPlayers.length = e.target.value;
+
+    numberOfPlayers.forEach((_, playerNo) => {
+      venueCounts[selectedVenues[playerNo]] = Object.keys(numberOfPlayers)
+        .filter((no) => selectedVenues[no] == selectedVenues[playerNo])
+        .map((n) => getNumberOfMatches(n).nMatches)
+        .reduce((a, b) => a + b, 0);
+    });
+
+    setFormData({
+      ...formData,
+      tableCount: parseInt(e.target.value),
+      numberOfPlayers,
+    });
   };
 
   const handleBlockCountChange = (e, index) => {
     numberOfPlayers[index] = parseInt(e.target.value) * 2;
+
+    venueCounts[selectedVenues[index]] = Object.keys(numberOfPlayers)
+      .filter((no) => selectedVenues[no] == selectedVenues[index])
+      .map((n) => getNumberOfMatches(n).nMatches)
+      .reduce((a, b) => a + b, 0);
 
     if (!Array.isArray(selectedPlayers[index]))
       selectedPlayers[index] = new Array();
@@ -59,15 +78,28 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
       selectedPlayers,
       tables,
     });
+    setVenueCounts(venueCounts);
   };
 
   const handleVenueChange = (e, index) => {
+    const prevValue = selectedVenues[index];
     selectedVenues[index] = parseInt(e.target.value);
+
+    venueCounts[prevValue] = Object.keys(numberOfPlayers)
+      .filter((no) => selectedVenues[no] == prevValue)
+      .map((n) => getNumberOfMatches(n).nMatches)
+      .reduce((a, b) => a + b, 0);
+
+    venueCounts[selectedVenues[index]] = Object.keys(numberOfPlayers)
+      .filter((no) => selectedVenues[no] == selectedVenues[index])
+      .map((n) => getNumberOfMatches(n).nMatches)
+      .reduce((a, b) => a + b, 0);
 
     setFormData({
       ...formData,
       selectedVenues,
     });
+    setVenueCounts(venueCounts);
   };
 
   const handlePlayerChange = (e, index, colIndex) => {
@@ -278,13 +310,14 @@ const FirstKnockout = ({ selectedTournament, step, classSize, addMatch }) => {
                   }
                 >
                   <option value={0}>0</option>
-                  {Array.from({
-                    length: getNumberOfMatches(tableNumber).nMatches,
-                  }).map((_, no) => (
-                    <option key={no} value={no + 1}>
-                      {no + 1}
-                    </option>
-                  ))}
+                  {selectedVenues[tableNumber] &&
+                    Array.from({
+                      length: venueCounts[selectedVenues[tableNumber]],
+                    }).map((_, no) => (
+                      <option key={no} value={no + 1}>
+                        {no + 1}
+                      </option>
+                    ))}
                 </select>
               )}
             </div>

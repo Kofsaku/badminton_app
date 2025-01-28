@@ -31,11 +31,11 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
             cellIndex++;
           }
         } else {
-          tables[index][0][cellIndex] = cell.number;
+          tables[index][0][cellIndex] = cell.number % 1000;
           addChildMatch(
             index,
             timetable_cell,
-            cell.number,
+            cell.number % 1000,
             1,
             cellIndex,
             group_size / 2
@@ -80,21 +80,13 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
 
     if (!cell) return;
 
-    console.log(
-      cell,
-      "this is index",
-      index,
-      round,
-      parseInt(cellIndex / 2),
-      cell.number
-    );
-    tables[index][round][parseInt(cellIndex / 2)] = cell.number;
+    tables[index][round][parseInt(cellIndex / 2)] = cell.number % 1000;
     setTables(tables);
 
     addChildMatch(
       index,
       timetable_cell,
-      cell.number,
+      cell.number % 1000,
       round + 1,
       parseInt(cellIndex / 2),
       block_size
@@ -137,12 +129,14 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
           scores: [
             tables[index][matchArray.length][i]
               ? timetable_cell.find(
-                  (cell) => cell.number == tables[index][matchArray.length][i]
+                  (cell) =>
+                    cell.number % 1000 == tables[index][matchArray.length][i]
                 ).match.match_score_teamA
               : null,
             tables[index][matchArray.length][i]
               ? timetable_cell.find(
-                  (cell) => cell.number == tables[index][matchArray.length][i]
+                  (cell) =>
+                    cell.number % 1000 == tables[index][matchArray.length][i]
                 ).match.match_score_teamB
               : null,
           ],
@@ -166,76 +160,76 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
           <SeedTeam>
             {!round ? (
               <>
-                <p>{showPlayerName(teams[0])}:</p>
-                <p>{scores[0]}</p>
+                <p className="mb-0">{showPlayerName(teams[0])}:</p>
+                <p className="mb-0">{scores[0]}</p>
               </>
             ) : tables[tableNumber][round - 1][id * 2] ? (
               <>
-                <p>
+                <p className="mb-0">
                   Round {round} - {tables[tableNumber][round - 1][id * 2]}:
                 </p>
-                <p>{scores[0]}</p>
+                <p className="mb-0">{scores[0]}</p>
               </>
             ) : round > 1 &&
               tables[tableNumber][round - 2][id * 2 * 2] &&
               tables[tableNumber][round - 2][id * 2 * 2 + 1] ? (
-              <p>None</p>
+              <p className="mb-0">None</p>
             ) : round > 1 && tables[tableNumber][round - 2][id * 2 * 2] ? (
               <>
-                <p>
+                <p className="mb-0">
                   Round {round} - {tables[tableNumber][round - 2][id * 2 * 2]}
                 </p>
-                <p>{scores[0]}</p>
+                <p className="mb-0">{scores[0]}</p>
               </>
             ) : round > 1 && tables[tableNumber][round - 2][id * 2 * 2 + 1] ? (
               <>
-                <p>
+                <p className="mb-0">
                   Round {round} -{" "}
                   {tables[tableNumber][round - 2][id * 2 * 2 + 1]}
                 </p>
-                <p>{scores[0]}</p>
+                <p className="mb-0">{scores[0]}</p>
               </>
             ) : (
-              <p>None</p>
+              <p className="mb-0">None</p>
             )}
           </SeedTeam>
           <SeedTeam>
             {!round ? (
               <>
-                <p>{showPlayerName(teams[1])}:</p>
-                <p>{scores[1]}</p>
+                <p className="mb-0">{showPlayerName(teams[1])}:</p>
+                <p className="mb-0">{scores[1]}</p>
               </>
             ) : tables[tableNumber][round - 1][id * 2 + 1] ? (
               <>
-                <p>
+                <p className="mb-0">
                   Round {round} - {tables[tableNumber][round - 1][id * 2 + 1]}:
                 </p>
-                <p>{scores[1]}</p>
+                <p className="mb-0">{scores[1]}</p>
               </>
             ) : round > 1 &&
               tables[tableNumber][round - 2][(id * 2 + 1) * 2] &&
               tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1] ? (
-              <p>None</p>
+              <p className="mb-0">None</p>
             ) : round > 1 &&
               tables[tableNumber][round - 2][(id * 2 + 1) * 2] ? (
               <>
-                <p>
+                <p className="mb-0">
                   Round {round} -{" "}
                   {tables[tableNumber][round - 2][(id * 2 + 1) * 2]}:
                 </p>
-                <p>{scores[1]}</p>
+                <p className="mb-0">{scores[1]}</p>
               </>
             ) : round > 1 &&
               tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1] ? (
               <>
-                <p>
+                <p className="mb-0">
                   Round {round} -{" "}
                   {tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1]}:
                 </p>
-                <p>{scores[1]}</p>
+                <p className="mb-0">{scores[1]}</p>
               </>
             ) : (
-              <p>None</p>
+              <p className="mb-0">None</p>
             )}
           </SeedTeam>
         </SeedItem>
@@ -254,11 +248,24 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
         <h5>{round_size}</h5>
       </div>
       {match_groups.map((group, index) => (
-        <Bracket
-          key={group.id}
-          rounds={showBracket(group, index)}
-          renderSeedComponent={CustomSeed}
-        />
+        <div key={group.id}>
+          <h6>{String.fromCharCode("A".charCodeAt(0) + index)}</h6>
+          <div className="border d-flex">
+            <div className="flex-fill p-2">
+              <p className="mb-0">ブロック数</p>
+              <p className="mb-0 border">{group.group_size / 2}</p>
+            </div>
+            <div className="flex-fill p-2">
+              <p className="mb-0">試合日数</p>
+              <p className="mb-0 border">{group.tournament_venue.venue_name}</p>
+            </div>
+          </div>
+
+          <Bracket
+            rounds={showBracket(group, index)}
+            renderSeedComponent={CustomSeed}
+          />
+        </div>
       ))}
     </>
   );
