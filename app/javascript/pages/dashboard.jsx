@@ -22,11 +22,11 @@ export default function () {
   const navigate = useNavigate();
   const role = useSelector((state) => state.user.role);
   const sidebar = [
-    { key: 'profile', title: 'あなたのプロフィール', sidebarTitle: 'プロフィール'},
+    { key: 'profile', title: 'プロフィール', sidebarTitle: 'プロフィール'},
     { key: 'team', title: t('adminHeader.userMenu.items.teamMatches'), sidebarTitle: t('adminHeader.userMenu.items.teamMatches')},
     { key: 'entry', title: 'あなたのエントリー・決済履歴', sidebarTitle: 'エントリー履歴・　決済'},
-    { key: 'notice', title: 'お知らせ', sidebarTitle: 'お知らせ'},
-    { key: 'setting', title: 'システム設定', sidebarTitle: 'システム設定'},
+    // { key: 'notice', title: 'お知らせ', sidebarTitle: 'お知らせ'},
+    // { key: 'setting', title: 'システム設定', sidebarTitle: 'システム設定'},
   ];
   const [sidebarActive, setSidebarActive] = useState({ key: 'profile', title: 'あなたのプロフィール', sidebarTitle: 'プロフィール'})
   const [userData, setUserData] = useState({})
@@ -62,8 +62,6 @@ export default function () {
         <div className="w-100 d-flex justify-content-between p-12-0-sm box-shadow-1 position-relative">
           <div className="container">
               <div className="d-flex gap-32 align-items-center justify-content-center w-100-sm pd-67 pd-0-sm gap-12-sm">
-                <img src="/images/avatar-1.png" alt=""
-                     className="width-123 height-123 border-radius-50 width-80-sm height-80-sm"/>
                 <div className="">
                   <div className="text-green3 fz-44 fw-bold text-decoration-underline fz-24-sm text-decoration-none-sm">{sidebarActive.title}</div>
                 </div>
@@ -111,7 +109,6 @@ export default function () {
           </div>
         </div>
       </main>
-      <CtaSection/>
       <Footer/>
     </>
   );

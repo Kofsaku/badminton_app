@@ -13,9 +13,9 @@ const Footer = () => {
 
   const bottomLinks = [
     { path: '/about', text: footer_translation('footer.bottomLinks.0') },
-    { path: '/contact', text: footer_translation('footer.bottomLinks.1') },
+    // { path: '/contact', text: footer_translation('footer.bottomLinks.1') },
     { path: '/privacy-policy', text: footer_translation('footer.bottomLinks.2') },
-    { path: '#', text: footer_translation('footer.bottomLinks.3') },
+    // { path: '#', text: footer_translation('footer.bottomLinks.3') },
     { path: '/terms-of-service', text: footer_translation('footer.bottomLinks.4') },
     { path: '/transactions-law', text: '特定商取引法' }
   ];
@@ -30,32 +30,29 @@ const Footer = () => {
                 <Link to="/">
                   <img
                     className="footer-logo mb-3"
-                    src="/images/badminton-dark-logo.png"
+                    src="/images/logoblack.png"
                     alt="Badminton Logo"
                   />
                 </Link>
-                <h5 className="text-green3 mt-0 mb-2 text-17 fw-bold">
+                {/* <h5 className="text-green3 mt-0 mb-2 text-17 fw-bold">
                   Main Slogan here,
                 </h5>
                 <p className="text-green3 fw-normal mt-0 mb-3 text-14">
                   Supporting line here
-                </p>
-                <div className="d-flex align-items-center justify-content-start">
+                </p> */}
+                {/* <div className="d-flex align-items-center justify-content-start">
                   {socialLinks.map((link, index) => (
                     <Link to="#" key={index} className="me-2">
                       <img src={`/images/${link.icon}`} alt={link.alt} />
                     </Link>
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-lg-8 col-md-8 col-sm-12 col-12">
               <div className="row">
                 <div className="col-lg-4 col-md-4 col-sm-4 col-12">
                   <div className="d-block w-100 mt-3">
-                    <h3 className="text-green3 mt-0 mb-3 fw-bold text-18">
-                      Useful links
-                    </h3>
                     <ul className="list-style-none m-0 p-0">
                       {bottomLinks.slice(0, 3).map((link, index) => (
                         <li className="mb-2" key={index}>
@@ -72,9 +69,6 @@ const Footer = () => {
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4 col-12">
                   <div className="d-block w-100 mt-3">
-                    <h3 className="text-green3 mt-0 mb-3 fw-bold text-18">
-                      Our Company
-                    </h3>
                     <ul className="list-style-none m-0 p-0">
                       {bottomLinks.slice(3).map((link, index) => (
                         <li className="mb-2" key={index}>

@@ -23,7 +23,7 @@ const HeroSection = () => {
               <div className="d-block w-100 text-center">
                 <img 
                   className="about-symbol" 
-                  src="images/about-symbol.png" 
+                  src="images/logoblack.png" 
                   alt={t('about.hero.title')} 
                 />
               </div>

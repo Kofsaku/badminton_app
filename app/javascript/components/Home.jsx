@@ -20,12 +20,11 @@ export default () => (
     <SearchSection />
     <TournamentSection />
     <ResultSection />
-    <PickOutSection />
+    {/* <PickOutSection /> */}
     <TeamSearchSection />
     <FeatureSection />
     <ProductSection />
     <UseSection />
-    <CtaSection />
     <Footer />
   </div>
 );

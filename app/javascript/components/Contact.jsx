@@ -35,7 +35,7 @@ const Contact = () => {
 
       <ContactForm />
 
-      <section className="pb-5 my-3">
+      {/* <section className="pb-5 my-3">
         <div className="container">
           <div className="row justify-content-center">
             {t('contact.contactMethods', { returnObjects: true }).map((method, index) => (
@@ -70,9 +70,9 @@ const Contact = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="py-5 bg-silver4">
+      {/* <section className="py-5 bg-silver4">
         <div className="container">
           <div className="row my-5 align-items-center">
             <div className="col-lg-7 col-md-7 col-sm-6 col-12 order-lg-1 order-md-1 order-sm-1 order-2">
@@ -99,9 +99,8 @@ const Contact = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <CtaSection />
       <Footer />
     </div>
   );

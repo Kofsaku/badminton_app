@@ -4,7 +4,7 @@
       "add_new_tournament": "トーナメント登録",
       "name": "大会名",
       "region": "地域",
-      "prefecture": "都道府",
+      "prefecture": "都道府県",
       "event_date_time": "イベント日時",
       "registration_time": "登録開始時間",
       "organization_name": "組織名",
@@ -131,18 +131,18 @@
         "joinButton": "参加する"
       },
       "hero": {
-        "tagline": "1つのプラットフォームで無限のコントロール",
+        "tagline": "バドミントン大会",
         "title": {
           "part1": "最高の",
           "part2": "バドミントンアプリ"
         },
-        "description": "Lorem ipsum dolor sit amet consectetur. フェルトラ ディグニッシム ブランディット キス オルグ。プロイン マティス フェセルス フェセルス ファシリス ヴルプテート ディクトゥムスト ノン コンセクアット。フリンギラ オブ エリート ベルプロインヘンドレリト アディピシンゲゲット。",
+        "description": "バドミントンを楽しむ全てのプレイヤー・運営者のためのアプリ",
         "toggleButtons": {
           "player": "プレイヤーの方",
           "organizer": "トーナメント主催者の方"
         },
         "approvedSection": {
-          "title": "承認"
+          "title": ""
         }
       },
       "pickOut": {
@@ -188,7 +188,7 @@
           "dates": "日付",
           "status": "状態",
           "region": "地域",
-          "prefecture": "都道府",
+          "prefecture": "都道府県",
           "tournamentType": "トーナメントタイプ",
           "venue": "会場",
           "matchFormat": "試合形式",
@@ -241,7 +241,7 @@
         }
       },
       "use": {
-        "title": "使い方？",
+        "title": "使い方",
         "points": {
           "1": {
             "title": "ポイント 1",
@@ -293,8 +293,8 @@
         }
       },
       "hero": {
-        "title": "バドミントンについて",
-        "description": "Lorem ipsum dolor sit amet consectetur. Magnis placerat eros id adipiscing non. Egestas pellentesque sed aliquam dolor quis."
+        "title": "運営会社について",
+        "description": ""
       },
       "partners": {
         "title": "パートナー企業",
@@ -363,8 +363,8 @@
         "submit": "送信"
       },
       "hero": {
-        "title": "お問い合わせ！",
-        "description": "Lorem ipsum dolor sit amet consectetur. Magnis placerat eros id adipiscing non. Egestas pellentesque sed aliquam dolor quis."
+        "title": "お問い合わせ",
+        "description": "ご不明点があればご連絡ください。"
       },
       "contactMethods": [
         {
@@ -660,7 +660,7 @@
         "使い方",
         "利用規約"
       ],
-      "copyright": "© 2023 Badminton. All rights reserved."
+      "copyright": "© 2025 Badminton. All rights reserved."
     },
     "ctaSection": {
       "title": "アプリをダウンロード",

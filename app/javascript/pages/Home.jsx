@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import Header from "../components/Shared/Header";
 import CtaSection from "../components/Shared/CtaSection";
@@ -13,19 +13,28 @@ import UseSection from "../components/HomeScreens/UseSection";
 import TeamSearchSection from "../components/HomeScreens/TeamSearchSection";
 import Footer from "../components/Shared/Footer";
 
-export default () => (
-  <div>
-    <Header />
-    <HeroSection />
-    <SearchSection />
-    {/* <TournamentSection /> */}
-    <ResultSection />
-    <PickOutSection />
-    <TeamSearchSection />
-    <FeatureSection />
-    <ProductSection />
-    <UseSection />
-    <CtaSection />
-    <Footer />
-  </div>
-);
+const Home = () => {
+  const [activeToggle, setActiveToggle] = useState('player');
+
+  return (
+    <div>
+      <Header />
+      <HeroSection activeToggle={activeToggle} setActiveToggle={setActiveToggle} />
+      {activeToggle === 'player' ? (
+        <>
+          <SearchSection />
+          {/* <FeatureSection /> */}
+        </>
+      ) : (
+        <>
+          <UseSection />
+          <ProductSection />
+
+        </>
+      )}
+      <Footer />
+    </div>
+  );
+};
+
+export default Home;

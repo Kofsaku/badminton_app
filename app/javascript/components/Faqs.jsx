@@ -59,8 +59,6 @@ const Faqs = () => {
           </div>
         </div>
       </section>
-
-      <CtaSection />
       <Footer />
     </div>
   );

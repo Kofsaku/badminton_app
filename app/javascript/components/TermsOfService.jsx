@@ -10,7 +10,7 @@ const TermsOfService = () => {
       <section className="py-5 my-2">
         <div className="container">
           <div className="d-block w-100 text-center">
-            <h3 className="text-green3 mt-0 mb-2 text-32 fw-bold">Terms Of Service</h3>
+            <h3 className="text-green3 mt-0 mb-2 text-32 fw-bold">利用規約</h3>
           </div>
         </div>
       </section>
@@ -132,7 +132,6 @@ const TermsOfService = () => {
         </div>
       </section>
 
-      <CtaSection />
       <Footer />
     </div>
   );

@@ -13,9 +13,9 @@ const Header = () => {
   const role = useSelector((state) => state.user.role);
 
   const menuItems = [
-    { path: "/", text: translation("header.menu.home") },
+    // { path: "/", text: translation("header.menu.home") },
     { path: "/about", text: translation("header.menu.about") },
-    { path: "/services", text: translation("header.menu.services") },
+    // { path: "/services", text: translation("header.menu.services") },
     { path: "/faqs", text: translation("header.menu.faqs") },
     { path: "/privacy-policy", text: translation("header.menu.privacyPolicy") },
     {
@@ -23,7 +23,7 @@ const Header = () => {
       text: translation("header.menu.termsOfService"),
     },
     { path: "/transactions-law", text: "特定商取引法" },
-    { path: "/contact", text: translation("header.menu.contact") },
+    // { path: "/contact", text: translation("header.menu.contact") },
   ];
 
   const logout = (e) => {
@@ -38,7 +38,7 @@ const Header = () => {
         <div className="header-row d-flex align-items-center justify-content-between">
           <div className="logo">
             <Link to="/">
-              <img src="/images/badminton-white-logo.png" alt="Logo" />
+              <img src="/images/logowhite.png" alt="Logo" style={{ width: '150px', height: 'auto' }} />
             </Link>
           </div>
           <div className="navbar-custom">

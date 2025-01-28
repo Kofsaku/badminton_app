@@ -16,9 +16,8 @@ export default () => (
     <VisionSection />
     <StorySection />
     <CultureAndValuesSection />
-    <PartnersSection />
-    <TeamSection />
-    <CtaSection />
+    {/* <PartnersSection /> */}
+    {/* <TeamSection /> */}
     <Footer />
   </div>
 );

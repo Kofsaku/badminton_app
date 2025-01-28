@@ -1,3 +1,4 @@
+//デフォルトの値が入っているので修正する
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Shared/Header";
@@ -179,7 +180,6 @@ export default function () {
           </div>
         </div>
       </main>
-      <CtaSection/>
       <Footer/>
       <Modal show={isAddMember} onHide={handleCloseAddMemberModal}>
         <Modal.Header closeButton>

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const HeroSection = () => {
+const HeroSection = ({ activeToggle, setActiveToggle }) => {
   const { t } = useTranslation();
-  const [activeToggle, setActiveToggle] = useState('player');
 
   const handleToggle = (type) => {
     setActiveToggle(type);
+    console.log('Active toggle set to:', type);
   };
 
   return (
@@ -48,15 +48,19 @@ const HeroSection = () => {
                 </h4>
               </div>
               <div className="d-flex flex-wrap w-100 align-items-center justify-content-start">
-                <img src="images/approved-logo1.png" className="me-5" alt="Approved Logo 1" />
+                {/* <img src="images/approved-logo1.png" className="me-5" alt="Approved Logo 1" />
                 <img src="images/approved-logo2.png" className="me-5" alt="Approved Logo 2" />
                 <img src="images/approved-logo3.png" className="me-5" alt="Approved Logo 3" />
-                <img src="images/approved-logo4.png" alt="Approved Logo 4" />
+                <img src="images/approved-logo4.png" alt="Approved Logo 4" /> */}
               </div>
             </div>
             <div className="col-lg-5 col-md-5 col-sm-12 col-12">
               <div className="d-block w-100 text-center">
-                <img className="custom-image2" src="images/shuttle.png" alt="Shuttle" />
+                {activeToggle === 'player' ? (
+                  <img className="custom-image2" src="images/shuttle.png" alt="Shuttle" />
+                ) : (
+                  <img className="custom-image2" src="images/organizer.png" alt="Organizer" />
+                )}
               </div>
             </div>
           </div>
