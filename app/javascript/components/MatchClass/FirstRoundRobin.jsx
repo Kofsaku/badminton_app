@@ -4,6 +4,7 @@ import axios from "axios";
 const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
   const [tournamentVenues, setTournamentVenues] = useState([]);
   const [tournamentPlayers, setTournamentPlayers] = useState([]);
+  const [venueCounts, setVenueCounts] = useState([]);
 
   const [formData, setFormData] = useState({
     tableCount: 0,
@@ -36,7 +37,20 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
   }, [selectedTournament]);
 
   const handleTableCountChange = (e) => {
-    setFormData({ ...formData, tableCount: parseInt(e.target.value) });
+    numberOfPlayers.length = e.target.value;
+
+    numberOfPlayers.forEach((_, playerNo) => {
+      venueCounts[selectedVenues[index]] = numberOfPlayers
+        .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+        .map((n) => (n * (n - 1)) / 2)
+        .reduce((a, b) => a + b, 0);
+    });
+
+    setFormData({
+      ...formData,
+      tableCount: parseInt(e.target.value),
+      numberOfPlayers,
+    });
   };
 
   const handleWinnerCountChange = (e) => {
@@ -45,6 +59,11 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
 
   const handlePlayerCountChange = (e, index) => {
     numberOfPlayers[index] = parseInt(e.target.value);
+
+    venueCounts[selectedVenues[index]] = numberOfPlayers
+      .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+      .map((n) => (n * (n - 1)) / 2)
+      .reduce((a, b) => a + b, 0);
 
     if (!Array.isArray(selectedPlayers[index]))
       selectedPlayers[index] = new Array();
@@ -59,15 +78,28 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
       selectedPlayers,
       tables,
     });
+    setVenueCounts(venueCounts);
   };
 
   const handleVenueChange = (e, index) => {
+    const prevValue = selectedVenues[index];
     selectedVenues[index] = parseInt(e.target.value);
+
+    venueCounts[prevValue] = numberOfPlayers
+      .filter((_, no) => selectedVenues[no] == prevValue)
+      .map((n) => (n * (n - 1)) / 2)
+      .reduce((a, b) => a + b, 0);
+
+    venueCounts[selectedVenues[index]] = numberOfPlayers
+      .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+      .map((n) => (n * (n - 1)) / 2)
+      .reduce((a, b) => a + b, 0);
 
     setFormData({
       ...formData,
       selectedVenues,
     });
+    setVenueCounts(venueCounts);
   };
 
   const handlePlayerChange = (e, index, colIndex) => {
@@ -82,6 +114,18 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
   const handleTableChange = (e, index, rowIndex, colIndex) => {
     console.log(e.target.value, index, rowIndex, colIndex);
 
+    if (e.target.value)
+      tables
+        .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+        .forEach((table) => {
+          table.forEach((row, rowNo) => {
+            row.forEach((col, colNo) => {
+              if (col == e.target.value) {
+                row[colNo] = 0;
+              }
+            });
+          });
+        });
     tables[index][rowIndex][colIndex] = parseInt(e.target.value);
     tables[index][colIndex][rowIndex] = parseInt(e.target.value);
 
@@ -95,7 +139,7 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
     const player = tournamentPlayers.find(
       (player) => player.id === selectedPlayers[index][rowIndex]
     );
-    console.log(player, selectedPlayers[index][rowIndex]);
+    // console.log(player, selectedPlayers[index][rowIndex]);
     return !player
       ? "To be selected"
       : player.player_type === "User"
@@ -194,14 +238,30 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
                       (_, colIndex) => (
                         <td key={colIndex}>
                           {rowIndex < colIndex ? (
-                            <input
-                              type="number"
-                              min={0}
+                            // <input
+                            //   type="number"
+                            //   min={0}
+                            //   value={tables[index][rowIndex][colIndex]}
+                            //   onChange={(e) =>
+                            //     handleTableChange(e, index, rowIndex, colIndex)
+                            //   }
+                            // />
+                            <select
                               value={tables[index][rowIndex][colIndex]}
                               onChange={(e) =>
                                 handleTableChange(e, index, rowIndex, colIndex)
                               }
-                            />
+                            >
+                              <option value="0">0</option>
+                              {selectedVenues[index] &&
+                                Array.from({
+                                  length: venueCounts[selectedVenues[index]],
+                                }).map((_, num) => (
+                                  <option key={num} value={num + 1}>
+                                    {num + 1}
+                                  </option>
+                                ))}
+                            </select>
                           ) : rowIndex > colIndex ? (
                             tables[index][rowIndex][colIndex]
                           ) : (

@@ -95,6 +95,8 @@ const NewMatchClass = () => {
     const url = "/api/v1/match_classes";
     const token = document.querySelector('meta[name="csrf-token"]').content;
 
+    console.log("this is body", body);
+
     axios
       .post(url, body, {
         headers: { "X-CSRF-Token": token, "Content-Type": "application/json" },

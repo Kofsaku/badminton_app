@@ -21,6 +21,7 @@ class Api::V1::MatchClassesController < ApplicationController
         group_sizes = match_round[:numberOfPlayers]
         selected_venues = match_round[:selectedVenues]
         selected_players = match_round[:selectedPlayers]
+        match_type = match_round[:matchType]
 
         if @match_round.save
           group_sizes.each_with_index do |size, group_index|
@@ -41,48 +42,142 @@ class Api::V1::MatchClassesController < ApplicationController
                 end
               end
 
-              group_data = match_round[:tables][group_index]
+              if !match_type
+                group_data = match_round[:tables][group_index]
 
-              if round_index == 0
-                group_data.each_with_index do |match_row, row_index|
-                  match_row.each_with_index do |match_cell, col_index|
-                    if col_index > row_index && match_cell
-                      cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], tournament_player_id: selected_players_in_group[row_index], second_tournament_player_id: selected_players_in_group[col_index])
-                      cell.number = @match_group.id * 1000 + match_cell
-          
-                      unless cell.save
-                        logger.error "error to save cell: #{cell.errors.full_messages}"
-                      else
-                        unless cell.match.present?
-                          player1 = cell.tournament_player.player_type == "User" ? cell.tournament_player.player.full_name : cell.tournament_player.player.title
-                          player2 = cell.second_tournament_player.player_type == "User" ? cell.second_tournament_player.player.full_name : cell.second_tournament_player.player.title
-                          Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
+                if round_index == 0
+                  group_data.each_with_index do |match_row, row_index|
+                    match_row.each_with_index do |match_cell, col_index|
+                      if col_index > row_index && match_cell != 0
+                        cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], tournament_player_id: selected_players_in_group[row_index], second_tournament_player_id: selected_players_in_group[col_index])
+                        cell.number = match_cell
+            
+                        unless cell.save
+                          logger.error "error to save cell: #{cell.errors.full_messages}"
+                        else
+                          unless cell.match.present?
+                            player1 = cell.tournament_player.player_type == "User" ? cell.tournament_player.player.full_name : cell.tournament_player.player.title
+                            player2 = cell.second_tournament_player.player_type == "User" ? cell.second_tournament_player.player.full_name : cell.second_tournament_player.player.title
+                            Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
+                          end
+                        end
+                      end
+                    end
+                  end
+                else
+                  group_data.each_with_index do |match_row, row_index|
+                    match_row.each_with_index do |match_cell, col_index|
+                      if col_index > row_index && match_cell != 0
+                        cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], player_key: selected_players_in_group[row_index], second_player_key: selected_players_in_group[col_index])
+                        cell.number = match_cell
+            
+                        unless cell.save
+                          logger.error "error to save cell: #{cell.errors.full_messages}"
+                        else
+                          unless cell.match.present?
+                            @prev_round = MatchRound.find_by(round_number: round_index - 1)
+
+                            player1_group = ("A".ord + cell.player_key / @prev_round.number_of_winners).chr
+                            player1_no = cell.player_key % @prev_round.number_of_winners + 1
+                            player1 = "#{player1_group}-#{player1_no}"
+
+                            player2_group = ("A".ord + cell.second_player_key / @prev_round.number_of_winners).chr
+                            player2_no = cell.second_player_key % @prev_round.number_of_winners + 1
+                            player2 = "#{player2_group}-#{player2_no}"
+                            Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
+                          end
                         end
                       end
                     end
                   end
                 end
               else
-                group_data.each_with_index do |match_row, row_index|
-                  match_row.each_with_index do |match_cell, col_index|
-                    if col_index > row_index && match_cell != 0
-                      cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], player_key: selected_players_in_group[row_index], second_player_key: selected_players_in_group[col_index])
-                      cell.number = @match_group.id * 1000 + match_cell
-          
-                      unless cell.save
-                        logger.error "error to save cell: #{cell.errors.full_messages}"
-                      else
-                        unless cell.match.present?
-                          @prev_round = MatchRound.find_by(round_number: round_index - 1)
+                group_data = match_round[:tables][group_index]
 
-                          player1_group = ("A".ord + cell.player_key / @prev_round.number_of_winners).chr
-                          player1_no = cell.player_key % @prev_round.number_of_winners + 1
-                          player1 = "#{player1_group}-#{player1_no}"
+                if round_index == 0
+                  group_data.each_with_index do |match_row, row_index|
+                    match_row.each_with_index do |match_cell, col_index|
+                      if match_cell != 0
+                        cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], number: match_cell)
+                        
+                        if row_index == 0
+                          cell.tournament_player_id = selected_players_in_group[col_index * 2]
+                          cell.second_tournament_player_id = selected_players_in_group[col_index * 2 + 1]
 
-                          player2_group = ("A".ord + cell.second_player_key / @prev_round.number_of_winners).chr
-                          player2_no = cell.second_player_key % @prev_round.number_of_winners + 1
-                          player2 = "#{player2_group}-#{player2_no}"
-                          Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
+                          if cell.save
+                            match = Match.find_or_initialize_by(timetable_cell_id: cell.id, match_type: "single")
+                            player1 = cell.tournament_player.player_type == "User" ? cell.tournament_player.player.full_name : cell.tournament_player.player.title
+                            player2 = cell.second_tournament_player.player_type == "User" ? cell.second_tournament_player.player.full_name : cell.second_tournament_player.player.title
+                            match.player1 = player1
+                            match.player2 = player2
+
+                            match.save
+                          else
+                            logger.info "error to save cell #{cell.errors.full_messages}"
+                          end
+                        else
+                          cell.player_key = group_data[row_index - 1][col_index * 2]
+                          cell.second_player_key = group_data[row_index - 1][col_index * 2 + 1]
+
+                          if cell.save
+                            match = Match.find_or_initialize_by(timetable_cell_id: cell.id, match_type: "single")
+                            player1 = "Number #{cell.player_key}"
+                            player2 = "Number #{cell.second_player_key}"
+                            match.player1 = player1
+                            match.player2 = player2
+
+                            match.save
+                          else
+                            logger.info "error to save cell #{cell.errors.full_messages}"
+                          end
+                        end
+                      end
+                    end
+                  end
+                else
+                  group_data.each_with_index do |match_row, row_index|
+                    match_row.each_with_index do |match_cell, col_index|
+                      if match_cell != 0
+                        cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], number: match_cell)
+                        
+                        if row_index == 0
+                          cell.player_key = selected_players_in_group[col_index * 2]
+                          cell.second_player_key = selected_players_in_group[col_index * 2 + 1]
+
+                          if cell.save
+                            match = Match.find_or_initialize_by(timetable_cell_id: cell.id, match_type: "single")
+                            @prev_round = MatchRound.find_by(round_number: round_index - 1)
+
+                            player1_group = ("A".ord + cell.player_key / @prev_round.number_of_winners).chr
+                            player1_no = cell.player_key % @prev_round.number_of_winners + 1
+                            player1 = "#{player1_group}-#{player1_no}"
+
+                            player2_group = ("A".ord + cell.second_player_key / @prev_round.number_of_winners).chr
+                            player2_no = cell.second_player_key % @prev_round.number_of_winners + 1
+                            player2 = "#{player2_group}-#{player2_no}"
+
+                            match.player1 = player1
+                            match.player2 = player2
+
+                            match.save
+                          else
+                            logger.info "error to save cell #{cell.errors.full_messages}"
+                          end
+                        else
+                          cell.player_key = group_data[row_index - 1][col_index * 2]
+                          cell.second_player_key = group_data[row_index - 1][col_index * 2 + 1]
+
+                          if cell.save
+                            match = Match.find_or_initialize_by(timetable_cell_id: cell.id, match_type: "single")
+                            player1 = "Number #{cell.player_key}"
+                            player2 = "Number #{cell.second_player_key}"
+                            match.player1 = player1
+                            match.player2 = player2
+
+                            match.save
+                          else
+                            logger.info "error to save cell #{cell.errors.full_messages}"
+                          end
                         end
                       end
                     end
