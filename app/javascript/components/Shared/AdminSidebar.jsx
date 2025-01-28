@@ -89,14 +89,14 @@ const AdminSidebar = () => {
         <div className="d-block w-100 py-lg-5 py-md-5 pt-sm-2 pb-sm-5 pt-2 pb-5 text-center">
           <img
             className="admin-logo"
-            src="/images/badminton-admin-logo.png"
+            src="/images/logoblack.png"
             alt={t("adminSidebar.logo.alt")}
           />
         </div>
         <div className="d-block w-100 px-3 mb-4">
-          <h3 className="text-black fw-bold text-20 merriweather-font">
+          {/* <h3 className="text-black fw-bold text-20 merriweather-font">
             {role !== "Both" ? role : "Tournament Organizer"}
-          </h3>
+          </h3> */}
         </div>
         <div className="d-block px-3 mb-4">
           <ul className="list-style-none p-0 m-0">

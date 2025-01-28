@@ -648,7 +648,7 @@ const Players = () => {
                               >
                                 {buttonStates[player.id] === "loading"
                                   ? "追加中..."
-                                  : "それを追加する"}
+                                  : "エントリー"}
                               </button>
                             )}
                           </td>

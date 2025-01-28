@@ -66,7 +66,7 @@ const CreateAccount = () => {
           <div className="d-flex h-100 align-items-center justify-content-center bg-gradient-1 w-100">
             <img
               className="logo-image-1"
-              src="images/badminton-white-logo.png"
+              src="images/logowhite.png"
               alt={t('createAccount.logo.alt')}
             />
           </div>

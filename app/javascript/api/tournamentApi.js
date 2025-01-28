@@ -13,7 +13,7 @@ export const createTournament = async (tournamentData) => {
   }
 };
 
-export const updateTournament = async (tournamentData, banner) => {
+export const updateTournament = async (tournamentData) => {
   try {
     const response = await axiosInstance.put(`tournaments/${tournamentData.id}.json`, {...tournamentData})
     return response.data;

@@ -25,7 +25,6 @@ export default () => (
     <FeatureSection />
     <ProductSection />
     <UseSection />
-    <CtaSection />
     <Footer />
   </div>
 );

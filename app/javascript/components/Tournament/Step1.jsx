@@ -283,7 +283,7 @@ const Step1 = ({ nextStep, formData, banner, setBanner , handleFormChange }) => 
                 type: 'text'
               },
               {
-                label: 'Banner',
+                label: '大会イメージ画像',
                 name: 'banner',
                 type: 'file',
                 accept: "image/png, image/jpeg"

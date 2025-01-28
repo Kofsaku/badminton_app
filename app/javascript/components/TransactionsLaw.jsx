@@ -63,15 +63,14 @@ const PrivacyPolicy = () => {
                 <div>申込後のキャンセルはできません。</div>
               </p>
               <p>
-                <div>対応機種</div>
-                <div>Windows〇〇以上など）</div>
+                <div>対応環境</div>
+                <div>Chrome, Safari</div>
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <CtaSection />
       <Footer />
     </div>
   );

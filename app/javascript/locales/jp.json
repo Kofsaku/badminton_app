@@ -131,7 +131,7 @@
         "joinButton": "参加する"
       },
       "hero": {
-        "tagline": "1つのプラットフォームで無限のコントロール",
+        "tagline": "バドミントン大会",
         "title": {
           "part1": "最高の",
           "part2": "バドミントンアプリ"
@@ -241,7 +241,7 @@
         }
       },
       "use": {
-        "title": "使い方？",
+        "title": "使い方",
         "points": {
           "1": {
             "title": "ポイント 1",
@@ -293,8 +293,8 @@
         }
       },
       "hero": {
-        "title": "バドミントンについて",
-        "description": "Lorem ipsum dolor sit amet consectetur. Magnis placerat eros id adipiscing non. Egestas pellentesque sed aliquam dolor quis."
+        "title": "運営会社について",
+        "description": ""
       },
       "partners": {
         "title": "パートナー企業",
@@ -363,8 +363,8 @@
         "submit": "送信"
       },
       "hero": {
-        "title": "お問い合わせ！",
-        "description": "Lorem ipsum dolor sit amet consectetur. Magnis placerat eros id adipiscing non. Egestas pellentesque sed aliquam dolor quis."
+        "title": "お問い合わせ",
+        "description": "ご不明点があればご連絡ください。"
       },
       "contactMethods": [
         {
@@ -660,7 +660,7 @@
         "使い方",
         "利用規約"
       ],
-      "copyright": "© 2023 Badminton. All rights reserved."
+      "copyright": "© 2025 Badminton. All rights reserved."
     },
     "ctaSection": {
       "title": "アプリをダウンロード",

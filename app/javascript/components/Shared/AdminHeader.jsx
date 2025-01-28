@@ -25,7 +25,7 @@ const AdminHeader = () => {
   return (
     <div className="d-block top-bar-sec w-100 py-2 px-3">
       <div className="d-flex w-100 align-items-center justify-content-lg-end justify-content-md-center justify-content-sm-center justify-content-center">
-        <div className="d-inline-block search-form-wrapper ms-3">
+        {/* <div className="d-inline-block search-form-wrapper ms-3">
           <form className="d-flex search-form bg-EEEEEE rounded-3 overflow-hidden w-100">
             <input
               type="text"
@@ -39,9 +39,9 @@ const AdminHeader = () => {
               />
             </button>
           </form>
-        </div>
+        </div> */}
         
-        <div className="d-lg-inline-block d-md-none d-sm-none d-none ms-4">
+        {/* <div className="d-lg-inline-block d-md-none d-sm-none d-none ms-4">
           <div className="dropdown user-dropdown">
             <button
               className="border-0 bg-transparent user-dropdown-btn shadow-none p-0 dropdown-toggle no-caret"
@@ -63,7 +63,7 @@ const AdminHeader = () => {
               ))}
             </ul>
           </div>
-        </div>
+        </div> */}
 
         <div className="d-lg-inline-block d-md-none d-sm-none d-none ms-3">
           <div className="dropdown notif-dropdown">
@@ -82,11 +82,11 @@ const AdminHeader = () => {
             <ul className="dropdown-menu" aria-labelledby="userMenuDropdown">
               {isLoggedIn ? (
                 <>
-                  <li>
+                  {/* <li>
                     <a className="dropdown-item" href="#">
                       {t('adminHeader.userMenu.items.profile')}
                     </a>
-                  </li>
+                  </li> */}
                   <li>
                     <a className="dropdown-item" href="#" onClick={logout}>
                       {t('adminHeader.userMenu.items.logout')}

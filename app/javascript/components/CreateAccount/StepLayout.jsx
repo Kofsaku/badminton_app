@@ -6,7 +6,7 @@ const StepLayout = ({ children }) => {
       <div className="d-flex row w-100 m-0 overflow-hidden">
         <div className="col-lg-6 col-md-6 col-sm-6 col-12 p-0 d-lg-flex d-md-flex d-sm-flex d-none">
           <div className="d-flex h-100 align-items-center justify-content-center bg-gradient-1 w-100">
-            <img className="logo-image-1" src="images/badminton-white-logo.png" alt="Logo" />
+            <img className="logo-image-1" src="images/logoblack.png" alt="Logo" />
           </div>
         </div>
         <div className="col-lg-6 col-md-6 col-sm-6 col-12 p-0">

@@ -220,7 +220,6 @@ export default function () {
           </div>
         </div>
       </main>
-      <CtaSection/>
       <Footer/>
     </>
   );

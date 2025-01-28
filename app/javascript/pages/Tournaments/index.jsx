@@ -1,3 +1,4 @@
+// src/components/Tournaments.js
 import React, { useEffect, useState } from 'react';
 import AdminHeader from '../../components/Shared/AdminHeader';
 import AdminSidebar from '../../components/Shared/AdminSidebar';
@@ -49,10 +50,10 @@ const Tournaments = () => {
             <div className="d-flex flex-wrap w-100 align-items-center justify-content-between">
               <div className="d-inline-block min-width-clear mb-lg-0 mb-md-0 mb-sm-0 mb-3">
                 <h3 className="text-black text-20 mob-text-18 fw-bold merriweather-font mt-0 mb-2">
-                  Tournament Management
+                  大会管理
                 </h3>
                 <p className="text-grey1 text-15 m-0">
-                  General Conference:
+                  大会数:
                   <span className="bg-green1 px-1 rounded-3 text-white d-inline-block ms-1">
                     {tournaments?.length}
                   </span>
@@ -63,10 +64,6 @@ const Tournaments = () => {
                   <i className="fa fa-plus text-14 me-2"> </i>
                   大会を登録する
                 </Link>
-                {/* <a className="custom-btn5">
-                  <i className="fa fa-file text-14 me-2"> </i>
-                  Download PDF Report
-                </a> */}
               </div>
             </div>
           </div>
@@ -164,7 +161,7 @@ const Tournaments = () => {
                     <tr>
                       <td
                         className="bg-silver4 px-3 py-3 merriweather-font fw-medium text-14 border border-color-silver2 text-end"
-                        colSpan="6"
+                        colSpan="7"
                       >
                         <div className="d-flex justify-content-end">
                           <button
