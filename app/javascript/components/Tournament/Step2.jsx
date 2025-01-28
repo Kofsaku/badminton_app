@@ -1,50 +1,137 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TournamentCategoryModel } from '../../models/TournamentCategoryModel';
 import { TournamentDivisionModel } from '../../models/TournamentDivisionModel';
 import { useTranslation } from 'react-i18next';
 
 const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
-  const [categories, setCategories] = useState([TournamentCategoryModel()]);
-  const { t } = useTranslation();
+  // ゲーム数に基づいて games 配列を初期化する関数
+  const initializeGames = (number_of_games) => {
+    const gameCount = parseInt(number_of_games, 10) || 0;
+    return Array.from({ length: gameCount }, () => ({
+      interval_duration: '',            // 各ゲームのインターバル時間
+      switch_ends: false,               // エンドチェンジの有無
+      switch_score_during_game: '',     // エンドチェンジ時のスコア
+    }));
+  };
 
-  useEffect(() => {
-    if (formData.id) {
-      const categoriesData = formData.tournament_categories_attributes
-      if (categoriesData?.length > 0) {
-        setCategories(categoriesData)
-      }
+  // 初期状態で number_of_games を3に設定し、games 配列を初期化
+  const [categories, setCategories] = useState(() => {
+    // formData に既にカテゴリデータが存在する場合はそれを使用
+    if (formData.tournament_categories_attributes && formData.tournament_categories_attributes.length > 0) {
+      return formData.tournament_categories_attributes.map(category => ({
+        ...TournamentCategoryModel(),
+        ...category,
+        number_of_games: category.number_of_games || 3,
+        show_intervals: category.show_intervals !== undefined ? category.show_intervals : false,
+        games: category.games || initializeGames(category.number_of_games || 3), // 既存のgamesを使用
+      }));
+    } else {
+      // 既定のカテゴリを1つ追加
+      const initialCategory = TournamentCategoryModel();
+      initialCategory.number_of_games = 3;
+      initialCategory.show_intervals = false;
+      initialCategory.games = initializeGames(initialCategory.number_of_games);
+      return [initialCategory];
     }
-  }, [formData.id]);
+  });
+
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     nextStep();
   };
 
+  // カテゴリの変更を処理する関数
   const handleCategoryChange = (index, e) => {
     const { name, value, type, checked } = e.target;
     const newCategories = [...categories];
-    newCategories[index][name] = type === 'checkbox' ? checked : value;
+    const category = { ...newCategories[index] };
 
-    if (name === "division_number") {
-      const divisionCount = parseInt(value) || 0;
-      newCategories[index].tournament_divisions_attributes = Array.from({ length: divisionCount }, (_, i) => TournamentDivisionModel());
+    if (type === 'radio') {
+      // ラジオボタンの場合、値をブール値に変換
+      category[name] = value === 'true';
+    } else if (type === 'checkbox') {
+      category[name] = checked;
+    } else if (name === 'number_of_games' || name === 'score') {
+      // 数値フィールドの場合、数値に変換
+      category[name] = parseInt(value, 10) || '';
+    } else {
+      category[name] = value;
     }
-    
+
+    // division_number の変更に応じて tournament_divisions_attributes を更新
+    if (name === "division_number") {
+      const divisionCount = parseInt(value, 10) || 0;
+      category.tournament_divisions_attributes = Array.from({ length: divisionCount }, () => TournamentDivisionModel());
+    }
+
+    // number_of_games の変更に応じて games 配列を更新
+    if (name === 'number_of_games') {
+      const gameCount = parseInt(value, 10) || 0;
+      category.games = initializeGames(gameCount);
+    }
+
+    newCategories[index] = category;
     setCategories(newCategories);
     handleFormChange('tournament_categories_attributes', newCategories);
+
+    // デバッグ用ログ
+    console.log('handleCategoryChange - Updated Categories:', newCategories);
   };
 
+  // ディビジョンの変更を処理する関数
   const handleDivisionChange = (catIndex, divIndex, e) => {
     const { name, value } = e.target;
     const newCategories = [...categories];
     newCategories[catIndex].tournament_divisions_attributes[divIndex][name] = value;
     setCategories(newCategories);
     handleFormChange('tournament_categories_attributes', newCategories);
+
+    // デバッグ用ログ
+    console.log('handleDivisionChange - Updated Categories:', newCategories);
   };
 
+  // ゲーム設定の変更を処理する関数を修正
+  const handleGameChange = (catIndex, gameIndex, e) => {
+    const { name, value, type } = e.target;
+    const newCategories = [...categories];
+    const category = { ...newCategories[catIndex] };
+    const games = [...(category.games || [])];
+    const game = { ...games[gameIndex] };
+
+    if (name.startsWith('switch_ends_')) {
+      game.switch_ends = value === 'true';
+    } else if (type === 'number') {
+      game[name] = parseInt(value, 10) || '';
+    } else {
+      game[name] = value;
+    }
+
+    games[gameIndex] = game;
+    category.games = games;
+    newCategories[catIndex] = category;
+
+    setCategories(newCategories);
+    handleFormChange('tournament_categories_attributes', newCategories);
+
+    // デバッグログ
+    console.log('Game settings updated:', game);
+    console.log('Updated categories:', newCategories);
+  };
+
+  // 新しいカテゴリを追加する関数
   const addCategory = () => {
-    setCategories([...categories, TournamentCategoryModel()]);
+    const newCategory = TournamentCategoryModel();
+    newCategory.number_of_games = 3;            // 新規カテゴリでもデフォルトで3ゲーム
+    newCategory.show_intervals = false;         // インターバルをデフォルトで非表示
+    newCategory.games = initializeGames(newCategory.number_of_games);
+    const updatedCategories = [...categories, newCategory];
+    setCategories(updatedCategories);
+    handleFormChange('tournament_categories_attributes', updatedCategories);
+
+    // デバッグ用ログ
+    console.log('addCategory - Updated Categories:', updatedCategories);
   };
 
   return (
@@ -67,10 +154,11 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
         <form onSubmit={handleSubmit}>
           {categories.map((category, catIndex) => (
             <div key={catIndex} className="row mb-4">
+              {/* Category Type */}
               <div className="col-lg-8 col-md-8 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
-                    Category Type <sup>*</sup>
+                    {t('tournament.categoryType')} <sup>*</sup>
                   </label>
                   <select
                     className="field-style5"
@@ -78,26 +166,28 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     value={category.category_type || ''}
                     onChange={(e) => handleCategoryChange(catIndex, e)}
                   >
-                    <option value="">{t('tournament.selectTournamentCategory')}</option> {/* Translation key */}
-                    <option value="mens_singles_individual">{t('tournament.mensSinglesIndividual')}</option> {/* Translation key */}
-                    <option value="womens_singles_individual">{t('tournament.womensSinglesIndividual')}</option> {/* Translation key */}
-                    <option value="mens_doubles_individual">{t('tournament.mensDoublesIndividual')}</option> {/* Translation key */}
-                    <option value="womens_doubles_individual">{t('tournament.womensDoublesIndividual')}</option> {/* Translation key */}
-                    <option value="mens_triples_individual">{t('tournament.mensTriplesIndividual')}</option> {/* Translation key */}
-                    <option value="womens_triples_individual">{t('tournament.womensTriplesIndividual')}</option> {/* Translation key */}
-                    <option value="mixed_triples_individual">{t('tournament.mixedTriplesIndividual')}</option> {/* Translation key */}
-                    <option value="mens_doubles_team">{t('tournament.mensDoublesTeam')}</option> {/* Translation key */}
-                    <option value="womens_doubles_team">{t('tournament.womensDoublesTeam')}</option> {/* Translation key */}
-                    <option value="mixed_doubles_team">{t('tournament.mixedDoublesTeam')}</option> {/* Translation key */}
-                    <option value="mens_singles_doubles_team">{t('tournament.mensSinglesDoublesTeam')}</option> {/* Translation key */}
-                    <option value="womens_singles_doubles_team">{t('tournament.womensSinglesDoublesTeam')}</option> {/* Translation key */}
-                    <option value="mixed_singles_doubles_team">{t('tournament.mixedSinglesDoublesTeam')}</option> {/* Translation key */}
-                    <option value="mens_triples_team">{t('tournament.mensTriplesTeam')}</option> {/* Translation key */}
-                    <option value="womens_triples_team">{t('tournament.womensTriplesTeam')}</option> {/* Translation key */}
-                    <option value="mixed_triples_team">{t('tournament.mixedTriplesTeam')}</option> {/* Translation key */}
+                    <option value="">{t('tournament.selectTournamentCategory')}</option>
+                    <option value="mens_singles_individual">{t('tournament.mensSinglesIndividual')}</option>
+                    <option value="womens_singles_individual">{t('tournament.womensSinglesIndividual')}</option>
+                    <option value="mens_doubles_individual">{t('tournament.mensDoublesIndividual')}</option>
+                    <option value="womens_doubles_individual">{t('tournament.womensDoublesIndividual')}</option>
+                    <option value="mens_triples_individual">{t('tournament.mensTriplesIndividual')}</option>
+                    <option value="womens_triples_individual">{t('tournament.womensTriplesIndividual')}</option>
+                    <option value="mixed_triples_individual">{t('tournament.mixedTriplesIndividual')}</option>
+                    <option value="mens_doubles_team">{t('tournament.mensDoublesTeam')}</option>
+                    <option value="womens_doubles_team">{t('tournament.womensDoublesTeam')}</option>
+                    <option value="mixed_doubles_team">{t('tournament.mixedDoublesTeam')}</option>
+                    <option value="mens_singles_doubles_team">{t('tournament.mensSinglesDoublesTeam')}</option>
+                    <option value="womens_singles_doubles_team">{t('tournament.womensSinglesDoublesTeam')}</option>
+                    <option value="mixed_singles_doubles_team">{t('tournament.mixedSinglesDoublesTeam')}</option>
+                    <option value="mens_triples_team">{t('tournament.mensTriplesTeam')}</option>
+                    <option value="womens_triples_team">{t('tournament.womensTriplesTeam')}</option>
+                    <option value="mixed_triples_team">{t('tournament.mixedTriplesTeam')}</option>
                   </select>
                 </div>
               </div>
+
+              {/* Tournament & League Checkboxes */}
               <div className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4 align-self-end">
                 <div className="d-flex w-100 align-items-center justify-content-start">
                   <div className="checkbox-style1 me-2 mb-2 d-flex rounded-2 align-items-center justify-content-start">
@@ -128,21 +218,26 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   </div>
                 </div>
               </div>
+
+              {/* Number of Games */}
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
                     {t('tournament.numberOfGames')} <sup>*</sup>
                   </label>
                   <input
-                    type="text"
+                    type="number" // 数値入力に変更
                     placeholder="Game Number"
                     className="field-style5"
                     name="number_of_games"
                     value={category.number_of_games}
                     onChange={(e) => handleCategoryChange(catIndex, e)}
+                    min="1"
                   />
                 </div>
               </div>
+
+              {/* Score */}
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
@@ -159,17 +254,20 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       />
                     </div>
                     <input
-                      type="text"
+                      type="number" // 数値入力に変更
                       placeholder="Score"
                       className="field-style5"
                       name="score"
                       value={category.score}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                       disabled={!category.show_score}
+                      min="1"
                     />
                   </div>
                 </div>
               </div>
+
+              {/* Time Limit */}
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                 <div className="form-field5">
                   <label>
@@ -177,7 +275,6 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   </label>
                   <div className="d-flex w-100 align-items-center justify-content-start">
                     <div className="checkbox-style1 me-2 d-inline-block">
-                      {category.show_time_limit}
                       <input
                         className="m-0 min-width-clear mt-0"
                         type="checkbox"
@@ -189,25 +286,27 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                     <select
                       className="field-style5"
                       name="time_limit"
-                      value={category.time_limit || t('tournament.selectTimeLimit')}
+                      value={category.time_limit || ''}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                       disabled={!category.show_time_limit}
                     >
-                      <option value="">{ t('tournament.selectTimeLimit') }</option>
-                      <option value="15">{ t('tournament.fifteenMinutes') }</option>
-                      <option value="30">{ t('tournament.thirtyMinutes') }</option>
-                      <option value="60">{ t('tournament.sixtyMinutes') }</option>
+                      <option value="">{t('tournament.selectTimeLimit')}</option>
+                      <option value="15">{t('tournament.fifteenMinutes')}</option>
+                      <option value="30">{t('tournament.thirtyMinutes')}</option>
+                      <option value="60">{t('tournament.sixtyMinutes')}</option>
                     </select>
                   </div>
                 </div>
               </div>
+
+              {/* Intervals and Game Settings */}
               <div className="col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
                 <div className="form-field5">
-                  <label>{ t('tournament.intervals') }</label>
+                  <label>{t('tournament.intervals')}</label>
                 </div>
-                <div className="d-flex align-items-center justify-content-start w-100">
-                  <div className="d-inline-block min-width-clear">
-                    <div className="checkbox-style1 me-2 d-flex align-items-center justify-content-start">
+                <div className="d-flex align-items-start justify-content-start w-100">
+                  <div className="d-inline-block me-2">
+                    <div className="checkbox-style1 d-flex align-items-center justify-content-start">
                       <input
                         className="m-0 min-width-clear mt-0"
                         type="checkbox"
@@ -215,133 +314,81 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                         checked={category.show_intervals}
                         onChange={(e) => handleCategoryChange(catIndex, e)}
                       />
+                      <label className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold">
+                        {t('tournament.enableIntervals')}
+                      </label>
                     </div>
                   </div>
-                  <div className="d-inline-block w-100 border rounded-3 px-3 py-2 border border-color-silver">
-                    <div className="row">
-                      <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-lg-0 mb-md-0 mb-sm-0 mb-4">
-                        <div className="form-field5">
-                          <label>
-                            { t('tournament.breakPoint') } <sup>*</sup>
-                          </label>
-                          <select
-                            className="field-style5"
-                            name="break_point"
-                            value={category.break_point}
-                            onChange={(e) => handleCategoryChange(catIndex, e)}
-                            disabled={!category.show_intervals}
-                          >
-                            <option value="">{ t('tournament.selectBreakPoint') }</option>
-                            <option value="10Points">{ t('tournament.tenPoints') }</option>
-                            <option value="20Points">{ t('tournament.twentyPoints') }</option>
-                            <option value="30Points">{ t('tournament.thirtyPoints') }</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-field5">
-                          <label>
-                            { t('tournament.intervalDurationPlaceholder') } <sup>*</sup>
-                          </label>
+                </div>
+                {category.show_intervals && (
+                  <div className="mt-3">
+                    {/* ゲーム設定フォームの追加 */}
+                    {category.games?.map((game, gameIndex) => (
+                      <div key={gameIndex} className="border p-3 mb-2">
+                        <h5>第{gameIndex + 1}{t('tournament.game')}</h5>
+                        {/* インターバルの長さ */}
+                        <div className="form-group">
+                          <label>{t('tournament.intervalDuration')}</label>
                           <input
-                            type="text"
-                            placeholder="Internal Duration"
-                            className="field-style5"
+                            type="number"
                             name="interval_duration"
-                            value={category.interval_duration}
-                            disabled={!category.show_intervals}
-                            onChange={(e) => handleCategoryChange(catIndex, e)}
+                            value={game.interval_duration || ''}
+                            onChange={(e) => handleGameChange(catIndex, gameIndex, e)}
+                            className="field-style5"
+                            min="1"
+                            placeholder={t('tournament.intervalDurationPlaceholder')}
                           />
                         </div>
+                        {/* エンドチェンジの有無 */}
+                        <div className="form-group">
+                          <label>{t('tournament.switchEnds')}</label>
+                          <div>
+                            <label className="me-3">
+                              <input
+                                type="radio"
+                                name={`switch_ends_${catIndex}_${gameIndex}`} // グループ名をユニークに
+                                value="true"
+                                checked={game.switch_ends === true}
+                                onChange={(e) => handleGameChange(catIndex, gameIndex, e)}
+                              />
+                              {t('tournament.yes')}
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name={`switch_ends_${catIndex}_${gameIndex}`} // グループ名をユニークに
+                                value="false"
+                                checked={game.switch_ends === false}
+                                onChange={(e) => handleGameChange(catIndex, gameIndex, e)}
+                              />
+                              {t('tournament.no')}
+                            </label>
+                          </div>
+                        </div>
+                        {/* エンドチェンジが有効な場合のスコア */}
+                        {game.switch_ends && (
+                          <div className="form-group">
+                            <label>{t('tournament.switchScoreDuringGame')}</label>
+                            <input
+                              type="number"
+                              name="switch_score_during_game"
+                              value={game.switch_score_during_game || ''}
+                              onChange={(e) => handleGameChange(catIndex, gameIndex, e)}
+                              className="field-style5"
+                              min="1"
+                              placeholder={t('tournament.switchScorePlaceholder')}
+                            />
+                          </div>
+                        )}
                       </div>
-                    </div>
+                    ))}
                   </div>
-                </div>
+                )}
               </div>
-              <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-                <div className="form-field5">
-                  <label>
-                    { t('tournament.changeEnds') }
-                  </label>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-                <div className="form-field5">
-                  <label>
-                    { t('tournament.switchDuringGame') }<sup>*</sup>
-                  </label>
-                  <div className="d-flex w-100 align-items-center justify-content-start">
-                    <label className="mr-2 custom_label_width">
-                      <input
-                        type="radio"
-                        name="switch_during_game"
-                        value="yes"
-                        checked={category.switch_during_game === 'yes'}
-                        onChange={(e) => handleCategoryChange(catIndex, e)}
-                      />{' '}
-                      { t('tournament.yes') }
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="switch_during_game"
-                        value="no"
-                        checked={category.switch_during_game === 'no'}
-                        onChange={(e) => handleCategoryChange(catIndex, e)}
-                      />{' '}
-                      { t('tournament.no') }
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-                <div className="form-field5">
-                  <label>
-                    { t('tournament.switchScoreDuringGame') }<sup>*</sup>
-                  </label>
-                  <div className="d-flex w-100 align-items-center justify-content-start">
-                    <input
-                      type="text"
-                      placeholder="Change Ends"
-                      className="field-style5"
-                      name="change_ends"
-                      value={category.switch_score_during_game}
-                      onChange={(e) => handleCategoryChange(catIndex, e)}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4 col-sm-12 col-12 mb-4">
-                <div className="form-field5">
-                  <label>
-                    { t('tournament.switchBetweenGame') }<sup>*</sup>
-                  </label>
-                  <div className="d-flex w-100 align-items-center justify-content-start">
-                    <label className="mr-2 custom_label_width">
-                      <input
-                        type="radio"
-                        name="switch_between_games"
-                        value="yes"
-                        checked={category.switch_between_games === 'yes'}
-                        onChange={(e) => handleCategoryChange(catIndex, e)}
-                      />{' '}
-                      { t('tournament.yes') }
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="switch_between_games"
-                        value="no"
-                        checked={category.switch_between_games === 'no'}
-                        onChange={(e) => handleCategoryChange(catIndex, e)}
-                      />{' '}
-                      { t('tournament.no') }
-                    </label>
-                  </div>
-                </div>
-              </div>
+
+              {/* Division Number */}
               <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
-                {category.division_name === "free_writing" ? (
+                {category.division_name_type === "free_writing" ? (
                   <div className="form-field5">
                     <input
                       type="text"
@@ -355,7 +402,7 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                 ) : (
                   <div className="form-field5">
                     <label>
-                      { t('tournament.divisionNumber') } <sup>*</sup>
+                      {t('tournament.divisionNumber')} <sup>*</sup>
                     </label>
                     <select
                       className="field-style5"
@@ -363,63 +410,25 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                       value={category.division_number || ''}
                       onChange={(e) => handleCategoryChange(catIndex, e)}
                     >
-                      <option value="">{ t('tournament.selectDivisionNumber') }</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
+                    <option value="">{t('tournament.selectDivisionNumber')}</option>
+                    {Array.from({ length: 50 }, (_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                          {i + 1}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 )}
               </div>
-              <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
-                <div className="form-field5">
-                  <label>
-                    {t('tournament.divisionName')} <sup>*</sup>
-                  </label>
-                </div>
-                <div className="d-flex w-100 align-items-center justify-content-start">
-                  <div className="checkbox-style1 me-2 mb-2 d-flex rounded-2 align-items-center justify-content-start">
-                    <input
-                      className="m-0 min-width-clear mt-0"
-                      type="radio"
-                      name="division_name_type"
-                      value="number"
-                      checked={category.division_name_type === 'number'}
-                      onChange={(e) => handleCategoryChange(catIndex, e)}
-                    />
-                    <label
-                      className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold"
-                      htmlFor="divisionNameTournament"
-                    >
-                      {t('tournament.number')}
-                    </label>
-                  </div>
-                  
-                  <div className="checkbox-style1 me-2 mb-2 d-flex rounded-2 align-items-center justify-content-start">
-                    <input
-                      className="m-0 min-width-clear mt-0"
-                      type="radio"
-                      name="division_name_type"  // Same name attribute for grouping
-                      value="free_writing"
-                      checked={category.division_name_type === 'free_writing'}
-                      onChange={(e) => handleCategoryChange(catIndex, e)}
-                    />
-                    <label
-                      className="text-black text-14 ms-2 pt-1 w-auto merriweather-font fw-bold"
-                      htmlFor="divisionNameFreeWriting"
-                    >
-                      {t('tournament.freeWriting')}
-                    </label>
-                  </div>
-                </div>
-              </div>
 
+
+              {/* Division Names */}
               <div className="row">
                 {(category.tournament_divisions_attributes || []).map((division, division_index) => (
                   <div key={division_index} className="col-lg-4 col-md-4 col-sm-4 col-12 mb-4">
                     <div className="form-field5">
                       <label>
-                        Division {division_index + 1} Name <sup>*</sup>
+                      {division_index + 1}{t('tournament.divisionName')}  <sup>*</sup>
                       </label>
                       <input
                         type="text"
@@ -432,12 +441,13 @@ const Step2 = ({ nextStep, prevStep, formData, handleFormChange }) => {
                   </div>
                 ))}
               </div>
+
             </div>
           ))}
           <button type="button" onClick={addCategory} className="btn btn-link p-0 text-decoration-none">
             {t('tournament.addCategory')}
           </button>
-          <div className="d-flex w-100 justify-content-end">
+          <div className="d-flex w-100 justify-content-end mt-3">
             <button type="submit" className="bg-green1 py-2 px-4 text-white rounded-2">
               {t('tournament.next')}
             </button>

@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_27_124705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "title"
@@ -117,6 +145,15 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "taggable_type", null: false
+    t.bigint "taggable_id", null: false
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["taggable_type", "taggable_id"], name: "index_tags_on_taggable"
+  end
+
   create_table "team_match_orders", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "team_id"
@@ -203,6 +240,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
     t.boolean "show_time_limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "number_of_members"
+    t.jsonb "games", default: [], null: false
     t.index ["tournament_id"], name: "index_tournament_categories_on_tournament_id"
   end
 
@@ -242,21 +281,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
   end
 
   create_table "tournament_tables", force: :cascade do |t|
-    t.string "name", null: false
     t.integer "table_type", null: false
-    t.bigint "tournament_id", null: false
-    t.bigint "tournament_category_id", null: false
-    t.bigint "tournament_division_id", null: false
+    t.bigint "match_classes_id", null: false
     t.integer "size", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bracket_direction"
     t.bigint "tournament_venue_id"
     t.bigint "timetable_id"
+    t.index ["match_classes_id"], name: "index_tournament_tables_on_match_classes_id"
     t.index ["timetable_id"], name: "index_tournament_tables_on_timetable_id"
-    t.index ["tournament_category_id"], name: "index_tournament_tables_on_tournament_category_id"
-    t.index ["tournament_division_id"], name: "index_tournament_tables_on_tournament_division_id"
-    t.index ["tournament_id"], name: "index_tournament_tables_on_tournament_id"
     t.index ["tournament_venue_id"], name: "index_tournament_tables_on_tournament_venue_id"
   end
 
@@ -313,6 +347,11 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
     t.string "region"
     t.string "prefecture"
     t.date "registeration_time"
+    t.text "description"
+    t.string "costume_detail"
+    t.string "transport_information"
+    t.text "note_for_participants"
+    t.string "banner"
     t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 
@@ -325,6 +364,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "group_players", "match_groups"
   add_foreign_key "group_players", "tournament_players"
   add_foreign_key "match_classes", "tournament_categories"
@@ -350,11 +391,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_22_140645) do
   add_foreign_key "tournament_players", "tournaments"
   add_foreign_key "tournament_table_players", "tournament_players"
   add_foreign_key "tournament_table_players", "tournament_tables", on_delete: :cascade
+  add_foreign_key "tournament_tables", "match_classes", column: "match_classes_id"
   add_foreign_key "tournament_tables", "timetables"
-  add_foreign_key "tournament_tables", "tournament_categories"
-  add_foreign_key "tournament_tables", "tournament_divisions"
   add_foreign_key "tournament_tables", "tournament_venues"
-  add_foreign_key "tournament_tables", "tournaments"
   add_foreign_key "tournament_venues", "tournaments"
   add_foreign_key "tournaments", "users"
 end

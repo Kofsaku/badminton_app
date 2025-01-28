@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/axiosInstance";
 import { start } from "@popperjs/core";
@@ -436,14 +436,6 @@ const SearchSection = () => {
                       Team Competition (Open)
                     </span>
                   </h5>
-                </div>
-                <div className="d-flex align-items-center justify-content-start w-100">
-                  <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
-                    Deadline: 10 days left
-                  </span>
-                  <span className="border border-color-silver rounded-2 text-green4 px-2 py-2 me-2 text-14">
-                    Available: Extra room
-                  </span>
                 </div>
               </div>
             ))}

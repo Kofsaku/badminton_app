@@ -2252,6 +2252,17 @@ span.custom-line-4 {
 .flex-1 {
   flex: 1;
 }
+.flex-1-1 {
+  flex: 1 1 calc(25% - 10px);
+  max-width: calc(25% - 10px);
+  box-sizing: border-box;
+}
+.flex-1-1-50 {
+  flex: 1 1 calc(50%);
+  max-width: calc(50%);
+  box-sizing: border-box;
+}
+
 .flex-1-5 {
   flex: 1.5;
 }
@@ -2621,6 +2632,9 @@ span.custom-line-4 {
   }
   .align-items-none-sm {
     align-items: unset !important;
+  }
+  .mw-100-sm {
+    max-width: 100% !important;
   }
 }
 .box-shadow-1 {

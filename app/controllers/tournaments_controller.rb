@@ -114,7 +114,6 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments or /tournaments.json
   def create
-    # binding.pry
     @tournament = Tournament.new(tournament_params)
 
     if @tournament.save!
@@ -193,6 +192,11 @@ class TournamentsController < ApplicationController
       :inquiry_contact_information,     # t.string "inquiry_contact_information"
       :notes_for_organizers,
       :user_id,
+      :costume_detail,
+      :description,
+      :transport_information,
+      :note_for_participants,
+      :banner,
       tournament_categories_attributes: [
         :id,
         :category_type,
@@ -217,12 +221,24 @@ class TournamentsController < ApplicationController
         tournament_divisions_attributes: [
           :id, :division, :_destroy
         ],
+        games: [
+          :interval_duration,
+          :switch_ends,
+          :switch_score_during_game
+        ]
       ],
       tournament_players_attributes: [
         :id, :user_id, :status, :_destroy
       ],
       tournament_venues_attributes: [
-        :id, :venue_name, :venue_address, :no_of_courts, :venue_date, :category_type, :division_number, :_destroy
+        :id,
+        :venue_name, 
+        :venue_address, 
+        :no_of_courts, 
+        :venue_date, 
+        :division_number, 
+        :_destroy,
+        category_type: [], 
       ]
     )
   end
@@ -230,7 +246,7 @@ class TournamentsController < ApplicationController
   def show_full_data(tournament)
     tournament.attributes.merge(
       tournament_categories_attributes: tournament_categories_data(tournament),
-      tournament_venues_attributes: tournament.tournament_venues.map(&:attributes),
+      tournament_venues_attributes: tournament.tournament_venues.map(&:attributes)
     )
   end
 

@@ -57,7 +57,7 @@ const Header = () => {
                 <>
                   <Link
                     to={
-                      role === "player"
+                      role === "Player"
                         ? "/dashboard"
                         : "/tournament-management"
                     }
