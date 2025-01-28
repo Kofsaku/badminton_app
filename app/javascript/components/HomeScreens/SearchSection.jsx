@@ -265,8 +265,9 @@ const SearchSection = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  {regions.map((curRegion) => (
+                  {regions.map((curRegion, index) => (
                     <div
+                      key={index}
                       className={`d-inline-block mb-2 checkbox-selector-wrapper border border-color-silver2 rounded-2 px-2 me-2 py-2 position-relative ${
                         region === curRegion && "checkbox-selector-active"
                       }`}
@@ -386,7 +387,7 @@ const SearchSection = () => {
                 onClick={handleSubmit}
               >
                 <i className="fa fa-search text-16 me-2"> </i>
-                Search for tournaments with these conditions
+                {t("home.search.searchWithConditions")}
               </button>
             </div>
           </div>

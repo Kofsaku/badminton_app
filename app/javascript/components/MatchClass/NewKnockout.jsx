@@ -49,9 +49,9 @@ const NewKnockout = ({
     if (!Array.isArray(selectedPlayers[index]))
       selectedPlayers[index] = new Array();
 
-    tables[index] = Array.from({ length: numberOfPlayers[index] }).map((_) =>
-      Array.from({ length: numberOfPlayers[index] }).fill(0)
-    );
+    tables[index] = Array.from({
+      length: getNumberOfMatches(index).nRounds,
+    }).map((_) => Array.from({ length: numberOfPlayers[index] / 2 }).fill(0));
 
     setFormData({
       ...formData,
@@ -72,13 +72,47 @@ const NewKnockout = ({
 
   const handlePlayerChange = (e, index, colIndex) => {
     selectedPlayers[index][colIndex] = parseInt(e.target.value);
-    if (colIndex % 2 == 0)
-      tables[index][colIndex][colIndex + 1] = colIndex / 2 + 1;
-    else tables[index][colIndex - 1][colIndex] = parseInt(colIndex / 2) + 1;
 
     setFormData({
       ...formData,
       selectedPlayers,
+    });
+  };
+
+  const getNumberOfMatches = (index) => {
+    let nPlayers = numberOfPlayers[index];
+    let nMatches = 0,
+      nRounds = 0;
+
+    while (nPlayers > 1) {
+      nPlayers = (nPlayers + 1) >> 1;
+      nMatches += nPlayers;
+      nRounds++;
+    }
+
+    return { nMatches, nRounds };
+  };
+
+  const startMatchNumberClear = (tableNumber, round, id) => {
+    if (!tables[tableNumber][round + 1]) return;
+
+    tables[tableNumber][round + 1][parseInt(id / 2)] = 0;
+    console.log(
+      "match number cleared",
+      tableNumber,
+      round + 1,
+      parseInt(id / 2)
+    );
+
+    startMatchNumberClear(tableNumber, round + 1, parseInt(id / 2));
+  };
+
+  const handleMatchNumberChange = (e, tableNumber, round, id) => {
+    tables[tableNumber][round][id] = parseInt(e.target.value);
+    if (e.target.value == 0) startMatchNumberClear(tableNumber, round, id);
+
+    setFormData({
+      ...formData,
       tables,
     });
   };
@@ -106,69 +140,173 @@ const NewKnockout = ({
   };
 
   const CustomSeed = ({ seed, breakpoint }) => {
-    const { round } = seed;
+    const { round, tableNumber, id } = seed;
+
+    let isFirstPlayerSelected = false;
+    let isSecondPlayerSelected = false;
+
+    if (round > 1) {
+      isFirstPlayerSelected =
+        (tables[tableNumber][round - 2][id * 2 * 2] &&
+          !tables[tableNumber][round - 2][id * 2 * 2 + 1]) ||
+        (!tables[tableNumber][round - 2][id * 2 * 2] &&
+          tables[tableNumber][round - 2][id * 2 * 2 + 1]);
+
+      isSecondPlayerSelected =
+        (tables[tableNumber][round - 2][(id * 2 + 1) * 2] &&
+          !tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1]) ||
+        (!tables[tableNumber][round - 2][(id * 2 + 1) * 2] &&
+          tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1]);
+
+      console.log(
+        "first player:",
+        isFirstPlayerSelected,
+        tables[tableNumber][round - 2][id * 2 * 2],
+        tables[tableNumber][round - 2][id * 2 * 2 + 1]
+      );
+    }
+
+    let isSelectionNeeded =
+      (round &&
+        tables[tableNumber][round - 1][id * 2] &&
+        tables[tableNumber][round - 1][id * 2 + 1]) ||
+      (round > 1 &&
+        ((isFirstPlayerSelected && isSecondPlayerSelected) ||
+          (isFirstPlayerSelected &&
+            tables[tableNumber][round - 1][id * 2 + 1]) ||
+          (isSecondPlayerSelected &&
+            tables[tableNumber][round - 1][id * 2]))) ||
+      !round;
 
     return (
       <Seed mobileBreakpoint={breakpoint}>
         <SeedItem>
-          <SeedTeam>
+          <div className="d-flex justify-content-between align-items-center pe-2">
             <div>
-              {!round && (
+              <SeedTeam>
+                <div>
+                  {!round ? (
+                    <select
+                      onChange={(e) =>
+                        handlePlayerChange(e, seed.tableNumber, seed.id * 2)
+                      }
+                    >
+                      <option value="">Select</option>
+                      {Array.from({
+                        length:
+                          classData[step - 2].winnerCount *
+                          classData[step - 2].tableCount,
+                      }).map((_, index) => {
+                        return (
+                          <option key={index} value={index}>
+                            {String.fromCharCode(
+                              "A".charCodeAt(0) +
+                                index / classData[step - 2].winnerCount
+                            ) +
+                              " - " +
+                              ((index % classData[step - 2].winnerCount) + 1)}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  ) : tables[tableNumber][round - 1][id * 2] ? (
+                    <p>
+                      Round {round} - {tables[tableNumber][round - 1][id * 2]}
+                    </p>
+                  ) : round > 1 &&
+                    tables[tableNumber][round - 2][id * 2 * 2] &&
+                    tables[tableNumber][round - 2][id * 2 * 2 + 1] ? (
+                    <p>None</p>
+                  ) : round > 1 &&
+                    tables[tableNumber][round - 2][id * 2 * 2] ? (
+                    <p>
+                      Round {round} -{" "}
+                      {tables[tableNumber][round - 2][id * 2 * 2]}
+                    </p>
+                  ) : round > 1 &&
+                    tables[tableNumber][round - 2][id * 2 * 2 + 1] ? (
+                    <p>
+                      Round {round} -{" "}
+                      {tables[tableNumber][round - 2][id * 2 * 2 + 1]}
+                    </p>
+                  ) : (
+                    <p>None</p>
+                  )}
+                </div>
+              </SeedTeam>
+              <SeedTeam>
+                <div>
+                  {!round ? (
+                    <select
+                      onChange={(e) =>
+                        handlePlayerChange(e, seed.tableNumber, seed.id * 2 + 1)
+                      }
+                    >
+                      <option value="">Select</option>
+                      {Array.from({
+                        length:
+                          classData[step - 2].winnerCount *
+                          classData[step - 2].tableCount,
+                      }).map((_, index) => {
+                        return (
+                          <option key={index} value={index}>
+                            {String.fromCharCode(
+                              "A".charCodeAt(0) +
+                                index / classData[step - 2].winnerCount
+                            ) +
+                              " - " +
+                              ((index % classData[step - 2].winnerCount) + 1)}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  ) : tables[tableNumber][round - 1][id * 2 + 1] ? (
+                    <p>
+                      Round {round} -{" "}
+                      {tables[tableNumber][round - 1][id * 2 + 1]}
+                    </p>
+                  ) : round > 1 &&
+                    tables[tableNumber][round - 2][(id * 2 + 1) * 2] &&
+                    tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1] ? (
+                    <p>None</p>
+                  ) : round > 1 &&
+                    tables[tableNumber][round - 2][(id * 2 + 1) * 2] ? (
+                    <p>
+                      Round {round} -{" "}
+                      {tables[tableNumber][round - 2][(id * 2 + 1) * 2]}
+                    </p>
+                  ) : round > 1 &&
+                    tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1] ? (
+                    <p>
+                      Round {round} -{" "}
+                      {tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1]}
+                    </p>
+                  ) : (
+                    <p>None</p>
+                  )}
+                </div>
+              </SeedTeam>
+            </div>
+            <div>
+              {isSelectionNeeded && (
                 <select
+                  value={tables[tableNumber][round][id]}
                   onChange={(e) =>
-                    handlePlayerChange(e, seed.tableNumber, seed.id * 2)
+                    handleMatchNumberChange(e, tableNumber, round, id)
                   }
                 >
-                  <option value="">Select</option>
+                  <option value={0}>0</option>
                   {Array.from({
-                    length:
-                      classData[step - 2].winnerCount *
-                      classData[step - 2].tableCount,
-                  }).map((_, index) => {
-                    return (
-                      <option key={index} value={index}>
-                        {String.fromCharCode(
-                          "A".charCodeAt(0) +
-                            index / classData[step - 2].winnerCount
-                        ) +
-                          " - " +
-                          ((index % classData[step - 2].winnerCount) + 1)}
-                      </option>
-                    );
-                  })}
+                    length: getNumberOfMatches(tableNumber).nMatches,
+                  }).map((_, no) => (
+                    <option key={no} value={no + 1}>
+                      {no + 1}
+                    </option>
+                  ))}
                 </select>
               )}
             </div>
-          </SeedTeam>
-          <SeedTeam>
-            <div>
-              {!round && (
-                <select
-                  onChange={(e) =>
-                    handlePlayerChange(e, seed.tableNumber, seed.id * 2 + 1)
-                  }
-                >
-                  <option value="">Select</option>
-                  {Array.from({
-                    length:
-                      classData[step - 2].winnerCount *
-                      classData[step - 2].tableCount,
-                  }).map((_, index) => {
-                    return (
-                      <option key={index} value={index}>
-                        {String.fromCharCode(
-                          "A".charCodeAt(0) +
-                            index / classData[step - 2].winnerCount
-                        ) +
-                          " - " +
-                          ((index % classData[step - 2].winnerCount) + 1)}
-                      </option>
-                    );
-                  })}
-                </select>
-              )}
-            </div>
-          </SeedTeam>
+          </div>
         </SeedItem>
       </Seed>
     );

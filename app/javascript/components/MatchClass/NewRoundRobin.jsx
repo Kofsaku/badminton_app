@@ -9,6 +9,7 @@ const NewRoundRobin = ({
   addMatch,
 }) => {
   const [tournamentVenues, setTournamentVenues] = useState([]);
+  const [venueCounts, setVenueCounts] = useState([]);
 
   const [formData, setFormData] = useState({
     tableCount: 0,
@@ -50,6 +51,11 @@ const NewRoundRobin = ({
   const handlePlayerCountChange = (e, index) => {
     numberOfPlayers[index] = parseInt(e.target.value);
 
+    venueCounts[selectedVenues[index]] = numberOfPlayers
+      .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+      .map((n) => (n * (n - 1)) / 2)
+      .reduce((a, b) => a + b, 0);
+
     if (!Array.isArray(selectedPlayers[index]))
       selectedPlayers[index] = new Array();
 
@@ -63,15 +69,28 @@ const NewRoundRobin = ({
       selectedPlayers,
       tables,
     });
+    setVenueCounts(venueCounts);
   };
 
   const handleVenueChange = (e, index) => {
+    const prevValue = selectedVenues[index];
     selectedVenues[index] = parseInt(e.target.value);
+
+    venueCounts[prevValue] = numberOfPlayers
+      .filter((_, no) => selectedVenues[no] == prevValue)
+      .map((n) => (n * (n - 1)) / 2)
+      .reduce((a, b) => a + b, 0);
+
+    venueCounts[selectedVenues[index]] = numberOfPlayers
+      .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+      .map((n) => (n * (n - 1)) / 2)
+      .reduce((a, b) => a + b, 0);
 
     setFormData({
       ...formData,
       selectedVenues,
     });
+    setVenueCounts(venueCounts);
   };
 
   const handlePlayerChange = (e, index, colIndex) => {
@@ -86,6 +105,18 @@ const NewRoundRobin = ({
   const handleTableChange = (e, index, rowIndex, colIndex) => {
     console.log(e.target.value, index, rowIndex, colIndex);
 
+    if (e.target.value)
+      tables
+        .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+        .forEach((table) => {
+          table.forEach((row, rowNo) => {
+            row.forEach((col, colNo) => {
+              if (col == e.target.value) {
+                row[colNo] = 0;
+              }
+            });
+          });
+        });
     tables[index][rowIndex][colIndex] = parseInt(e.target.value);
     tables[index][colIndex][rowIndex] = parseInt(e.target.value);
 
@@ -207,14 +238,30 @@ const NewRoundRobin = ({
                       (_, colIndex) => (
                         <td key={colIndex}>
                           {rowIndex < colIndex ? (
-                            <input
-                              type="number"
-                              min={0}
+                            // <input
+                            //   type="number"
+                            //   min={0}
+                            //   value={tables[index][rowIndex][colIndex]}
+                            //   onChange={(e) =>
+                            //     handleTableChange(e, index, rowIndex, colIndex)
+                            //   }
+                            // />
+                            <select
                               value={tables[index][rowIndex][colIndex]}
                               onChange={(e) =>
                                 handleTableChange(e, index, rowIndex, colIndex)
                               }
-                            />
+                            >
+                              <option value="0">0</option>
+                              {selectedVenues[index] &&
+                                Array.from({
+                                  length: venueCounts[selectedVenues[index]],
+                                }).map((_, num) => (
+                                  <option key={num} value={num + 1}>
+                                    {num + 1}
+                                  </option>
+                                ))}
+                            </select>
                           ) : rowIndex > colIndex ? (
                             tables[index][rowIndex][colIndex]
                           ) : (

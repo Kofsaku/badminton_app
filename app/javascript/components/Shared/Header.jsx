@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const { t: translation } = useTranslation();
@@ -13,14 +13,17 @@ const Header = () => {
   const role = useSelector((state) => state.user.role);
 
   const menuItems = [
-    { path: '/', text: translation('header.menu.home') },
-    { path: '/about', text: translation('header.menu.about') },
-    { path: '/services', text: translation('header.menu.services') },
-    { path: '/faqs', text: translation('header.menu.faqs') },
-    { path: '/privacy-policy', text: translation('header.menu.privacyPolicy') },
-    { path: '/terms-of-service', text: translation('header.menu.termsOfService') },
-    { path: '/transactions-law', text: '特定商取引法' },
-    { path: '/contact', text: translation('header.menu.contact') }
+    { path: "/", text: translation("header.menu.home") },
+    { path: "/about", text: translation("header.menu.about") },
+    { path: "/services", text: translation("header.menu.services") },
+    { path: "/faqs", text: translation("header.menu.faqs") },
+    { path: "/privacy-policy", text: translation("header.menu.privacyPolicy") },
+    {
+      path: "/terms-of-service",
+      text: translation("header.menu.termsOfService"),
+    },
+    { path: "/transactions-law", text: "特定商取引法" },
+    { path: "/contact", text: translation("header.menu.contact") },
   ];
 
   const logout = (e) => {
@@ -40,23 +43,35 @@ const Header = () => {
           </div>
           <div className="navbar-custom">
             {menuItems.map((item, index) => (
-              <div key={index} className={`menu-item-btn ${item.path === '/' ? 'menu-active-btn' : ''}`}>
+              <div
+                key={index}
+                className={`menu-item-btn ${
+                  item.path === "/" ? "menu-active-btn" : ""
+                }`}
+              >
                 <Link to={item.path}>{item.text}</Link>
               </div>
             ))}
             <div className="d-inline-block">
               {isLoggedIn ? (
                 <>
-                  <Link to={role === 'Player' ? '/dashboard' : '/tournament-management'} className="header-btn1 ml-20">
-                    Dashboard
+                  <Link
+                    to={
+                      role === "Player"
+                        ? "/dashboard"
+                        : "/tournament-management"
+                    }
+                    className="header-btn1 ml-20"
+                  >
+                    {translation("header.auth.dashboard")}
                   </Link>
                   <button className="header-btn1" onClick={logout}>
-                    {translation('header.auth.signout')}
+                    {translation("header.auth.signout")}
                   </button>
                 </>
               ) : (
                 <Link to="/create-account" className="header-btn1">
-                  {translation('header.auth.signup')}
+                  {translation("header.auth.signup")}
                 </Link>
               )}
             </div>

@@ -3,42 +3,79 @@ import { Bracket, Seed, SeedItem, SeedTeam } from "react-brackets";
 
 const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
   const { match_groups, round_size, round_number } = roundData;
+  const [tables, setTables] = useState([]);
 
-  let tables = match_groups.map((group) => {
-    let temp = Array.from({ length: group.group_size }).map((_) =>
-      Array.from({ length: group.group_size })
-    );
+  useEffect(() => {
+    match_groups.forEach((group, index) => {
+      const { timetable_cell, group_size } = group;
 
-    const { group_players, timetable_cell } = group;
-    timetable_cell.forEach((cell) => {
-      if (!round_number) {
-        const firstPlayerIndex = group_players.findIndex(
-          (player) => player.tournament_player_id == cell.tournament_player_id
-        );
-        const secondPlayerIndex = group_players.findIndex(
-          (player) =>
-            player.tournament_player_id == cell.second_tournament_player_id
-        );
-        temp[firstPlayerIndex][secondPlayerIndex] =
-          cell.match.match_score_teamA;
-        temp[secondPlayerIndex][firstPlayerIndex] =
-          cell.match.match_score_teamB;
-      } else {
-        const firstPlayerIndex = group_players.findIndex(
-          (player) => player.player_key == cell.player_key
-        );
-        const secondPlayerIndex = group_players.findIndex(
-          (player) => player.player_key == cell.second_player_key
-        );
-        temp[firstPlayerIndex][secondPlayerIndex] =
-          cell.match.match_score_teamA;
-        temp[secondPlayerIndex][firstPlayerIndex] =
-          cell.match.match_score_teamB;
-      }
+      tables[index] = Array.from({
+        length: getNumberOfMatches(group_size).nRounds,
+      }).map((_) => Array.from({ length: group_size / 2 }).fill(0));
+      let cellIndex = 0;
+
+      timetable_cell.forEach((cell) => {
+        if (cellIndex == group_size / 2) return;
+        if (!round_number) {
+          if (cell.tournament_player_id && cell.second_tournament_player_id) {
+            tables[index][0][cellIndex] = cell.number;
+
+            addChildMatch(index, timetable_cell, cell.number, 1, cellIndex);
+            cellIndex++;
+          }
+        } else {
+          tables[index][0][cellIndex] = cell.number;
+          addChildMatch(index, timetable_cell, cell.number, 1, cellIndex);
+          cellIndex++;
+        }
+      });
     });
 
-    return temp;
-  });
+    console.log("this is tables", tables);
+
+    setTables([...tables]);
+  }, []);
+
+  const getNumberOfMatches = (group_size) => {
+    let nPlayers = group_size;
+    let nMatches = 0,
+      nRounds = 0;
+
+    while (nPlayers > 1) {
+      nPlayers = (nPlayers + 1) >> 1;
+      nMatches += nPlayers;
+      nRounds++;
+    }
+
+    return { nMatches, nRounds };
+  };
+
+  const addChildMatch = (index, timetable_cell, number, round, cellIndex) => {
+    if (!tables[index][round]) return;
+
+    const cell = timetable_cell.find((item) => item.player_key == number);
+
+    if (!cell) return;
+
+    console.log(
+      cell,
+      "this is index",
+      index,
+      round,
+      parseInt(cellIndex / 2),
+      cell.number
+    );
+    tables[index][round][parseInt(cellIndex / 2)] = cell.number;
+    setTables(tables);
+
+    addChildMatch(
+      index,
+      timetable_cell,
+      cell.number,
+      round + 1,
+      parseInt(cellIndex / 2)
+    );
+  };
 
   const showPlayerName = (player) => {
     if (!round_number)
@@ -57,21 +94,36 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
   };
 
   const showBracket = (group, index) => {
-    let nPlayers = group.group_size;
+    if (!tables.length) return [];
+
+    const { group_size, group_players, timetable_cell } = group;
+
+    let nPlayers = group_size;
     let matchArray = [];
 
     while (nPlayers > 1) {
       nPlayers = (nPlayers + 1) >> 1;
       let matches = [];
       for (let i = 0; i < nPlayers; i++) {
+        console.log("this is group", tables[index][matchArray.length][i]);
+
         const match = {
           id: i,
+          tableNumber: index,
           scores: [
-            tables[index][i * 2][i * 2 + 1],
-            tables[index][i * 2 + 1][i * 2],
+            tables[index][matchArray.length][i]
+              ? timetable_cell.find(
+                  (cell) => cell.number == tables[index][matchArray.length][i]
+                ).match.match_score_teamA
+              : null,
+            tables[index][matchArray.length][i]
+              ? timetable_cell.find(
+                  (cell) => cell.number == tables[index][matchArray.length][i]
+                ).match.match_score_teamB
+              : null,
           ],
           round: matchArray.length,
-          teams: [group.group_players[i * 2], group.group_players[i * 2 + 1]],
+          teams: [group_players[i * 2], group_players[i * 2 + 1]],
         };
         matches.push(match);
       }
@@ -82,20 +134,85 @@ const ShowKnockout = ({ roundData, step, prevNoOfWinners, matchSize }) => {
   };
 
   const CustomSeed = ({ seed, breakpoint }) => {
-    const { round, teams, scores } = seed;
+    const { tableNumber, round, teams, scores, id } = seed;
 
     return (
       <Seed mobileBreakpoint={breakpoint}>
         <SeedItem>
           <SeedTeam>
-            <div>
-              {!round && showPlayerName(teams[0]) + " Score: " + scores[0]}
-            </div>
+            {!round ? (
+              <>
+                <p>{showPlayerName(teams[0])}:</p>
+                <p>{scores[0]}</p>
+              </>
+            ) : tables[tableNumber][round - 1][id * 2] ? (
+              <>
+                <p>
+                  Round {round} - {tables[tableNumber][round - 1][id * 2]}:
+                </p>
+                <p>{scores[0]}</p>
+              </>
+            ) : round > 1 &&
+              tables[tableNumber][round - 2][id * 2 * 2] &&
+              tables[tableNumber][round - 2][id * 2 * 2 + 1] ? (
+              <p>None</p>
+            ) : round > 1 && tables[tableNumber][round - 2][id * 2 * 2] ? (
+              <>
+                <p>
+                  Round {round} - {tables[tableNumber][round - 2][id * 2 * 2]}
+                </p>
+                <p>{scores[0]}</p>
+              </>
+            ) : round > 1 && tables[tableNumber][round - 2][id * 2 * 2 + 1] ? (
+              <>
+                <p>
+                  Round {round} -{" "}
+                  {tables[tableNumber][round - 2][id * 2 * 2 + 1]}
+                </p>
+                <p>{scores[0]}</p>
+              </>
+            ) : (
+              <p>None</p>
+            )}
           </SeedTeam>
           <SeedTeam>
-            <div>
-              {!round && showPlayerName(teams[1]) + " Score: " + scores[1]}
-            </div>
+            {!round ? (
+              <>
+                <p>{showPlayerName(teams[1])}:</p>
+                <p>{scores[1]}</p>
+              </>
+            ) : tables[tableNumber][round - 1][id * 2 + 1] ? (
+              <>
+                <p>
+                  Round {round} - {tables[tableNumber][round - 1][id * 2 + 1]}:
+                </p>
+                <p>{scores[1]}</p>
+              </>
+            ) : round > 1 &&
+              tables[tableNumber][round - 2][(id * 2 + 1) * 2] &&
+              tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1] ? (
+              <p>None</p>
+            ) : round > 1 &&
+              tables[tableNumber][round - 2][(id * 2 + 1) * 2] ? (
+              <>
+                <p>
+                  Round {round} -{" "}
+                  {tables[tableNumber][round - 2][(id * 2 + 1) * 2]}
+                </p>
+                <p>{scores[1]}</p>
+              </>
+            ) : round > 1 &&
+              tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1] ? (
+              <>
+                <p>
+                  Round {round} -{" "}
+                  {tables[tableNumber][round - 2][(id * 2 + 1) * 2 + 1]}
+                </p>
+                <p>{scores[1]}</p>
+              </>
+            ) : (
+              <p>None</p>
+            )}
           </SeedTeam>
         </SeedItem>
       </Seed>
