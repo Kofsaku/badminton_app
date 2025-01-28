@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Shared/Header";
 import Footer from "../../components/Shared/Footer";
 import CtaSection from '../../components/Shared/CtaSection';
-import {paymentTournament} from "../../api/tournamentApi";
+import {paymentTournament, showTournament} from "../../api/tournamentApi";
 
 export default function () {
   const params = useParams()
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [cardNumber, setCardNumber] = useState('');
   const [cardCvv, setCardCvv] = useState('');
   const [cardMonth, setCardMonth] = useState('');
   const [cardYear, setCardYear] = useState('');
+  const [categories, setCategories] = useState();
+  const [participationFee, setParticipationFee] = useState(0)
+  const [teamMember, setTeamMember] = useState([]);
+
+  useEffect(async () => {
+    if (params.id){
+      const res = await showTournament(params.id)
+      setCategories(res.tournament.tournament_categories_attributes)
+      setParticipationFee(res.tournament.participation_fee)
+      setTeamMember(JSON.parse(searchParams.get("teamMembers")))
+    }
+  }, [params.id]);
 
   const handleChangeCardNumber = (event) => {
     let value = event.target.value
@@ -36,14 +50,17 @@ export default function () {
       card_cvv: cardCvv,
       card_year: cardYear,
       card_month: cardMonth,
+      team_member: teamMember,
+      tournament_id: params.id
     }
     const response = await paymentTournament(params.id,formData)
-    console.log(response)
+    if(response.status === 'ok') {
+      navigate('/dashboard#team')
+    }
   }
-
-  useEffect(() => {
-  }, []);
-
+  function isEven(index) {
+    return index % 2 === 0;
+  }
   return (
     <>
       <Header />
@@ -76,40 +93,34 @@ export default function () {
               <div className="pd-40 bg-green4 b-b-r-right-left-8 pd-22-12-sm border-radius-0-sm">
                 <div className="height-80 border-radius-10 text-center bg-white align-content-center height-53-sm border-radius-06-sm">
                   <span className="fw-bold fz-24 fz-14-sm">お支払い金額：</span>
-                  <span className="fw-bold fz-32 c-red-1 fz-24-sm">4,000円</span>
+                  <span className="fw-bold fz-32 c-red-1 fz-24-sm">{Number(participationFee * teamMember.length).toLocaleString()}円</span>
                 </div>
 
                 <div
                   className="p-d-l-41 p-d-r-41 height-80 border-radius-06 align-content-center
                   mt-83 fz-24 fw-bold bg-white fz-14-sm height-53-sm p-d-r-22-sm p-d-l-22-sm mt-40-sm">男子ダブルス2位
                 </div>
-                <div className="p-d-l-41 p-d-r-41 fz-24 m-t-25 c-grey-1 p-d-r-22-sm p-d-l-22-sm fz-14-sm">通常参加費：2,000 × 2名 = 4,000円</div>
+                <div className="p-d-l-41 p-d-r-41 fz-24 m-t-25 c-grey-1 p-d-r-22-sm p-d-l-22-sm fz-14-sm">通常参加費：{Number(participationFee).toLocaleString()} × {teamMember.length}名 = {Number(participationFee * teamMember.length).toLocaleString()}円</div>
                 <div className="mg-0-41 division mg-0-22-sm"></div>
                 <div className="p-d-l-41 p-d-r-41 p-d-r-22-sm p-d-l-22-sm">
                   <span className="fz-24 c-grey-1 fz-14-sm">種目小計：</span>
-                  <span className="fz-32 c-red-1 c-red-1 fw-bold fz-18-sm">4,000円</span>
+                  <span className="fz-32 c-red-1 c-red-1 fw-bold fz-18-sm">{Number(participationFee * teamMember.length).toLocaleString()}円</span>
                 </div>
                 <div className="mt-55 mt-30-sm"></div>
                 <div className="fw-bold fz-24 fz-14-sm">参加者一覧</div>
-                <div className="mt-16 bg-white border-radius-08 d-flex flex-direction-column-sm">
-                  <div className="d-flex align-items-center gap-23 border-r-1 pd-43 flex-1 border-r-0-sm border-b-1-sm pd-25-sm">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6th-oTbkDMbDOPGU_kkRMM55lfvRYgM8JA&s"
-                      alt="" className="width-114 height-114 border-radius-50 width-86-sm height-86-sm"/>
-                    <div>
-                      <div className="fw-bold fz-24 text-green3 fz-20-sm">Kofworkshard</div>
-                      <div className="fz-20 text-green3 fz-16-sm">通常参加費：2,000円</div>
+                <div className="mt-16 bg-white border-radius-08 d-flex flex-direction-column-sm flex-wrap">
+                  { teamMember.map((member, index)=> (
+                    <div
+                      className={`d-flex align-items-center gap-23 ${isEven(index) ? "border-r-1" : ''} pd-43 flex-1 border-r-0-sm border-b-1-sm pd-25-sm flex-1-1-50 mw-100-sm`}>
+                      <img
+                        src="/images/avatar-1.png"
+                        alt="" className="width-114 height-114 border-radius-50 width-86-sm height-86-sm"/>
+                      <div>
+                        <div className="fw-bold fz-24 text-green3 fz-20-sm">{member}</div>
+                        <div className="fz-20 text-green3 fz-16-sm">通常参加費：{Number(participationFee).toLocaleString()}円</div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="d-flex align-items-center gap-23 pd-43 flex-1  pd-25-sm">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ6th-oTbkDMbDOPGU_kkRMM55lfvRYgM8JA&s"
-                      alt="" className="width-114 height-114 border-radius-50 width-86-sm height-86-sm"/>
-                    <div>
-                      <div className="fw-bold fz-24 text-green3 fz-20-sm">Kofworkshard</div>
-                      <div className="fz-20 text-green3 fz-16-sm">通常参加費：2,000円</div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
               <div className="triangle-down"></div>

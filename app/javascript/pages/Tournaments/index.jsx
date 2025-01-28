@@ -61,12 +61,12 @@ const Tournaments = () => {
               <div className="d-inline-block">
                 <Link to="/tournament-creation" className="custom-btn5 mb-2">
                   <i className="fa fa-plus text-14 me-2"> </i>
-                  Create New Tournament
+                  大会を登録する
                 </Link>
-                <a className="custom-btn5">
+                {/* <a className="custom-btn5">
                   <i className="fa fa-file text-14 me-2"> </i>
                   Download PDF Report
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -80,19 +80,19 @@ const Tournaments = () => {
                         S.N
                       </th>
                       <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                        Name
+                        大会名
                       </th>
                       <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                        Date & Time
+                        日付
                       </th>
                       <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                        Organizer
+                        主催者
                       </th>
                       <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font">
-                        Organization
+                        運営組織
                       </th>
                       <th className="bg-silver1 border border-color-silver2 text-14 px-3 py-2 merriweather-font text-center">
-                        Action
+                        アクション
                       </th>
                     </tr>
                   </thead>
@@ -134,7 +134,7 @@ const Tournaments = () => {
                                   to={`/tournaments/${tournament.id}/edit`}
                                   className="dropdown-item text-14"
                                 >
-                                  Edit
+                                  編集
                                 </Link>
                               </li>
                               <li>
@@ -142,7 +142,7 @@ const Tournaments = () => {
                                   to={`/players-management?tournament_id=${tournament.id}`}
                                   className="dropdown-item text-14"
                                 >
-                                  Manage Players
+                                  選手管理
                                 </Link>
                               </li>
                               <li>
@@ -151,7 +151,7 @@ const Tournaments = () => {
                                   href="#"
                                   onClick={() => handleDelete(tournament.id)}
                                 >
-                                  Delete
+                                  削除
                                 </a>
                               </li>
                             </ul>

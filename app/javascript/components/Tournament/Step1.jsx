@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TournamentVenueModel } from "../../models/TournamentVenueModel";
 import { useTranslation } from "react-i18next";
 
-const Step1 = ({ nextStep, formData, handleFormChange }) => {
+const Step1 = ({ nextStep, formData, banner, setBanner , handleFormChange }) => {
   const [venues, setVenues] = useState([TournamentVenueModel()]); // Call the model function
   const { t } = useTranslation();
 
@@ -81,6 +81,11 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
     handleFormChange(name, value);
   };
 
+  const handleFile = (e) => {
+    const { files } = e.target
+    setBanner(files[0])
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     nextStep();
@@ -131,14 +136,19 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 name: "prefecture",
                 type: "text",
               },
+              // {
+              //   label: t("tournament.event_date_time"),
+              //   name: "event_date",
+              //   type: "datetime-local",
+              // },
               {
-                label: t("tournament.event_date_time"),
-                name: "event_date",
-                type: "datetime-local",
+                label: t("tournament.registeration_time"),
+                name: "registeration_time",
+                type: "date",
               },
               {
-                label: t("tournament.registration_time"),
-                name: "registration_time",
+                label: t("tournament.application_deadline"),
+                name: "application_deadline",
                 type: "date",
               },
               {
@@ -172,21 +182,16 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 type: "text",
               },
               { label: t("tournament.sponsor"), name: "sponsor", type: "text" },
-              {
-                label: t("tournament.event_category"),
-                name: "event_category",
-                type: "text",
-              },
-              {
-                label: t("tournament.days_schedule"),
-                name: "days_schedule",
-                type: "text",
-              },
-              {
-                label: t("tournament.reception_period"),
-                name: "reception_period",
-                type: "text",
-              },
+              // {
+              //   label: t("tournament.days_schedule"),
+              //   name: "days_schedule",
+              //   type: "text",
+              // },
+              // {
+              //   label: t("tournament.reception_period"),
+              //   name: "reception_period",
+              //   type: "text",
+              // },
               {
                 label: t("tournament.competition_format"),
                 name: "competition_format",
@@ -202,11 +207,11 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 name: "competition_rules",
                 type: "text",
               },
-              {
-                label: t("tournament.ball_type"),
-                name: "ball_type",
-                type: "text",
-              },
+              // {
+              //   label: t("tournament.ball_type"),
+              //   name: "ball_type",
+              //   type: "text",
+              // },
               {
                 label: t("tournament.participation_eligibility"),
                 name: "participation_eligibility",
@@ -217,16 +222,11 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 name: "application_method",
                 type: "text",
               },
-              {
-                label: t("tournament.application_deadline"),
-                name: "application_deadline",
-                type: "date",
-              },
-              {
-                label: t("tournament.award_details"),
-                name: "award_details",
-                type: "text",
-              },
+              // {
+              //   label: t("tournament.award_details"),
+              //   name: "award_details",
+              //   type: "text",
+              // },
               {
                 label: t("tournament.member_changes"),
                 name: "presence_of_member_changes",
@@ -253,15 +253,41 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                 type: "text",
               },
               {
-                label: t("tournament.announcements"),
-                name: "announcements",
-                type: "textarea",
+                label: t("tournament.costume_detail"),
+                name: 'costume_detail',
+                type: 'text'
+              },
+              // {
+              //   label: 'transport',
+              //   name: 'transport_information',
+              //   type: 'text'
+              // },
+              // {
+              //   label: t("tournament.announcements"),
+              //   name: "announcements",
+              //   type: "textarea",
+              // },
+              {
+                label: '大会に関する情報',
+                name: 'description',
+                type: 'textarea'
+              },
+              // {
+              //   label: t("tournament.notes_for_organizers"),
+              //   name: "notes_for_organizers",
+              //   type: "textarea",
+              // },
+              {
+                label: '参加対象者',
+                name: 'note_for_participants',
+                type: 'text'
               },
               {
-                label: t("tournament.notes_for_organizers"),
-                name: "notes_for_organizers",
-                type: "textarea",
-              },
+                label: 'Banner',
+                name: 'banner',
+                type: 'file',
+                accept: "image/png, image/jpeg"
+              }
             ].map(({ label, name, type }) => (
               <div
                 className={
@@ -279,7 +305,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                     <textarea
                       className="field-style5"
                       name={name}
-                      placeholder={`Add ${label}`}
+                      placeholder={``}
                       value={formData[name] || ""}
                       onChange={handleChange}
                     />
@@ -322,13 +348,15 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
                       value={formData[name] || ""}
                       onChange={handleChange}
                     >
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option value="yes">許可する</option>
+                      <option value="no">許可しない</option>
                     </select>
+                  ) : name == 'banner' ? (
+                    <input type={type} accept="image/*" onChange={handleFile} name={name} />
                   ) : (
                     <input
                       type={type}
-                      placeholder={`Add ${label}`}
+                      placeholder={`${label}`}
                       className="field-style5"
                       name={name}
                       value={formData[name] || ""}
@@ -341,7 +369,7 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
 
             {/* Venue Section */}
             <div className="col-12 mb-4">
-              <h4>Venues</h4>
+              <h4>会場を設定</h4>
               {venues.map((venue, index) => (
                 <div key={index} className="row mb-4">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
