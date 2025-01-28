@@ -40,8 +40,8 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
     numberOfPlayers.length = e.target.value;
 
     numberOfPlayers.forEach((_, playerNo) => {
-      venueCounts[selectedVenues[index]] = numberOfPlayers
-        .filter((_, no) => selectedVenues[no] == selectedVenues[index])
+      venueCounts[selectedVenues[playerNo]] = numberOfPlayers
+        .filter((_, no) => selectedVenues[no] == selectedVenues[playerNo])
         .map((n) => (n * (n - 1)) / 2)
         .reduce((a, b) => a + b, 0);
     });
@@ -64,6 +64,7 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
       .filter((_, no) => selectedVenues[no] == selectedVenues[index])
       .map((n) => (n * (n - 1)) / 2)
       .reduce((a, b) => a + b, 0);
+    console.log("asdfasdfasdfasdfadsf", venueCounts[selectedVenues[index]]);
 
     if (!Array.isArray(selectedPlayers[index]))
       selectedPlayers[index] = new Array();
@@ -252,7 +253,7 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
                                 handleTableChange(e, index, rowIndex, colIndex)
                               }
                             >
-                              <option value="0">0</option>
+                              <option value={0}>0</option>
                               {selectedVenues[index] &&
                                 Array.from({
                                   length: venueCounts[selectedVenues[index]],

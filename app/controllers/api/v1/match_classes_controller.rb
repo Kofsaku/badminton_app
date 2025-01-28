@@ -56,6 +56,7 @@ class Api::V1::MatchClassesController < ApplicationController
                           logger.error "error to save cell: #{cell.errors.full_messages}"
                         else
                           unless cell.match.present?
+                            logger.info "this is tournament player #{cell.inspect}"
                             player1 = cell.tournament_player.player_type == "User" ? cell.tournament_player.player.full_name : cell.tournament_player.player.title
                             player2 = cell.second_tournament_player.player_type == "User" ? cell.second_tournament_player.player.full_name : cell.second_tournament_player.player.title
                             Match.create(timetable_cell_id: cell.id, match_type: "single", player1: player1, player2: player2)
@@ -69,7 +70,7 @@ class Api::V1::MatchClassesController < ApplicationController
                     match_row.each_with_index do |match_cell, col_index|
                       if col_index > row_index && match_cell != 0
                         cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], player_key: selected_players_in_group[row_index], second_player_key: selected_players_in_group[col_index])
-                        cell.number = match_cell
+                        cell.number = round_index * 1000 + match_cell
             
                         unless cell.save
                           logger.error "error to save cell: #{cell.errors.full_messages}"
@@ -138,7 +139,7 @@ class Api::V1::MatchClassesController < ApplicationController
                   group_data.each_with_index do |match_row, row_index|
                     match_row.each_with_index do |match_cell, col_index|
                       if match_cell != 0
-                        cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], number: match_cell)
+                        cell = TimetableCell.find_or_initialize_by(match_group_id: @match_group.id, tournament_venue_id: selected_venues[group_index], number: round_index * 1000 + match_cell)
                         
                         if row_index == 0
                           cell.player_key = selected_players_in_group[col_index * 2]
@@ -221,8 +222,11 @@ class Api::V1::MatchClassesController < ApplicationController
                 include: {
                   match: {}
                 }
-              }
-            }
+              },
+              tournament_venue: {}
+            }, except: [
+              :tournament_venue_id
+            ]
           } 
         }
       }

@@ -41,7 +41,20 @@ const NewRoundRobin = ({
   }, [selectedTournament]);
 
   const handleTableCountChange = (e) => {
-    setFormData({ ...formData, tableCount: parseInt(e.target.value) });
+    numberOfPlayers.length = e.target.value;
+
+    numberOfPlayers.forEach((_, playerNo) => {
+      venueCounts[selectedVenues[playerNo]] = numberOfPlayers
+        .filter((_, no) => selectedVenues[no] == selectedVenues[playerNo])
+        .map((n) => (n * (n - 1)) / 2)
+        .reduce((a, b) => a + b, 0);
+    });
+
+    setFormData({
+      ...formData,
+      tableCount: parseInt(e.target.value),
+      numberOfPlayers,
+    });
   };
 
   const handleWinnerCountChange = (e) => {
@@ -252,7 +265,7 @@ const NewRoundRobin = ({
                                 handleTableChange(e, index, rowIndex, colIndex)
                               }
                             >
-                              <option value="0">0</option>
+                              <option value={0}>0</option>
                               {selectedVenues[index] &&
                                 Array.from({
                                   length: venueCounts[selectedVenues[index]],

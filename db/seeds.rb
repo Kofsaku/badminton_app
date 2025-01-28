@@ -45,7 +45,7 @@ puts "Creating tournaments with events and divisions..."
   tournament = Tournament.create!(
     name: "大会#{i + 1}",
     event_date: Date.today + i.days,
-    registration_date: "10:00",
+    registeration_time: "2025/01/01",
     organization_name: "バドミントン協会",
     user: organizer
   )
@@ -91,8 +91,9 @@ end
 puts "Registering players in tournaments..."
 
 tournaments = Tournament.all
+tournament = tournaments.sample
+
 players.each do |player|
-  tournament = tournaments.sample
   TournamentPlayer.create!(
     player: player,
     tournament: tournament,

@@ -75,26 +75,40 @@ const ShowRoundRobin = ({ roundData, step, matchSize }) => {
         <h5>{number_of_winners}</h5>
       </div>
       {match_groups.map((group, index) => (
-        <table key={group.id} className="table">
-          <thead>
-            <tr>
-              <th></th>
-              {group.group_players.map((player) => (
-                <th key={player.id}>{showPlayerName(player)}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {group.group_players.map((player, rowIndex) => (
-              <tr key={rowIndex}>
-                <th>{showPlayerName(player)}</th>
-                {tables[index][rowIndex].map((col, colIndex) => (
-                  <td key={colIndex}>{col}</td>
+        <div key={group.id}>
+          <h6>{String.fromCharCode("A".charCodeAt(0) + index)}</h6>
+          <div className="border d-flex">
+            <div className="flex-fill p-2">
+              <p className="mb-0">マスの数</p>
+              <p className="mb-0 border">{group.group_size / 2}</p>
+            </div>
+            <div className="flex-fill p-2">
+              <p className="mb-0">試合日数</p>
+              <p className="mb-0 border">{group.tournament_venue.venue_name}</p>
+            </div>
+          </div>
+
+          <table className="table">
+            <thead>
+              <tr>
+                <th></th>
+                {group.group_players.map((player) => (
+                  <th key={player.id}>{showPlayerName(player)}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {group.group_players.map((player, rowIndex) => (
+                <tr key={rowIndex}>
+                  <th>{showPlayerName(player)}</th>
+                  {tables[index][rowIndex].map((col, colIndex) => (
+                    <td key={colIndex}>{col}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ))}
     </>
   );
