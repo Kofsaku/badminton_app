@@ -19,9 +19,9 @@ export default () => (
     <HeroSection />
     <SearchSection />
     {/* <TournamentSection /> */}
-    <ResultSection />
-    <PickOutSection />
-    <TeamSearchSection />
+    {/* <ResultSection /> */}
+    {/* <PickOutSection />
+    <TeamSearchSection /> */}
     <FeatureSection />
     <ProductSection />
     <UseSection />

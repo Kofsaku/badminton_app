@@ -20,7 +20,7 @@ export default () => (
     <SearchSection />
     <TournamentSection />
     <ResultSection />
-    <PickOutSection />
+    {/* <PickOutSection /> */}
     <TeamSearchSection />
     <FeatureSection />
     <ProductSection />

@@ -4,7 +4,7 @@
       "add_new_tournament": "トーナメント登録",
       "name": "大会名",
       "region": "地域",
-      "prefecture": "都道府",
+      "prefecture": "都道府県",
       "event_date_time": "イベント日時",
       "registration_time": "登録開始時間",
       "organization_name": "組織名",
@@ -136,13 +136,13 @@
           "part1": "最高の",
           "part2": "バドミントンアプリ"
         },
-        "description": "Lorem ipsum dolor sit amet consectetur. フェルトラ ディグニッシム ブランディット キス オルグ。プロイン マティス フェセルス フェセルス ファシリス ヴルプテート ディクトゥムスト ノン コンセクアット。フリンギラ オブ エリート ベルプロインヘンドレリト アディピシンゲゲット。",
+        "description": "バドミントンを楽しむ全てのプレイヤー・運営者のためのアプリ",
         "toggleButtons": {
           "player": "プレイヤーの方",
           "organizer": "トーナメント主催者の方"
         },
         "approvedSection": {
-          "title": "承認"
+          "title": ""
         }
       },
       "pickOut": {
@@ -188,7 +188,7 @@
           "dates": "日付",
           "status": "状態",
           "region": "地域",
-          "prefecture": "都道府",
+          "prefecture": "都道府県",
           "tournamentType": "トーナメントタイプ",
           "venue": "会場",
           "matchFormat": "試合形式",

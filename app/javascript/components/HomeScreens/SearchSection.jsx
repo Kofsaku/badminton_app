@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
 import { Link, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/axiosInstance";
-import { start } from "@popperjs/core";
 
 const SearchSection = () => {
   const [formData, setFormData] = useState({
@@ -115,74 +113,11 @@ const SearchSection = () => {
         formData
       );
       setSearchResults(response.data);
-
       console.log(response.data);
     } catch (e) {}
   };
 
   const { t } = useTranslation();
-
-  const getSliderSettings = () => {
-    const numberOfSlides = searchResults.length;
-
-    const sliderSettings = {
-      dots: true,
-      infinite: numberOfSlides > 1,
-      speed: 300,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      arrows: true,
-      autoplay: true,
-      focusOnSelect: false,
-      pauseOnHover: false,
-      autoplaySpeed: 2000,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            infinite: numberOfSlides > 1,
-            dots: true,
-          },
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            infinite: numberOfSlides > 1,
-            dots: true,
-          },
-        },
-        {
-          breakpoint: 700,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            infinite: numberOfSlides > 1,
-            dots: true,
-          },
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-      ],
-    };
-
-    return sliderSettings;
-  };
 
   return (
     <section className="py-5">
@@ -387,59 +322,57 @@ const SearchSection = () => {
                 onClick={handleSubmit}
               >
                 <i className="fa fa-search text-16 me-2"> </i>
-                {t("home.search.searchWithConditions")}
+                条件付きで検索する
               </button>
             </div>
           </div>
         </div>
-        <div className="d-block w-100">
-          <Slider {...getSliderSettings()} className="custom-slider1 arrows-1">
-            {searchResults.map((tournament) => (
-              <div className="d-block px-3" key={tournament.id}>
-                <div className="d-block w-100">
-                  <img
-                    className="w-100"
-                    src="images/result-1.png"
-                    alt="Result 1"
-                  />
-                </div>
-                <div className="d-block py-3">
-                  <h3 className="text-green4 text-22 fw-bold m-0">
-                    <Link to={`/tournament-details/${tournament.id}`}>
-                      {tournament.name}
-                    </Link>
-                  </h3>
-                </div>
-                <div className="d-block w-100 mb-3">
-                  <h5 className="text-grey1 text-14">
-                    Dates
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      {new Date(tournament.event_date).toDateString()}
-                    </span>
-                  </h5>
-                  <h5 className="text-grey1 text-14">
-                    Region
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      {tournament.region &&
-                        t(`home.search.regions.${tournament.region}`)}
-                    </span>
-                  </h5>
-                  <h5 className="text-grey1 text-14 mt-0 mb-2">
-                    Prefecture
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      {tournament.prefecture}
-                    </span>
-                  </h5>
-                  <h5 className="text-grey1 text-14">
-                    Tournament Classification
-                    <span className="text-green4 d-inline-block ms-1 fw-bold">
-                      Team Competition (Open)
-                    </span>
-                  </h5>
+        <div className="row">
+          {searchResults.length > 0 ? (
+            searchResults.map((tournament) => (
+              <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={tournament.id}>
+                <div className="card h-100">
+                  <div className="card-body">
+                    <h3 className="text-green4 text-22 fw-bold mb-3">
+                      <Link to={`/tournament-details/${tournament.id}`} className="text-decoration-none">
+                        {tournament.name}
+                      </Link>
+                    </h3>
+                    <div className="tournament-info">
+                      <h5 className="text-grey1 text-14 mb-2">
+                        日程
+                        <span className="text-green4 d-inline-block ms-1 fw-bold">
+                          {new Date(tournament.event_date).toDateString()}
+                        </span>
+                      </h5>
+                      <h5 className="text-grey1 text-14 mb-2">
+                        地域
+                        <span className="text-green4 d-inline-block ms-1 fw-bold">
+                          {tournament.region && t(`home.search.regions.${tournament.region}`)}
+                        </span>
+                      </h5>
+                      <h5 className="text-grey1 text-14 mb-2">
+                        都道府県
+                        <span className="text-green4 d-inline-block ms-1 fw-bold">
+                          {tournament.prefecture}
+                        </span>
+                      </h5>
+                      <h5 className="text-grey1 text-14 mb-2">
+                        種目
+                        <span className="text-green4 d-inline-block ms-1 fw-bold">
+                          Team Competition (Open)
+                        </span>
+                      </h5>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
-          </Slider>
+            ))
+          ) : (
+            <div className="col-12 text-center py-4">
+              <p className="text-muted">検索結果がありません</p>
+            </div>
+          )}
         </div>
       </div>
     </section>

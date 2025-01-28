@@ -48,10 +48,10 @@ const HeroSection = () => {
                 </h4>
               </div>
               <div className="d-flex flex-wrap w-100 align-items-center justify-content-start">
-                <img src="images/approved-logo1.png" className="me-5" alt="Approved Logo 1" />
+                {/* <img src="images/approved-logo1.png" className="me-5" alt="Approved Logo 1" />
                 <img src="images/approved-logo2.png" className="me-5" alt="Approved Logo 2" />
                 <img src="images/approved-logo3.png" className="me-5" alt="Approved Logo 3" />
-                <img src="images/approved-logo4.png" alt="Approved Logo 4" />
+                <img src="images/approved-logo4.png" alt="Approved Logo 4" /> */}
               </div>
             </div>
             <div className="col-lg-5 col-md-5 col-sm-12 col-12">
