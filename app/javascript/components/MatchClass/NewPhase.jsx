@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const NewPhase = ({
   addMatch,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [matchType, setMatchType] = useState(false);
 
   const handleMatchTypeChange = (val) => {
@@ -28,10 +30,26 @@ const NewPhase = ({
     addMatch(matchData);
   };
 
+  const camelCaseToPascalCase = (text) => {
+    if (text) {
+      return text
+        .split("_")
+        .map((word, index) =>
+          index === 0
+            ? word.toLowerCase()
+            : word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join("");
+    }
+    return "";
+  };
+
   return (
     <>
       <h3 className="fw-bold">マッチ作成</h3>
-      <p>{selectedTournament.name + " " + category.category_type}</p>
+      <p>
+        {selectedTournament.name + " " + t(`tournament.${camelCaseToPascalCase(category.category_type)}`)}
+      </p>
 
       <div className="bg-light p-4">
         <div className="mb-3">

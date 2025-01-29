@@ -63,15 +63,15 @@ const ShowRoundRobin = ({ roundData, step, matchSize }) => {
   return (
     <>
       <div className="d-flex justify-content-between">
-        <p>Match Format</p>
-        <h5>League matches</h5>
+        <p>試合形式</p>
+        <h5>リーグ戦</h5>
       </div>
       <div className="d-flex justify-content-between">
-        <p>Number of league tables</p>
+        <p>リーグ表の数</p>
         <h5>{round_size}</h5>
       </div>
       <div className="d-flex justify-content-between">
-        <p>Number of winners</p>
+        <p>勝ち抜け数</p>
         <h5>{number_of_winners}</h5>
       </div>
       {match_groups.map((group, index) => (

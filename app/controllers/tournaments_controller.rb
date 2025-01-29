@@ -5,7 +5,7 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments or /tournaments.json
   def index
-    @tournaments = Tournament.page(params[:page]).per(params[:per_page] || 50)
+    @tournaments = Tournament.where(user_id: session[:current_user_id]).page(params[:page]).per(params[:per_page] || 50)
     render json: {
       tournaments: @tournaments,
       current_page: @tournaments.current_page,
@@ -18,7 +18,7 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_ids
-    @tournaments = Tournament.all.select(:id, :name)
+    @tournaments = Tournament.where(user_id: session[:current_user_id]).select(:id, :name)
     render json: {
       tournaments: @tournaments
     }
@@ -59,9 +59,10 @@ class TournamentsController < ApplicationController
     render json: { success: true }
   end
 
+
   def add_new_player
-    begin
       ActiveRecord::Base.transaction do
+        binding.pry
         player = params["player"]
         user = User.create!(email: player["email"], full_name: player["name"], password: "password")
         Profile.create!(role: "Player", user_id: user.id, gender: player["gender"], date_of_birth: player["date_of_birth"], years_of_experience: player["years_of_experience"], age: player["age"])
@@ -69,9 +70,6 @@ class TournamentsController < ApplicationController
       end
 
       render json: { success: true }
-    rescue => e
-      render json: { success: false, error: e.message }, status: :unprocessable_entity
-    end
   end
 
   def remove_player_from_tournament
@@ -114,8 +112,9 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments or /tournaments.json
   def create
-    @tournament = Tournament.new(tournament_params)
+    @tournament = current_user.tournament.build(tournament_params)
 
+    binding.pry
     if @tournament.save!
       render json: { tournament: @tournament, message: 'Tournament created successfully' }, status: :created
     else
