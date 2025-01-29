@@ -1,6 +1,33 @@
 // api.js
 import axiosInstance from './axiosInstance';
 
+// Create a new IMG
+export const createImg = async (file) => {
+  console.log('Creating banner', file);
+  const data = new FormData();
+  data.append('file', file);
+  data.append('pinataMetadata', JSON.stringify({ name: 'File to upload' }));
+
+  try {
+    const response = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0ZTIwMzJiNy1kZGE1LTQwNDgtOWJhNS1mZTI5ODE4NmM2M2UiLCJlbWFpbCI6ImNoYXJtaW5nLmRldjc3N0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJGUkExIn0seyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJOWUMxIn1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiNzYyZGE5MjA4ZmY3MzBkNjIyZTYiLCJzY29wZWRLZXlTZWNyZXQiOiI5YjExY2Y3NjBiOWY5Mzc3YzNhOWEyODVlM2Q1MzA4NTg3NWJmYzNkYTRhOGY4ZmI0MTFhMTMzNjgxZjcwMTljIiwiZXhwIjoxNzY5NjQ4ODE1fQ.4vvx4XA3tf3_qnrUXAtU1CNMsq0E0pdYltISrDgFyjo`, // Use your environment variable
+      },
+      body: data,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload to IPFS');
+    }
+
+    const result = await response.json();
+    return result.IpfsHash;
+    
+  } catch (err) {
+    console.error(err);
+  }
+};
 // Create a new tournament
 export const createTournament = async (tournamentData) => {
   try {
