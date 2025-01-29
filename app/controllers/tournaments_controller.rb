@@ -20,7 +20,7 @@ class TournamentsController < ApplicationController
   end
 
   def tournament_ids
-    @tournaments = Tournament.all.select(:id, :name)
+    @tournaments = Tournament.where(user_id: session[:current_user_id]).select(:id, :name)
     render json: {
       tournaments: @tournaments
     }
@@ -116,8 +116,9 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments or /tournaments.json
   def create
-    @tournament = Tournament.new(tournament_params)
+    @tournament = current_user.tournament.build(tournament_params)
 
+    binding.pry
     if @tournament.save!
       render json: { tournament: @tournament, message: 'Tournament created successfully' }, status: :created
     else

@@ -142,7 +142,7 @@ const FirstRoundRobin = ({ selectedTournament, step, classSize, addMatch }) => {
     );
     // console.log(player, selectedPlayers[index][rowIndex]);
     return !player
-      ? "To be selected"
+      ? "選手を選択してください"
       : player.player_type === "User"
       ? player.player.full_name
       : player.player.title;

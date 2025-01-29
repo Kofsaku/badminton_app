@@ -3,9 +3,24 @@ import axios from "axios";
 import AdminHeader from "../../components/Shared/AdminHeader";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const MatchClasses = () => {
   const [matchClasses, setMatchClasses] = useState([]);
+  const { t } = useTranslation();
+  const camelCaseToPascalCase = (text) => {
+    if (text) {
+      return text
+        .split('_')
+        .map((word, index) =>
+          index === 0
+            ? word.toLowerCase()
+            : word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join('');
+    }
+    return ''; // Return an empty string if text is falsy
+  };
 
   useEffect(() => {
     const url = "/api/v1/match_classes";
@@ -43,26 +58,26 @@ const MatchClasses = () => {
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
         <div className="p-3">
-          <h1>Match Classes</h1>
+          <h1>試合管理</h1>
           <Link to="/match-management/new" className="btn btn-primary">
-            New Match Class
+            試合を組む
           </Link>
 
           <table className="table">
             <thead>
               <tr>
-                <th>Tournament</th>
-                <th>Category</th>
-                <th>Division</th>
-                <th>Size</th>
-                <th>Actions</th>
+                <th>大会</th>
+                <th>種目</th>
+                <th>部</th>
+                <th>試合数</th>
+                <th>アクション</th>
               </tr>
             </thead>
             <tbody>
               {matchClasses.map((matchClass) => (
                 <tr key={matchClass.id}>
                   <td>{matchClass.tournament.name}</td>
-                  <td>{matchClass.tournament_category.category_type}</td>
+                  <td>{t(`tournament.${camelCaseToPascalCase(matchClass.tournament_category.category_type)}`)}</td>
                   <td>{matchClass.tournament_division.division}</td>
                   <td>{matchClass.size}</td>
                   <td>
@@ -70,7 +85,7 @@ const MatchClasses = () => {
                       to={"/match-management/" + matchClass.id}
                       className="btn btn-info"
                     >
-                      Show
+                      詳細
                     </Link>
                     {/* <Link
                       to={"/tournament-tables/" + tournamentTable.id + "/edit"}
@@ -83,7 +98,7 @@ const MatchClasses = () => {
                       className="btn btn-danger"
                       onClick={() => handleDelete(matchClass.id)}
                     >
-                      Delete
+                      削除
                     </button>
                   </td>
                 </tr>

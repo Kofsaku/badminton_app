@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import AdminHeader from "../../components/Shared/AdminHeader";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
@@ -8,6 +9,7 @@ import NewPhase from "../../components/MatchClass/NewPhase";
 
 const NewMatchClass = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [selectedTournament, setSelectedTournament] = useState(0);
   const [tournaments, setTournaments] = useState([]);
@@ -97,6 +99,20 @@ const NewMatchClass = () => {
       });
   };
 
+  const camelCaseToPascalCase = (text) => {
+    if (text) {
+      return text
+        .split("_")
+        .map((word, index) =>
+          index === 0
+            ? word.toLowerCase()
+            : word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join("");
+    }
+    return "";
+  };
+
   return (
     <main className="admin-wrapper d-flex w-100 flex-wrap bg-EEEEEE">
       <AdminSidebar />
@@ -105,12 +121,10 @@ const NewMatchClass = () => {
         <div className="p-3">
           {!step ? (
             <>
-              <h1>New Match Class</h1>
-              <p>Tournament name</p>
-
+              <h1>試合登録</h1>
               <div className="bg-light p-4">
                 <div className="mb-3">
-                  <label>Tournament</label>
+                  <label>大会選択</label>
                   <select
                     name="tournament"
                     className="form-control"
@@ -125,7 +139,7 @@ const NewMatchClass = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label>Tournament Category</label>
+                  <label>種目</label>
                   <select
                     name="tournament_category"
                     className="form-control"
@@ -134,14 +148,14 @@ const NewMatchClass = () => {
                     {tournamentCategories &&
                       tournamentCategories.map((category) => (
                         <option key={category.id} value={category.id}>
-                          {category.category_type}
+                          {t(`tournament.${camelCaseToPascalCase(category.category_type)}`)}
                         </option>
                       ))}
                   </select>
                 </div>
 
                 <div className="mb-3">
-                  <label>Tournament Division</label>
+                  <label>部</label>
                   <select
                     name="tournament_division"
                     className="form-control"
@@ -158,7 +172,7 @@ const NewMatchClass = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label>Class Size</label>
+                  <label>試合数</label>
                   <input
                     type="number"
                     name="size"

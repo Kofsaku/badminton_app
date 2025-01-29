@@ -12,7 +12,8 @@ export default function TournamentDetail() {
   const { id } = useParams();
   const [tournament, setTournament] = useState({});
   const [venues, setVenues] = useState([]);
-
+  const ipfsHash = 'https://indigo-tremendous-ox-144.mypinata.cloud/ipfs/'
+  const pinataToken='gjlPvOjH1FY2-C9QzEFH4DWwng1aih4pT5kZXbYL_Rsii4o2Z5d2l-f6rS4S0VdI'
   useEffect(() => {
     axiosInstance
       .get(`/tournaments/${id}`)
@@ -86,7 +87,13 @@ export default function TournamentDetail() {
         {/* Tournament Overview */}
         <section className="tournament-overview p-5">
           <div className="text-center mb-5">
-            <img src="/images/result-2.png" alt="Tournament Overview" className="img-fluid" />
+            <div>
+              <img 
+                src={`https://indigo-tremendous-ox-144.mypinata.cloud/ipfs/${tournament?.banner}?pinataGatewayToken=${pinataToken}`} 
+                alt="Tournament Overview"
+                className="detail-banner"
+              />
+            </div>
             <h5 className="fw-bold mt-4">
               <Link to={`/tournament/${id}/entry`} className="text-decoration-none text-primary">
                 エントリーの種類を選んでください

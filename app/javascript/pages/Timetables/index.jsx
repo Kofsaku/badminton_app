@@ -22,16 +22,16 @@ const Timetables = () => {
       <section className="right-content-wrapper overflow-auto custom-scroll1">
         <AdminHeader />
         <div>
-          <h1>Timetables</h1>
+          <h1>タイムテーブル</h1>
 
           <table className="table">
             <thead>
               <tr>
-                <th>Tournament</th>
-                <th>Venue Name</th>
-                <th>Venue Date</th>
-                <th>Venue Address</th>
-                <th>Actions</th>
+                <th>大会名</th>
+                <th>会場名</th>
+                <th>開催日</th>
+                <th>大会住所</th>
+                <th>アクション</th>
               </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@ const Timetables = () => {
                       to={"/timetables/" + timetable.id}
                       className="btn btn-info"
                     >
-                      Show
+                      詳細
                     </Link>
                   </td>
                 </tr>

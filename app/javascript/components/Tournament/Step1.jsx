@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Image } from "react-bootstrap";
 import { TournamentVenueModel } from "../../models/TournamentVenueModel";
 import { useTranslation } from "react-i18next";
 
 const Step1 = ({ nextStep, formData, banner, setBanner , handleFormChange }) => {
   const [venues, setVenues] = useState([TournamentVenueModel()]); // Call the model function
   const { t } = useTranslation();
-
+  const ipfsHash = 'https://indigo-tremendous-ox-144.mypinata.cloud/ipfs/'
+  const pinataToken='gjlPvOjH1FY2-C9QzEFH4DWwng1aih4pT5kZXbYL_Rsii4o2Z5d2l-f6rS4S0VdI'
   const regions = [
     "hokkaido",
     "tohoku",
@@ -68,8 +70,12 @@ const Step1 = ({ nextStep, formData, banner, setBanner , handleFormChange }) => 
     "鹿児島県",
     "沖縄県",
   ];
+  useEffect(()=>{
+    console.log("test form", formData);
+  }, [formData])
 
   useEffect(() => {
+
     const venueData = formData.tournament_venues_attributes;
     if (venueData?.length > 0) {
       setVenues(venueData);
@@ -352,7 +358,18 @@ const Step1 = ({ nextStep, formData, banner, setBanner , handleFormChange }) => 
                       <option value="no">許可しない</option>
                     </select>
                   ) : name == 'banner' ? (
-                    <input type={type} accept="image/*" onChange={handleFile} name={name} />
+                    <div>
+                      <input type={type} accept="image/*" onChange={handleFile} name={name} />
+                      {formData?.banner !=null && 
+                      <Image
+                        width={128}
+                        height={128}
+                        alt="Banner"
+                        src={`https://indigo-tremendous-ox-144.mypinata.cloud/ipfs/${formData?.banner}?pinataGatewayToken=${pinataToken}`}
+                        className="rounded-full md:rounded-none mt-2"
+                      />}
+                    </div>
+                    
                   ) : (
                     <input
                       type={type}
