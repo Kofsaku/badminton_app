@@ -4,6 +4,9 @@ import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/axiosInstance";
 
 const SearchSection = () => {
+  const ipfsHash = 'https://indigo-tremendous-ox-144.mypinata.cloud/ipfs/'
+  const pinataToken='gjlPvOjH1FY2-C9QzEFH4DWwng1aih4pT5kZXbYL_Rsii4o2Z5d2l-f6rS4S0VdI'
+
   const [formData, setFormData] = useState({
     name: "",
     // classification: "all",
@@ -335,6 +338,11 @@ const SearchSection = () => {
                   <div className="card-body">
                     <h3 className="text-green4 text-22 fw-bold mb-3">
                       <Link to={`/tournament-details/${tournament.id}`} className="text-decoration-none">
+                      <img 
+                        src={`https://indigo-tremendous-ox-144.mypinata.cloud/ipfs/${tournament?.banner}?pinataGatewayToken=${pinataToken}`}
+                        alt={`${tournament.name} Banner`}
+                        className="detail-banner"
+                      />
                         {tournament.name}
                       </Link>
                     </h3>

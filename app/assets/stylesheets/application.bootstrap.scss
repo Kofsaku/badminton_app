@@ -2657,3 +2657,10 @@ span.custom-line-4 {
   background: #387000;
   color: white;
 }
+
+.detail-banner {
+  aspect-ratio: 16/9 !important;
+  object-fit: cover !important;
+  height: auto !important;
+  width: 100% !important;
+}
