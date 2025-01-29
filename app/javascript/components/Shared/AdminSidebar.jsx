@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 const AdminSidebar = () => {
-  const role = useSelector((state) => state.user.role);
   const { t } = useTranslation();
+  const role = useSelector((state) => state.user.role);
 
   return (
     <section className="left-sidebar-wrapper bg-white overflow-auto custom-scroll1">
@@ -75,7 +75,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    Organizer Management
+                    {t('adminSidebar.menu.organizerManagement')}
                   </NavLink>
                 </li>
               </>
@@ -94,7 +94,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    Tournament Creation
+                    {t('adminSidebar.menu.tournamentCreation')}
                   </NavLink>
                 </li>
                 <li>
@@ -118,7 +118,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    Split Management
+                    {t('adminSidebar.menu.splitManagement')}
                   </NavLink>
                 </li>
                 <li>
@@ -130,7 +130,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    Player Management
+                    {t('adminSidebar.menu.playerManagement')}
                   </NavLink>
                 </li>
                 <li>
@@ -142,7 +142,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    Match Management
+                    {t('adminSidebar.menu.matchManagement')}
                   </NavLink>
                 </li>
               </>
@@ -161,7 +161,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    Timetable
+                    {t('adminSidebar.menu.timetable')}
                   </NavLink>
                 </li>
                 <li>
@@ -173,7 +173,7 @@ const AdminSidebar = () => {
                         : "left-menu-btn1 merriweather-font"
                     }
                   >
-                    Notification Management
+                    {t('adminSidebar.menu.notificationManagement')}
                   </NavLink>
                 </li>
               </>
@@ -189,7 +189,7 @@ const AdminSidebar = () => {
                       : "left-menu-btn1 merriweather-font"
                   }
                 >
-                  Tournaments
+                  {t('adminSidebar.menu.tournaments')}
                 </NavLink>
               </li>
             </>
