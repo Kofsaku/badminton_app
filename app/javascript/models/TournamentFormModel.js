@@ -39,7 +39,7 @@ export const TournamentFormModel = () => ({
   organizers_url: "", // t.string "organizers_url"
   notes_for_organizers: "", // t.text "notes_for_organizers"
   user_id: null, // t.bigint "user_id"
-  banner: new Blob (),
+  banner: null,
   note_for_participants: "",
 
   tournament_categories_attributes: [TournamentCategoryModel], // Using category model

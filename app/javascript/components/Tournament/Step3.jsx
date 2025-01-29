@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createTournament, updateTournament } from '../../api/tournamentApi';
+import { createTournament, updateTournament, createImg } from '../../api/tournamentApi';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Loading from "../Loading";
@@ -82,10 +82,15 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setForm
   const handleCreate = async () => {
     try {
       // Submit form data using the API function
+      const bannerImg = await createImg(banner)
+      const updatedFormData = {
+        ...formData,
+        banner: bannerImg
+      };
       if (formData.id) {
-        await updateTournament(formData, banner);
+        await updateTournament(updatedFormData);
       } else {
-        await createTournament(formData);
+        await createTournament(updatedFormData);
       }
 
       navigate('/tournament-management');
@@ -98,8 +103,14 @@ const Step3 = ({ nextStep, prevStep, handleFormChange, banner, formData, setForm
 
   const handleUpdate = async () => {
     try {
-      const result = await updateTournament(formData, banner);
-      console.log('Tournament updated successfully:', result);
+    
+      const bannerImg = await createImg(banner)
+      const updatedFormData = {
+        ...formData,
+        banner: bannerImg
+      };
+      const result = await updateTournament(updatedFormData);
+      console.log(result, 'Tournament updated successfully:', bannerImg);
 
       navigate('/tournament-management');
       // Handle success (e.g., redirect to another page or show success message)
