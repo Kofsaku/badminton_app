@@ -81,27 +81,6 @@ const Step1 = ({ nextStep, formData, handleFormChange }) => {
             </div>
           </form>
         </div>
-        <div className="d-block w-100 text-center px-2 mb-5">
-          <h5 className="text-grey1 text-16 mt-0 mb-3">
-            {t('signup.step1.socialLogin.title')}
-          </h5>
-          <div className="d-flex w-100 align-items-center justify-content-center">
-            {socialButtons.map((button, index) => (
-              <div key={index} className="d-inline-block text-center mx-2">
-                <button 
-                  className="bg-silver2 d-flex align-items-center justify-content-center rounded-circle p-3 border-0"
-                  aria-label={button.ariaLabel}
-                >
-                  <img 
-                    className="social-icon1" 
-                    src={`images/${button.icon}`} 
-                    alt={button.alt} 
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
         <div className="d-block w-100 px-2">
           <p className="text-center w-100 text-14">
             {t('signup.step1.login.text')}&nbsp;

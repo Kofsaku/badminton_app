@@ -4,6 +4,7 @@ import AdminHeader from "../../components/Shared/AdminHeader";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
 import { fetchPlayers } from "../../api/userApi";
 import {
+  fetchTournaments,
   fetchTournamentIds,
   addPlayersTournament,
   removePlayerFromTournament,
@@ -58,7 +59,8 @@ const Players = () => {
     const loadTournaments = async () => {
       setLoadingTournaments(true);
       try {
-        const data = await fetchTournamentIds();
+        const data = await fetchTournaments();
+        console.log(data);
         setTournaments(data.tournaments || []);
       } catch (error) {
         console.error("Error fetching tournaments:", error);

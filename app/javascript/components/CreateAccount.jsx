@@ -151,11 +151,11 @@ const CreateAccount = () => {
                             value={formData.role}
                             onChange={handleChange}
                           >
-                            <option value="Player">Player</option>
+                            <option value="Player">プレイヤー</option>
                             <option value="Tournament Organizer">
                               大会運営者
                             </option>
-                            <option value="Both">Both</option>
+                            <option value="Both">両方</option>
                           </select>
                         </div>
                         <div className="d-block w-100">

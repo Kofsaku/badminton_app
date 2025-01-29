@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import AdminHeader from "../../components/Shared/AdminHeader";
 import AdminSidebar from "../../components/Shared/AdminSidebar";
@@ -13,37 +13,42 @@ const CreateTimetable = () => {
   const [rowCount, setRowCount] = useState(0);
 
   useEffect(() => {
-    const url = "/api/v1/tournaments";
-    axios.get(url).then((res) => {
-      console.log(res.data);
+    const fetchTournaments = async () => {
+      try {
+        const response = await axios.get("/api/v1/tournaments");
+        setTournaments(response.data);
+        console.log(response.data);
+        if (response.data.length) setSelectedTournament(response.data[0].id);
+      } catch (error) {
+        console.error("Error fetching tournaments:", error);
+      }
+    };
 
-      setTournaments(res.data);
-      if (res.data.length) setSelectedTournament(res.data[0].id);
-    });
+    fetchTournaments();
   }, []);
 
   useEffect(() => {
     if (!selectedTournament) return;
 
-    const url = `/api/v1/tournaments/${selectedTournament}/tournament-venues`;
-    axios.get(url).then((res) => {
-      console.log(res.data);
+    const fetchTournamentVenues = async () => {
+      try {
+        const response = await axios.get(`/api/v1/tournaments/${selectedTournament}/tournament-venues`);
+        setTournamentVenues(response.data);
+        if (response.data.length) setSelectedVenue(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching tournament venues:", error);
+      }
+    };
 
-      setTournamentVenues(res.data);
-      if (res.data.length) setSelectedVenue(res.data[0]);
-    });
+    fetchTournamentVenues();
   }, [selectedTournament]);
 
   const handleTournamentChange = (e) => {
-    console.log(e.target.value);
     setSelectedTournament(e.target.value);
   };
 
   const handleVenueChange = (e) => {
-    console.log(e.target.value);
     const venue = tournamentVenues.find((venue) => venue.id == e.target.value);
-    console.log(venue);
-
     setSelectedVenue(venue);
   };
 
@@ -67,6 +72,7 @@ const CreateTimetable = () => {
               <select
                 className="form-control"
                 onChange={handleTournamentChange}
+                value={selectedTournament}
               >
                 {tournaments.map((tournament) => (
                   <option key={tournament.id} value={tournament.id}>
@@ -80,9 +86,7 @@ const CreateTimetable = () => {
               <select className="form-control" onChange={handleVenueChange}>
                 {tournamentVenues.map((tournamentVenue) => (
                   <option key={tournamentVenue.id} value={tournamentVenue.id}>
-                    {tournamentVenue.venue_name +
-                      " " +
-                      tournamentVenue.venue_date}
+                    {tournamentVenue.venue_name + " " + tournamentVenue.venue_date}
                   </option>
                 ))}
               </select>
