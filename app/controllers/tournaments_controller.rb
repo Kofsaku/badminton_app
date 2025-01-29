@@ -59,10 +59,9 @@ class TournamentsController < ApplicationController
     render json: { success: true }
   end
 
-
   def add_new_player
+    begin
       ActiveRecord::Base.transaction do
-        binding.pry
         player = params["player"]
         user = User.create!(email: player["email"], full_name: player["name"], password: "password")
         Profile.create!(role: "Player", user_id: user.id, gender: player["gender"], date_of_birth: player["date_of_birth"], years_of_experience: player["years_of_experience"], age: player["age"])
@@ -70,6 +69,9 @@ class TournamentsController < ApplicationController
       end
 
       render json: { success: true }
+    rescue => e
+      render json: { success: false, error: e.message }, status: :unprocessable_entity
+    end
   end
 
   def remove_player_from_tournament
