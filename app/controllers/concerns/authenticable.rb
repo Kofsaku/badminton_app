@@ -8,7 +8,11 @@ module Authenticable
 
   def authorize_request
     api_key = request.headers['Authorization']
-    user = User.find_by(api_key:)
-    render json: { error: 'Unauthorized' }, status: :unauthorized unless user
+    @current_user = User.find_by(api_key: api_key)
+    render json: { error: 'Unauthorized' }, status: :unauthorized unless @current_user
+  end
+
+  def current_user
+    @current_user
   end
 end

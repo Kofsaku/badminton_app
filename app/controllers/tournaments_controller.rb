@@ -1,11 +1,13 @@
 class TournamentsController < ApplicationController
   include Authenticable
-  #before_action :authorize_request
+  before_action :authorize_request
   before_action :set_tournament, only: %i[ show edit update destroy]
 
   # GET /tournaments or /tournaments.json
   def index
-    @tournaments = Tournament.where(user_id: session[:current_user_id]).page(params[:page]).per(params[:per_page] || 50)
+    @tournaments = Tournament.where(user_id: current_user.id)
+                           .page(params[:page])
+                           .per(params[:per_page] || 50)
     render json: {
       tournaments: @tournaments,
       current_page: @tournaments.current_page,
