@@ -5,8 +5,10 @@ import Header from "../../components/Shared/Header";
 import Footer from "../../components/Shared/Footer";
 import CtaSection from '../../components/Shared/CtaSection';
 import {paymentTournament, showTournament} from "../../api/tournamentApi";
+import {useTranslation} from "react-i18next";
 
 export default function () {
+  const { t } = useTranslation();
   const params = useParams()
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ export default function () {
   const [categories, setCategories] = useState();
   const [participationFee, setParticipationFee] = useState(0)
   const [teamMember, setTeamMember] = useState([]);
+  const [category, setCategory] = useState('');
 
   useEffect(async () => {
     if (params.id){
@@ -24,6 +27,7 @@ export default function () {
       setCategories(res.tournament.tournament_categories_attributes)
       setParticipationFee(res.tournament.participation_fee)
       setTeamMember(JSON.parse(searchParams.get("teamMembers")))
+      setCategory(JSON.parse(searchParams.get("category")))
     }
   }, [params.id]);
 
@@ -51,7 +55,8 @@ export default function () {
       card_year: cardYear,
       card_month: cardMonth,
       team_member: teamMember,
-      tournament_id: params.id
+      tournament_id: params.id,
+      category: category,
     }
     const response = await paymentTournament(params.id,formData)
     if(response.status === 'ok') {
@@ -98,7 +103,9 @@ export default function () {
 
                 <div
                   className="p-d-l-41 p-d-r-41 height-80 border-radius-06 align-content-center
-                  mt-83 fz-24 fw-bold bg-white fz-14-sm height-53-sm p-d-r-22-sm p-d-l-22-sm mt-40-sm">男子ダブルス2位
+                  mt-83 fz-24 fw-bold bg-white fz-14-sm height-53-sm p-d-r-22-sm p-d-l-22-sm mt-40-sm"
+                >
+                  {category ? t(`tournament.${category}`) : '男子ダブルス2位'}
                 </div>
                 <div className="p-d-l-41 p-d-r-41 fz-24 m-t-25 c-grey-1 p-d-r-22-sm p-d-l-22-sm fz-14-sm">通常参加費：{Number(participationFee).toLocaleString()} × {teamMember.length}名 = {Number(participationFee * teamMember.length).toLocaleString()}円</div>
                 <div className="mg-0-41 division mg-0-22-sm"></div>

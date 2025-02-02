@@ -17,6 +17,7 @@ export default function () {
   const [teamMember, setTeamMember] = useState([]);
   const [newMemberName, setNewMemberName] = useState("");
   const [isAddMember, setIsAddMember] = useState(false);
+  const [categoryActive, setCategoryActive] = useState('');
 
   useEffect(async () => {
     if (params.id){
@@ -81,7 +82,8 @@ export default function () {
               {categories?.map((category, index) => (
                 <div
                   key={index}
-                  className="d-flex flex-1-1 gap-10 height-60 bg-silver6 border-radius-06 pd-20 flex-grow-1 align-items-baseline fz-16-sm mw-100-sm"
+                  className={`d-flex flex-1-1 gap-10 height-60 bg-silver6 border-radius-06 pd-20 flex-grow-1 align-items-baseline fz-16-sm mw-100-sm cursor-pointer ${categoryActive === category.category_type ? 'bg-green3 text-white fw-bold' : ''}`}
+                  onClick={()=>{setCategoryActive(category.category_type)}}
                 >
                   <i className="fa-solid fa-circle-check height-20 width-20"></i>
                   <div>{t(`tournament.${category.category_type}`)}</div>
@@ -96,7 +98,9 @@ export default function () {
               <div className="flex-2-5">
                 <div>
                   <div
-                    className="fz-24 bg-green3 height-76 text-white pd-25-40 fw-bold fz-18-sm pd-22-12-sm">男子ダブルス１位
+                    className="fz-24 bg-green3 height-76 text-white pd-25-40 fw-bold fz-18-sm pd-22-12-sm"
+                  >
+                    {categoryActive ? t(`tournament.${categoryActive}`) : '男子ダブルス１位'}
                   </div>
                   <div className="bg-white pd-25-40 pd-28-12-sm">
                     <div className="fz-24 fz-16-sm">メンバー：{teamMember.length}名</div>
@@ -149,7 +153,7 @@ export default function () {
                 <div>
                   <div className="fz-24 bg-green3 height-76 text-white pd-25-40 fw-bold">エントリー金額</div>
                   <div className="pd-25-40 bg-white pd-22-12-sm">
-                    <div className="fz-24 fz-18-sm">男子ダブルス</div>
+                    <div className="fz-24 fz-18-sm">{categoryActive ? t(`tournament.${categoryActive}`) : '男子ダブルス'}</div>
                     <div className="fz-18 mt-30 fz-14-sm">通常参加費：{Number(participationFee).toLocaleString()}円×{teamMember.length}名</div>
                     <div className="fz-18 fz-14-sm">小計{Number(participationFee * teamMember.length).toLocaleString()}円</div>
                     <div className="text-right fz-24 fw-bold mt-57 fz-17-sm">合計：{Number(participationFee * teamMember.length).toLocaleString()}円</div>
@@ -169,8 +173,8 @@ export default function () {
                  align-content-center cursor-pointer fz-16-sm height-52-sm width-111-sm border-radius-06-sm">キャンセル
               </div>
               <a href={`/tournament/${params.id}/entry/payment?teamMembers=${encodeURIComponent(
-                JSON.stringify(teamMember)
-              )}`}>
+                JSON.stringify(teamMember))}&category=${encodeURIComponent(
+                JSON.stringify(categoryActive))}`}>
                 <div
                   className="text-white bg-green3 width-300 height-70 fw-bold fz-26 text-center
                    border-radius-10 align-content-center cursor-pointer fz-16-sm height-52-sm width-220-sm border-radius-06-sm">エントリーに進む
